@@ -365,7 +365,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 /* ===== Configuration centrale ===== */
 const CONFIG = {
   STORE_MODE: 'preview',            // 'preview' | 'live'
-  checkoutUrl: '',                  // URL de paiement Shopify/Stripe réelle (vide = paiement non branché)
+  checkoutApi: '/api/checkout',     // fonction Vercel qui crée la session Stripe Checkout
   contactEmail: 'guillaumecassisa@gmail.com',
   annonce: 'Boutique en préparation : les commandes ouvriront prochainement.',
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
@@ -387,7 +387,8 @@ const COLLECTIONS = {
   'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
-const LIVE = CONFIG.STORE_MODE === 'live' && !!CONFIG.checkoutUrl && Object.values(CONFIG.legal).every(Boolean) && Object.values(CONFIG.vente).every(Boolean);
+const TEST_BOUTIQUE = (()=>{ try{ const q=new URLSearchParams(location.search); if(q.has('test-boutique')) sessionStorage.setItem('kreau-test','1'); return sessionStorage.getItem('kreau-test')==='1'; }catch(e){ return false; } })();
+const LIVE = TEST_BOUTIQUE || (CONFIG.STORE_MODE === 'live' && Object.values(CONFIG.legal).every(Boolean) && Object.values(CONFIG.vente).every(Boolean));
 
 /* ===== Utilitaires ===== */
 const $ = (s, r=document) => r.querySelector(s);
@@ -836,6 +837,15 @@ function vueChecklist(){
     <ul class="check">${items.map(([t,ok])=>`<li><span class="statut ${ok?'fait':'manque'}">${ok?'Fait':'À faire'}</span><span>${esc(t)}</span></li>`).join('')}</ul>`);
 }
 
+function vueMerci(){
+  setMeta('Merci pour votre commande | K-Reau','');
+  Panier.lignes = []; Panier.sauver();
+  app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start;max-width:720px">
+    <span class="eyebrow">Commande confirmée</span><h1>Merci pour votre commande.</h1>
+    <p class="lead">Votre paiement a bien été reçu. Un reçu vous a été envoyé par e-mail ; nous vous écrirons dès l’expédition de vos carreaux.</p>
+    <a class="btn btn-p" href="#carreaux">Continuer la visite</a></div>`;
+}
+
 function vue404(){
   setMeta('Page introuvable | K-Reau','');
   app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start"><span class="eyebrow">Page introuvable</span><h1>Ce lieu n’existe pas (encore).</h1><p class="lead">La page demandée n’a pas été trouvée.</p><a class="btn btn-p" href="#accueil">Retour à l’accueil</a></div>`;
@@ -866,14 +876,29 @@ const Panier = {
       <div style="display:flex;justify-content:space-between;align-items:center"><h2>Panier</h2><button class="icone-btn" type="button" data-fermer aria-label="Fermer le panier">${ICONES.croix}</button></div>
       <div class="panier-lignes">${lignes.length ? lignes.map(l=>`<div class="ligne"><img src="${esc(l.p.miniature)}" width="64" height="64" alt=""><div><strong>${esc(l.p.nom)}</strong><div class="small muted">Quantité : ${l.q}</div></div><button class="lien" style="background:none;border:0;cursor:pointer" data-suppr="${esc(l.slug)}">Retirer</button></div>`).join('') : '<p class="muted">Votre panier est vide.</p>'}</div>
       ${lignes.length ? `<p style="display:flex;justify-content:space-between"><span>Sous-total TTC</span><strong>${total.toLocaleString('fr-FR',{style:'currency',currency:'EUR'})}</strong></p>
-      <p class="small muted">Frais de livraison : ${esc(V.fraisLivraison)}</p>
-      <a class="btn btn-p" href="${esc(CONFIG.checkoutUrl)}" target="_blank" rel="noopener">Passer au paiement sécurisé</a>` : ''}
+      <p class="small muted">${V.fraisLivraison ? 'Frais de livraison : '+esc(V.fraisLivraison) : 'Frais de livraison indiqués à l’étape suivante.'}</p>
+      <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
+      <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
+      <div id="payer-retour" aria-live="polite"></div>` : ''}
     </div></div>`;
     const t = c.firstElementChild;
     t.addEventListener('click', e => {
       if(e.target===t || e.target.closest('[data-fermer]')) { c.innerHTML=''; return; }
       const s = e.target.closest('[data-suppr]'); if(s){ this.lignes = this.lignes.filter(l=>l.slug!==s.dataset.suppr); this.sauver(); this.ouvrir(); }
+      if(e.target.closest('#payer')) this.payer();
     });
+  },
+  async payer(){
+    const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
+    try{
+      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ lignes: this.lignes }) });
+      const j = await r.json().catch(()=>({}));
+      if(!r.ok || !j.url) throw new Error(j.erreur || 'Erreur');
+      location.href = j.url;
+    }catch(err){
+      ret.innerHTML = `<p class="msg ko">${esc(err.message)}. Réessayez dans un instant ou écrivez-nous via le formulaire de contact.</p>`;
+      b.disabled = false; b.textContent = 'Passer au paiement sécurisé';
+    }
   }
 };
 
@@ -941,6 +966,7 @@ function route(){
   else if(h==='faq') vueFAQ();
   else if(h==='contact') vueContact();
   else if(h==='panier'){ if(LIVE){ vueAccueil(); Panier.ouvrir(); } else vueAccueil(); }
+  else if(h==='merci') vueMerci();
   else if(PAGES[h]) PAGES[h]();
   else vue404();
   vueCourante = cle + (PRODUITS ? ':data' : '');
@@ -959,7 +985,8 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') fermerMenu(); }
 
 /* ===== Démarrage ===== */
 $('#annee').textContent = new Date().getFullYear();
-if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.annonce; a.hidden = false; }
+if(TEST_BOUTIQUE){ const a=$('#annonce'); a.textContent='Mode test du paiement : utilisez la carte 4242 4242 4242 4242, aucune somme n’est débitée.'; a.hidden=false; }
+else if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.annonce; a.hidden = false; }
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);
 route();
