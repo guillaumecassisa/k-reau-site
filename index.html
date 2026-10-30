@@ -363,7 +363,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 <script>
 /* ===== Configuration centrale ===== */
 const CONFIG = {
-  STORE_MODE: 'preview',            // 'preview' | 'live'
+  STORE_MODE: 'live',            // 'preview' | 'live'
   checkoutApi: '/api/checkout',     // fonction Vercel qui crée la session Stripe Checkout
   contactEmail: '',                 // non affiché : le contact se fait uniquement par le formulaire
   formEndpoint: 'https://formsubmit.co/ajax/guillaumecassisa@gmail.com', // destinataire des formulaires (non affiché)
@@ -389,7 +389,7 @@ const COLLECTIONS = {
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
 const TEST_BOUTIQUE = false; // accès test désactivé : une clé Stripe réelle est en place
-const LIVE = TEST_BOUTIQUE || (CONFIG.STORE_MODE === 'live' && Object.values(CONFIG.legal).every(Boolean) && Object.values(CONFIG.vente).every(Boolean));
+const LIVE = TEST_BOUTIQUE || CONFIG.STORE_MODE === 'live';
 
 /* ===== Utilitaires ===== */
 const $ = (s, r=document) => r.querySelector(s);
