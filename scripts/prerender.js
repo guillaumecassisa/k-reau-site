@@ -5,7 +5,7 @@ const http = require('http'), fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const RACINE = path.resolve(__dirname, '..');
 const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produits.json'), 'utf8'));
-const pagesSimples = ['carreaux','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier','avant-lancement'];
+const pagesSimples = ['carreaux','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier'];
 const routes = ['/', '/collections/marseille', '/collections/cote-bleue', ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
 const types = { '.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.webp':'image/webp', '.xml':'application/xml', '.txt':'text/plain' };
 
@@ -37,7 +37,7 @@ const serveur = http.createServer((req, res) => {
     const sortie = r === '/' ? 'index.html' : r === '/404' ? '404.html' : path.join('pages', r.slice(1) + '.html');
     fs.mkdirSync(path.join(RACINE, path.dirname(sortie)), { recursive: true });
     fs.writeFileSync(path.join(RACINE, sortie), html);
-    if (!['/404', '/merci', '/panier', '/avant-lancement'].includes(r)) urls.push(r);
+    if (!['/404', '/merci', '/panier'].includes(r)) urls.push(r);
     console.log('✓', r, '→', sortie, await page.title());
   }
   await nav.close(); serveur.close();

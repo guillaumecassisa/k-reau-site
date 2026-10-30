@@ -9,7 +9,7 @@
       "destination": "/pages/collections/:c.html"
     },
     {
-      "source": "/:page(carreaux|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier|avant-lancement)",
+      "source": "/:page(carreaux|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier)",
       "destination": "/pages/:page.html"
     }
   ],
