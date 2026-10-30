@@ -392,6 +392,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .guide-corps h2{scroll-margin-top:90px}.guide-corps h2{margin-top:12px}
 .tete-visuel.tete-guide{grid-template-columns:minmax(0,1fr) minmax(220px,360px)}
 @media(max-width:860px){.tete-visuel.tete-guide{grid-template-columns:1fr}}
+.signature{display:grid;grid-template-columns:120px 1fr;gap:24px;align-items:center;background:var(--blanc);border:1px solid var(--joint);padding:22px}
+.signature img{width:120px;height:120px;border-radius:50%;object-fit:cover;filter:grayscale(1)}
+.signature p{margin:0 0 10px}.signature-nom{font-family:var(--f-titre);font-style:italic;font-size:1.15rem;color:var(--encre)}
+.signature-accueil{max-width:760px;margin-inline:auto}.signature-accueil p{font-family:var(--f-titre);font-size:1.2rem;line-height:1.5;color:var(--encre)}
+@media(max-width:560px){.signature{grid-template-columns:1fr;justify-items:start}.signature img{width:96px;height:96px}}
 .projet-lien{text-align:center;margin-top:32px;color:var(--encre-doux)}
 @media(max-width:860px){.etapes{grid-template-columns:1fr 1fr}.etapes li:nth-child(3){border-left:0}.etapes li:nth-child(n+3){border-top:1px solid var(--joint)}}
 .montants{display:flex;flex-wrap:wrap;gap:10px}
@@ -821,6 +826,14 @@ function vueAccueil(){
     </div>
   </section>
 
+  <section class="bloc" aria-label="Le créateur de K-Reau"><div class="wrap">
+    <div class="signature signature-accueil">
+      <img src="/img/01_Identite/guillaume.webp" width="120" height="120" loading="lazy" alt="Guillaume, créateur de K-Reau">
+      <div><p>« Moi, c’est Guillaume. J’imprime chaque carreau à Mallemort, en Provence, et je prépare chaque coffret moi-même. Merci de soutenir une petite marque d’ici. »</p>
+      <a class="lien" href="/notre-histoire">Lire notre histoire</a></div>
+    </div>
+  </div></section>
+
   <section class="bloc fond-blanc joint-haut" aria-labelledby="t-fin">
     <div class="wrap fin">
       <h2 id="t-fin">Et vous, quel lieu aimeriez-vous garder près de vous ?</h2>
@@ -1091,6 +1104,16 @@ function vueHistoire(){
 
       <h2>Un souvenir à offrir</h2>
       <p>Un K-Reau se garde et s’offre. Pour un Marseillais installé loin de chez lui, un couple qui s’est rencontré dans une calanque, une crémaillère, un départ ou un anniversaire, c’est un cadeau souvenir qui a du sens. Vous pouvez composer un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, offrir une <a class="lien" href="/carte-cadeau">carte cadeau</a> ou faire dessiner <a class="lien" href="/sur-mesure">votre propre lieu sur mesure</a>.</p>
+
+      <h2>Qui est derrière K-Reau ?</h2>
+      <div class="signature">
+        <img src="/img/01_Identite/guillaume.webp" width="160" height="160" loading="lazy" alt="Guillaume, créateur de K-Reau">
+        <div>
+          <p>Moi, c’est Guillaume. J’ai créé K-Reau à Mallemort, entre la Durance et les Alpilles, et c’est ici que j’imprime chaque carreau, que je le contrôle et que je le glisse dans son coffret avant de l’expédier.</p>
+          <p>Je ne suis pas une grande enseigne : derrière chaque commande, il y a une personne qui la prépare. Si vous m’écrivez, c’est moi qui vous réponds. Et si un lieu vous manque dans les collections, dites-le-moi : c’est souvent comme ça que naissent les prochains carreaux.</p>
+          <p class="signature-nom">Guillaume, fondateur de K-Reau</p>
+        </div>
+      </div>
 
       <h2>La suite</h2>
       <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="/contact">Dites-le-nous</a>. Vous avez un projet pour une entreprise, un mariage ou une boutique ? <a class="lien" href="/projet-specifique">Parlez-nous de votre projet</a>.</p>
