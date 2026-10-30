@@ -52,11 +52,11 @@ const serveur = http.createServer((req, res) => {
   // Flux produits pour Google Merchant Center (fiches gratuites dans Google Shopping)
   const xml = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const items = cat.map(p => {
-    const region = p.collection === 'Marseille' ? 'Marseille' : p.collection === 'Côte Bleue' ? 'la Côte Bleue' : p.collection === 'Montagnes du Sud' ? 'Provence' : 'Méditerranée';
+    const region = p.collection === 'Marseille' ? 'Marseille' : p.collection === 'Côte Bleue' ? 'la Côte Bleue' : p.collection === 'Montagnes du Sud' ? 'Provence' : p.region || 'Méditerranée';
     return `  <item>
     <g:id>${p.slug}</g:id>
     <g:title>${xml(`Carreau décoratif ${p.nom} – céramique 15 x 15 cm`)}</g:title>
-    <g:description>${xml(`${p.description} ${p.a_propos || ''} Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir de ${region}.`)}</g:description>
+    <g:description>${xml(`${p.description} ${p.a_propos || ''} Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir ${/^Val /.test(region) ? 'du '+region : /^[AEIOUÎÉ]/.test(region) ? 'd’'+region : 'de '+region}.`)}</g:description>
     <g:link>https://k-reau.fr/produits/${p.slug}</g:link>
     <g:image_link>https://k-reau.fr/${p.image_principale.replace(/^\//,'')}</g:image_link>
 ${[p.image_coffret,p.image_detail].filter(Boolean).map(u=>`    <g:additional_image_link>https://k-reau.fr/${u.replace(/^\//,'')}</g:additional_image_link>`).join('\n')}

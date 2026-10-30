@@ -78,7 +78,7 @@ nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color
 .burger{display:none}
 .visuellement-cache{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .recherche{position:relative;margin-left:auto;flex:0 1 340px;min-width:0}
-.recherche svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--encre);pointer-events:none}
+.recherche>svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--encre);pointer-events:none}
 .recherche input{width:100%;min-height:42px;padding:0 16px 0 40px;border:1px solid var(--encre);border-radius:999px;background:transparent;font:400 .88rem var(--f-texte);color:var(--encre);letter-spacing:.01em;transition:background .2s,box-shadow .2s}
 .recherche input::placeholder{color:var(--encre-doux)}
 .recherche input:hover{background:rgba(255,254,251,.5)}
@@ -88,6 +88,15 @@ nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color
 .suggestions li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;padding:6px 8px;border-radius:9px;cursor:pointer}
 .suggestions li[aria-selected="true"],.suggestions li:hover{background:var(--sable-clair)}
 .suggestions img{width:44px;height:44px;object-fit:cover;border:1px solid var(--joint);background:var(--blanc)}
+.suggestions .sug-ico{width:44px;height:44px;display:grid;place-items:center;background:var(--olivier);color:var(--ceramique)}
+.suggestions .sug-ico svg{width:28px;height:28px;position:static;transform:none;color:var(--ceramique)}
+.offres-q{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:32px}
+.offre-q{display:flex;align-items:center;gap:14px;padding:12px;background:var(--blanc);border:1px solid var(--joint);text-decoration:none}
+.offre-q:hover{border-color:var(--olivier)}
+.offre-q img,.offre-q .sug-ico{width:64px;height:64px;object-fit:cover;flex:none}
+.offre-q strong{display:block;font-weight:600}
+.offre-q .sug-ico{display:grid;place-items:center;background:var(--olivier);color:var(--ceramique)}
+.offre-q .sug-ico svg{width:34px;height:34px}
 .suggestions strong{display:block;font-weight:500;font-size:.92rem;line-height:1.25}
 .suggestions span{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mer)}
 .suggestions .vide{display:block;padding:12px;color:var(--encre-doux);font-size:.88rem;cursor:default}
@@ -138,7 +147,8 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 /* Cartes collections */
 .colls{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
 .colls-4{grid-template-columns:repeat(4,1fr)}
-@media(max-width:1100px){.colls-4{grid-template-columns:repeat(2,1fr)}}
+.colls-5{grid-template-columns:repeat(6,1fr)}.colls-5>*{grid-column:span 2}.colls-5>:nth-child(4){grid-column:2/span 2}
+@media(max-width:1100px){.colls-4,.colls-5{grid-template-columns:repeat(2,1fr)}.colls-5>*,.colls-5>:nth-child(4){grid-column:auto}}
 .coll{display:flex;flex-direction:column;background:var(--blanc);border:1px solid var(--joint);text-decoration:none}
 .coll-img{overflow:hidden;aspect-ratio:1/1;background:var(--sable-clair)}
 .coll-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
@@ -417,6 +427,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a href="/collections/marseille">Marseille</a>
     <a href="/collections/cote-bleue">Côte Bleue</a>
     <a href="/collections/montagnes-du-sud" data-coll="montagnes-du-sud">Les Montagnes du Sud</a>
+    <a href="/collections/chateaux" data-coll="chateaux" hidden="">Les Châteaux</a>
     <a href="/produits/les-embiez">Les Embiez</a>
     <a href="/carreaux">Nos carreaux</a>
     <a href="/coffrets">Coffrets &amp; trios</a>
@@ -447,6 +458,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           <li><a href="/collections/marseille">Marseille</a></li>
           <li><a href="/collections/cote-bleue">La Côte Bleue</a></li>
           <li data-coll="montagnes-du-sud"><a href="/collections/montagnes-du-sud">Les Montagnes du Sud</a></li>
+          <li data-coll="chateaux" hidden=""><a href="/collections/chateaux">Les Châteaux</a></li>
           <li><a href="/produits/les-embiez">Les Embiez</a></li>
           <li><a href="/carreaux">Tous les carreaux</a></li>
         </ul>
@@ -518,7 +530,7 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs de la Côte Bleue',
     offrir:'Un souvenir de la Côte Bleue à offrir',
     texte:'De L’Estaque à Carro, en passant par Niolon, Méjean, La Redonne, Ensuès-la-Redonne, Carry-le-Rouet, Sausset-les-Pins, le Cap Couronne et la plage de Sainte-Croix : les ports et calanques de la Côte Bleue dessinés sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y ont leurs souvenirs d’été.' },
-  'montagnes-du-sud': { nom:'Les Montagnes du Sud', titre:'Collection Les Montagnes du Sud', cle:'Montagnes du Sud', img:'/img/09_Produits_Montagnes/montagnes-sainte-victoire.webp', w:1254, h:1254,
+  'montagnes-du-sud': { nom:'Les Montagnes du Sud', titre:'Collection Les Montagnes du Sud', cle:'Montagnes du Sud', filtre:'Montagnes', region:'Provence', img:'/img/09_Produits_Montagnes/montagnes-sainte-victoire.webp', w:1254, h:1254,
     court:'Sainte-Victoire, Ventoux, Garlaban… Les sommets de Provence en un trait.',
     intro:'De la Sainte-Victoire au Mont Ventoux, du Garlaban de Pagnol au Mont Faron : dix sommets de Provence et du Var dessinés au trait, chacun avec son nom en calligraphie.',
     seo:'Carreaux décoratifs montagnes de Provence | Sainte-Victoire, Ventoux – K-Reau',
@@ -526,6 +538,14 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs des montagnes du Sud',
     offrir:'Un souvenir des montagnes de Provence à offrir',
     texte:'La Sainte-Victoire de Cézanne, la Sainte-Baume et sa forêt, le Garlaban de Marcel Pagnol, le Mont Ventoux, le Mont Puget au-dessus des Calanques, le Mont Faron, le Mont Caume et le Gros Cerveau au-dessus de Toulon et Sanary, le Mont Salva près de Six-Fours et le Rocher de Roquebrune : les sommets du Sud sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour les randonneurs et les amoureux de Provence.' },
+  'chateaux': { nom:'Les Châteaux', titre:'Collection Les Châteaux', cle:'Châteaux', img:'', w:1254, h:1254, filtre:'Châteaux', region:'France',
+    court:'Versailles, Chambord, Chenonceau… Les grands châteaux de France en un trait.',
+    intro:'De Versailles à Chambord, de Chenonceau au Haut-Kœnigsbourg : dix châteaux emblématiques de France dessinés au trait, chacun avec son nom en calligraphie.',
+    seo:'Carreaux décoratifs châteaux de France | Versailles, Chambord, Loire – K-Reau',
+    seoDesc:'10 carreaux en céramique illustrés des châteaux de France : Versailles, Chambord, Chenonceau, Amboise, Blois, Cheverny, Villandry, Fontainebleau… Idée cadeau à 19,90 €.',
+    h1:'Carreaux décoratifs des châteaux de France',
+    offrir:'Un souvenir des châteaux de France à offrir',
+    texte:'Versailles et Fontainebleau, les châteaux de la Loire – Chambord, Chenonceau, Amboise, Blois, Azay-le-Rideau, Cheverny, Villandry – et le Haut-Kœnigsbourg en Alsace : les grands châteaux de France dessinés au trait sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour les amoureux d’histoire et de patrimoine.' },
   'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'/img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
@@ -575,8 +595,10 @@ async function charger(){
   route();
 }
 const parSlug = s => PRODUITS?.find(p => p.slug === s);
-const COLLS_PRINCIPALES = ['marseille','cote-bleue','montagnes-du-sud'];
-const collPubliee = k => k !== 'montagnes-du-sud' || !!PRODUITS?.some(p => p.collection_slug === k);
+const COLLS_PRINCIPALES = ['marseille','cote-bleue','montagnes-du-sud','chateaux'];
+const ORDRE_COLLS = [...COLLS_PRINCIPALES, 'les-embiez'];
+// une collection n'apparaît que si elle contient au moins un carreau publié
+const collPubliee = k => ['marseille','cote-bleue','les-embiez'].includes(k) || !!PRODUITS?.some(p => p.collection_slug === k);
 const imgColl = k => COLLECTIONS[k].img || (PRODUITS?.find(p => p.collection_slug === k)?.image_principale ?? '');
 const deCollection = k => PRODUITS?.filter(p => p.collection_slug === k) || [];
 const collNom = p => p.collection === 'Signature' ? 'Les Embiez · modèle signature' : p.collection;
@@ -601,7 +623,7 @@ function grilleHTML(list){
   return list.map(p => carte(p)).join('');
 }
 function filtresHTML(actif, id){
-  const opts = [['tout','Tout'],['marseille','Marseille'],['cote-bleue','Côte Bleue'],['montagnes-du-sud','Montagnes'],['les-embiez','Les Embiez']].filter(([k])=>k==='tout'||collPubliee(k));
+  const opts = [['tout','Tout'], ...ORDRE_COLLS.map(k => [k, COLLECTIONS[k].filtre || COLLECTIONS[k].nom.replace(/^La /,'')])].filter(([k])=>k==='tout'||collPubliee(k));
   return `<div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="${id}">${opts.map(([k,l])=>`<button type="button" class="filtre" data-f="${k}" aria-pressed="${k===actif}">${l}</button>`).join('')}</div>`;
 }
 function brancherFiltres(id, listeTout){
@@ -669,8 +691,8 @@ function vueAccueil(){
         <h2 id="t-coll">Où voulez-vous retourner ?</h2>
         <p class="lead">Un port, une crique, une colline… Il y a toujours un lieu qui nous suit partout.</p>
       </div>
-      <div class="colls${['marseille','cote-bleue','montagnes-du-sud','les-embiez'].filter(collPubliee).length===4?' colls-4':''}">
-        ${['marseille','cote-bleue','montagnes-du-sud','les-embiez'].filter(collPubliee).map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
+      <div class="colls colls-${ORDRE_COLLS.filter(collPubliee).length}">
+        ${ORDRE_COLLS.filter(collPubliee).map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
           const href = k==='les-embiez' ? '/produits/les-embiez' : '/collections/'+k;
           return `<a class="coll" href="${href}">
             <div class="coll-img"><img src="${imgColl(k)}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)}"></div>
@@ -809,14 +831,16 @@ function vueTous(){
   setMeta('Tous les carreaux décoratifs en céramique | K-Reau','Les 21 carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue et Les Embiez. Céramique 15 × 15 cm, 19,90 €, idée cadeau souvenir.');
   const q = (new URLSearchParams(location.search).get('q') || '').trim();
   const res = q && PRODUITS ? chercher(q) : null;
+  const offresQ = q ? chercherOffres(q) : [];
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Nos carreaux','']])}
-    ${q ? `<div class="bloc-titre"><span class="eyebrow">Recherche</span><h1>Résultats pour « ${esc(q)} »</h1><p class="lead">${res ? (res.length ? res.length+' carreau'+(res.length>1?'x':'')+' trouvé'+(res.length>1?'s':'') : 'Aucun carreau ne correspond à cette recherche. Essayez un autre lieu, ou parcourez tous les modèles.') : ''}</p><a class="lien" href="/carreaux">Voir tous les carreaux</a></div>`
+    ${q ? `<div class="bloc-titre"><span class="eyebrow">Recherche</span><h1>Résultats pour « ${esc(q)} »</h1><p class="lead">${res ? (res.length ? res.length+' carreau'+(res.length>1?'x':'')+' trouvé'+(res.length>1?'s':'') : offresQ.length ? '' : 'Aucun carreau ne correspond à cette recherche. Essayez un autre lieu, ou parcourez tous les modèles.') : ''}</p><a class="lien" href="/carreaux">Voir tous les carreaux</a></div>`
         : `<div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>`}
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
-    ${q ? `<div class="grille" id="g-tous">${res ? (res.length ? res.map(p=>carte(p)).join('') : grilleHTML(PRODUITS).replace(/^/, '<p class="small muted" style="grid-column:1/-1">Tous nos carreaux :</p>')) : grilleHTML([])}</div>`
+    ${offresQ.length ? `<div class="offres-q">${offresQ.map(o=>`<a class="offre-q" href="${o.url}">${o.img ? `<img src="${esc(o.img)}" alt="" loading="lazy">` : `<span class="sug-ico">${ICO_CARTE}</span>`}<span><strong>${esc(o.nom)}</strong><span class="small muted">${esc(o.sous)}</span></span></a>`).join('')}</div>` : ''}
+    ${q && res && !res.length && offresQ.length ? '' : q ? `<div class="grille" id="g-tous">${res ? (res.length ? res.map(p=>carte(p)).join('') : grilleHTML(PRODUITS).replace(/^/, '<p class="small muted" style="grid-column:1/-1">Tous nos carreaux :</p>')) : grilleHTML([])}</div>`
         : `${filtresHTML('tout','g-tous')}
     <p class="small muted" id="g-tous-statut" role="status" aria-live="polite">${PRODUITS? PRODUITS.length+' carreaux affichés':''}</p>
     <div class="grille" id="g-tous">${grilleHTML(PRODUITS||[])}</div>`}
@@ -837,6 +861,17 @@ function chercher(q){
     return { p, score };
   }).filter(Boolean).sort((a,b)=>b.score-a.score).map(x=>x.p);
 }
+// pages d'offres trouvables par la recherche (cartes cadeaux, coffrets, sur mesure)
+const OFFRES_RECHERCHE = [
+  { nom:'Carte cadeau K-Reau', sous:'De 25 € à 100 €', url:'/carte-cadeau', ico:'carte', mots:'carte cadeau cartes cadeaux bon cadeau cheque cadeau offrir noel anniversaire fete code' },
+  { nom:'Coffret 3 carreaux', sous:'Trios et coffret à composer', url:'/coffrets', img:'/img/coffret/les-embiez-coffret.webp', mots:'coffret coffrets trio trios lot pack trois 3 carreaux cadeau offrir noel ensemble' },
+  { nom:'Carreau sur mesure', sous:'Votre lieu, votre photo, votre dessin', url:'/sur-mesure', img:'/img/sur-mesure/photo-vers-carreau-mini.webp', mots:'sur mesure personnalise personnalisee personnalisation personnaliser maison photo dessin enfant famille cadeau offrir unique' }
+];
+function chercherOffres(q){
+  const mots = norm(q).split(/\s+/).filter(m => m.length > 1);
+  if(!mots.length) return [];
+  return OFFRES_RECHERCHE.filter(o => { const t = norm(o.nom+' '+o.mots); return mots.every(m => t.split(/\s+/).some(w => w.startsWith(m))); });
+}
 (function(){
   const form = $('#recherche'), champ = $('#q'), liste = $('#suggestions');
   let choix = [], actif = -1;
@@ -845,9 +880,11 @@ function chercher(q){
   const afficher = () => {
     const q = champ.value.trim();
     if(q.length < 2 || !PRODUITS){ fermer(); return; }
-    choix = chercher(q).slice(0,6);
+    const offres = chercherOffres(q).map(o => ({ url:o.url, nom:o.nom, sous:o.sous, img:o.img, ico:o.ico }));
+    const carreaux = chercher(q).slice(0, Math.max(3, 6 - offres.length)).map(p => ({ url:'/produits/'+p.slug, nom:p.nom, sous:p.collection==='Signature'?'Les Embiez':p.collection, img:p.miniature }));
+    choix = [...offres, ...carreaux];
     liste.innerHTML = choix.length
-      ? choix.map((p,i)=>`<li role="option" id="sug-${i}" data-slug="${esc(p.slug)}" aria-selected="false"><img src="${esc(p.miniature)}" alt="" width="44" height="44"><div><strong>${esc(p.nom)}</strong><span>${esc(p.collection==='Signature'?'Les Embiez':p.collection)}</span></div></li>`).join('') + `<li class="tous" data-tous="1">Voir tous les résultats pour « ${esc(q)} »</li>`
+      ? choix.map((c,i)=>`<li role="option" id="sug-${i}" data-url="${esc(c.url)}" aria-selected="false">${c.img ? `<img src="${esc(c.img)}" alt="" width="44" height="44">` : `<span class="sug-ico" aria-hidden="true">${ICO_CARTE}</span>`}<div><strong>${esc(c.nom)}</strong><span>${esc(c.sous)}</span></div></li>`).join('') + (carreaux.length ? `<li class="tous" data-tous="1">Voir tous les résultats pour « ${esc(q)} »</li>` : '')
       : `<li class="vide">Aucun carreau pour « ${esc(q)} »</li>`;
     liste.hidden = false; champ.setAttribute('aria-expanded','true'); actif = -1;
   };
@@ -864,12 +901,12 @@ function chercher(q){
     const li = e.target.closest('li'); if(!li || li.classList.contains('vide')) return;
     e.preventDefault();
     if(li.dataset.tous) aller('/carreaux?q='+encodeURIComponent(champ.value.trim()));
-    else aller('/produits/'+li.dataset.slug);
+    else aller(li.dataset.url);
   });
   form.addEventListener('submit', e => {
     e.preventDefault();
     const q = champ.value.trim(); if(!q) return;
-    if(actif >= 0 && choix[actif]) aller('/produits/'+choix[actif].slug);
+    if(actif >= 0 && choix[actif]) aller(choix[actif].url);
     else aller('/carreaux?q='+encodeURIComponent(q));
   });
   document.addEventListener('click', e => { if(!form.contains(e.target)) fermer(); });
@@ -880,10 +917,10 @@ function vueProduit(slug){
   const p = parSlug(slug);
   if(!p) return vue404();
   const k = p.collection_slug, c = COLLECTIONS[k];
-  const region = k==='marseille' ? 'Marseille' : k==='cote-bleue' ? 'la Côte Bleue' : k==='montagnes-du-sud' ? 'Provence' : 'Méditerranée';
+  const region = k==='marseille' ? 'Marseille' : k==='cote-bleue' ? 'la Côte Bleue' : p.region || COLLECTIONS[k]?.region || 'Méditerranée';
   const urlP = 'https://k-reau.fr/produits/'+p.slug;
-  setMeta(`Carreau ${p.nom} | Déco céramique, cadeau ${k==='les-embiez'?'Var':region.replace('la ','')} – K-Reau`,
-    `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir de ${region}. 19,90 €, livraison offerte dès 50 €.`,
+  setMeta(`Carreau ${p.nom} | Déco céramique, ${k==='chateaux' ? 'cadeau patrimoine' : 'cadeau '+(k==='les-embiez'?'Var':region.replace('la ',''))} – K-Reau`,
+    `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir ${deLieu(region)}. 19,90 €, livraison offerte dès 50 €.`,
     { image: p.image_principale, ld: { '@context':'https://schema.org', '@type':'Product', name:`Carreau décoratif ${p.nom}`, sku:p.slug, url:urlP,
       image:[p.image_principale,p.image_detail,p.image_coffret].filter(Boolean).map(u=>'https://k-reau.fr'+u), description:`${p.description} ${p.a_propos||''}`.trim(),
       brand:{ '@type':'Brand', name:'K-Reau' }, material:'Céramique', category:'Décoration > Carreaux décoratifs',
@@ -1124,6 +1161,7 @@ function vueChecklist(){
     <ul class="check">${items.map(([t,ok])=>`<li><span class="statut ${ok?'fait':'manque'}">${ok?'Fait':'À faire'}</span><span>${esc(t)}</span></li>`).join('')}</ul>`);
 }
 
+const deLieu = r => /^Val /.test(r) ? 'du '+r : /^[AEIOUÎÉaeiou]/.test(r) ? 'd’'+r : 'de '+r;
 const prixEur = v => Number(v).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 function offresHTML(){
   const emb = parSlug('les-embiez');
