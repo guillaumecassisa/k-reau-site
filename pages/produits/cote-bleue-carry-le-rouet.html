@@ -11,6 +11,8 @@
 <meta property="og:locale" content="fr_FR">
 <meta property="og:url" content="https://k-reau.fr/produits/cote-bleue-carry-le-rouet">
 <link rel="canonical" href="https://k-reau.fr/produits/cote-bleue-carry-le-rouet">
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer="" src="/_vercel/insights/script.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap">
@@ -1195,7 +1197,7 @@ const PAGES = {
 
     <h2>10. Données personnelles et cookies</h2>
     <p>Les données recueillies via les formulaires et lors des commandes sont traitées conformément au Règlement général sur la protection des données (RGPD) et à la loi « Informatique et Libertés ». Le détail des traitements, des durées de conservation et de vos droits (accès, rectification, suppression, opposition) figure dans la <a class="lien" href="/confidentialite">politique de confidentialité</a>. Vous pouvez exercer ces droits à contact@k-reau.fr et introduire une réclamation auprès de la CNIL (cnil.fr).</p>
-    <p>Le site ne dépose aucun cookie publicitaire ni de mesure d’audience. Le panier est conservé dans le stockage local de votre navigateur, uniquement pour le fonctionnement de la commande.</p>
+    <p>Le site ne dépose aucun cookie publicitaire ni de mesure d’audience ; la fréquentation est mesurée de façon anonyme et sans cookie (Vercel Web Analytics). Le panier est conservé dans le stockage local de votre navigateur, uniquement pour le fonctionnement de la commande.</p>
 
     <h2>11. Médiation de la consommation</h2>
     <p>${L.mediateur ? 'Conformément à l’article L.612-1 du Code de la consommation, le client peut recourir gratuitement au médiateur de la consommation : '+esc(L.mediateur)+'.' : 'Conformément à l’article L.612-1 du Code de la consommation, le client pourra recourir gratuitement à un médiateur de la consommation, en cours de désignation. Ses coordonnées seront indiquées ici et dans les conditions générales de vente.'} Avant toute saisine, le client adresse une réclamation écrite à contact@k-reau.fr.</p>
@@ -1251,6 +1253,7 @@ const PAGES = {
     <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Polices de caractères : Google Fonts (Google Ireland Limited), qui reçoit à cette occasion l’adresse IP du visiteur. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
     <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
     <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
+    <h2>Mesure d’audience</h2><p>Le site utilise Vercel Web Analytics pour compter les visites de façon anonyme et agrégée (pages vues, provenance, type d’appareil, pays). Cet outil ne dépose aucun cookie et ne permet pas de vous identifier.</p>
     <h2>Cookies</h2><p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Le panier est conservé dans votre navigateur (stockage local) uniquement pour le fonctionnement de la commande. Si des outils de mesure sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser.</p>`),
 
 };
@@ -1664,6 +1667,9 @@ document.addEventListener('click', e => {
   route();
 });
 window.addEventListener('popstate', route);
+// mesure d'audience : signaler chaque changement de page à Vercel Web Analytics
+const _pushState = history.pushState.bind(history);
+history.pushState = (...a) => { _pushState(...a); try{ window.va && window.va('pageview', { route: location.pathname, path: location.pathname }); }catch(e){} };
 
 /* ===== Menu mobile ===== */
 const tiroir = $('#tiroir'), btnMenu = $('#btn-menu');
