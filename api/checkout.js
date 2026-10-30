@@ -45,10 +45,14 @@ module.exports = async function handler(req, res) {
     metadata: { modeles: valides.map(l => `${l.slug}x${l.q}`).join(',').slice(0, 490) }
   };
   const frais = parseInt(process.env.FRAIS_LIVRAISON_CENTIMES || '', 10);
+  const seuil = parseInt(process.env.SEUIL_LIVRAISON_GRATUITE_CENTIMES || '', 10);
+  const sousTotal = valides.reduce((t, l) => t + l.q * PRIX_CENTIMES, 0);
   if (frais >= 0) {
+    const offerte = seuil > 0 && sousTotal >= seuil;
     params.shipping_options = [{ shipping_rate_data: {
-      type: 'fixed_amount', display_name: process.env.LIBELLE_LIVRAISON || 'Livraison',
-      fixed_amount: { amount: frais, currency: 'eur' }
+      type: 'fixed_amount',
+      display_name: offerte ? 'Livraison France offerte' : (process.env.LIBELLE_LIVRAISON || 'Livraison'),
+      fixed_amount: { amount: offerte ? 0 : frais, currency: 'eur' }
     } }];
   }
   try {

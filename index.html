@@ -371,7 +371,8 @@ const CONFIG = {
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
   legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'07 71 62 17 15', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
-  vente: { fraisLivraison:'7,90 € (forfait par commande)', delaiLivraison:'', paysLivres:'France', retours:'' }
+  livraisonGratuiteDes: 50,         // € — livraison offerte à partir de ce montant (aligné sur SEUIL_LIVRAISON_GRATUITE_CENTIMES dans Vercel)
+  vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'', paysLivres:'France', retours:'' }
 };
 const COLLECTIONS = {
   'marseille': { nom:'Marseille', titre:'Collection Marseille', cle:'Marseille', img:'img/mises-en-scene/marseille-port.webp', w:545, h:462,
@@ -876,7 +877,7 @@ const Panier = {
       <div style="display:flex;justify-content:space-between;align-items:center"><h2>Panier</h2><button class="icone-btn" type="button" data-fermer aria-label="Fermer le panier">${ICONES.croix}</button></div>
       <div class="panier-lignes">${lignes.length ? lignes.map(l=>`<div class="ligne"><img src="${esc(l.p.miniature)}" width="64" height="64" alt=""><div><strong>${esc(l.p.nom)}</strong><div class="small muted">Quantité : ${l.q}</div></div><button class="lien" style="background:none;border:0;cursor:pointer" data-suppr="${esc(l.slug)}">Retirer</button></div>`).join('') : '<p class="muted">Votre panier est vide.</p>'}</div>
       ${lignes.length ? `<p style="display:flex;justify-content:space-between"><span>Sous-total TTC</span><strong>${total.toLocaleString('fr-FR',{style:'currency',currency:'EUR'})}</strong></p>
-      <p class="small muted">${V.fraisLivraison ? 'Frais de livraison : '+esc(V.fraisLivraison) : 'Frais de livraison indiqués à l’étape suivante.'}</p>
+      <p class="small muted">${(() => { const s = CONFIG.livraisonGratuiteDes; if(s && total >= s) return 'Livraison offerte'; if(s) return `Livraison 7,90 € · plus que ${(s-total).toLocaleString('fr-FR',{style:'currency',currency:'EUR'})} pour la livraison offerte`; return V.fraisLivraison ? 'Frais de livraison : '+esc(V.fraisLivraison) : 'Frais de livraison indiqués à l’étape suivante.'; })()}</p>
       <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
       <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
       <div id="payer-retour" aria-live="polite"></div>` : ''}
