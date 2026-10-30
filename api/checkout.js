@@ -14,6 +14,7 @@ function encoder(obj, prefix, out = []) {
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
+  if (process.env.BOUTIQUE_OUVERTE !== 'true') return res.status(503).json({ erreur: 'Les commandes ne sont pas encore ouvertes' });
   const cle = process.env.STRIPE_SECRET_KEY;
   if (!cle) return res.status(503).json({ erreur: 'Paiement non configuré' });
   let corps = req.body;
