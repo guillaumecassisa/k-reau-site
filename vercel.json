@@ -5,11 +5,15 @@
       "destination": "/pages/produits/:slug.html"
     },
     {
+      "source": "/guides/:g",
+      "destination": "/pages/guides/:g.html"
+    },
+    {
       "source": "/collections/:c",
       "destination": "/pages/collections/:c.html"
     },
     {
-      "source": "/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier)",
+      "source": "/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|guides|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier)",
       "destination": "/pages/:page.html"
     }
   ],

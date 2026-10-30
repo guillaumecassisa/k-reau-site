@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://k-reau.fr/</loc><lastmod>2026-10-30</lastmod><priority>1.0</priority></url>
+  <url><loc>https://k-reau.fr/guides/que-ramener-de-marseille</loc><lastmod>2026-10-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://k-reau.fr/guides/idees-cadeaux-provence</loc><lastmod>2026-10-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://k-reau.fr/guides/cote-bleue-ports-et-calanques</loc><lastmod>2026-10-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://k-reau.fr/guides/idee-cadeau-cremaillere-originale</loc><lastmod>2026-10-30</lastmod><priority>0.7</priority></url>
+  <url><loc>https://k-reau.fr/guides/chateaux-de-la-loire-incontournables</loc><lastmod>2026-10-30</lastmod><priority>0.7</priority></url>
   <url><loc>https://k-reau.fr/collections/marseille</loc><lastmod>2026-10-30</lastmod><priority>0.9</priority></url>
   <url><loc>https://k-reau.fr/collections/cote-bleue</loc><lastmod>2026-10-30</lastmod><priority>0.9</priority></url>
   <url><loc>https://k-reau.fr/collections/montagnes-du-sud</loc><lastmod>2026-10-30</lastmod><priority>0.9</priority></url>
@@ -10,6 +15,7 @@
   <url><loc>https://k-reau.fr/sur-mesure</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>
   <url><loc>https://k-reau.fr/carte-cadeau</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>
   <url><loc>https://k-reau.fr/projet-specifique</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>
+  <url><loc>https://k-reau.fr/guides</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>
   <url><loc>https://k-reau.fr/notre-histoire</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>
   <url><loc>https://k-reau.fr/faq</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>
   <url><loc>https://k-reau.fr/contact</loc><lastmod>2026-10-30</lastmod><priority>0.5</priority></url>

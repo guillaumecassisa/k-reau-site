@@ -381,6 +381,13 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-boutons{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .sm-projet{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between;background:var(--sable-clair);padding:clamp(24px,4vw,40px);max-width:980px}
 .sm-projet h2{margin:0 0 8px}.sm-projet p{margin:0;color:var(--encre-doux);max-width:36em}
+.guides-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
+.guide-carte{display:grid;gap:14px;align-content:start}
+.guide-visuel{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sable-clair)}.guide-visuel img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.guide-carte:hover .guide-visuel img{transform:scale(1.03)}
+.guide-txt{display:grid;gap:8px}.guide-txt h2,.guide-txt h3{font-size:1.3rem;margin:0;line-height:1.3}.guide-txt h2 a,.guide-txt h3 a{color:inherit;text-decoration:none}.guide-txt p{margin:0;color:var(--encre-doux);font-size:.95rem}.guide-txt .lien{justify-self:start}
+.guide-corps{max-width:72ch}.guide-corps h2{margin-top:12px}
+.tete-visuel.tete-guide{grid-template-columns:minmax(0,1fr) minmax(220px,360px)}
+@media(max-width:860px){.tete-visuel.tete-guide{grid-template-columns:1fr}}
 .projet-lien{text-align:center;margin-top:32px;color:var(--encre-doux)}
 @media(max-width:860px){.etapes{grid-template-columns:1fr 1fr}.etapes li:nth-child(3){border-left:0}.etapes li:nth-child(n+3){border-top:1px solid var(--joint)}}
 .montants{display:flex;flex-wrap:wrap;gap:10px}
@@ -460,6 +467,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a href="/sur-mesure">Carreau sur mesure</a>
     <a href="/carte-cadeau">Carte cadeau</a>
     <a href="/projet-specifique">Projet spécifique</a>
+    <a href="/guides">Guides et idées cadeaux</a>
     <a href="/notre-histoire">Notre histoire</a>
     <a href="/faq">Questions fréquentes</a>
     <a href="/contact">Contact</a>
@@ -687,6 +695,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <p>Chaque carreau associe un dessin au trait noir et le nom du lieu en calligraphie. C’est un cadeau original pour un Marseillais exilé, un amoureux de la Provence ou du patrimoine, une crémaillère, un départ ou un anniversaire : un souvenir élégant, loin des objets touristiques. À poser sur un meuble ou à accrocher au mur, il apporte une touche de décoration à la maison.</p>
       <p>Pour offrir, composez un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, faites dessiner <a class="lien" href="/sur-mesure">votre propre lieu sur mesure</a> ou choisissez une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p>
       <p>Tous les carreaux sont à 19,90 €, expédiés en France sous 5 à 7 jours, avec la livraison offerte dès 50 € d’achat. Découvrez la <a class="lien" href="/collections/marseille">collection Marseille</a>, la <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>, <a class="lien" href="/collections/montagnes-du-sud">les Montagnes du Sud</a>, <a class="lien" href="/collections/chateaux">les Châteaux</a> et le modèle signature <a class="lien" href="/produits/les-embiez">Les Embiez</a>.</p>
+      <p>Besoin d’inspiration ? Lisez nos guides : <a class="lien" href="/guides/que-ramener-de-marseille">que ramener de Marseille</a>, <a class="lien" href="/guides/idees-cadeaux-provence">idées cadeaux Provence</a>, <a class="lien" href="/guides/cote-bleue-ports-et-calanques">les plus beaux ports de la Côte Bleue</a>.</p>
     </div>
   </section>
 
@@ -722,6 +731,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           <li><a href="/sur-mesure">Carreau sur mesure</a></li>
           <li><a href="/carte-cadeau">Carte cadeau</a></li>
           <li><a href="/projet-specifique">Projet spécifique</a></li>
+          <li><a href="/guides">Guides et idées cadeaux</a></li>
           <li><a href="/notre-histoire">Notre histoire</a></li>
           <li><a href="/faq">Questions fréquentes</a></li>
           <li><a href="/contact">Contact</a></li>
@@ -1033,6 +1043,7 @@ function vueAccueil(){
       <p>Chaque carreau associe un dessin au trait noir et le nom du lieu en calligraphie. C’est un cadeau original pour un Marseillais exilé, un amoureux de la Provence ou du patrimoine, une crémaillère, un départ ou un anniversaire : un souvenir élégant, loin des objets touristiques. À poser sur un meuble ou à accrocher au mur, il apporte une touche de décoration à la maison.</p>
       <p>Pour offrir, composez un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, faites dessiner <a class="lien" href="/sur-mesure">votre propre lieu sur mesure</a> ou choisissez une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p>
       <p>Tous les carreaux sont à 19,90 €, expédiés en France sous 5 à 7 jours, avec la livraison offerte dès 50 € d’achat. Découvrez la <a class="lien" href="/collections/marseille">collection Marseille</a>, la <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>, <a class="lien" href="/collections/montagnes-du-sud">les Montagnes du Sud</a>, <a class="lien" href="/collections/chateaux">les Châteaux</a> et le modèle signature <a class="lien" href="/produits/les-embiez">Les Embiez</a>.</p>
+      <p>Besoin d’inspiration ? Lisez nos guides : <a class="lien" href="/guides/que-ramener-de-marseille">que ramener de Marseille</a>, <a class="lien" href="/guides/idees-cadeaux-provence">idées cadeaux Provence</a>, <a class="lien" href="/guides/cote-bleue-ports-et-calanques">les plus beaux ports de la Côte Bleue</a>.</p>
     </div>
   </section>
 
@@ -1338,6 +1349,182 @@ function vueContact(){
       <button class="btn btn-p" type="submit" style="justify-self:start">Envoyer le message</button>
       <div class="retour" aria-live="polite"></div>
     </form>
+  </div></section>`;
+}
+
+/*GUIDES-DEBUT*/
+const PL = (s, t) => `<a class="lien" href="/produits/${s}">${t}</a>`;
+const CL = (c, t) => `<a class="lien" href="/collections/${c}">${t}</a>`;
+const GUIDES = [
+{
+  slug: 'que-ramener-de-marseille',
+  titre: 'Que ramener de Marseille ? 10 idées de souvenirs authentiques',
+  metaT: 'Que ramener de Marseille ? 10 souvenirs authentiques | K-Reau',
+  metaD: 'Savon de Marseille, navettes, santons, pastis, carreau illustré du Vieux-Port… Notre sélection de souvenirs authentiques à ramener de Marseille, loin des objets touristiques.',
+  date: '2026-10-31',
+  image: '/img/03_Produits_Marseille/marseille-vieux-port.webp',
+  intro: 'Le Vieux-Port, la Bonne Mère, les calanques… Marseille laisse des souvenirs forts. Encore faut-il trouver le bon objet pour les garder, ou pour les offrir. Voici dix idées qui ont vraiment le goût de la ville, loin des magnets fabriqués à l’autre bout du monde.',
+  corps: () => `
+<h2>1. Le savon de Marseille</h2>
+<p>Incontournable, à condition de choisir le vrai : un cube cuit au chaudron, à base d’huiles végétales, comme le fabriquent encore quelques savonneries historiques de la région. Utile, durable et typiquement marseillais.</p>
+<h2>2. Les navettes</h2>
+<p>Ces biscuits en forme de barque, parfumés à la fleur d’oranger, sont associés à l’abbaye Saint-Victor et à la Chandeleur. Ils se conservent longtemps et voyagent très bien dans une valise.</p>
+<h2>3. Un carreau illustré du lieu que vous aimez</h2>
+<p>Pour un souvenir qui se garde des années, choisissez un lieu précis dessiné au trait : ${PL('marseille-vieux-port','le Vieux-Port')}, ${PL('marseille-notre-dame-de-la-garde','Notre-Dame de la Garde')}, ${PL('marseille-le-panier','le Panier')} ou ${PL('marseille-vallon-des-auffes','le Vallon des Auffes')}. Nos carreaux en céramique de 15 × 15 cm se posent sur une étagère ou s’accrochent au mur, avec le nom du lieu en calligraphie. Toute la ${CL('marseille','collection Marseille')} est à 19,90 €.</p>
+<h2>4. Les santons de Provence</h2>
+<p>Petites figurines en argile peinte de la crèche provençale, les santons sont une tradition marseillaise : la foire aux santons s’installe chaque fin d’année en ville. Un cadeau parfait à l’approche de Noël.</p>
+<h2>5. Le pastis</h2>
+<p>L’apéritif anisé est indissociable de Marseille. Pour un cadeau plus original, cherchez les pastis artisanaux produits par de petites distilleries de Provence.</p>
+<h2>6. L’huile d’olive et la tapenade</h2>
+<p>Une bouteille d’huile d’olive d’un moulin provençal ou un pot de tapenade : un souvenir gourmand qui rappelle les apéritifs au soleil.</p>
+<h2>7. Un clin d’œil à l’OM</h2>
+<p>Pour les supporters, un maillot ou une écharpe de l’Olympique de Marseille… ou, plus déco, un carreau du ${PL('marseille-velodrome','stade Vélodrome')}, avec ses grandes courbes blanches.</p>
+<h2>8. Un livre de Marcel Pagnol</h2>
+<p>Marius, Fanny, César : la trilogie marseillaise de Pagnol se relit avec plaisir après un séjour sur le Vieux-Port. Et pour les gourmands, la ${PL('marseille-panisse','panisse')} a même son carreau.</p>
+<h2>9. Un souvenir des calanques</h2>
+<p>Après une randonnée à ${PL('marseille-calanque-sormiou','Sormiou')} ou ${PL('marseille-calanque-morgiou','Morgiou')}, rien de tel qu’un dessin de la calanque pour retrouver la lumière et le bleu de l’eau en rentrant chez soi.</p>
+<h2>10. Un coffret à composer</h2>
+<p>Impossible de choisir ? Composez un ${`<a class="lien" href="/coffrets">coffret de 3 carreaux</a>`} : le Vieux-Port, la Bonne Mère et une calanque, par exemple. Il est livré dans son coffret kraft, prêt à offrir, avec la livraison offerte.</p>
+<h2>Bien choisir son souvenir de Marseille</h2>
+<p>Le meilleur souvenir est celui qui rappelle un lieu précis : le quartier où l’on a vécu, le port où l’on a mangé, la calanque où l’on s’est baigné. C’est tout l’esprit de K-Reau : des <strong>carreaux d’ici</strong>, pour garder chez soi les lieux qu’on aime.</p>`,
+  produits: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-le-panier','marseille-calanque-sormiou','marseille-velodrome','marseille-panisse','marseille-mucem','marseille-vallon-des-auffes']
+},
+{
+  slug: 'idees-cadeaux-provence',
+  titre: 'Idées cadeaux Provence : 8 cadeaux qui sentent le Sud',
+  metaT: 'Idées cadeaux Provence : 8 cadeaux qui sentent le Sud | K-Reau',
+  metaD: 'Lavande, huile d’olive, calissons, carreau illustré de la Sainte-Victoire ou du Ventoux… Nos idées de cadeaux provençaux originaux pour un anniversaire, Noël ou une crémaillère.',
+  date: '2026-10-31',
+  image: '/img/09_Produits_Montagnes/montagnes-sainte-victoire.webp',
+  intro: 'Offrir la Provence, c’est offrir un peu de soleil, de lumière et d’art de vivre. Que ce soit pour un Provençal exilé, un amoureux du Luberon ou un ami de passage, voici huit idées de cadeaux qui sentent vraiment le Sud.',
+  corps: () => `
+<h2>1. Un carreau de la montagne qu’on voit depuis chez soi</h2>
+<p>En Provence, chacun a sa montagne : la ${PL('montagnes-sainte-victoire','Sainte-Victoire')} pour les Aixois, le ${PL('montagnes-garlaban','Garlaban')} pour les amoureux de Pagnol, le ${PL('montagnes-mont-ventoux','Mont Ventoux')} pour les cyclistes, la ${PL('montagnes-sainte-baume','Sainte-Baume')} pour les randonneurs. Notre ${CL('montagnes-du-sud','collection Montagnes du Sud')} les dessine au trait sur des carreaux en céramique, à 19,90 €.</p>
+<h2>2. La lavande</h2>
+<p>En sachet, en huile essentielle ou en bouquet séché, la lavande de Haute-Provence reste le cadeau provençal par excellence. Choisissez-la de producteurs locaux.</p>
+<h2>3. Les calissons d’Aix</h2>
+<p>Pâte d’amande et melon confit sous un glaçage blanc : la confiserie d’Aix-en-Provence se glisse facilement dans un colis et plaît à tous.</p>
+<h2>4. L’huile d’olive d’un moulin</h2>
+<p>Une bouteille d’huile d’olive de la vallée des Baux ou d’un moulin du Var, à accompagner de tapenade ou d’herbes de Provence, pour un cadeau gourmand.</p>
+<h2>5. Un souvenir de la mer</h2>
+<p>La Provence, c’est aussi la Méditerranée : les petits ports de la ${CL('cote-bleue','Côte Bleue')}, ${PL('les-embiez','l’île des Embiez')} ou ${PL('marseille-calanque-morgiou','les calanques de Marseille')}, dessinés sur un carreau à poser dans une maison de bord de mer… ou loin de la mer.</p>
+<h2>6. La céramique provençale</h2>
+<p>Faïence, poterie vernissée, carreaux : la céramique fait partie de la maison provençale depuis toujours. Un objet en céramique, utile ou décoratif, est un cadeau qui traverse les années.</p>
+<h2>7. Un santon</h2>
+<p>Le santonnier, la poissonnière, le berger… Les santons racontent la vie des villages provençaux. Un cadeau idéal pour compléter une crèche à Noël.</p>
+<h2>8. Un lieu dessiné sur mesure</h2>
+<p>Le mas familial, la bastide des vacances, la place du village : avec le ${`<a class="lien" href="/sur-mesure">carreau sur mesure</a>`}, nous dessinons le lieu de votre choix et l’imprimons sur céramique avec le nom que vous voulez. Le cadeau provençal le plus personnel qui soit.</p>
+<h2>Un cadeau provençal pour chaque occasion</h2>
+<p>Pour un anniversaire, une crémaillère, un départ à la retraite ou Noël, misez sur un objet qui raconte un lieu. Et si vous hésitez, la ${`<a class="lien" href="/carte-cadeau">carte cadeau K-Reau</a>`} laisse à chacun le choix de son coin de Provence.</p>`,
+  produits: ['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux','montagnes-sainte-baume','les-embiez','cote-bleue-carry-le-rouet','marseille-notre-dame-de-la-garde','montagnes-rocher-de-roquebrune']
+},
+{
+  slug: 'cote-bleue-ports-et-calanques',
+  titre: 'La Côte Bleue : ses plus beaux ports et calanques, de L’Estaque à Carro',
+  metaT: 'Côte Bleue : les plus beaux ports et calanques de L’Estaque à Carro | K-Reau',
+  metaD: 'Niolon, Méjean, La Redonne, Carry-le-Rouet, Sausset-les-Pins, Carro… Découvrez les plus beaux ports et calanques de la Côte Bleue, entre Marseille et Martigues.',
+  date: '2026-10-31',
+  image: '/img/04_Produits_Cote_Bleue/cote-bleue-port-niolon.webp',
+  intro: 'Entre Marseille et Martigues, la Côte Bleue déroule une vingtaine de kilomètres de criques, de petits ports et de falaises plongeant dans une eau turquoise. Moins connue que les calanques de Cassis, elle garde un charme intact. Voici ses plus beaux coins, d’est en ouest.',
+  corps: () => `
+<h2>L’Estaque, la porte de la Côte Bleue</h2>
+<p>Ancien village de pêcheurs aux portes de Marseille, ${PL('cote-bleue-estaque','L’Estaque')} a inspiré Cézanne, Braque et Dufy. On y vient pour son port, ses panisses et ses chichis frégis, et pour la vue sur la rade.</p>
+<h2>Niolon, le village perché</h2>
+<p>Accroché à la falaise au-dessus de sa calanque, ${PL('cote-bleue-port-niolon','le port de Niolon')} est un haut lieu de la plongée sous-marine. On y accède en voiture par une route sinueuse, ou par le train de la Côte Bleue qui longe la mer sur ses viaducs.</p>
+<h2>La calanque de Méjean</h2>
+<p>Minuscule port de cabanons au fond d’une calanque, ${PL('cote-bleue-calanque-mejean','Méjean')} est l’une des criques les plus photographiées de la côte, pour ses barques colorées et son eau limpide.</p>
+<h2>La Redonne et Ensuès</h2>
+<p>Un peu plus loin, ${PL('cote-bleue-port-la-redonne','le port de La Redonne')} et les criques d’${PL('cote-bleue-ensues-la-redonne','Ensuès-la-Redonne')} offrent des coins de baignade plus confidentiels, au pied des pinèdes.</p>
+<h2>Carry-le-Rouet et Sausset-les-Pins</h2>
+<p>Stations balnéaires familiales, ${PL('cote-bleue-carry-le-rouet','Carry-le-Rouet')}, célèbre pour sa fête de l’oursin, et ${PL('cote-bleue-sausset-les-pins','Sausset-les-Pins')}, avec sa promenade en bord de mer et son petit phare, sont parfaites pour une journée de plage et un dîner sur le port.</p>
+<h2>Le Cap Couronne, Sainte-Croix et Carro</h2>
+<p>À l’ouest, le ${PL('cote-bleue-cap-couronne','Cap Couronne')} et ses rochers clairs, la ${PL('cote-bleue-plage-sainte-croix','plage de Sainte-Croix')} et sa chapelle, puis ${PL('cote-bleue-port-carro','le port de Carro')}, dernier village de pêcheurs avant le golfe de Fos, où l’on achète encore le poisson à la criée.</p>
+<h2>Garder la Côte Bleue chez soi</h2>
+<p>Chacun a son port ou sa crique préférée sur la Côte Bleue. Notre ${CL('cote-bleue','collection Côte Bleue')} les dessine un par un, au trait, sur des carreaux en céramique de 15 × 15 cm : un souvenir de vacances ou un cadeau pour ceux qui y ont grandi.</p>`,
+  produits: ['cote-bleue-port-niolon','cote-bleue-calanque-mejean','cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','cote-bleue-port-carro','cote-bleue-estaque','cote-bleue-cap-couronne','cote-bleue-port-la-redonne']
+},
+{
+  slug: 'idee-cadeau-cremaillere-originale',
+  titre: 'Idée cadeau crémaillère originale : offrir un lieu qui compte',
+  metaT: 'Idée cadeau crémaillère originale et personnalisée | K-Reau',
+  metaD: 'Un cadeau de crémaillère qui a du sens : le quartier, la ville ou la maison des nouveaux propriétaires dessiné sur un carreau en céramique. Idées et conseils pour bien choisir.',
+  date: '2026-10-31',
+  image: '/img/sur-mesure/photo-vers-carreau.webp',
+  intro: 'Une plante, une bouteille, des bougies… Les cadeaux de crémaillère se ressemblent souvent. Pour marquer le coup, offrez quelque chose qui parle du nouveau lieu de vie de vos amis : leur quartier, leur ville, ou même leur maison.',
+  corps: () => `
+<h2>Pourquoi offrir un lieu pour une crémaillère ?</h2>
+<p>Emménager, c’est commencer une nouvelle histoire avec un endroit. Un cadeau qui représente ce lieu devient vite un objet auquel on tient : on le pose dans l’entrée, sur une étagère du salon, et il rappelle chaque jour le début de cette aventure.</p>
+<h2>Leur quartier ou leur ville</h2>
+<p>Vos amis s’installent à Marseille ? Offrez-leur ${PL('marseille-le-panier','le Panier')}, ${PL('marseille-canebiere','la Canebière')} ou ${PL('marseille-cite-radieuse','la Cité radieuse')} s’ils aiment l’architecture. Ils partent vivre au bord de la mer ? Un carreau de ${PL('cote-bleue-sausset-les-pins','Sausset-les-Pins')} ou de ${PL('cote-bleue-carry-le-rouet','Carry-le-Rouet')} fera son effet.</p>
+<h2>Leur maison, dessinée sur mesure</h2>
+<p>Le cadeau le plus personnel : envoyez-nous une photo de la façade, et nous la dessinons au trait sur un ${`<a class="lien" href="/sur-mesure">carreau sur mesure</a>`}, avec le nom de la maison ou de la famille en calligraphie. Le dessin vous est soumis avant impression.</p>
+<h2>Un trio pour la nouvelle déco</h2>
+<p>Pour habiller un mur ou une étagère, un ${`<a class="lien" href="/coffrets">coffret de 3 carreaux</a>`} compose une petite galerie cohérente : la ville, la plage et la colline préférées du couple, par exemple. Ajoutez un ${`chevalet en bois`} pour poser chaque carreau sans perçage.</p>
+<h2>Nos conseils pour réussir le cadeau</h2>
+<p><strong>Pensez au lieu qui compte pour eux</strong>, pas seulement à leur nouvelle adresse : le village d’enfance, le lieu de leur rencontre, la plage de leurs vacances. <strong>Ajoutez un mot</strong> : notre message cadeau est imprimé sur la carte glissée dans le coffret. <strong>Et si vous hésitez</strong>, la ${`<a class="lien" href="/carte-cadeau">carte cadeau</a>`} leur laisse le choix.</p>`,
+  produits: ['marseille-le-panier','marseille-canebiere','marseille-cite-radieuse','cote-bleue-sausset-les-pins','montagnes-sainte-victoire','marseille-corniche-kennedy','les-embiez','chateaux-chenonceau']
+},
+{
+  slug: 'chateaux-de-la-loire-incontournables',
+  titre: 'Châteaux de la Loire : les incontournables à visiter (et à garder en souvenir)',
+  metaT: 'Châteaux de la Loire : les incontournables à visiter | K-Reau',
+  metaD: 'Chambord, Chenonceau, Amboise, Blois, Azay-le-Rideau, Villandry, Ussé, Saumur… Les châteaux de la Loire incontournables et une idée de souvenir pour les amoureux du patrimoine.',
+  date: '2026-10-31',
+  image: '/img/10_Produits_Chateaux/chateaux-chambord.webp',
+  intro: 'Le Val de Loire, inscrit au patrimoine mondial de l’UNESCO, rassemble certains des plus beaux châteaux de France. Voici les incontournables, pour préparer une visite ou se souvenir d’un voyage.',
+  corps: () => `
+<h2>Chambord, le plus spectaculaire</h2>
+<p>Commandé par François Ier, ${PL('chateaux-chambord','Chambord')} impressionne par ses toits hérissés de cheminées et de lanternons, et par son célèbre escalier à double révolution. Il se dresse au cœur du plus grand parc forestier clos d’Europe.</p>
+<h2>Chenonceau, le château des dames</h2>
+<p>Avec sa galerie qui enjambe le Cher, ${PL('chateaux-chenonceau','Chenonceau')} est l’un des châteaux les plus visités de France. Diane de Poitiers et Catherine de Médicis ont marqué son histoire et ses jardins.</p>
+<h2>Amboise et Blois, les châteaux royaux</h2>
+<p>Dominant la Loire, ${PL('chateaux-amboise','Amboise')} fut une résidence royale où repose Léonard de Vinci, dans la chapelle Saint-Hubert. À ${PL('chateaux-blois','Blois')}, on admire l’escalier François Ier, sculpté et ouvert sur la cour.</p>
+<h2>Azay-le-Rideau et Villandry, l’eau et les jardins</h2>
+<p>${PL('chateaux-azay-le-rideau','Azay-le-Rideau')} semble flotter sur l’Indre, tandis que ${PL('chateaux-villandry','Villandry')} est célèbre dans le monde entier pour ses jardins Renaissance et son potager décoratif.</p>
+<h2>Ussé et Saumur, les châteaux de conte</h2>
+<p>Avec ses tours blanches, ${PL('chateaux-usse','Ussé')} passe pour avoir inspiré La Belle au bois dormant. Plus à l’ouest, ${PL('chateaux-saumur','Saumur')} domine la Loire et figure dans les Très Riches Heures du duc de Berry.</p>
+<h2>Et en Île-de-France</h2>
+<p>Pour compléter le tour des grands châteaux, ${PL('chateaux-versailles','Versailles')} et ${PL('chateaux-fontainebleau','Fontainebleau')} restent deux visites majeures, chacune avec ses jardins et son histoire royale.</p>
+<h2>Un souvenir de château à garder chez soi</h2>
+<p>Notre ${CL('chateaux','collection Les Châteaux')} dessine chacun de ces monuments au trait, sur un carreau en céramique de 15 × 15 cm avec son nom en calligraphie. Un cadeau idéal pour les passionnés d’histoire, ou pour se souvenir d’un voyage dans le Val de Loire.</p>`,
+  produits: ['chateaux-chambord','chateaux-chenonceau','chateaux-amboise','chateaux-blois','chateaux-azay-le-rideau','chateaux-villandry','chateaux-usse','chateaux-saumur']
+}
+];
+/*GUIDES-FIN*/
+
+const guideImg = g => g.image.replace(/\.webp$/, '-mini.webp');
+function vueGuides(){
+  setMeta('Guides K-Reau : idées cadeaux, souvenirs de Marseille et de Provence', 'Nos guides pour choisir un souvenir de Marseille, une idée cadeau provençale, découvrir la Côte Bleue ou les châteaux de la Loire.');
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','']])}
+    <div class="bloc-titre"><span class="eyebrow">Guides</span><h1>Idées, conseils et beaux lieux</h1>
+    <p class="lead">Que ramener de Marseille, quel cadeau offrir pour une crémaillère, où se baigner sur la Côte Bleue : nos guides pour trouver l’inspiration, et le bon souvenir.</p></div></div></div>
+  <section class="bloc" style="padding-top:40px"><div class="wrap guides-liste">
+    ${GUIDES.map(g=>`<article class="guide-carte"><a href="/guides/${g.slug}" class="guide-visuel"><img src="${esc(guideImg(g))}" alt="" loading="lazy" width="600" height="600"></a>
+      <div class="guide-txt"><h2><a href="/guides/${g.slug}">${esc(g.titre)}</a></h2><p>${esc(g.intro)}</p><a class="lien" href="/guides/${g.slug}">Lire le guide</a></div></article>`).join('')}
+  </div></section>`;
+}
+function vueGuide(slug){
+  const g = GUIDES.find(x=>x.slug===slug); if(!g) return vue404();
+  const url = 'https://k-reau.fr/guides/'+g.slug;
+  setMeta(g.metaT, g.metaD, { image: g.image, ld: [
+    { '@context':'https://schema.org', '@type':'Article', headline:g.titre, description:g.metaD, image:'https://k-reau.fr'+g.image, datePublished:g.date, dateModified:g.date, inLanguage:'fr-FR',
+      author:{ '@type':'Organization', name:'K-Reau', url:'https://k-reau.fr/' }, publisher:{ '@type':'Organization', name:'K-Reau', logo:{ '@type':'ImageObject', url:'https://k-reau.fr/img/01_Identite/logo-kreau.webp' } }, mainEntityOfPage:url },
+    { '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement:[['Accueil','https://k-reau.fr/'],['Guides','https://k-reau.fr/guides'],[g.titre,url]].map(([n,u],i)=>({ '@type':'ListItem', position:i+1, name:n, item:u })) } ] });
+  const prods = g.produits.map(parSlug).filter(Boolean);
+  const autres = GUIDES.filter(x=>x.slug!==g.slug).slice(0,3);
+  const d = new Date(g.date).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' });
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','/guides'],[g.titre,'']])}
+    <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · ${d}</span><h1>${esc(g.titre)}</h1><p class="lead">${esc(g.intro)}</p></div>
+    <figure class="tete-img"><img src="${esc(g.image)}" width="1254" height="1254" alt="${esc(g.titre)}" fetchpriority="high"></figure></div></div></div>
+  <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">${g.corps()}</article></div></section>
+  <section class="bloc fond-blanc joint-haut"><div class="wrap">
+    <div class="bloc-titre"><span class="eyebrow">À offrir ou à garder</span><h2>Les carreaux de ce guide</h2></div>
+    <div class="grille">${grilleHTML(prods)}</div>
+  </div></section>
+  <section class="bloc"><div class="wrap"><div class="bloc-titre"><span class="eyebrow">Guides</span><h2>À lire aussi</h2></div>
+    <div class="guides-liste">${autres.map(x=>`<article class="guide-carte"><a href="/guides/${x.slug}" class="guide-visuel"><img src="${esc(guideImg(x))}" alt="" loading="lazy" width="600" height="600"></a><div class="guide-txt"><h3><a href="/guides/${x.slug}">${esc(x.titre)}</a></h3><a class="lien" href="/guides/${x.slug}">Lire le guide</a></div></article>`).join('')}</div>
   </div></section>`;
 }
 
@@ -1910,6 +2097,7 @@ function cleDepuisChemin(p){
   let m;
   if((m = p.match(/^\/produits\/([a-z0-9-]+)$/))) return 'produit-'+m[1];
   if((m = p.match(/^\/collections\/([a-z0-9-]+)$/))) return 'collection-'+m[1];
+  if((m = p.match(/^\/guides\/([a-z0-9-]+)$/))) return 'guide-'+m[1];
   if((m = p.match(/^\/([a-z0-9-]+)$/))) return m[1];
   return '404';
 }
@@ -1941,6 +2129,8 @@ function route(){
   else if(h==='sur-mesure') vueSurMesure();
   else if(h==='carte-cadeau') vueCarteCadeau();
   else if(h==='projet-specifique') vueProjet();
+  else if(h==='guides') vueGuides();
+  else if(h.startsWith('guide-')) vueGuide(h.slice(6));
   else if(PAGES[h]) PAGES[h]();
   else vue404();
   vueCourante = cle + (PRODUITS ? ':data' : '');

@@ -6,8 +6,10 @@ const { chromium } = require('playwright');
 const RACINE = path.resolve(__dirname, '..');
 const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produits.json'), 'utf8')).filter(p => p.publie !== false);
 const collections = [...new Set(cat.map(p => p.collection_slug))].filter(c => c !== 'les-embiez');
-const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-specifique','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier'];
-const routes = ['/', ...collections.map(c => '/collections/' + c), ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
+const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-specifique','guides','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier'];
+const appSrc = fs.readFileSync(path.join(RACINE, 'app.html'), 'utf8');
+const guides = [...appSrc.slice(appSrc.indexOf('/*GUIDES-DEBUT*/'), appSrc.indexOf('/*GUIDES-FIN*/')).matchAll(/slug: '([a-z0-9-]+)'/g)].map(m => m[1]);
+const routes = ['/', ...guides.map(g => '/guides/' + g), ...collections.map(c => '/collections/' + c), ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
 const types = { '.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.webp':'image/webp', '.xml':'application/xml', '.txt':'text/plain' };
 
 const serveur = http.createServer((req, res) => {
@@ -46,7 +48,7 @@ const serveur = http.createServer((req, res) => {
   const jour = new Date().toISOString().slice(0, 10);
   fs.writeFileSync(path.join(RACINE, 'sitemap.xml'),
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    urls.map(u => `  <url><loc>https://k-reau.fr${u}</loc><lastmod>${jour}</lastmod><priority>${u === '/' ? '1.0' : u.startsWith('/produits/') ? '0.8' : u.startsWith('/collections/') ? '0.9' : '0.5'}</priority></url>`).join('\n') +
+    urls.map(u => `  <url><loc>https://k-reau.fr${u}</loc><lastmod>${jour}</lastmod><priority>${u === '/' ? '1.0' : u.startsWith('/produits/') ? '0.8' : u.startsWith('/collections/') ? '0.9' : u.startsWith('/guides/') ? '0.7' : '0.5'}</priority></url>`).join('\n') +
     '\n</urlset>\n');
   console.log(`sitemap : ${urls.length} adresses`);
   // Flux produits pour Google Merchant Center (fiches gratuites dans Google Shopping)
