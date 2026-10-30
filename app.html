@@ -1874,8 +1874,9 @@ function vueCoffrets(){
     <button class="btn btn-p" type="button" data-trio="${t.id}">Ajouter au panier</button></div></article>`;
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Coffrets','']])}
-    <div class="bloc-titre"><span class="eyebrow">Coffrets</span><h1>Le coffret de 3 carreaux</h1>
-    <p class="lead">Trois lieux réunis dans un même envoi : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, et la livraison est offerte. Choisissez un trio tout prêt ou composez le vôtre.</p></div></div></div>
+    <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Coffrets</span><h1>Le coffret de 3 carreaux</h1>
+    <p class="lead">Trois lieux réunis dans un même envoi : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, et la livraison est offerte. Choisissez un trio tout prêt ou composez le vôtre.</p></div>
+    <figure class="tete-img"><img src="/img/coffret/coffret-trio.webp" srcset="/img/coffret/coffret-trio-mini.webp 640w, /img/coffret/coffret-trio.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Coffret cadeau K-Reau en carton kraft avec trois carreaux en céramique : Le Vélodrome, Sainte-Victoire et Le Mucem" fetchpriority="high"></figure></div></div></div>
   <section class="bloc" style="padding-top:48px"><div class="wrap">
     <div class="bloc-titre"><h2>Nos trios</h2></div>
     ${PRODUITS ? `<div class="offres">${CONFIG.trios.filter(t=>t.slugs.every(parSlug)).map(trioCarte).join('')}</div>` : `<div class="grille">${grilleHTML([])}</div>`}
