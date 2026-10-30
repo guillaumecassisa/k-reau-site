@@ -57,4 +57,17 @@ async function envoyerMail(sujet, html, repondreA) {
   return r.ok;
 }
 
-module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail };
+// E-mail au client : uniquement si un expéditeur sur le domaine vérifié est configuré (CONTACT_EXPEDITEUR).
+async function envoyerClient(destinataire, sujet, html) {
+  const cle = process.env.RESEND_API_KEY, exp = process.env.CONTACT_EXPEDITEUR;
+  if (!cle || !exp || !/@k-reau\.fr>?$/.test(exp) || !destinataire) return false;
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: exp, to: [destinataire], reply_to: 'contact@k-reau.fr', subject: sujet, html })
+  });
+  if (!r.ok) console.error('Resend client', r.status, (await r.text()).slice(0, 200));
+  return r.ok;
+}
+
+module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient };
