@@ -54,7 +54,7 @@ const serveur = http.createServer((req, res) => {
     return `  <item>
     <g:id>${p.slug}</g:id>
     <g:title>${xml(`Carreau décoratif ${p.nom} – céramique 15 x 15 cm`)}</g:title>
-    <g:description>${xml(`${p.description} ${p.a_propos || ''} Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée par sublimation. Idée cadeau souvenir de ${region}.`)}</g:description>
+    <g:description>${xml(`${p.description} ${p.a_propos || ''} Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir de ${region}.`)}</g:description>
     <g:link>https://k-reau.fr/produits/${p.slug}</g:link>
     <g:image_link>https://k-reau.fr/${p.image_principale.replace(/^\//,'')}</g:image_link>
     <g:availability>in_stock</g:availability>
