@@ -188,7 +188,9 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 .histoire-texte{display:grid;gap:22px}
 .histoire-page{display:grid;gap:clamp(40px,5vw,64px)}
 .histoire-page .prose{max-width:none}
-.histoire-bas{margin:0;justify-self:center;width:min(100%,480px)}
+.tete-visuel.tete-histoire{grid-template-columns:minmax(0,1fr) minmax(200px,300px)}
+.tete-histoire .tete-img img{border:8px solid var(--blanc);border-radius:0}
+@media(max-width:860px){.tete-visuel.tete-histoire{grid-template-columns:1fr}.tete-histoire .tete-img{max-width:260px}}
 .histoire-texte p.corps{font-family:var(--f-titre);font-size:clamp(1.3rem,2.2vw,1.6rem);line-height:1.45;color:var(--encre)}
 .histoire-texte .btn{justify-self:start}
 @media(max-width:860px){.histoire{grid-template-columns:1fr}}
@@ -1058,8 +1060,9 @@ function vueHistoire(){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Notre histoire','']])}
-    <div class="bloc-titre"><span class="eyebrow">Notre histoire</span><h1>Un lieu. Un souvenir. Un K-Reau.</h1>
+    <div class="tete-visuel tete-histoire"><div class="bloc-titre"><span class="eyebrow">Notre histoire</span><h1>Un lieu. Un souvenir. Un K-Reau.</h1>
     <p class="lead">Une marque provençale de carreaux décoratifs illustrés, née entre la Durance, le Luberon et les Alpilles.</p></div>
+    <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" fetchpriority="high" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure></div>
   </div></div>
   <section class="bloc"><div class="wrap histoire-page">
     <div class="prose">
@@ -1088,7 +1091,6 @@ function vueHistoire(){
       <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="/contact">Dites-le-nous</a>. Vous avez un projet pour une entreprise, un mariage ou une boutique ? <a class="lien" href="/projet-specifique">Parlez-nous de votre projet</a>.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-p" href="/#collections">Découvrir les collections</a><a class="btn btn-s" href="/sur-mesure">Créer mon carreau sur mesure</a></div>
     </div>
-    <figure class="histoire-img histoire-bas"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" loading="lazy" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure>
   </div></section>`;
 }
 
