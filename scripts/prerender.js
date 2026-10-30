@@ -47,5 +47,28 @@ const serveur = http.createServer((req, res) => {
     urls.map(u => `  <url><loc>https://k-reau.fr${u}</loc><lastmod>${jour}</lastmod><priority>${u === '/' ? '1.0' : u.startsWith('/produits/') ? '0.8' : u.startsWith('/collections/') ? '0.9' : '0.5'}</priority></url>`).join('\n') +
     '\n</urlset>\n');
   console.log(`sitemap : ${urls.length} adresses`);
+  // Flux produits pour Google Merchant Center (fiches gratuites dans Google Shopping)
+  const xml = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const items = cat.map(p => {
+    const region = p.collection === 'Marseille' ? 'Marseille' : p.collection === 'Côte Bleue' ? 'la Côte Bleue' : 'Méditerranée';
+    return `  <item>
+    <g:id>${p.slug}</g:id>
+    <g:title>${xml(`Carreau décoratif ${p.nom} – céramique 15 x 15 cm`)}</g:title>
+    <g:description>${xml(`${p.description} ${p.a_propos || ''} Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée par sublimation. Idée cadeau souvenir de ${region}.`)}</g:description>
+    <g:link>https://k-reau.fr/produits/${p.slug}</g:link>
+    <g:image_link>https://k-reau.fr/${p.image_principale.replace(/^\//,'')}</g:image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>19.90 EUR</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>K-Reau</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:google_product_category>696</g:google_product_category>
+    <g:product_type>${xml(`Décoration > Carreaux décoratifs > ${p.collection === 'Signature' ? 'Les Embiez' : p.collection}`)}</g:product_type>
+    <g:material>Céramique</g:material>
+    <g:shipping><g:country>FR</g:country><g:price>7.90 EUR</g:price></g:shipping>
+  </item>`; }).join('\n');
+  fs.writeFileSync(path.join(RACINE, 'google-merchant.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n<channel>\n  <title>K-Reau – carreaux décoratifs</title>\n  <link>https://k-reau.fr/</link>\n  <description>Carreaux décoratifs en céramique de Marseille et de la Côte Bleue</description>\n${items}\n</channel>\n</rss>\n`);
+  console.log(`flux Merchant : ${cat.length} produits`);
   if (erreurs.length) { console.error('Erreurs JS :', erreurs); process.exit(1); }
 })();
