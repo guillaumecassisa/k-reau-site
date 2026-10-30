@@ -353,7 +353,6 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     </div>
     <div class="pied-bas">
       <span>© <span id="annee"></span> K-Reau · Carreaux d’ici</span>
-      <span>Les visuels présentés sont des maquettes de présentation, non contractuelles.</span>
       <a href="#avant-lancement" style="min-height:0;font-size:.78rem;color:#A9A398">Checklist avant vente</a>
     </div>
   </div>
@@ -373,7 +372,7 @@ const CONFIG = {
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
   legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
   livraisonGratuiteDes: 50,         // € — livraison offerte à partir de ce montant (aligné sur SEUIL_LIVRAISON_GRATUITE_CENTIMES dans Vercel)
-  vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'', paysLivres:'France', retours:'' }
+  vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'Expédition sous 5 à 7 jours', paysLivres:'France', retours:'' }
 };
 const COLLECTIONS = {
   'marseille': { nom:'Marseille', titre:'Collection Marseille', cle:'Marseille', img:'img/mises-en-scene/marseille-port.webp', w:545, h:462,
@@ -493,7 +492,6 @@ function vueAccueil(){
       </div>
       <figure class="hero-img" style="margin:0">
         <img src="img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
-        <figcaption class="legende">Visuel de présentation, non contractuel.</figcaption>
       </figure>
     </div>
   </section>
@@ -517,7 +515,7 @@ function vueAccueil(){
         ${['marseille','cote-bleue','les-embiez'].map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
           const href = k==='les-embiez' ? '#les-embiez' : '#collection-'+k;
           return `<a class="coll" href="${href}">
-            <div class="coll-img"><img src="${c.img}" width="${c.w}" height="${c.h}" loading="lazy" alt="Mise en scène d’un carreau K-Reau de la collection ${esc(c.nom)} au bord de la mer"></div>
+            <div class="coll-img"><img src="${c.img}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)} posé au bord de la mer"></div>
             <div class="coll-corps">
               <span class="eyebrow">${k==='les-embiez'?'Modèle signature':(PRODUITS? n+' modèles':'Collection')}</span>
               <h3>${esc(c.nom)}</h3>
@@ -545,7 +543,6 @@ function vueAccueil(){
     <div class="wrap histoire">
       <figure class="histoire-img" style="margin:0">
         <img src="img/mises-en-scene/etagere-mise-en-scene.webp" width="494" height="336" loading="lazy" alt="Un carreau illustré posé sur une étagère en bois, près d’un vase et d’une branche d’olivier, dans une pièce lumineuse">
-        <figcaption class="legende">Mise en scène illustrative.</figcaption>
       </figure>
       <div class="histoire-texte">
         <span class="eyebrow">UN LIEU. UN SOUVENIR. UN K-REAU.</span>
@@ -600,8 +597,8 @@ function faqHTML(){
   const q = [
     ['Comment choisir mon carreau ?', `<p>Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections <a class="lien" href="#collection-marseille">Marseille</a> et <a class="lien" href="#collection-cote-bleue">Côte Bleue</a>, ou le modèle signature <a class="lien" href="#les-embiez">Les Embiez</a>. Un doute ? Écrivez-nous via le ${contact}.</p>`],
     ['Quelles sont ses dimensions ?', `<p>Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique.</p>`],
-    ['Comment le présenter chez soi ?', `<p>Les façons de présenter chaque carreau (à poser, à accrocher) seront précisées sur sa fiche produit une fois validées. Nous préférons ne rien annoncer avant.</p>`],
-    ['Quels sont les délais et frais de livraison ?', `<p>Les délais, les frais et les zones de livraison seront publiés sur la page <a class="lien" href="#livraison-retours">Livraison et retours</a> avant l’ouverture des commandes.</p>`],
+    ['Comment le présenter chez soi ?', `<p>Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs.</p>`],
+    ['Quels sont les délais et frais de livraison ?', `<p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="#livraison-retours">Livraison et retours</a>.</p>`],
     ['Puis-je l’offrir ?', `<p>Oui, c’est même l’idée : offrir un lieu qui a du sens pour quelqu’un. Les éventuelles options cadeau (emballage, message) seront détaillées à l’ouverture de la boutique ; aucune n’est proposée pour le moment.</p>`],
     ['Comment contacter K-Reau ?', `<p>Par le ${contact}. Nous vous répondons par e-mail.</p>`]
   ];
@@ -663,7 +660,6 @@ function vueProduit(slug){
         <button class="vignette" type="button" data-v="ensemble" aria-pressed="true" aria-label="Vue d’ensemble"><img src="${esc(p.miniature)}" width="600" height="600" alt=""></button>
         <button class="vignette zoomee" type="button" data-v="detail" aria-pressed="false" aria-label="Détail de la calligraphie"><img src="${esc(p.miniature)}" width="600" height="600" alt=""></button>
       </div>
-      <p class="avert">Visuel de présentation (maquette), non contractuel. Les photographies du produit fini seront publiées avant l’ouverture des commandes.</p>
     </div>
     <div class="fiche-infos">
       <span class="eyebrow">${esc(collNom(p))}</span>
@@ -684,13 +680,8 @@ function vueProduit(slug){
       <table class="carac">
         <caption class="eyebrow" style="text-align:left;padding-bottom:10px">Caractéristiques</caption>
         <tbody>
-          <tr><th scope="row">Dimensions</th><td>${val(p.dimensions)}</td></tr>
-          <tr><th scope="row">Matière</th><td>${val(p.matiere_confirmee)}</td></tr>
-          <tr><th scope="row">Finition</th><td>${val(p.finition)}</td></tr>
-          <tr><th scope="row">Entretien</th><td>${val(p.entretien)}</td></tr>
-          <tr><th scope="row">Fixation / présentation</th><td>${val(p.fixation)}</td></tr>
-          <tr><th scope="row">Contenu de la boîte</th><td>${val(p.contenu)}</td></tr>
-          <tr><th scope="row">Livraison</th><td>${val(p.delai_livraison)}</td></tr>
+          ${[['Dimensions',p.dimensions],['Matière',p.matiere_confirmee],['Forme',p.forme],['Finition',p.finition],['Entretien',p.entretien],['Utilisation',p.fixation],['Contenu de la boîte',p.contenu],['Livraison',p.delai_livraison]]
+            .filter(([,v])=>v).map(([k,v])=>`<tr><th scope="row">${k}</th><td>${esc(v)}</td></tr>`).join('')}
         </tbody>
       </table>
       <p class="small"><a class="lien" href="#contact">Une question sur ce modèle ?</a></p>
@@ -782,8 +773,7 @@ const PAGES = {
     <li>Adresse : ${aCompleter(L.adresse)}</li><li>Contact : par le <a class="lien" href="#contact">formulaire de contact</a></li>
     <li>Directeur de la publication : ${aCompleter(L.directeurPublication)}</li></ul>
     <h2>Hébergement</h2><p>${aCompleter(L.hebergeur,'nom, adresse et téléphone de l’hébergeur')}</p>
-    <h2>Propriété intellectuelle</h2><p>Le nom K-Reau, le logo, les dessins et l’ensemble des contenus de ce site sont protégés. Toute reproduction sans autorisation est interdite.</p>
-    <h2>Visuels</h2><p>Les images présentées sont des visuels de présentation (maquettes) et ne constituent pas des photographies contractuelles du produit.</p>`),
+    <h2>Propriété intellectuelle</h2><p>Le nom K-Reau, le logo, les dessins et l’ensemble des contenus de ce site sont protégés. Toute reproduction sans autorisation est interdite.</p>`),
   'cgv': () => pageLegale('Conditions générales de vente','CGV | K-Reau', `
     <p class="msg ko">Les conditions générales de vente seront publiées avant l’ouverture des commandes. Aucune commande n’est possible pour le moment.</p>
     <h2>Contenu à prévoir</h2>
@@ -816,7 +806,6 @@ function vueChecklist(){
     ['Dimensions, matière, finition, entretien, fixation de chaque modèle', nbComplets===21],
     ['Contenu de la boîte et packaging réel (le coffret affiché est une maquette)', false],
     ['Stocks réels par modèle', nbComplets===21],
-    ['Photographies du produit fini pour remplacer les maquettes générées', false],
     ['Vérification des noms et de la fidélité des dessins (ex. tuile « L’Île du Frioul » vs fiche « Les Îles du Frioul »)', false],
     ['Frais, délais et zones de livraison ; transporteur', !!(V.fraisLivraison && V.delaiLivraison && V.paysLivres)],
     ['Politique de retour et rétractation', !!V.retours],
