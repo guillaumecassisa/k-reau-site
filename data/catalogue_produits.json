@@ -23,7 +23,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Cœur historique de Marseille depuis la fondation de Massalia par les Grecs de Phocée, il y a plus de 2 600 ans, le Vieux-Port reste le point de rendez-vous de toute la ville : marché aux poissons du quai des Belges, ferry-boat, ombrière et coucher de soleil sur le fort Saint-Jean. Un carreau du Vieux-Port, c’est le souvenir de Marseille par excellence.",
   "image_detail": "img/details/marseille-vieux-port-detail.webp",
-  "image_coffret": "img/coffret/marseille-vieux-port-coffret.webp"
+  "image_coffret": "img/coffret/marseille-vieux-port-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-vieux-port-dimensions.webp"
  },
  {
   "id": "marseille-notre-dame-de-la-garde",
@@ -49,7 +50,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Perchée sur la plus haute colline de la ville, la basilique Notre-Dame de la Garde, achevée au XIXe siècle, veille sur Marseille et sur les marins. Les Marseillais l’appellent affectueusement « la Bonne Mère ». Un carreau Notre-Dame de la Garde est une idée cadeau idéale pour un Marseillais exilé ou un amoureux de la ville.",
   "image_detail": "img/details/marseille-notre-dame-de-la-garde-detail.webp",
-  "image_coffret": "img/coffret/marseille-notre-dame-de-la-garde-coffret.webp"
+  "image_coffret": "img/coffret/marseille-notre-dame-de-la-garde-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-notre-dame-de-la-garde-dimensions.webp"
  },
  {
   "id": "marseille-mucem",
@@ -75,7 +77,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Ouvert en 2013 à l’entrée du Vieux-Port, le Mucem, musée des Civilisations de l’Europe et de la Méditerranée, se reconnaît à sa résille de béton signée Rudy Ricciotti et à sa passerelle qui le relie au fort Saint-Jean. Un symbole du Marseille contemporain, dessiné sur un carreau en céramique.",
   "image_detail": "img/details/marseille-mucem-detail.webp",
-  "image_coffret": "img/coffret/marseille-mucem-coffret.webp"
+  "image_coffret": "img/coffret/marseille-mucem-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-mucem-dimensions.webp"
  },
  {
   "id": "marseille-la-major",
@@ -101,7 +104,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "La cathédrale Sainte-Marie-Majeure, dite La Major, domine le port de la Joliette avec ses coupoles et ses pierres bicolores. Bâtie au XIXe siècle au pied du Panier, c’est l’un des monuments les plus impressionnants de Marseille.",
   "image_detail": "img/details/marseille-la-major-detail.webp",
-  "image_coffret": "img/coffret/marseille-la-major-coffret.webp"
+  "image_coffret": "img/coffret/marseille-la-major-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-la-major-dimensions.webp"
  },
  {
   "id": "marseille-vallon-des-auffes",
@@ -127,7 +131,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Niché sous le pont de la Corniche Kennedy, le Vallon des Auffes est un petit port de pêcheurs avec ses cabanons et ses pointus colorés. Ce coin secret du 7e arrondissement fait partie des lieux les plus photographiés de Marseille.",
   "image_detail": "img/details/marseille-vallon-des-auffes-detail.webp",
-  "image_coffret": "img/coffret/marseille-vallon-des-auffes-coffret.webp"
+  "image_coffret": "img/coffret/marseille-vallon-des-auffes-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-vallon-des-auffes-dimensions.webp"
  },
  {
   "id": "marseille-chateau-d-if",
@@ -153,7 +158,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Construit au XVIe siècle sous François Ier sur un îlot face à Marseille, le château d’If est devenu célèbre grâce au Comte de Monte-Cristo d’Alexandre Dumas. On y accède en navette depuis le Vieux-Port.",
   "image_detail": "img/details/marseille-chateau-d-if-detail.webp",
-  "image_coffret": "img/coffret/marseille-chateau-d-if-coffret.webp"
+  "image_coffret": "img/coffret/marseille-chateau-d-if-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-chateau-d-if-dimensions.webp"
  },
  {
   "id": "marseille-iles-du-frioul",
@@ -179,7 +185,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "L’archipel du Frioul, avec ses îles calcaires de Ratonneau et Pomègues, offre criques et eaux turquoise à quelques minutes de navette du Vieux-Port. Une échappée en pleine mer, sans quitter Marseille.",
   "image_detail": "img/details/marseille-iles-du-frioul-detail.webp",
-  "image_coffret": "img/coffret/marseille-iles-du-frioul-coffret.webp"
+  "image_coffret": "img/coffret/marseille-iles-du-frioul-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-iles-du-frioul-dimensions.webp"
  },
  {
   "id": "marseille-calanque-sormiou",
@@ -205,7 +212,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Au cœur du Parc national des Calanques, Sormiou est l’une des plus grandes calanques de Marseille, avec sa plage, ses cabanons et ses falaises de calcaire blanc plongeant dans une eau turquoise.",
   "image_detail": "img/details/marseille-calanque-sormiou-detail.webp",
-  "image_coffret": "img/coffret/marseille-calanque-sormiou-coffret.webp"
+  "image_coffret": "img/coffret/marseille-calanque-sormiou-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-calanque-sormiou-dimensions.webp"
  },
  {
   "id": "marseille-calanque-morgiou",
@@ -231,7 +239,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Morgiou abrite un petit port de pêche et des cabanons au fond d’une calanque encaissée du Parc national des Calanques. Un bout du monde à quelques kilomètres du centre de Marseille.",
   "image_detail": "img/details/marseille-calanque-morgiou-detail.webp",
-  "image_coffret": "img/coffret/marseille-calanque-morgiou-coffret.webp"
+  "image_coffret": "img/coffret/marseille-calanque-morgiou-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-calanque-morgiou-dimensions.webp"
  },
  {
   "id": "marseille-palais-longchamp",
@@ -257,7 +266,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Édifié au XIXe siècle pour célébrer l’arrivée des eaux de la Durance à Marseille, le Palais Longchamp déploie sa colonnade, sa fontaine monumentale et abrite le musée des Beaux-Arts et le Muséum d’histoire naturelle.",
   "image_detail": "img/details/marseille-palais-longchamp-detail.webp",
-  "image_coffret": "img/coffret/marseille-palais-longchamp-coffret.webp"
+  "image_coffret": "img/coffret/marseille-palais-longchamp-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-palais-longchamp-dimensions.webp"
  },
  {
   "id": "marseille-tour-cma-cgm",
@@ -283,7 +293,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Dessinée par l’architecte Zaha Hadid et inaugurée en 2011, la tour CMA CGM s’élève à 147 mètres au cœur du quartier Euroméditerranée. Siège de l’armateur marseillais, elle est devenue l’un des repères de la ville, visible depuis la mer comme depuis les collines.",
   "image_detail": "img/details/marseille-tour-cma-cgm-detail.webp",
-  "image_coffret": "img/coffret/marseille-tour-cma-cgm-coffret.webp"
+  "image_coffret": "img/coffret/marseille-tour-cma-cgm-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-tour-cma-cgm-dimensions.webp"
  },
  {
   "id": "marseille-velodrome",
@@ -309,7 +320,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Inauguré en 1937 et transformé pour l’Euro 2016 avec son toit ondulé, le stade Vélodrome est l’antre de l’Olympique de Marseille. Avec environ 67 000 places, c’est l’un des plus grands stades de France et un lieu mythique de la ferveur marseillaise.",
   "image_detail": "img/details/marseille-velodrome-detail.webp",
-  "image_coffret": "img/coffret/marseille-velodrome-coffret.webp"
+  "image_coffret": "img/coffret/marseille-velodrome-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-velodrome-dimensions.webp"
  },
  {
   "id": "marseille-panisse",
@@ -335,7 +347,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "La panisse, galette de farine de pois chiches coupée en rondelles ou en frites puis dorée à la poêle, se mange chaude, en cornet de papier, sur le port et à L’Estaque depuis des générations. Son nom évoque aussi Panisse, le maître voilier du Vieux-Port imaginé par Marcel Pagnol dans Marius et Fanny.",
   "image_detail": "img/details/marseille-panisse-detail.webp",
-  "image_coffret": "img/coffret/marseille-panisse-coffret.webp"
+  "image_coffret": "img/coffret/marseille-panisse-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-panisse-dimensions.webp"
  },
  {
   "id": "marseille-david",
@@ -361,7 +374,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Réplique en marbre du David de Michel-Ange, la statue a été installée en 1903 au bout de l’avenue du Prado, face aux plages. Les Marseillais l’appellent simplement « le David » et en ont fait un lieu de rendez-vous incontournable du bord de mer.",
   "image_detail": "img/details/marseille-david-detail.webp",
-  "image_coffret": "img/coffret/marseille-david-coffret.webp"
+  "image_coffret": "img/coffret/marseille-david-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-david-dimensions.webp"
  },
  {
   "id": "marseille-corniche-kennedy",
@@ -387,7 +401,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Tracée au XIXe siècle et rebaptisée en hommage au président John F. Kennedy, la Corniche longe la mer des Catalans jusqu’au Prado. Bordée d’un banc de pierre de plusieurs kilomètres, elle passe au-dessus du Vallon des Auffes et offre une vue sur le Frioul et le château d’If.",
   "image_detail": "img/details/marseille-corniche-kennedy-detail.webp",
-  "image_coffret": "img/coffret/marseille-corniche-kennedy-coffret.webp"
+  "image_coffret": "img/coffret/marseille-corniche-kennedy-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-corniche-kennedy-dimensions.webp"
  },
  {
   "id": "marseille-le-panier",
@@ -413,7 +428,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Perché au-dessus du Vieux-Port, le Panier est le plus ancien quartier de Marseille, à l’emplacement de la cité grecque de Massalia fondée vers 600 av. J.-C. On y flâne entre ruelles colorées, ateliers d’artisans et la Vieille Charité, bâtie au XVIIe siècle d’après les plans de Pierre Puget.",
   "image_detail": "img/details/marseille-le-panier-detail.webp",
-  "image_coffret": "img/coffret/marseille-le-panier-coffret.webp"
+  "image_coffret": "img/coffret/marseille-le-panier-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-le-panier-dimensions.webp"
  },
  {
   "id": "marseille-canebiere",
@@ -439,7 +455,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Artère historique de la ville, la Canebière relie le Vieux-Port au quartier des Réformés. Son nom vient du provençal canebe, le chanvre, rappelant les cordiers qui fabriquaient autrefois les cordages des navires. Chantée dans de nombreuses chansons, elle reste le cœur symbolique de Marseille.",
   "image_detail": "img/details/marseille-canebiere-detail.webp",
-  "image_coffret": "img/coffret/marseille-canebiere-coffret.webp"
+  "image_coffret": "img/coffret/marseille-canebiere-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-canebiere-dimensions.webp"
  },
  {
   "id": "marseille-cite-radieuse",
@@ -465,7 +482,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Achevée en 1952, la Cité radieuse est la première Unité d’habitation imaginée par Le Corbusier : une ville verticale avec logements, commerces, hôtel et toit-terrasse. Elle est inscrite au patrimoine mondial de l’UNESCO depuis 2016 avec d’autres œuvres de l’architecte.",
   "image_detail": "img/details/marseille-cite-radieuse-detail.webp",
-  "image_coffret": "img/coffret/marseille-cite-radieuse-coffret.webp"
+  "image_coffret": "img/coffret/marseille-cite-radieuse-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-cite-radieuse-dimensions.webp"
  },
  {
   "id": "marseille-fort-saint-jean",
@@ -491,7 +509,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Bâti au XVIIe siècle sous Louis XIV autour de la tour du roi René, plus ancienne, le fort Saint-Jean veille avec le fort Saint-Nicolas sur l’entrée du Vieux-Port. Relié au Mucem par une passerelle depuis 2013, il accueille aujourd’hui des jardins et des expositions ouverts au public.",
   "image_detail": "img/details/marseille-fort-saint-jean-detail.webp",
-  "image_coffret": "img/coffret/marseille-fort-saint-jean-coffret.webp"
+  "image_coffret": "img/coffret/marseille-fort-saint-jean-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-fort-saint-jean-dimensions.webp"
  },
  {
   "id": "marseille-le-prado",
@@ -517,7 +536,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Au bout de l’avenue du Prado, le parc balnéaire du Prado s’étend le long de la mer avec ses plages, ses pelouses et le parc Borély tout proche. Aménagé à partir de la fin des années 1970, il est devenu le grand lieu de détente des Marseillais, autour de la statue du David.",
   "image_detail": "img/details/marseille-le-prado-detail.webp",
-  "image_coffret": "img/coffret/marseille-le-prado-coffret.webp"
+  "image_coffret": "img/coffret/marseille-le-prado-coffret.webp",
+  "image_dimensions": "img/dimensions/marseille-le-prado-dimensions.webp"
  },
  {
   "id": "cote-bleue-port-niolon",
@@ -543,7 +563,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Petit village du Rove accroché aux rochers, Niolon est réputé pour ses eaux claires, ses fonds marins appréciés des plongeurs et le viaduc du train de la Côte Bleue qui passe au-dessus du port.",
   "image_detail": "img/details/cote-bleue-port-niolon-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-port-niolon-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-port-niolon-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-port-niolon-dimensions.webp"
  },
  {
   "id": "cote-bleue-calanque-mejean",
@@ -569,7 +590,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Sur la commune d’Ensuès-la-Redonne, la calanque de Méjean est une crique abritée bordée de cabanons, où les bateaux viennent mouiller le temps d’une baignade. Un des trésors discrets de la Côte Bleue.",
   "image_detail": "img/details/cote-bleue-calanque-mejean-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-calanque-mejean-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-calanque-mejean-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-calanque-mejean-dimensions.webp"
  },
  {
   "id": "cote-bleue-port-la-redonne",
@@ -595,7 +617,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le petit port de La Redonne, à Ensuès-la-Redonne, se cache au fond d’une calanque enjambée par le viaduc de la ligne de la Côte Bleue. Barques, cabanons et pinède : le calme absolu.",
   "image_detail": "img/details/cote-bleue-port-la-redonne-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-port-la-redonne-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-port-la-redonne-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-port-la-redonne-dimensions.webp"
  },
  {
   "id": "cote-bleue-carry-le-rouet",
@@ -621,7 +644,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Station balnéaire de la Côte Bleue, Carry-le-Rouet est connue pour son port, ses criques et ses célèbres oursinades d’hiver. Un village de bord de mer où beaucoup ont des souvenirs d’été.",
   "image_detail": "img/details/cote-bleue-carry-le-rouet-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-carry-le-rouet-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-carry-le-rouet-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-carry-le-rouet-dimensions.webp"
  },
  {
   "id": "cote-bleue-sausset-les-pins",
@@ -647,7 +671,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Ancien village de pêcheurs, Sausset-les-Pins séduit avec sa corniche, son petit port et ses pins parasols au bord de l’eau. Un carreau Sausset-les-Pins, c’est un cadeau pour tous ceux qui y ont grandi ou passé leurs vacances.",
   "image_detail": "img/details/cote-bleue-sausset-les-pins-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-sausset-les-pins-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-sausset-les-pins-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-sausset-les-pins-dimensions.webp"
  },
  {
   "id": "cote-bleue-port-carro",
@@ -673,7 +698,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "À l’extrémité de la Côte Bleue, Carro est le port de pêche de Martigues, avec son marché aux poissons et son spot apprécié des surfeurs et kitesurfeurs quand le vent se lève.",
   "image_detail": "img/details/cote-bleue-port-carro-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-port-carro-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-port-carro-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-port-carro-dimensions.webp"
  },
  {
   "id": "cote-bleue-cap-couronne",
@@ -699,7 +725,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le Cap Couronne, à Martigues, avance dans la mer avec son phare, ses rochers clairs et ses criques idéales pour la plongée et le pique-nique face au large.",
   "image_detail": "img/details/cote-bleue-cap-couronne-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-cap-couronne-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-cap-couronne-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-cap-couronne-dimensions.webp"
  },
  {
   "id": "cote-bleue-plage-sainte-croix",
@@ -725,7 +752,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Sur la commune de Martigues, la plage de Sainte-Croix dessine un grand arc de sable surplombé par sa petite chapelle. Une des plages les plus appréciées de la Côte Bleue.",
   "image_detail": "img/details/cote-bleue-plage-sainte-croix-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-plage-sainte-croix-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-plage-sainte-croix-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-plage-sainte-croix-dimensions.webp"
  },
  {
   "id": "cote-bleue-ensues-la-redonne",
@@ -751,7 +779,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Entre Marseille et Carry-le-Rouet, Ensuès-la-Redonne cache plusieurs calanques (Méjean, La Redonne, les Figuières) reliées par le sentier des douaniers, entre pinèdes et eau limpide.",
   "image_detail": "img/details/cote-bleue-ensues-la-redonne-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-ensues-la-redonne-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-ensues-la-redonne-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-ensues-la-redonne-dimensions.webp"
  },
  {
   "id": "cote-bleue-estaque",
@@ -777,7 +806,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Ancien village de pêcheurs au nord de Marseille, L’Estaque a inspiré Cézanne et Braque. Ses petits ports, ses chichis frégis et sa vue sur la rade en font la porte d’entrée de la Côte Bleue.",
   "image_detail": "img/details/cote-bleue-estaque-detail.webp",
-  "image_coffret": "img/coffret/cote-bleue-estaque-coffret.webp"
+  "image_coffret": "img/coffret/cote-bleue-estaque-coffret.webp",
+  "image_dimensions": "img/dimensions/cote-bleue-estaque-dimensions.webp"
  },
  {
   "id": "les-embiez",
@@ -803,7 +833,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Au large de Six-Fours-les-Plages, dans le Var, l’île des Embiez offre criques, sentiers et port de plaisance à quelques minutes de traversée. Notre modèle signature, pour les amoureux de cette île méditerranéenne.",
   "image_detail": "img/details/les-embiez-detail.webp",
-  "image_coffret": "img/coffret/les-embiez-coffret.webp"
+  "image_coffret": "img/coffret/les-embiez-coffret.webp",
+  "image_dimensions": "img/dimensions/les-embiez-dimensions.webp"
  },
  {
   "id": "montagnes-sainte-victoire",
@@ -829,7 +860,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Montagne emblématique du pays d’Aix, la Sainte-Victoire dresse sa grande barre calcaire à l’est d’Aix-en-Provence. Paul Cézanne l’a peinte des dizaines de fois, et la Croix de Provence, plantée sur l’un de ses sommets, est le but de randonnée préféré des Aixois.",
   "image_detail": "img/details/montagnes-sainte-victoire-detail.webp",
-  "image_coffret": "img/coffret/montagnes-sainte-victoire-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-sainte-victoire-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-sainte-victoire-dimensions.webp"
  },
  {
   "id": "montagnes-sainte-baume",
@@ -855,7 +887,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Entre Bouches-du-Rhône et Var, le massif de la Sainte-Baume aligne une longue falaise calcaire au pied de laquelle s’étend une forêt ancienne, réputée pour ses hêtres et ses ifs. Le lieu est aussi connu pour sa grotte, lieu de pèlerinage depuis des siècles.",
   "image_detail": "img/details/montagnes-sainte-baume-detail.webp",
-  "image_coffret": "img/coffret/montagnes-sainte-baume-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-sainte-baume-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-sainte-baume-dimensions.webp"
  },
  {
   "id": "montagnes-mont-salva",
@@ -881,7 +914,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Près de Six-Fours-les-Plages, dans le Var, le Mont Salva déroule ses collines boisées de pins au-dessus de la Méditerranée. Un coin de nature apprécié des promeneurs, avec des vues dégagées sur la côte varoise.",
   "image_detail": "img/details/montagnes-mont-salva-detail.webp",
-  "image_coffret": "img/coffret/montagnes-mont-salva-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-mont-salva-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-mont-salva-dimensions.webp"
  },
  {
   "id": "montagnes-gros-cerveau",
@@ -907,7 +941,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le Gros Cerveau forme une longue crête au-dessus de Sanary-sur-Mer, d’Ollioules et de Bandol, dans le Var. Depuis ses hauteurs, la vue embrasse la baie de Sanary, les vignobles et les îles au large.",
   "image_detail": "img/details/montagnes-gros-cerveau-detail.webp",
-  "image_coffret": "img/coffret/montagnes-gros-cerveau-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-gros-cerveau-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-gros-cerveau-dimensions.webp"
  },
  {
   "id": "montagnes-mont-faron",
@@ -933,7 +968,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le Mont Faron surplombe Toulon et sa rade. On y monte en téléphérique ou par une route en lacets pour profiter d’une vue spectaculaire sur la ville, le port et la mer, et découvrir le mémorial du Débarquement de Provence.",
   "image_detail": "img/details/montagnes-mont-faron-detail.webp",
-  "image_coffret": "img/coffret/montagnes-mont-faron-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-mont-faron-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-mont-faron-dimensions.webp"
  },
  {
   "id": "montagnes-mont-caume",
@@ -959,7 +995,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le Mont Caume est le plus haut des monts toulonnais. Ses falaises calcaires et son sommet dégagé offrent l’un des plus beaux panoramas du Var, des massifs de l’arrière-pays jusqu’à la mer.",
   "image_detail": "img/details/montagnes-mont-caume-detail.webp",
-  "image_coffret": "img/coffret/montagnes-mont-caume-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-mont-caume-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-mont-caume-dimensions.webp"
  },
  {
   "id": "montagnes-garlaban",
@@ -985,7 +1022,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Au-dessus d’Aubagne, le Garlaban dresse son piton rocheux au cœur des collines chères à Marcel Pagnol. C’est le décor de ses souvenirs d’enfance, de La Gloire de mon père et du Château de ma mère.",
   "image_detail": "img/details/montagnes-garlaban-detail.webp",
-  "image_coffret": "img/coffret/montagnes-garlaban-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-garlaban-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-garlaban-dimensions.webp"
  },
  {
   "id": "montagnes-mont-ventoux",
@@ -1011,7 +1049,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Surnommé le Géant de Provence, le Mont Ventoux domine le Vaucluse de ses quelque 1 900 mètres. Son sommet pelé, visible de très loin, est entré dans la légende du Tour de France.",
   "image_detail": "img/details/montagnes-mont-ventoux-detail.webp",
-  "image_coffret": "img/coffret/montagnes-mont-ventoux-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-mont-ventoux-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-mont-ventoux-dimensions.webp"
  },
  {
   "id": "montagnes-mont-puget",
@@ -1037,7 +1076,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Point culminant du massif des Calanques, le Mont Puget domine Marseille et la Méditerranée. Ses falaises calcaires blanches offrent une vue saisissante sur les calanques et les îles de l’archipel de Riou.",
   "image_detail": "img/details/montagnes-mont-puget-detail.webp",
-  "image_coffret": "img/coffret/montagnes-mont-puget-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-mont-puget-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-mont-puget-dimensions.webp"
  },
  {
   "id": "montagnes-rocher-de-roquebrune",
@@ -1063,7 +1103,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le Rocher de Roquebrune se dresse au-dessus de Roquebrune-sur-Argens, dans le Var. Ses roches aux teintes chaudes et ses formes étonnantes en font un lieu à part, couronné de trois grandes croix visibles de loin.",
   "image_detail": "img/details/montagnes-rocher-de-roquebrune-detail.webp",
-  "image_coffret": "img/coffret/montagnes-rocher-de-roquebrune-coffret.webp"
+  "image_coffret": "img/coffret/montagnes-rocher-de-roquebrune-coffret.webp",
+  "image_dimensions": "img/dimensions/montagnes-rocher-de-roquebrune-dimensions.webp"
  },
  {
   "id": "chateaux-versailles",
@@ -1090,7 +1131,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Résidence de Louis XIV et des rois de France jusqu’à la Révolution, le château de Versailles, dans les Yvelines, est célèbre pour sa galerie des Glaces et ses jardins dessinés par André Le Nôtre. Il est inscrit au patrimoine mondial de l’UNESCO.",
   "image_detail": "img/details/chateaux-versailles-detail.webp",
-  "image_coffret": "img/coffret/chateaux-versailles-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-versailles-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-versailles-dimensions.webp"
  },
  {
   "id": "chateaux-chambord",
@@ -1117,7 +1159,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Commencé en 1519 pour François Ier, Chambord est le plus vaste des châteaux de la Loire. Son célèbre escalier à double révolution et sa forêt immense en font l’un des joyaux de la Renaissance française.",
   "image_detail": "img/details/chateaux-chambord-detail.webp",
-  "image_coffret": "img/coffret/chateaux-chambord-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-chambord-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-chambord-dimensions.webp"
  },
  {
   "id": "chateaux-chenonceau",
@@ -1144,7 +1187,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Surnommé le « château des Dames », Chenonceau, en Indre-et-Loire, doit beaucoup à Diane de Poitiers et à Catherine de Médicis. Sa galerie à arches posée sur le Cher en fait une silhouette unique.",
   "image_detail": "img/details/chateaux-chenonceau-detail.webp",
-  "image_coffret": "img/coffret/chateaux-chenonceau-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-chenonceau-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-chenonceau-dimensions.webp"
  },
  {
   "id": "chateaux-amboise",
@@ -1171,7 +1215,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Demeure royale dominant la Loire, le château d’Amboise a accueilli Charles VIII et François Ier. Léonard de Vinci, qui vécut ses dernières années tout près, repose dans la chapelle Saint-Hubert du château.",
   "image_detail": "img/details/chateaux-amboise-detail.webp",
-  "image_coffret": "img/coffret/chateaux-amboise-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-amboise-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-amboise-dimensions.webp"
  },
  {
   "id": "chateaux-blois",
@@ -1198,7 +1243,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Résidence de plusieurs rois de France, le château de Blois, dans le Loir-et-Cher, réunit quatre siècles d’architecture autour d’une même cour. Son escalier François Ier, à vis et à loggias, est l’un des plus célèbres de la Renaissance.",
   "image_detail": "img/details/chateaux-blois-detail.webp",
-  "image_coffret": "img/coffret/chateaux-blois-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-blois-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-blois-dimensions.webp"
  },
  {
   "id": "chateaux-azay-le-rideau",
@@ -1225,7 +1271,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Bâti au XVIe siècle sur une île de l’Indre, en Indre-et-Loire, Azay-le-Rideau est un chef-d’œuvre de la première Renaissance. Ses façades se reflètent dans les eaux qui l’entourent comme dans un miroir.",
   "image_detail": "img/details/chateaux-azay-le-rideau-detail.webp",
-  "image_coffret": "img/coffret/chateaux-azay-le-rideau-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-azay-le-rideau-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-azay-le-rideau-dimensions.webp"
  },
  {
   "id": "chateaux-usse",
@@ -1252,7 +1299,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Dominant l’Indre à l’orée de la forêt de Chinon, en Indre-et-Loire, le château d’Ussé mêle forteresse médiévale et logis Renaissance. Charles Perrault s’en serait inspiré pour La Belle au bois dormant, d’où son surnom de « château de la Belle au bois dormant ».",
   "image_detail": "img/details/chateaux-usse-detail.webp",
-  "image_coffret": "img/coffret/chateaux-usse-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-usse-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-usse-dimensions.webp"
  },
  {
   "id": "chateaux-villandry",
@@ -1279,7 +1327,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le château de Villandry, en Indre-et-Loire, est surtout célèbre pour ses jardins Renaissance : jardin d’ornement, potager décoratif et jardin d’eau, entretenus avec une précision remarquable.",
   "image_detail": "img/details/chateaux-villandry-detail.webp",
-  "image_coffret": "img/coffret/chateaux-villandry-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-villandry-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-villandry-dimensions.webp"
  },
  {
   "id": "chateaux-fontainebleau",
@@ -1306,7 +1355,8 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "En Seine-et-Marne, Fontainebleau a été la demeure des souverains de France pendant huit siècles, de François Ier à Napoléon III. C’est dans sa cour du Cheval-Blanc que Napoléon fit ses adieux à la Garde en 1814.",
   "image_detail": "img/details/chateaux-fontainebleau-detail.webp",
-  "image_coffret": "img/coffret/chateaux-fontainebleau-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-fontainebleau-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-fontainebleau-dimensions.webp"
  },
  {
   "id": "chateaux-saumur",
@@ -1333,6 +1383,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Perché sur un éperon au-dessus de la Loire, dans le Maine-et-Loire, le château de Saumur a été rebâti à la fin du XIVe siècle par les ducs d’Anjou. Sa silhouette figure dans les Très Riches Heures du duc de Berry ; il abrite aujourd’hui un musée des arts décoratifs et du cheval.",
   "image_detail": "img/details/chateaux-saumur-detail.webp",
-  "image_coffret": "img/coffret/chateaux-saumur-coffret.webp"
+  "image_coffret": "img/coffret/chateaux-saumur-coffret.webp",
+  "image_dimensions": "img/dimensions/chateaux-saumur-dimensions.webp"
  }
 ]
