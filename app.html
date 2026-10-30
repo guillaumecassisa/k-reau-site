@@ -320,7 +320,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .jauge{height:6px;background:var(--joint);border-radius:3px;overflow:hidden}
 .jauge span{display:block;height:100%;background:var(--olivier);transition:width .4s}
 .completez{display:grid;gap:8px;padding:12px;background:var(--blanc);border:1px solid var(--joint)}
-.completez-liste{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.completez-liste{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px}
+.chevalet-mini{aspect-ratio:1/1;background:var(--sable-clair)}.chevalet-mini svg{width:100%;height:100%;display:block}
 .completez-liste button{display:grid;gap:4px;padding:0;border:1px solid var(--joint);background:var(--ceramique);cursor:pointer;text-align:left;font:inherit}
 .completez-liste img{width:100%;aspect-ratio:1/1;object-fit:cover}
 .completez-liste span{font-size:.7rem;line-height:1.25;padding:0 6px 6px}
@@ -1557,7 +1558,7 @@ const Panier = {
           <div class="ligne-prix">${prixEur(this.prix(l)*l.q)}<button class="lien" type="button" style="background:none;border:0;cursor:pointer" data-suppr="${i}">Retirer</button></div></div>`).join('')
         : `<p class="muted">Votre panier est vide.</p><a class="btn btn-s" href="/carreaux" data-fermer>Découvrir les carreaux</a>`}
         ${phys > 0 ? `<div style="display:grid;gap:6px"><p class="small" style="margin:0">${reste > 0 ? `Plus que <strong>${prixEur(reste)}</strong> pour la livraison offerte` : '<strong>Livraison offerte</strong> 🎁'.replace(' 🎁','')}</p><div class="jauge" aria-hidden="true"><span style="width:${Math.min(100, phys/seuil*100)}%"></span></div></div>` : ''}
-        ${phys > 0 && reste > 0 ? `<div class="completez"><strong class="small">Complétez avec…</strong><div class="completez-liste">${this.suggestions().map(p=>`<button type="button" data-plus="${esc(p.slug)}"><img src="${esc(p.miniature)}" alt="" loading="lazy"><span>${esc(p.nom)}</span><em>+ Ajouter</em></button>`).join('')}</div>
+        ${phys > 0 && reste > 0 ? `<div class="completez"><strong class="small">Complétez avec…</strong><div class="completez-liste">${this.suggestions().map(p=>`<button type="button" data-plus="${esc(p.slug)}"><img src="${esc(p.miniature)}" alt="" loading="lazy"><span>${esc(p.nom)}</span><em>+ Ajouter</em></button>`).join('')}${this.nbCarreaux() ? `<button type="button" data-chevalet class="completez-chevalet"><div class="chevalet-mini">${ILLU_CHEVALET}</div><span>Chevalet en bois brut · ${prixEur(CONFIG.prix.chevalet)}</span><em>+ Ajouter</em></button>` : ''}</div>
           ${reste > CONFIG.prix.carreau ? `<a class="lien small" href="/coffrets" data-fermer>Ou passez au coffret de 3 carreaux à ${prixEur(CONFIG.prix.coffret)}, livraison offerte</a>` : ''}</div>` : ''}
         ${phys > 0 ? `<div class="champ message-cadeau"><label for="msg-cadeau">Message cadeau <span class="muted" style="font-weight:400">(facultatif, imprimé sur la carte du coffret)</span></label>
           <textarea id="msg-cadeau" maxlength="200" placeholder="Joyeux anniversaire ! Un petit bout du Vieux-Port pour toi…">${esc(this.message)}</textarea><span class="small muted" id="msg-compte">${this.message.length} / 200</span></div>` : ''}
@@ -1574,6 +1575,7 @@ const Panier = {
       if(e.target===t || e.target.closest('[data-fermer]')) { c.innerHTML=''; return; }
       const sp = e.target.closest('[data-suppr]'); if(sp){ this.lignes.splice(+sp.dataset.suppr,1); this.sauver(); return this.ouvrir(); }
       const qb = e.target.closest('[data-q]'); if(qb){ const [i,d] = qb.dataset.q.split(':').map(Number); const l=this.lignes[i]; l.q += d; if(l.q<1) this.lignes.splice(i,1); else l.q=Math.min(20,l.q); this.sauver(); return this.ouvrir(); }
+      if(e.target.closest('[data-chevalet]')){ this.ajouter({ type:'chevalet', q:1 }); return this.ouvrir(); }
       const pl = e.target.closest('[data-plus]'); if(pl){ this.ajouter({ type:'carreau', slug:pl.dataset.plus }); return this.ouvrir(); }
       if(e.target.closest('#payer')){ if(this.proposerChevalet()) return; this.payer(); }
     });
