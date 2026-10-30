@@ -366,11 +366,12 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 const CONFIG = {
   STORE_MODE: 'preview',            // 'preview' | 'live'
   checkoutApi: '/api/checkout',     // fonction Vercel qui crée la session Stripe Checkout
-  contactEmail: 'guillaumecassisa@gmail.com',
+  contactEmail: '',                 // non affiché : le contact se fait uniquement par le formulaire
+  formEndpoint: 'https://formsubmit.co/ajax/guillaumecassisa@gmail.com', // destinataire des formulaires (non affiché)
   annonce: 'Boutique en préparation : les commandes ouvriront prochainement.',
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
-  legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'07 71 62 17 15', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
+  legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
   livraisonGratuiteDes: 50,         // € — livraison offerte à partir de ce montant (aligné sur SEUIL_LIVRAISON_GRATUITE_CENTIMES dans Vercel)
   vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'', paysLivres:'France', retours:'' }
 };
@@ -760,7 +761,6 @@ function vueContact(){
       <button class="btn btn-p" type="submit" style="justify-self:start">Envoyer le message</button>
       <div class="retour" aria-live="polite"></div>
     </form>
-    <p class="small muted" style="margin-top:28px">Adresse e-mail : ${CONFIG.contactEmail ? `<strong>${esc(CONFIG.contactEmail)}</strong>` : '<span class="a-completer">adresse e-mail K-Reau à compléter</span>'}</p>
   </div></section>`;
 }
 
@@ -779,7 +779,7 @@ const PAGES = {
     <ul><li>Dénomination : K-Reau — ${aCompleter(L.raisonSociale,'raison sociale / nom de l’entrepreneur')}</li>
     <li>Forme juridique : ${aCompleter(L.formeJuridique)}</li><li>Immatriculation : ${aCompleter(L.siret)}</li>
     <li>N° de TVA intracommunautaire : ${aCompleter(L.tva,'à compléter ou mention « TVA non applicable, art. 293 B du CGI »')}</li>
-    <li>Adresse : ${aCompleter(L.adresse)}</li><li>E-mail : ${aCompleter(CONFIG.contactEmail)}</li><li>Téléphone : ${aCompleter(L.telephone)}</li>
+    <li>Adresse : ${aCompleter(L.adresse)}</li><li>Contact : par le <a class="lien" href="#contact">formulaire de contact</a></li>
     <li>Directeur de la publication : ${aCompleter(L.directeurPublication)}</li></ul>
     <h2>Hébergement</h2><p>${aCompleter(L.hebergeur,'nom, adresse et téléphone de l’hébergeur')}</p>
     <h2>Propriété intellectuelle</h2><p>Le nom K-Reau, le logo, les dessins et l’ensemble des contenus de ce site sont protégés. Toute reproduction sans autorisation est interdite.</p>
@@ -802,7 +802,7 @@ const PAGES = {
     <p>Les messages sont transmis par e-mail via le service FormSubmit (formsubmit.co).</p>
     <h2>Responsable du traitement</h2><p>${aCompleter(L.raisonSociale)}</p>
     <h2>Durée de conservation</h2><p>${aCompleter('','durée de conservation')}</p>
-    <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en écrivant à ${aCompleter(CONFIG.contactEmail,'adresse e-mail de contact')}. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
+    <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en nous écrivant par le <a class="lien" href="#contact">formulaire de contact</a>. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
     <h2>Cookies</h2><p>À ce jour, ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Si de tels outils sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser avant tout dépôt.</p>`),
   'avant-lancement': vueChecklist
 };
@@ -824,10 +824,10 @@ function vueChecklist(){
     ['Hébergeur du site', !!L.hebergeur],
     ['Médiateur de la consommation', !!L.mediateur],
     ['CGV complètes et validées', false],
-    ['Politique de confidentialité : responsable, durée de conservation, adresse de contact', !!CONFIG.contactEmail],
+    ['Politique de confidentialité : durée de conservation des données', false],
     ['Bandeau cookies si ajout d’outils de mesure', false],
     ['Prestataire de paiement (Shopify ou Stripe) branché et testé ; CONFIG.checkoutUrl', !!CONFIG.checkoutUrl],
-    ['Adresse e-mail de contact publique (CONFIG.contactEmail)', !!CONFIG.contactEmail],
+    ['Adresse e-mail et téléphone pros (ex. contact@k-reau.fr) pour les mentions légales et les CGV', false],
     ['Comptes réseaux sociaux réels pour le pied de page', false],
     ['Nom de domaine et hébergement définitif', false],
     ['Passage de CONFIG.STORE_MODE à « live »', LIVE]
@@ -906,7 +906,7 @@ const Panier = {
 /* ===== Formulaires (enregistrement réel dans la base de l'artifact) ===== */
 async function enregistrer(type, data){
   const sujet = type==='contacts' ? `K-Reau · Contact : ${data.sujet||''}` : `K-Reau · Inscription lancement (${data.contexte||''})`;
-  const r = await fetch('https://formsubmit.co/ajax/' + CONFIG.contactEmail, {
+  const r = await fetch(CONFIG.formEndpoint, {
     method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
     body: JSON.stringify({ ...data, type, date:new Date().toLocaleString('fr-FR'), _subject:sujet, _template:'table', _captcha:'false', _replyto:data.email })
   });
