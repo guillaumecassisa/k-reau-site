@@ -790,7 +790,7 @@ function vueProduit(slug){
       <h1>${esc(p.nom)}</h1>
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
-      ${prix ? `<p class="prix">${prix}<span class="small muted" style="display:block;font-weight:400">TVA non applicable, art. 293 B du CGI</span></p>` : ''}
+      ${prix ? `<p class="prix">${prix}</p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>

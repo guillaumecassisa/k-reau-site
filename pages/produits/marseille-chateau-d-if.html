@@ -359,7 +359,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <h1>Le Château d’If</h1>
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">Posé sur son rocher au large, le château d'If garde ses histoires et ses légendes. Un carreau qui raconte la traversée en navette et l'horizon tout autour.</p>
-      <p class="prix">19,90&nbsp;€<span class="small muted" style="display:block;font-weight:400">TVA non applicable, art. 293 B du CGI</span></p>
+      <p class="prix">19,90&nbsp;€</p>
       
         <div class="encart">
           <label for="qte-out">Quantité</label>
@@ -861,7 +861,7 @@ function vueProduit(slug){
       <h1>${esc(p.nom)}</h1>
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
-      ${prix ? `<p class="prix">${prix}<span class="small muted" style="display:block;font-weight:400">TVA non applicable, art. 293 B du CGI</span></p>` : ''}
+      ${prix ? `<p class="prix">${prix}</p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>
