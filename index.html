@@ -393,7 +393,7 @@ const LIVE = CONFIG.STORE_MODE === 'live' && !!CONFIG.checkoutUrl && Object.valu
 const $ = (s, r=document) => r.querySelector(s);
 const app = $('#app');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) + ' TTC' : ''; };
+const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) : ''; };
 const aCompleter = (v, txt='À compléter avant mise en ligne') => v ? esc(v) : `<span class="a-completer">${txt}</span>`;
 const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
 function setMeta(title, desc){ document.title = title; let m = document.querySelector('meta[name="description"]'); if(m && desc) m.setAttribute('content', desc); }
@@ -423,7 +423,7 @@ const collNom = p => p.collection === 'Signature' ? 'Les Embiez · modèle signa
 
 /* ===== Composants ===== */
 function carte(p, eager=false){
-  const prix = LIVE ? prixTxt(p) : '';
+  const prix = prixTxt(p);
   return `<article class="carte">
     <a class="carte-img" href="#produit-${esc(p.slug)}" tabindex="-1" aria-hidden="true">
       <img src="${esc(p.miniature)}" srcset="${esc(p.miniature)} 600w, ${esc(p.image_principale)} 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="${esc(p.alt)}" ${eager?'':'loading="lazy"'} decoding="async">
@@ -666,7 +666,7 @@ function vueProduit(slug){
       <span class="eyebrow">${esc(collNom(p))}</span>
       <h1>${esc(p.nom)}</h1>
       <p class="fiche-desc">${esc(p.description)}</p>
-      ${LIVE && prix ? `<p class="prix">${prix}</p>` : ''}
+      ${prix ? `<p class="prix">${prix}<span class="small muted" style="display:block;font-weight:400">TVA non applicable, art. 293 B du CGI</span></p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>
