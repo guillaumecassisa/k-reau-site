@@ -366,7 +366,7 @@ const CONFIG = {
   STORE_MODE: 'live',            // 'preview' | 'live'
   checkoutApi: '/api/checkout',     // fonction Vercel qui crée la session Stripe Checkout
   contactEmail: '',                 // non affiché : le contact se fait uniquement par le formulaire
-  formEndpoint: 'https://formsubmit.co/ajax/guillaumecassisa@gmail.com', // destinataire des formulaires (non affiché)
+  formEndpoint: '/api/contact',     // relais serveur ; destinataire dans la variable Vercel CONTACT_DESTINATION
   annonce: 'Boutique en préparation : les commandes ouvriront prochainement.',
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
@@ -915,13 +915,9 @@ const Panier = {
 
 /* ===== Formulaires (enregistrement réel dans la base de l'artifact) ===== */
 async function enregistrer(type, data){
-  const sujet = type==='contacts' ? `K-Reau · Contact : ${data.sujet||''}` : `K-Reau · Inscription lancement (${data.contexte||''})`;
-  const r = await fetch(CONFIG.formEndpoint, {
-    method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
-    body: JSON.stringify({ ...data, type, date:new Date().toLocaleString('fr-FR'), _subject:sujet, _template:'table', _captcha:'false', _replyto:data.email })
-  });
+  const r = await fetch(CONFIG.formEndpoint, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ ...data, type }) });
   const j = await r.json().catch(()=>({}));
-  if(!r.ok || String(j.success)==='false') throw new Error(j.message||r.status);
+  if(!r.ok) throw new Error(j.erreur || ('Erreur ' + r.status));
 }
 function valider(form){
   let ok = true;
