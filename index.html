@@ -388,7 +388,7 @@ const COLLECTIONS = {
   'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
-const TEST_BOUTIQUE = (()=>{ try{ const q=new URLSearchParams(location.search); if(q.has('test-boutique')) sessionStorage.setItem('kreau-test','1'); return sessionStorage.getItem('kreau-test')==='1'; }catch(e){ return false; } })();
+const TEST_BOUTIQUE = false; // accès test désactivé : une clé Stripe réelle est en place
 const LIVE = TEST_BOUTIQUE || (CONFIG.STORE_MODE === 'live' && Object.values(CONFIG.legal).every(Boolean) && Object.values(CONFIG.vente).every(Boolean));
 
 /* ===== Utilitaires ===== */
