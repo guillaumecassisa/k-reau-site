@@ -954,7 +954,7 @@ document.addEventListener('submit', async e => {
       ? '<p class="msg ok">Merci, votre message a bien été envoyé. Nous vous répondrons par e-mail.</p>'
       : '<p class="msg ok">C’est noté : nous vous préviendrons à l’ouverture des commandes.</p>';
   }catch(err){
-    retour.innerHTML = `<p class="msg ko">L’envoi n’a pas abouti depuis cet affichage. ${CONFIG.contactEmail ? `Écrivez-nous directement à <strong>${esc(CONFIG.contactEmail)}</strong>.` : 'Réessayez un peu plus tard.'}</p>`;
+    retour.innerHTML = `<p class="msg ko">L’envoi n’a pas abouti. Réessayez un peu plus tard ou écrivez-nous à contact@k-reau.fr.<br><span class="small">Détail : ${esc(err && err.message || '')}</span></p>`;
   }finally{ btn.disabled = false; btn.textContent = lib; }
 });
 document.addEventListener('input', e => { const ch = e.target.closest('.champ.invalide'); if(ch){ ch.classList.remove('invalide'); ch.querySelector('.err').textContent=''; } });
