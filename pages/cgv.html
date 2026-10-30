@@ -336,7 +336,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-tete{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
 @media(max-width:860px){.sm-tete{grid-template-columns:1fr}}
 .sm-exemple{margin:0;position:relative;display:grid;gap:10px}
-.sm-exemple img{width:100%;height:auto;border:1px solid var(--joint);box-shadow:0 24px 50px -30px rgba(34,33,30,.45)}
+.sm-exemple img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--joint);box-shadow:0 24px 50px -30px rgba(34,33,30,.45)}
 .sm-etiquette{position:absolute;top:12px;background:rgba(255,254,251,.94);border:1px solid var(--joint);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px}
 .sm-etiquette.g{left:12px}.sm-etiquette.d{left:calc(50% + 12px)}
 #form-sm{scroll-margin-top:110px}
@@ -1213,6 +1213,12 @@ function vueCoffrets(){
   app.querySelectorAll('[data-trio]').forEach(b => b.addEventListener('click', () => { const t=CONFIG.trios.find(x=>x.id===b.dataset.trio); Panier.ajouter({ type:'coffret', slugs:[...t.slugs], nom:t.nom }); toast(`${t.nom} ajouté au panier`); Panier.ouvrir(); }));
 }
 
+const SM_EXEMPLES = [
+  { f:'photo-vers-carreau', g:'Votre photo', legende:'Exemple : de la photo de votre maison au carreau dessiné.',
+    alt:'À gauche, la photo d’un mas provençal aux volets verts ; à droite, le même mas dessiné au trait noir sur un carreau K-Reau' },
+  { f:'dessin-enfant-vers-carreau', g:'Son dessin', legende:'Exemple : le dessin de votre enfant reproduit en couleurs sur un carreau.',
+    alt:'À gauche, un dessin d’enfant aux feutres représentant une famille sous le soleil ; à droite, le même dessin reproduit en couleurs sur un carreau K-Reau' }
+];
 function vueSurMesure(){
   setMeta('Carreau personnalisé sur mesure : votre lieu dessiné | K-Reau', `Votre maison, votre village ou votre plage dessiné au trait sur un carreau en céramique 15 × 15 cm, avec le nom de votre choix en calligraphie. ${prixEur(CONFIG.prix.surMesure)}.`);
   app.innerHTML = `
@@ -1222,11 +1228,15 @@ function vueSurMesure(){
       <p class="lead">La maison de famille, le village de vacances, la plage de votre enfance : nous dessinons le lieu de votre choix au trait et l’imprimons sur un carreau en céramique de 15 × 15 cm, avec le nom de votre choix en calligraphie.</p>
       <p class="offre-prix" style="font-size:1.5rem">${prixEur(CONFIG.prix.surMesure)}</p>
       <a class="btn btn-p" href="#form-sm" style="justify-self:start">Créer mon carreau</a></div>
-      <figure class="sm-exemple">
-        <img src="/img/sur-mesure/photo-vers-carreau.webp" srcset="/img/sur-mesure/photo-vers-carreau-mini.webp 700w, /img/sur-mesure/photo-vers-carreau.webp 1254w" sizes="(max-width:860px) 100vw, 560px" width="1254" height="1254" fetchpriority="high"
-          alt="À gauche, la photo d’un mas provençal aux volets verts ; à droite, le même mas dessiné au trait noir sur un carreau K-Reau">
-        <span class="sm-etiquette g">Votre photo</span><span class="sm-etiquette d">Votre carreau</span>
-        <figcaption class="small muted">Exemple : de la photo de votre maison au carreau dessiné.</figcaption>
+      <figure class="sm-exemple" id="sm-galerie" tabindex="-1">
+        <div class="galerie-cadre">
+          <img id="sm-img" src="/img/sur-mesure/${SM_EXEMPLES[0].f}.webp" srcset="/img/sur-mesure/${SM_EXEMPLES[0].f}-mini.webp 700w, /img/sur-mesure/${SM_EXEMPLES[0].f}.webp 1254w" sizes="(max-width:860px) 100vw, 560px" width="1254" height="1254" fetchpriority="high" alt="${esc(SM_EXEMPLES[0].alt)}">
+          <span class="sm-etiquette g" id="sm-g">${esc(SM_EXEMPLES[0].g)}</span><span class="sm-etiquette d">Votre carreau</span>
+          ${SM_EXEMPLES.length > 1 ? `<button class="fleche fleche-prec" type="button" id="sm-prec" aria-label="Exemple précédent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="fleche fleche-suiv" type="button" id="sm-suiv" aria-label="Exemple suivant"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+          <span class="galerie-compteur" id="sm-compteur" style="left:auto;right:12px" aria-live="polite">1 / ${SM_EXEMPLES.length}</span>` : ''}
+        </div>
+        <figcaption class="small muted" id="sm-legende">${esc(SM_EXEMPLES[0].legende)}</figcaption>
       </figure>
     </div></div></div>
   <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:48px">
@@ -1248,6 +1258,18 @@ function vueSurMesure(){
       <p class="small muted">Délai : dessin envoyé sous 5 jours ouvrés après la commande, puis expédition sous 5 à 7 jours après votre validation.</p>
     </form>
   </div></section>`;
+  if(SM_EXEMPLES.length > 1){
+    let n = 0; const img = $('#sm-img');
+    const voir = i => { n = (i + SM_EXEMPLES.length) % SM_EXEMPLES.length; const e = SM_EXEMPLES[n];
+      img.srcset = `/img/sur-mesure/${e.f}-mini.webp 700w, /img/sur-mesure/${e.f}.webp 1254w`; img.src = `/img/sur-mesure/${e.f}.webp`; img.alt = e.alt;
+      $('#sm-g').textContent = e.g; $('#sm-legende').textContent = e.legende; $('#sm-compteur').textContent = `${n+1} / ${SM_EXEMPLES.length}`; };
+    $('#sm-prec').addEventListener('click', () => voir(n-1));
+    $('#sm-suiv').addEventListener('click', () => voir(n+1));
+    $('#sm-galerie').addEventListener('keydown', e => { if(e.key==='ArrowLeft') voir(n-1); if(e.key==='ArrowRight') voir(n+1); });
+    let x0 = null; img.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive:true });
+    img.addEventListener('touchend', e => { if(x0===null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if(Math.abs(dx) > 45) voir(n + (dx < 0 ? 1 : -1)); });
+    SM_EXEMPLES.slice(1).forEach(e => { const p = new Image(); p.src = `/img/sur-mesure/${e.f}-mini.webp`; });
+  }
   const form = $('#form-sm');
   form.addEventListener('submit', e => {
     e.preventDefault(); e.stopPropagation();
