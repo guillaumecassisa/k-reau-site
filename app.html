@@ -1033,23 +1033,41 @@ function vueProduit(slug){
 }
 
 function vueHistoire(){
-  setMeta('Notre histoire | K-Reau, carreaux d’ici','L’histoire de K-Reau : des lieux méditerranéens dessinés en quelques lignes sur des carreaux décoratifs, pour leur faire une place chez soi.');
+  setMeta('Notre histoire : carreaux décoratifs illustrés de Provence | K-Reau, carreaux d’ici',
+    'L’histoire de K-Reau, marque provençale née à Mallemort : des lieux de Marseille, de la Côte Bleue et de Provence dessinés au trait sur des carreaux décoratifs en céramique, avec leur nom en calligraphie.');
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Notre histoire','']])}
-    <div class="bloc-titre"><span class="eyebrow">Notre histoire</span><h1>Un lieu. Un souvenir. Un K-Reau.</h1></div>
+    <div class="bloc-titre"><span class="eyebrow">Notre histoire</span><h1>Un lieu. Un souvenir. Un K-Reau.</h1>
+    <p class="lead">Une marque provençale de carreaux décoratifs illustrés, née entre la Durance, le Luberon et les Alpilles.</p></div>
   </div></div>
   <section class="bloc"><div class="wrap histoire">
     <figure class="histoire-img" style="margin:0"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" loading="lazy" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure>
     <div class="prose">
-      <p class="lead" style="color:var(--encre);font-family:var(--f-titre);font-size:1.6rem;line-height:1.4">Il y a des endroits qu’on n’oublie pas. Le port des vacances, la crique qu’on connaît par cœur, la ville où tout a commencé.</p>
-      <p>K-Reau est né d’une envie simple : donner une place, chez soi, à ces lieux qui nous accompagnent. Pas une carte postale, pas un souvenir de boutique, mais un dessin épuré qui garde l’essentiel d’un paysage.</p>
-      <p>Chaque carreau associe un dessin au trait noir sur fond blanc et le nom du lieu écrit en calligraphie. Les premières collections parcourent Marseille et la Côte Bleue, avec Les Embiez comme modèle signature.</p>
+      <p class="lead" style="color:var(--encre);font-family:var(--f-titre);font-size:1.6rem;line-height:1.4">Il y a des endroits qu’on n’oublie pas. Le port des vacances, la crique qu’on connaît par cœur, la colline qu’on voit depuis sa fenêtre, la ville où tout a commencé.</p>
+      <p>K-Reau est né d’une envie simple : donner une place, chez soi, à ces lieux qui nous accompagnent. Pas une carte postale qu’on range dans un tiroir, pas un souvenir de boutique fabriqué à la chaîne, mais un dessin épuré qui garde l’essentiel d’un paysage, et qu’on a plaisir à regarder tous les jours.</p>
+
+      <h2>Une marque née en Provence</h2>
+      <p>K-Reau est imaginé à Mallemort, dans les Bouches-du-Rhône, là où la Durance sépare le Luberon des Alpilles. Ici, la lumière dessine tout : l’ombre des platanes sur une place de village, les crêtes calcaires au coucher du soleil, l’éclat de la mer quand on arrive sur la Côte Bleue.</p>
+      <p>En Provence, le carreau fait partie de la maison. Les tomettes rouges des mas, les carreaux de ciment des vieilles cuisines, les faïences qu’on se transmet : la céramique y raconte depuis toujours l’histoire des lieux et de ceux qui les habitent. Nos carreaux décoratifs en céramique reprennent ce fil, à notre manière : un trait noir, un fond blanc, et un nom.</p>
+
+      <h2>Le trait, la céramique, la calligraphie</h2>
+      <p>Tout commence par le choix d’un lieu, toujours un lieu réel, que l’on aime et que l’on reconnaît au premier regard. Nous le dessinons au trait, en enlevant tout ce qui n’est pas essentiel, jusqu’à ne garder que sa silhouette : la Bonne Mère sur sa colline, la crête de la Sainte-Victoire, les arches du Vallon des Auffes.</p>
+      <p>Le dessin est ensuite accompagné du nom du lieu, écrit en calligraphie, puis imprimé en UV sur un carreau en céramique blanche brillante de 15 × 15 cm. Chaque carreau est préparé avec soin et expédié dans un coffret kraft, prêt à offrir. Il se pose sur une étagère ou un buffet, ou s’accroche au mur.</p>
+
+      <h2>De Marseille aux châteaux de France</h2>
+      <p>Nos premières collections sont nées autour de chez nous. <a class="lien" href="/collections/marseille">Marseille</a> d’abord, du Vieux-Port au Panier, des calanques à la Corniche. Puis <a class="lien" href="/collections/cote-bleue">la Côte Bleue</a>, ses petits ports et ses criques, de L’Estaque à Carro. <a class="lien" href="/collections/montagnes-du-sud">Les Montagnes du Sud</a> ont suivi, de la Sainte-Victoire au Ventoux, avec <a class="lien" href="/produits/les-embiez">Les Embiez</a> comme modèle signature.</p>
+      <p>Avec <a class="lien" href="/collections/chateaux">les Châteaux</a>, de Versailles à Chambord et aux châteaux de la Loire, K-Reau dessine aussi le patrimoine de toute la France, avec le même trait et la même simplicité.</p>
+
       <h2>Le nom</h2>
-      <p>K-Reau, comme un carreau. Notre signature, <em>Carreaux d’ici</em>, dit ce que nous aimons dessiner : des lieux proches, familiers, que l’on reconnaît au premier coup d’œil.</p>
+      <p>K-Reau, comme un carreau. Notre signature, <em>Carreaux d’ici</em>, dit ce que nous aimons dessiner : des lieux proches, familiers, que l’on reconnaît au premier coup d’œil. « D’ici », c’est la Provence où la marque est née. C’est aussi l’ici de chacun : le lieu qui compte pour vous, où qu’il soit.</p>
+
+      <h2>Un souvenir à offrir</h2>
+      <p>Un K-Reau se garde et s’offre. Pour un Marseillais installé loin de chez lui, un couple qui s’est rencontré dans une calanque, une crémaillère, un départ ou un anniversaire, c’est un cadeau souvenir qui a du sens. Vous pouvez composer un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, offrir une <a class="lien" href="/carte-cadeau">carte cadeau</a> ou faire dessiner <a class="lien" href="/sur-mesure">votre propre lieu sur mesure</a>.</p>
+
       <h2>La suite</h2>
-      <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="/contact">Dites-le-nous</a>.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-p" href="/#collections">Découvrir les collections</a></div>
+      <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="/contact">Dites-le-nous</a>. Vous avez un projet pour une entreprise, un mariage ou une boutique ? <a class="lien" href="/projet-specifique">Parlez-nous de votre projet</a>.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-p" href="/#collections">Découvrir les collections</a><a class="btn btn-s" href="/sur-mesure">Créer mon carreau sur mesure</a></div>
     </div>
   </div></section>`;
 }
