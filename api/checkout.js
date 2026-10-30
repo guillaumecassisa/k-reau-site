@@ -30,8 +30,8 @@ module.exports = async function handler(req, res) {
   const params = {
     mode: 'payment',
     locale: 'fr',
-    success_url: `${origine}/#merci`,
-    cancel_url: `${origine}/#panier`,
+    success_url: `${origine}/merci`,
+    cancel_url: `${origine}/panier`,
     billing_address_collection: 'auto',
     phone_number_collection: { enabled: 'true' },
     shipping_address_collection: { allowed_countries: (process.env.PAYS_LIVRES || 'FR').split(',').map(s => s.trim()) },

@@ -1,20 +1,21 @@
 <!doctype html>
-<html lang="fr">
-<head>
+<html lang="fr"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" type="image/webp" href="img/01_Identite/logo-kreau-header.webp">
-<title>K-Reau Carreaux d'ici</title>
+<link rel="icon" type="image/webp" href="/img/01_Identite/logo-kreau-header.webp">
+<title>K-Reau | Carreaux décoratifs des lieux qu’on aime</title>
 <meta name="description" content="Découvrez K-Reau, des carreaux décoratifs illustrés inspirés de Marseille, de la Côte Bleue et des Embiez. Des lieux à garder chez soi.">
 <meta property="og:title" content="K-Reau | Carreaux décoratifs des lieux qu’on aime">
-<meta property="og:description" content="Des carreaux décoratifs illustrés inspirés de Marseille, de la Côte Bleue et des Embiez.">
-<meta property="og:image" content="img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
+<meta property="og:description" content="Découvrez K-Reau, des carreaux décoratifs illustrés inspirés de Marseille, de la Côte Bleue et des Embiez. Des lieux à garder chez soi.">
+<meta property="og:image" content="https://k-reau.fr/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://k-reau.fr/">
+<link rel="canonical" href="https://k-reau.fr/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"K-Reau","slogan":"Les lieux qu’on aime, à garder chez soi.","logo":"img/01_Identite/logo-kreau.webp"}</script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap">
+<link rel="preload" as="image" href="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"K-Reau","slogan":"Les lieux qu’on aime, à garder chez soi.","logo":"https://k-reau.fr/img/01_Identite/logo-kreau.webp"}</script>
 <style>
 /* Mise en page : un « calepinage » — grilles de carreaux, joints fins couleur sable, beaucoup d'air. Thème clair unique, assumé (céramique). */
 :root{
@@ -276,84 +277,269 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
-<div class="annonce" id="annonce" hidden></div>
+<div class="annonce" id="annonce" hidden=""></div>
 <header class="site">
   <div class="wrap hd">
-    <a class="logo-lien" href="#accueil" aria-label="K-Reau, retour à l'accueil"><img src="img/01_Identite/logo-kreau-header.webp" alt="K-Reau" width="560" height="461"></a>
+    <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header.webp" alt="K-Reau" width="560" height="461"></a>
     <nav class="principale" aria-label="Navigation principale">
       <ul>
-        <li><a href="#collection-marseille" data-nav="collection-marseille">Marseille</a></li>
-        <li><a href="#collection-cote-bleue" data-nav="collection-cote-bleue">Côte Bleue</a></li>
-        <li><a href="#carreaux" data-nav="carreaux">Nos carreaux</a></li>
-        <li><a href="#notre-histoire" data-nav="notre-histoire">Notre histoire</a></li>
+        <li><a href="/collections/marseille" data-nav="collection-marseille">Marseille</a></li>
+        <li><a href="/collections/cote-bleue" data-nav="collection-cote-bleue">Côte Bleue</a></li>
+        <li><a href="/carreaux" data-nav="carreaux">Nos carreaux</a></li>
+        <li><a href="/notre-histoire" data-nav="notre-histoire">Notre histoire</a></li>
       </ul>
     </nav>
     <div class="hd-actions">
-      <button class="icone-btn" id="btn-panier" type="button" aria-label="Ouvrir le panier" hidden>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
-        <span class="pastille" id="nb-panier" hidden>0</span>
+      <button class="icone-btn" id="btn-panier" type="button" aria-label="Ouvrir le panier">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>
+        <span class="pastille" id="nb-panier" hidden="">0</span>
       </button>
       <button class="icone-btn burger" id="btn-menu" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="tiroir">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"></path></svg>
       </button>
     </div>
   </div>
 </header>
 
-<div class="tiroir" id="tiroir" hidden>
+<div class="tiroir" id="tiroir" hidden="">
   <div class="tiroir-panneau" role="dialog" aria-modal="true" aria-label="Menu">
-    <button class="icone-btn tiroir-fermer" type="button" data-fermer aria-label="Fermer le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
-    <a href="#accueil">Accueil</a>
-    <a href="#collection-marseille">Marseille</a>
-    <a href="#collection-cote-bleue">Côte Bleue</a>
-    <a href="#les-embiez">Les Embiez</a>
-    <a href="#carreaux">Nos carreaux</a>
-    <a href="#notre-histoire">Notre histoire</a>
-    <a href="#faq">Questions fréquentes</a>
-    <a href="#contact">Contact</a>
+    <button class="icone-btn tiroir-fermer" type="button" data-fermer="" aria-label="Fermer le menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+    <a href="/">Accueil</a>
+    <a href="/collections/marseille">Marseille</a>
+    <a href="/collections/cote-bleue">Côte Bleue</a>
+    <a href="/produits/les-embiez">Les Embiez</a>
+    <a href="/carreaux">Nos carreaux</a>
+    <a href="/notre-histoire">Notre histoire</a>
+    <a href="/faq">Questions fréquentes</a>
+    <a href="/contact">Contact</a>
   </div>
 </div>
 
-<main id="app" tabindex="-1"></main>
+<main id="app" tabindex="-1" data-prerendu="1">
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap hero-grille">
+      <div class="hero-texte">
+        <span class="eyebrow">K-REAU · CARREAUX D’ICI</span>
+        <h1 id="h1">Les lieux qu’on aime, <em>à garder chez soi.</em></h1>
+        <p class="lead">Des paysages méditerranéens dessinés avec délicatesse sur des carreaux décoratifs. Pour se souvenir d’un endroit, raconter une histoire ou offrir un petit bout d’ailleurs.</p>
+        <div class="hero-btns">
+          <a class="btn btn-p" href="/#collections">Découvrir les collections</a>
+          <a class="btn btn-s" href="/notre-histoire">L’histoire de K-Reau</a>
+        </div>
+      </div>
+      <figure class="hero-img" style="margin:0">
+        <img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="args">
+      <div class="arg"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M5 30c5-1 8-9 12-9s5 6 9 6 6-8 9-12"></path><path d="M5 34h30"></path></svg><h3>Des dessins épurés</h3><p>Chaque lieu, résumé à l’essentiel.</p></div>
+      <div class="arg"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="7" y="7" width="26" height="26"></rect><path d="M11 26c3-4 5-8 9-8s6 4 9 8"></path><circle cx="26" cy="13" r="2"></circle></svg><h3>Des souvenirs à garder</h3><p>Des paysages qui font partie de nos histoires.</p></div>
+      <div class="arg"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="7" y="15" width="26" height="18"></rect><path d="M5 11h30v4H5zM20 11v22"></path><path d="M20 11c-3-5-9-5-8-1s8 1 8 1zm0 0c3-5 9-5 8-1s-8 1-8 1z"></path></svg><h3>Une belle idée cadeau</h3><p>Pour ceux qui aiment un lieu un peu plus que les autres.</p></div>
+    </div>
+  </div>
+
+  <section class="bloc" id="collections" aria-labelledby="t-coll">
+    <div class="wrap">
+      <div class="bloc-titre centre">
+        <span class="eyebrow">Les collections</span>
+        <h2 id="t-coll">Où voulez-vous retourner ?</h2>
+        <p class="lead">Un port, une crique, une colline… Il y a toujours un lieu qui nous suit partout.</p>
+      </div>
+      <div class="colls">
+        <a class="coll" href="/collections/marseille">
+            <div class="coll-img"><img src="/img/mises-en-scene/marseille-port.webp" width="545" height="462" loading="lazy" alt="Carreau K-Reau de la collection Marseille posé au bord de la mer"></div>
+            <div class="coll-corps">
+              <span class="eyebrow">10 modèles</span>
+              <h3>Marseille</h3>
+              <p class="muted">Le Vieux-Port, les calanques, la Bonne Mère… Dix lieux de la ville.</p>
+              <span class="btn btn-s">Voir les modèles</span>
+            </div></a><a class="coll" href="/collections/cote-bleue">
+            <div class="coll-img"><img src="/img/mises-en-scene/cote-bleue-calanque.webp" width="548" height="465" loading="lazy" alt="Carreau K-Reau de la collection La Côte Bleue posé au bord de la mer"></div>
+            <div class="coll-corps">
+              <span class="eyebrow">10 modèles</span>
+              <h3>La Côte Bleue</h3>
+              <p class="muted">De L’Estaque à Carro, des ports et des criques à garder près de soi.</p>
+              <span class="btn btn-s">Voir les modèles</span>
+            </div></a><a class="coll" href="/produits/les-embiez">
+            <div class="coll-img"><img src="/img/mises-en-scene/les-embiez-rochers.webp" width="512" height="508" loading="lazy" alt="Carreau K-Reau de la collection Les Embiez posé au bord de la mer"></div>
+            <div class="coll-corps">
+              <span class="eyebrow">Modèle signature</span>
+              <h3>Les Embiez</h3>
+              <p class="muted">Notre modèle signature : l’île, sa tour et ses rochers.</p>
+              <span class="btn btn-s">Voir le modèle</span>
+            </div></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc fond-blanc joint-haut" id="carreaux-accueil" aria-labelledby="t-grille">
+    <div class="wrap">
+      <div class="bloc-titre">
+        <span class="eyebrow">Nos carreaux</span>
+        <h2 id="t-grille">Les carreaux à découvrir</h2>
+      </div>
+      <div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="g-accueil"><button type="button" class="filtre" data-f="tout" aria-pressed="true">Tout</button><button type="button" class="filtre" data-f="marseille" aria-pressed="false">Marseille</button><button type="button" class="filtre" data-f="cote-bleue" aria-pressed="false">Côte Bleue</button><button type="button" class="filtre" data-f="les-embiez" aria-pressed="false">Les Embiez</button></div>
+      <p class="small muted" id="g-accueil-statut" role="status" aria-live="polite"></p>
+      <div class="grille" id="g-accueil"><article class="carte">
+    <a class="carte-img" href="/produits/marseille-vieux-port" tabindex="-1" aria-hidden="true">
+      <img src="/img/03_Produits_Marseille/marseille-vieux-port-mini.webp" srcset="/img/03_Produits_Marseille/marseille-vieux-port-mini.webp 600w, /img/03_Produits_Marseille/marseille-vieux-port.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Le Vieux-Port de Marseille » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Marseille</span>
+    <h3><a href="/produits/marseille-vieux-port">Le Vieux-Port de Marseille</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/marseille-vieux-port">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/marseille-notre-dame-de-la-garde" tabindex="-1" aria-hidden="true">
+      <img src="/img/03_Produits_Marseille/marseille-notre-dame-de-la-garde-mini.webp" srcset="/img/03_Produits_Marseille/marseille-notre-dame-de-la-garde-mini.webp 600w, /img/03_Produits_Marseille/marseille-notre-dame-de-la-garde.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Notre-Dame de la Garde » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Marseille</span>
+    <h3><a href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/marseille-notre-dame-de-la-garde">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/marseille-vallon-des-auffes" tabindex="-1" aria-hidden="true">
+      <img src="/img/03_Produits_Marseille/marseille-vallon-des-auffes-mini.webp" srcset="/img/03_Produits_Marseille/marseille-vallon-des-auffes-mini.webp 600w, /img/03_Produits_Marseille/marseille-vallon-des-auffes.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Le Vallon des Auffes » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Marseille</span>
+    <h3><a href="/produits/marseille-vallon-des-auffes">Le Vallon des Auffes</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/marseille-vallon-des-auffes">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/marseille-chateau-d-if" tabindex="-1" aria-hidden="true">
+      <img src="/img/03_Produits_Marseille/marseille-chateau-d-if-mini.webp" srcset="/img/03_Produits_Marseille/marseille-chateau-d-if-mini.webp 600w, /img/03_Produits_Marseille/marseille-chateau-d-if.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Le Château d’If » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Marseille</span>
+    <h3><a href="/produits/marseille-chateau-d-if">Le Château d’If</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/marseille-chateau-d-if">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/cote-bleue-sausset-les-pins" tabindex="-1" aria-hidden="true">
+      <img src="/img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins-mini.webp" srcset="/img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins-mini.webp 600w, /img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Sausset-les-Pins » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Côte Bleue</span>
+    <h3><a href="/produits/cote-bleue-sausset-les-pins">Sausset-les-Pins</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/cote-bleue-sausset-les-pins">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/cote-bleue-carry-le-rouet" tabindex="-1" aria-hidden="true">
+      <img src="/img/04_Produits_Cote_Bleue/cote-bleue-carry-le-rouet-mini.webp" srcset="/img/04_Produits_Cote_Bleue/cote-bleue-carry-le-rouet-mini.webp 600w, /img/04_Produits_Cote_Bleue/cote-bleue-carry-le-rouet.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Carry-le-Rouet » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Côte Bleue</span>
+    <h3><a href="/produits/cote-bleue-carry-le-rouet">Carry-le-Rouet</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/cote-bleue-carry-le-rouet">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/cote-bleue-port-niolon" tabindex="-1" aria-hidden="true">
+      <img src="/img/04_Produits_Cote_Bleue/cote-bleue-port-niolon-mini.webp" srcset="/img/04_Produits_Cote_Bleue/cote-bleue-port-niolon-mini.webp 600w, /img/04_Produits_Cote_Bleue/cote-bleue-port-niolon.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Le Port de Niolon » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Côte Bleue</span>
+    <h3><a href="/produits/cote-bleue-port-niolon">Le Port de Niolon</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/cote-bleue-port-niolon">Voir le carreau</a>
+  </article><article class="carte">
+    <a class="carte-img" href="/produits/cote-bleue-calanque-mejean" tabindex="-1" aria-hidden="true">
+      <img src="/img/04_Produits_Cote_Bleue/cote-bleue-calanque-mejean-mini.webp" srcset="/img/04_Produits_Cote_Bleue/cote-bleue-calanque-mejean-mini.webp 600w, /img/04_Produits_Cote_Bleue/cote-bleue-calanque-mejean.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « La Calanque de Méjean » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Côte Bleue</span>
+    <h3><a href="/produits/cote-bleue-calanque-mejean">La Calanque de Méjean</a></h3>
+    <span class="carte-prix">19,90&nbsp;€</span>
+    <a class="btn btn-s" href="/produits/cote-bleue-calanque-mejean">Voir le carreau</a>
+  </article></div>
+      <div class="grille-pied"><a class="btn btn-s" href="/carreaux">Voir les 21 carreaux</a></div>
+    </div>
+  </section>
+
+  <section class="bloc" aria-labelledby="t-hist">
+    <div class="wrap histoire">
+      <figure class="histoire-img" style="margin:0">
+        <img src="/img/mises-en-scene/etagere-mise-en-scene.webp" width="494" height="336" loading="lazy" alt="Un carreau illustré posé sur une étagère en bois, près d’un vase et d’une branche d’olivier, dans une pièce lumineuse">
+      </figure>
+      <div class="histoire-texte">
+        <span class="eyebrow">UN LIEU. UN SOUVENIR. UN K-REAU.</span>
+        <h2 id="t-hist">Il y a des endroits qu’on n’oublie pas.</h2>
+        <p class="corps">Le port des vacances. La crique qu’on connaît par cœur. Une ville où tout a commencé. K-Reau dessine ces lieux en quelques lignes pour leur faire une place chez soi.</p>
+        <a class="btn btn-s" href="/notre-histoire">Découvrir notre histoire</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc fond-sable" aria-labelledby="t-offrir">
+    <div class="wrap">
+      <div class="bloc-titre centre">
+        <h2 id="t-offrir">À offrir, à garder, à collectionner</h2>
+      </div>
+      <div class="trio">
+        <figure>
+          <div class="cadre"><img src="/img/mises-en-scene/coffret-maquette.webp" width="540" height="508" loading="lazy" alt="Coffret en carton kraft contenant le carreau Les Embiez"></div>
+          <figcaption><strong>À offrir</strong><span class="muted">Un lieu partagé, une histoire commune : un cadeau qui parle à la personne qui le reçoit.</span></figcaption>
+        </figure>
+        <figure>
+          <div class="cadre"><img src="/img/mises-en-scene/detail-les-embiez.webp" width="376" height="336" loading="lazy" alt="Gros plan sur le dessin au trait et la calligraphie du carreau Les Embiez"></div>
+          <figcaption><strong>À garder</strong><span class="muted">Un trait fin, un nom calligraphié, du blanc autour : de quoi garder un lieu sous les yeux, simplement.</span></figcaption>
+        </figure>
+        <figure>
+          <div class="cadre"><div class="mosaique"><img src="/img/03_Produits_Marseille/marseille-vieux-port-mini.webp" width="600" height="600" loading="lazy" alt="Carreau décoratif K-Reau « Le Vieux-Port de Marseille » en céramique blanche, dessin au trait noir et nom calligraphié"><img src="/img/04_Produits_Cote_Bleue/cote-bleue-port-niolon-mini.webp" width="600" height="600" loading="lazy" alt="Carreau décoratif K-Reau « Le Port de Niolon » en céramique blanche, dessin au trait noir et nom calligraphié"><img src="/img/03_Produits_Marseille/marseille-calanque-sormiou-mini.webp" width="600" height="600" loading="lazy" alt="Carreau décoratif K-Reau « La Calanque de Sormiou » en céramique blanche, dessin au trait noir et nom calligraphié"><img src="/img/04_Produits_Cote_Bleue/cote-bleue-estaque-mini.webp" width="600" height="600" loading="lazy" alt="Carreau décoratif K-Reau « L’Estaque » en céramique blanche, dessin au trait noir et nom calligraphié"></div></div>
+          <figcaption><strong>À collectionner</strong><span class="muted">Un port, puis une calanque, puis le village d’à côté… Les carreaux se répondent les uns les autres.</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" id="faq-accueil" aria-labelledby="t-faq">
+    <div class="wrap">
+      <div class="bloc-titre centre"><span class="eyebrow">Questions fréquentes</span><h2 id="t-faq">Avant de choisir</h2></div>
+      <div class="faq"><details><summary>Comment choisir mon carreau ?</summary><div class="rep"><p>Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections <a class="lien" href="/collections/marseille">Marseille</a> et <a class="lien" href="/collections/cote-bleue">Côte Bleue</a>, ou le modèle signature <a class="lien" href="/produits/les-embiez">Les Embiez</a>. Un doute ? Écrivez-nous via le <a class="lien" href="/contact">formulaire de contact</a>.</p></div></details><details><summary>Quelles sont ses dimensions ?</summary><div class="rep"><p>Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique.</p></div></details><details><summary>Comment le présenter chez soi ?</summary><div class="rep"><p>Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs.</p></div></details><details><summary>Quels sont les délais et frais de livraison ?</summary><div class="rep"><p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="/livraison-retours">Livraison et retours</a>.</p></div></details><details><summary>Puis-je l’offrir ?</summary><div class="rep"><p>Oui, c’est même l’idée : offrir un lieu qui a du sens pour quelqu’un. Les éventuelles options cadeau (emballage, message) seront détaillées à l’ouverture de la boutique ; aucune n’est proposée pour le moment.</p></div></details><details><summary>Comment contacter K-Reau ?</summary><div class="rep"><p>Par le <a class="lien" href="/contact">formulaire de contact</a>. Nous vous répondons par e-mail.</p></div></details></div>
+    </div>
+  </section>
+
+  <section class="bloc fond-blanc joint-haut" aria-labelledby="t-fin">
+    <div class="wrap fin">
+      <h2 id="t-fin">Et vous, quel lieu aimeriez-vous garder près de vous ?</h2>
+      <a class="btn btn-p" href="/carreaux">Explorer les carreaux</a>
+    </div>
+  </section></main>
 
 <footer class="site">
   <div class="wrap">
     <div class="pied">
       <div>
-        <span class="pied-logo"><img src="img/01_Identite/logo-kreau-footer.webp" alt="K-Reau, carreaux d'ici" width="560" height="500" loading="lazy"></span>
+        <span class="pied-logo"><img src="/img/01_Identite/logo-kreau-footer.webp" alt="K-Reau, carreaux d'ici" width="560" height="500" loading="lazy"></span>
         <p class="pied-slogan">Les lieux qu’on aime, à garder chez soi.</p>
       </div>
       <div>
         <h2>Collections</h2>
         <ul>
-          <li><a href="#collection-marseille">Marseille</a></li>
-          <li><a href="#collection-cote-bleue">La Côte Bleue</a></li>
-          <li><a href="#les-embiez">Les Embiez</a></li>
-          <li><a href="#carreaux">Tous les carreaux</a></li>
+          <li><a href="/collections/marseille">Marseille</a></li>
+          <li><a href="/collections/cote-bleue">La Côte Bleue</a></li>
+          <li><a href="/produits/les-embiez">Les Embiez</a></li>
+          <li><a href="/carreaux">Tous les carreaux</a></li>
         </ul>
       </div>
       <div>
         <h2>K-Reau</h2>
         <ul>
-          <li><a href="#notre-histoire">Notre histoire</a></li>
-          <li><a href="#faq">Questions fréquentes</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="/notre-histoire">Notre histoire</a></li>
+          <li><a href="/faq">Questions fréquentes</a></li>
+          <li><a href="/contact">Contact</a></li>
           <li><span class="small" style="color:#A9A398">Réseaux sociaux : bientôt</span></li>
         </ul>
       </div>
       <div>
         <h2>Informations</h2>
         <ul>
-          <li><a href="#mentions-legales">Mentions légales</a></li>
-          <li><a href="#cgv">Conditions générales de vente</a></li>
-          <li><a href="#livraison-retours">Livraison et retours</a></li>
-          <li><a href="#confidentialite">Confidentialité et cookies</a></li>
+          <li><a href="/mentions-legales">Mentions légales</a></li>
+          <li><a href="/cgv">Conditions générales de vente</a></li>
+          <li><a href="/livraison-retours">Livraison et retours</a></li>
+          <li><a href="/confidentialite">Confidentialité et cookies</a></li>
         </ul>
       </div>
     </div>
     <div class="pied-bas">
-      <span>© <span id="annee"></span> K-Reau · Carreaux d’ici</span>
-      <a href="#avant-lancement" style="min-height:0;font-size:.78rem;color:#A9A398">Checklist avant vente</a>
+      <span>© <span id="annee">2026</span> K-Reau · Carreaux d’ici</span>
+      <a href="/avant-lancement" style="min-height:0;font-size:.78rem;color:#A9A398">Checklist avant vente</a>
     </div>
   </div>
 </footer>
@@ -375,17 +561,17 @@ const CONFIG = {
   vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'Expédition sous 5 à 7 jours', paysLivres:'France', retours:'Remboursement sous 14 jours, frais de retour à la charge du client' }
 };
 const COLLECTIONS = {
-  'marseille': { nom:'Marseille', titre:'Collection Marseille', cle:'Marseille', img:'img/mises-en-scene/marseille-port.webp', w:545, h:462,
+  'marseille': { nom:'Marseille', titre:'Collection Marseille', cle:'Marseille', img:'/img/mises-en-scene/marseille-port.webp', w:545, h:462,
     court:'Le Vieux-Port, les calanques, la Bonne Mère… Dix lieux de la ville.',
     intro:'Du Vieux-Port aux calanques, de la Bonne Mère au Palais Longchamp : dix lieux de Marseille dessinés au trait, chacun avec son nom en calligraphie.',
     seo:'Collection Marseille | K-Reau, carreaux d’ici',
     seoDesc:'Vieux-Port, Notre-Dame de la Garde, calanques de Sormiou et Morgiou… Les carreaux décoratifs illustrés K-Reau de la collection Marseille.' },
-  'cote-bleue': { nom:'La Côte Bleue', titre:'Collection Côte Bleue', cle:'Côte Bleue', img:'img/mises-en-scene/cote-bleue-calanque.webp', w:548, h:465,
+  'cote-bleue': { nom:'La Côte Bleue', titre:'Collection Côte Bleue', cle:'Côte Bleue', img:'/img/mises-en-scene/cote-bleue-calanque.webp', w:548, h:465,
     court:'De L’Estaque à Carro, des ports et des criques à garder près de soi.',
     intro:'Entre L’Estaque et Carro, la Côte Bleue aligne petits ports, calanques et pinèdes. Dix lieux pour ceux qui connaissent ses chemins de bord de mer.',
     seo:'Collection Côte Bleue | K-Reau, carreaux d’ici',
     seoDesc:'Niolon, Méjean, Carry-le-Rouet, Sausset-les-Pins, Carro… Les carreaux décoratifs illustrés K-Reau de la collection Côte Bleue.' },
-  'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
+  'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'/img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
 const TEST_BOUTIQUE = false; // accès test désactivé : une clé Stripe réelle est en place
@@ -398,7 +584,16 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) : ''; };
 const aCompleter = (v, txt='À compléter avant mise en ligne') => v ? esc(v) : `<span class="a-completer">${txt}</span>`;
 const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
-function setMeta(title, desc){ document.title = title; let m = document.querySelector('meta[name="description"]'); if(m && desc) m.setAttribute('content', desc); }
+function setMeta(title, desc){
+  document.title = title;
+  const set = (sel, attr, v) => { const m = document.querySelector(sel); if(m && v) m.setAttribute(attr, v); };
+  set('meta[name="description"]','content',desc); set('meta[property="og:title"]','content',title); set('meta[property="og:description"]','content',desc);
+  const url = 'https://k-reau.fr' + (location.pathname === '/' ? '/' : location.pathname.replace(/\/$/,''));
+  set('link[rel="canonical"]','href',url); set('meta[property="og:url"]','content',url);
+  let rob = document.querySelector('meta[name="robots"]');
+  const prive = ['/avant-lancement','/merci','/panier'].includes(location.pathname) || title.startsWith('Page introuvable');
+  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.remove();
+}
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),3200); }
 
 const ICONES = {
@@ -413,9 +608,9 @@ const ICONES = {
 let PRODUITS = null, ERREUR = null;
 async function charger(){
   try{
-    const r = await fetch('data/catalogue_produits.json');
+    const r = await fetch('/data/catalogue_produits.json');
     if(!r.ok) throw new Error(r.status);
-    PRODUITS = await r.json(); ERREUR = null;
+    PRODUITS = (await r.json()).map(p => ({...p, image_principale: '/'+p.image_principale.replace(/^\//,''), miniature: '/'+p.miniature.replace(/^\//,'')})); ERREUR = null;
   }catch(e){ ERREUR = e; }
   route();
 }
@@ -427,13 +622,13 @@ const collNom = p => p.collection === 'Signature' ? 'Les Embiez · modèle signa
 function carte(p, eager=false){
   const prix = prixTxt(p);
   return `<article class="carte">
-    <a class="carte-img" href="#produit-${esc(p.slug)}" tabindex="-1" aria-hidden="true">
+    <a class="carte-img" href="/produits/${esc(p.slug)}" tabindex="-1" aria-hidden="true">
       <img src="${esc(p.miniature)}" srcset="${esc(p.miniature)} 600w, ${esc(p.image_principale)} 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="${esc(p.alt)}" ${eager?'':'loading="lazy"'} decoding="async">
     </a>
     <span class="carte-coll">${esc(collNom(p))}</span>
-    <h3><a href="#produit-${esc(p.slug)}">${esc(p.nom)}</a></h3>
+    <h3><a href="/produits/${esc(p.slug)}">${esc(p.nom)}</a></h3>
     ${prix ? `<span class="carte-prix">${prix}</span>` : ''}
-    <a class="btn btn-s" href="#produit-${esc(p.slug)}">Voir le carreau</a>
+    <a class="btn btn-s" href="/produits/${esc(p.slug)}">Voir le carreau</a>
   </article>`;
 }
 function grilleHTML(list){
@@ -467,7 +662,7 @@ function formInteret(contexte, titre='Être informé du lancement', bouton='Me p
     <div class="champ"><label for="${id}-email">Adresse e-mail</label>
       <input type="email" id="${id}-email" name="email" autocomplete="email" required placeholder="vous@exemple.fr">
       <span class="err" aria-live="polite"></span></div>
-    <label class="consent"><input type="checkbox" name="consent" id="${id}-consent" required> <span>J’accepte que K-Reau utilise mon adresse uniquement pour me prévenir de l’ouverture des commandes. Je peux demander sa suppression à tout moment (voir <a class="lien" href="#confidentialite">confidentialité</a>).</span></label>
+    <label class="consent"><input type="checkbox" name="consent" id="${id}-consent" required> <span>J’accepte que K-Reau utilise mon adresse uniquement pour me prévenir de l’ouverture des commandes. Je peux demander sa suppression à tout moment (voir <a class="lien" href="/confidentialite">confidentialité</a>).</span></label>
     <button class="btn btn-p" type="submit">${esc(bouton)}</button>
     <div class="retour" aria-live="polite"></div>
   </form>`;
@@ -486,12 +681,12 @@ function vueAccueil(){
         <h1 id="h1">Les lieux qu’on aime, <em>à garder chez soi.</em></h1>
         <p class="lead">Des paysages méditerranéens dessinés avec délicatesse sur des carreaux décoratifs. Pour se souvenir d’un endroit, raconter une histoire ou offrir un petit bout d’ailleurs.</p>
         <div class="hero-btns">
-          <a class="btn btn-p" href="#collections">Découvrir les collections</a>
-          <a class="btn btn-s" href="#notre-histoire">L’histoire de K-Reau</a>
+          <a class="btn btn-p" href="/#collections">Découvrir les collections</a>
+          <a class="btn btn-s" href="/notre-histoire">L’histoire de K-Reau</a>
         </div>
       </div>
       <figure class="hero-img" style="margin:0">
-        <img src="img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
+        <img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
       </figure>
     </div>
   </section>
@@ -513,7 +708,7 @@ function vueAccueil(){
       </div>
       <div class="colls">
         ${['marseille','cote-bleue','les-embiez'].map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
-          const href = k==='les-embiez' ? '#les-embiez' : '#collection-'+k;
+          const href = k==='les-embiez' ? '/produits/les-embiez' : '/collections/'+k;
           return `<a class="coll" href="${href}">
             <div class="coll-img"><img src="${c.img}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)} posé au bord de la mer"></div>
             <div class="coll-corps">
@@ -535,20 +730,20 @@ function vueAccueil(){
       ${filtresHTML('tout','g-accueil')}
       <p class="small muted" id="g-accueil-statut" role="status" aria-live="polite"></p>
       <div class="grille" id="g-accueil">${grilleHTML(homeList())}</div>
-      <div class="grille-pied"><a class="btn btn-s" href="#carreaux">Voir les ${PRODUITS?PRODUITS.length:21} carreaux</a></div>
+      <div class="grille-pied"><a class="btn btn-s" href="/carreaux">Voir les ${PRODUITS?PRODUITS.length:21} carreaux</a></div>
     </div>
   </section>
 
   <section class="bloc" aria-labelledby="t-hist">
     <div class="wrap histoire">
       <figure class="histoire-img" style="margin:0">
-        <img src="img/mises-en-scene/etagere-mise-en-scene.webp" width="494" height="336" loading="lazy" alt="Un carreau illustré posé sur une étagère en bois, près d’un vase et d’une branche d’olivier, dans une pièce lumineuse">
+        <img src="/img/mises-en-scene/etagere-mise-en-scene.webp" width="494" height="336" loading="lazy" alt="Un carreau illustré posé sur une étagère en bois, près d’un vase et d’une branche d’olivier, dans une pièce lumineuse">
       </figure>
       <div class="histoire-texte">
         <span class="eyebrow">UN LIEU. UN SOUVENIR. UN K-REAU.</span>
         <h2 id="t-hist">Il y a des endroits qu’on n’oublie pas.</h2>
         <p class="corps">Le port des vacances. La crique qu’on connaît par cœur. Une ville où tout a commencé. K-Reau dessine ces lieux en quelques lignes pour leur faire une place chez soi.</p>
-        <a class="btn btn-s" href="#notre-histoire">Découvrir notre histoire</a>
+        <a class="btn btn-s" href="/notre-histoire">Découvrir notre histoire</a>
       </div>
     </div>
   </section>
@@ -560,11 +755,11 @@ function vueAccueil(){
       </div>
       <div class="trio">
         <figure>
-          <div class="cadre"><img src="img/mises-en-scene/coffret-maquette.webp" width="540" height="508" loading="lazy" alt="Coffret en carton kraft contenant le carreau Les Embiez"></div>
+          <div class="cadre"><img src="/img/mises-en-scene/coffret-maquette.webp" width="540" height="508" loading="lazy" alt="Coffret en carton kraft contenant le carreau Les Embiez"></div>
           <figcaption><strong>À offrir</strong><span class="muted">Un lieu partagé, une histoire commune : un cadeau qui parle à la personne qui le reçoit.</span></figcaption>
         </figure>
         <figure>
-          <div class="cadre"><img src="img/mises-en-scene/detail-les-embiez.webp" width="376" height="336" loading="lazy" alt="Gros plan sur le dessin au trait et la calligraphie du carreau Les Embiez"></div>
+          <div class="cadre"><img src="/img/mises-en-scene/detail-les-embiez.webp" width="376" height="336" loading="lazy" alt="Gros plan sur le dessin au trait et la calligraphie du carreau Les Embiez"></div>
           <figcaption><strong>À garder</strong><span class="muted">Un trait fin, un nom calligraphié, du blanc autour : de quoi garder un lieu sous les yeux, simplement.</span></figcaption>
         </figure>
         <figure>
@@ -585,19 +780,19 @@ function vueAccueil(){
   <section class="bloc fond-blanc joint-haut" aria-labelledby="t-fin">
     <div class="wrap fin">
       <h2 id="t-fin">Et vous, quel lieu aimeriez-vous garder près de vous ?</h2>
-      ${LIVE ? '<a class="btn btn-p" href="#carreaux">Explorer les carreaux</a>' : `<a class="btn btn-s" href="#carreaux">Explorer les carreaux</a>${formInteret('accueil','Être informé du lancement','Être informé du lancement')}`}
+      ${LIVE ? '<a class="btn btn-p" href="/carreaux">Explorer les carreaux</a>' : `<a class="btn btn-s" href="/carreaux">Explorer les carreaux</a>${formInteret('accueil','Être informé du lancement','Être informé du lancement')}`}
     </div>
   </section>`;
   brancherFiltres('g-accueil', homeList);
 }
 
 function faqHTML(){
-  const contact = `<a class="lien" href="#contact">formulaire de contact</a>`;
+  const contact = `<a class="lien" href="/contact">formulaire de contact</a>`;
   const q = [
-    ['Comment choisir mon carreau ?', `<p>Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections <a class="lien" href="#collection-marseille">Marseille</a> et <a class="lien" href="#collection-cote-bleue">Côte Bleue</a>, ou le modèle signature <a class="lien" href="#les-embiez">Les Embiez</a>. Un doute ? Écrivez-nous via le ${contact}.</p>`],
+    ['Comment choisir mon carreau ?', `<p>Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections <a class="lien" href="/collections/marseille">Marseille</a> et <a class="lien" href="/collections/cote-bleue">Côte Bleue</a>, ou le modèle signature <a class="lien" href="/produits/les-embiez">Les Embiez</a>. Un doute ? Écrivez-nous via le ${contact}.</p>`],
     ['Quelles sont ses dimensions ?', `<p>Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique.</p>`],
     ['Comment le présenter chez soi ?', `<p>Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs.</p>`],
-    ['Quels sont les délais et frais de livraison ?', `<p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="#livraison-retours">Livraison et retours</a>.</p>`],
+    ['Quels sont les délais et frais de livraison ?', `<p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="/livraison-retours">Livraison et retours</a>.</p>`],
     ['Puis-je l’offrir ?', `<p>Oui, c’est même l’idée : offrir un lieu qui a du sens pour quelqu’un. Les éventuelles options cadeau (emballage, message) seront détaillées à l’ouverture de la boutique ; aucune n’est proposée pour le moment.</p>`],
     ['Comment contacter K-Reau ?', `<p>Par le ${contact}. Nous vous répondons par e-mail.</p>`]
   ];
@@ -610,14 +805,14 @@ function vueCollection(k){
   const list = deCollection(k);
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
-    ${ariane([['Accueil','#accueil'],['Collections','#collections'],[c.nom,'']])}
+    ${ariane([['Accueil','/'],['Collections','/#collections'],[c.nom,'']])}
     <div class="bloc-titre"><span class="eyebrow">Collection · ${PRODUITS?list.length+' lieux':''}</span><h1>${esc(c.nom)}</h1><p class="lead">${esc(c.intro)}</p></div>
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     <div class="grille" id="g-coll">${grilleHTML(list)}</div>
     <div class="grille-pied" style="gap:12px;flex-wrap:wrap">
-      <a class="btn btn-s" href="#collection-${k==='marseille'?'cote-bleue':'marseille'}">Voir la collection ${k==='marseille'?'Côte Bleue':'Marseille'}</a>
-      <a class="btn btn-s" href="#les-embiez">Le modèle signature Les Embiez</a>
+      <a class="btn btn-s" href="/collections/${k==='marseille'?'cote-bleue':'marseille'}">Voir la collection ${k==='marseille'?'Côte Bleue':'Marseille'}</a>
+      <a class="btn btn-s" href="/produits/les-embiez">Le modèle signature Les Embiez</a>
     </div>
   </div></section>`;
 }
@@ -626,7 +821,7 @@ function vueTous(){
   setMeta('Tous les carreaux | K-Reau, carreaux d’ici','Les 21 carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue et Les Embiez.');
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
-    ${ariane([['Accueil','#accueil'],['Nos carreaux','']])}
+    ${ariane([['Accueil','/'],['Nos carreaux','']])}
     <div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous les lieux K-Reau</h1><p class="lead">Marseille, la Côte Bleue et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
@@ -646,7 +841,7 @@ function vueProduit(slug){
   const prix = prixTxt(p);
   const similaires = (k==='les-embiez' ? PRODUITS.filter(x=>x.slug!==p.slug).slice(0,4) : deCollection(k).filter(x=>x.slug!==p.slug).slice(0,4));
   const val = v => v ? esc(v) : '<span class="muted">Précisé à l’ouverture des commandes</span>';
-  const trail = k==='les-embiez' ? [['Accueil','#accueil'],['Les Embiez','']] : [['Accueil','#accueil'],[c.nom,'#collection-'+k],[p.nom,'']];
+  const trail = k==='les-embiez' ? [['Accueil','/'],['Les Embiez','']] : [['Accueil','/'],[c.nom,'/collections/'+k],[p.nom,'']];
   app.innerHTML = `
   <div class="wrap" style="padding-top:28px">${ariane(trail)}</div>
   <div class="wrap fiche">
@@ -683,7 +878,7 @@ function vueProduit(slug){
             .filter(([,v])=>v).map(([k,v])=>`<tr><th scope="row">${k}</th><td>${esc(v)}</td></tr>`).join('')}
         </tbody>
       </table>
-      <p class="small"><a class="lien" href="#contact">Une question sur ce modèle ?</a></p>
+      <p class="small"><a class="lien" href="/contact">Une question sur ce modèle ?</a></p>
     </div>
   </div>
   ${similaires.length ? `<section class="bloc fond-blanc joint-haut" aria-labelledby="t-sim"><div class="wrap">
@@ -709,11 +904,11 @@ function vueHistoire(){
   setMeta('Notre histoire | K-Reau, carreaux d’ici','L’histoire de K-Reau : des lieux méditerranéens dessinés en quelques lignes sur des carreaux décoratifs, pour leur faire une place chez soi.');
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
-    ${ariane([['Accueil','#accueil'],['Notre histoire','']])}
+    ${ariane([['Accueil','/'],['Notre histoire','']])}
     <div class="bloc-titre"><span class="eyebrow">Notre histoire</span><h1>Un lieu. Un souvenir. Un K-Reau.</h1></div>
   </div></div>
   <section class="bloc"><div class="wrap histoire">
-    <figure class="histoire-img" style="margin:0"><img src="img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" loading="lazy" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure>
+    <figure class="histoire-img" style="margin:0"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" loading="lazy" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure>
     <div class="prose">
       <p class="lead" style="color:var(--encre);font-family:var(--f-titre);font-size:1.6rem;line-height:1.4">Il y a des endroits qu’on n’oublie pas. Le port des vacances, la crique qu’on connaît par cœur, la ville où tout a commencé.</p>
       <p>K-Reau est né d’une envie simple : donner une place, chez soi, à ces lieux qui nous accompagnent. Pas une carte postale, pas un souvenir de boutique, mais un dessin épuré qui garde l’essentiel d’un paysage.</p>
@@ -721,8 +916,8 @@ function vueHistoire(){
       <h2>Le nom</h2>
       <p>K-Reau, comme un carreau. Notre signature, <em>Carreaux d’ici</em>, dit ce que nous aimons dessiner : des lieux proches, familiers, que l’on reconnaît au premier coup d’œil.</p>
       <h2>La suite</h2>
-      <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="#contact">Dites-le-nous</a>.</p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-p" href="#collections">Découvrir les collections</a></div>
+      <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="/contact">Dites-le-nous</a>.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-p" href="/#collections">Découvrir les collections</a></div>
     </div>
   </div></section>`;
 }
@@ -730,7 +925,7 @@ function vueHistoire(){
 function vueFAQ(){
   setMeta('Questions fréquentes | K-Reau','Choisir, offrir, recevoir un carreau K-Reau : les réponses aux questions fréquentes.');
   app.innerHTML = `
-  <div class="page-tete"><div class="wrap">${ariane([['Accueil','#accueil'],['Questions fréquentes','']])}
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Questions fréquentes','']])}
     <div class="bloc-titre"><span class="eyebrow">FAQ</span><h1>Questions fréquentes</h1></div></div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">${faqHTML()}</div></section>`;
 }
@@ -738,7 +933,7 @@ function vueFAQ(){
 function vueContact(){
   setMeta('Contact | K-Reau','Une question sur un carreau K-Reau, une idée de lieu ? Écrivez-nous.');
   app.innerHTML = `
-  <div class="page-tete"><div class="wrap">${ariane([['Accueil','#accueil'],['Contact','']])}
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Contact','']])}
     <div class="bloc-titre"><span class="eyebrow">Contact</span><h1>Écrivez-nous</h1><p class="lead">Une question sur un modèle, un lieu à nous suggérer, une demande particulière : nous vous répondons par e-mail.</p></div></div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     <form class="formulaire" data-form="contact" novalidate>
@@ -747,7 +942,7 @@ function vueContact(){
       <div class="champ"><label for="c-sujet">Sujet</label>
         <select id="c-sujet" name="sujet" required><option value="">Choisir…</option><option>Question sur un modèle</option><option>Suggestion de lieu</option><option>Idée cadeau</option><option>Autre demande</option></select><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="c-msg">Message</label><textarea id="c-msg" name="message" required minlength="10"></textarea><span class="err" aria-live="polite"></span></div>
-      <label class="consent"><input type="checkbox" name="consent" id="c-consent" required> <span>J’accepte que mes informations soient utilisées pour répondre à ma demande (voir <a class="lien" href="#confidentialite">confidentialité</a>).</span></label>
+      <label class="consent"><input type="checkbox" name="consent" id="c-consent" required> <span>J’accepte que mes informations soient utilisées pour répondre à ma demande (voir <a class="lien" href="/confidentialite">confidentialité</a>).</span></label>
       <button class="btn btn-p" type="submit" style="justify-self:start">Envoyer le message</button>
       <div class="retour" aria-live="polite"></div>
     </form>
@@ -757,7 +952,7 @@ function vueContact(){
 function pageLegale(titre, metaT, corps){
   setMeta(metaT, titre + ' du site K-Reau.');
   app.innerHTML = `
-  <div class="page-tete"><div class="wrap">${ariane([['Accueil','#accueil'],[titre,'']])}
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],[titre,'']])}
     <div class="bloc-titre"><span class="eyebrow">Informations</span><h1>${titre}</h1></div></div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap prose">${corps}</div></section>`;
 }
@@ -768,14 +963,14 @@ const PAGES = {
     <ul><li>Marque : K-Reau</li><li>Éditeur : ${esc(L.raisonSociale)}</li>
     <li>Forme juridique : ${esc(L.formeJuridique)}</li><li>Immatriculation : ${esc(L.siret)}</li>
     <li>TVA : ${esc(L.tva)}</li>
-    <li>Adresse : ${esc(L.adresse)}</li><li>Contact : par le <a class="lien" href="#contact">formulaire de contact</a> ou à l’adresse contact@k-reau.fr</li>
+    <li>Adresse : ${esc(L.adresse)}</li><li>Contact : par le <a class="lien" href="/contact">formulaire de contact</a> ou à l’adresse contact@k-reau.fr</li>
     <li>Directeur de la publication : ${esc(L.directeurPublication)}</li></ul>
     <h2>Hébergement</h2><p>${esc(L.hebergeur)}</p>
     <h2>Propriété intellectuelle</h2><p>Le nom K-Reau, le logo, les dessins et l’ensemble des contenus de ce site sont protégés. Toute reproduction sans autorisation est interdite.</p>`),
   'cgv': () => pageLegale('Conditions générales de vente','CGV | K-Reau', `
     <p class="small muted">Version du 30 octobre 2026</p>
     <h2>1. Vendeur</h2>
-    <p>Les présentes conditions s’appliquent aux ventes conclues sur le site k-reau.fr entre ${esc(L.raisonSociale)} (${esc(L.formeJuridique)}, ${esc(L.siret)}, ${esc(L.adresse)}), ci-après « K-Reau », et toute personne physique agissant en qualité de consommateur, ci-après « le client ». Contact : <a class="lien" href="#contact">formulaire de contact</a> ou contact@k-reau.fr.</p>
+    <p>Les présentes conditions s’appliquent aux ventes conclues sur le site k-reau.fr entre ${esc(L.raisonSociale)} (${esc(L.formeJuridique)}, ${esc(L.siret)}, ${esc(L.adresse)}), ci-après « K-Reau », et toute personne physique agissant en qualité de consommateur, ci-après « le client ». Contact : <a class="lien" href="/contact">formulaire de contact</a> ou contact@k-reau.fr.</p>
     <h2>2. Produits</h2>
     <p>K-Reau vend des carreaux décoratifs en céramique blanche brillante de 15 × 15 cm, illustrés d’un dessin noir imprimé par sublimation. Les caractéristiques essentielles de chaque modèle figurent sur sa fiche produit. Les produits sont destinés à la décoration intérieure.</p>
     <h2>3. Prix</h2>
@@ -794,26 +989,26 @@ const PAGES = {
     <h2>8. Garanties légales</h2>
     <p>Les produits bénéficient de la garantie légale de conformité (articles L.217-3 et suivants du Code de la consommation) pendant 2 ans à compter de la livraison, et de la garantie contre les vices cachés (articles 1641 et suivants du Code civil). En cas de produit cassé à la livraison, K-Reau rembourse ou renvoie un carreau (voir article 6). Pour tout autre défaut de conformité, le client contacte K-Reau, qui procède au remplacement ou au remboursement ; les éventuels frais de retour sont alors à la charge de K-Reau.</p>
     <h2>9. Réclamations et médiation</h2>
-    <p>Pour toute réclamation, le client contacte K-Reau par le <a class="lien" href="#contact">formulaire de contact</a> ou à contact@k-reau.fr. ${L.mediateur ? 'En cas de litige non résolu, le client peut recourir gratuitement au médiateur de la consommation : '+esc(L.mediateur)+'.' : 'Médiateur de la consommation : en cours de désignation.'}</p>
+    <p>Pour toute réclamation, le client contacte K-Reau par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. ${L.mediateur ? 'En cas de litige non résolu, le client peut recourir gratuitement au médiateur de la consommation : '+esc(L.mediateur)+'.' : 'Médiateur de la consommation : en cours de désignation.'}</p>
     <h2>10. Données personnelles</h2>
-    <p>Les données nécessaires au traitement des commandes sont traitées conformément à la <a class="lien" href="#confidentialite">politique de confidentialité</a>.</p>
+    <p>Les données nécessaires au traitement des commandes sont traitées conformément à la <a class="lien" href="/confidentialite">politique de confidentialité</a>.</p>
     <h2>11. Droit applicable</h2>
     <p>Les présentes conditions sont soumises au droit français.</p>`),
   'livraison-retours': () => pageLegale('Livraison et retours','Livraison et retours | K-Reau', `
     <h2>Livraison</h2>
     <ul><li>Zone : France métropolitaine</li><li>Expédition : sous 5 à 7 jours</li><li>Frais : 7,90 € par commande, offerts dès 50 € d’achat</li></ul>
-    <p>Vérifiez votre colis à réception. Si un carreau est arrivé cassé, écrivez-nous par le <a class="lien" href="#contact">formulaire de contact</a> ou à contact@k-reau.fr avec une photo : nous vous remboursons ou vous renvoyons un carreau, sans frais.</p>
+    <p>Vérifiez votre colis à réception. Si un carreau est arrivé cassé, écrivez-nous par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr avec une photo : nous vous remboursons ou vous renvoyons un carreau, sans frais.</p>
     <h2>Retours</h2>
-    <p>Vous disposez de 14 jours après réception pour changer d’avis. Prévenez-nous par le <a class="lien" href="#contact">formulaire de contact</a>, puis renvoyez le ou les carreaux dans leur état d’origine, bien protégés, dans les 14 jours suivants.</p>
+    <p>Vous disposez de 14 jours après réception pour changer d’avis. Prévenez-nous par le <a class="lien" href="/contact">formulaire de contact</a>, puis renvoyez le ou les carreaux dans leur état d’origine, bien protégés, dans les 14 jours suivants.</p>
     <ul><li>Les frais de retour sont à votre charge.</li><li>Nous vous remboursons le prix des carreaux et les frais de livraison initiaux, sous 14 jours, sur votre moyen de paiement.</li></ul>
-    <p>Le détail figure dans les <a class="lien" href="#cgv">conditions générales de vente</a>.</p>`),
+    <p>Le détail figure dans les <a class="lien" href="/cgv">conditions générales de vente</a>.</p>`),
   'confidentialite': () => pageLegale('Confidentialité et cookies','Confidentialité | K-Reau', `
     <h2>Responsable du traitement</h2><p>${esc(L.raisonSociale)}, ${esc(L.adresse)}.</p>
     <h2>Données collectées</h2><p>Formulaire de contact : nom, adresse e-mail et message. Inscription au lancement : adresse e-mail. Commande : nom, adresses de livraison et de facturation, e-mail, téléphone et contenu de la commande. Les données de carte bancaire sont traitées uniquement par Stripe.</p>
     <h2>Utilisation</h2><p>Ces informations servent à répondre à vos demandes, à vous prévenir de l’ouverture des commandes si vous l’avez demandé, et à traiter et livrer vos commandes. Elles ne sont ni vendues ni cédées.</p>
     <h2>Prestataires</h2><p>Hébergement : Vercel. Paiement : Stripe. Envoi des messages des formulaires par e-mail : Resend. Certains de ces prestataires sont situés aux États-Unis et encadrent ces transferts par des garanties contractuelles.</p>
     <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
-    <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="#contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
+    <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
     <h2>Cookies</h2><p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Le panier est conservé dans votre navigateur (stockage local) uniquement pour le fonctionnement de la commande. Si des outils de mesure sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser.</p>`),
   'avant-lancement': vueChecklist
 };
@@ -854,12 +1049,12 @@ function vueMerci(){
   app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start;max-width:720px">
     <span class="eyebrow">Commande confirmée</span><h1>Merci pour votre commande.</h1>
     <p class="lead">Votre paiement a bien été reçu. Un reçu vous a été envoyé par e-mail ; nous vous écrirons dès l’expédition de vos carreaux.</p>
-    <a class="btn btn-p" href="#carreaux">Continuer la visite</a></div>`;
+    <a class="btn btn-p" href="/carreaux">Continuer la visite</a></div>`;
 }
 
 function vue404(){
   setMeta('Page introuvable | K-Reau','');
-  app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start"><span class="eyebrow">Page introuvable</span><h1>Ce lieu n’existe pas (encore).</h1><p class="lead">La page demandée n’a pas été trouvée.</p><a class="btn btn-p" href="#accueil">Retour à l’accueil</a></div>`;
+  app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start"><span class="eyebrow">Page introuvable</span><h1>Ce lieu n’existe pas (encore).</h1><p class="lead">La page demandée n’a pas été trouvée.</p><a class="btn btn-p" href="/">Retour à l’accueil</a></div>`;
 }
 
 /* ===== Visionneuse ===== */
@@ -955,24 +1150,39 @@ document.addEventListener('submit', async e => {
 });
 document.addEventListener('input', e => { const ch = e.target.closest('.champ.invalide'); if(ch){ ch.classList.remove('invalide'); ch.querySelector('.err').textContent=''; } });
 
-/* ===== Routeur (ancre #nom) ===== */
+/* ===== Routeur (vraies adresses : /produits/…, /collections/…) ===== */
 const SECTIONS_ACCUEIL = ['collections','carreaux-accueil','faq-accueil'];
+const ANCIENNES = h => h==='accueil' ? '/' : h==='les-embiez' ? '/produits/les-embiez' : h.startsWith('produit-') ? '/produits/'+h.slice(8) : h.startsWith('collection-') ? '/collections/'+h.slice(11) : SECTIONS_ACCUEIL.includes(h) ? null : '/'+h;
+function cleDepuisChemin(p){
+  p = decodeURIComponent(p).replace(/\/+$/,'') || '/';
+  if(p==='/' || p==='/index.html') return 'accueil';
+  let m;
+  if((m = p.match(/^\/produits\/([a-z0-9-]+)$/))) return 'produit-'+m[1];
+  if((m = p.match(/^\/collections\/([a-z0-9-]+)$/))) return 'collection-'+m[1];
+  if((m = p.match(/^\/([a-z0-9-]+)$/))) return m[1];
+  return '404';
+}
 let vueCourante = null;
 function route(){
-  const h = decodeURIComponent(location.hash.slice(1)) || 'accueil';
-  let cle = h;
-  if(SECTIONS_ACCUEIL.includes(h)) cle = 'accueil';
-  const scroller = () => { if(cle==='accueil' && h!=='accueil'){ document.getElementById(h)?.scrollIntoView(); } else window.scrollTo(0,0); };
+  // anciennes adresses en #… → nouvelle adresse
+  const ancre = decodeURIComponent(location.hash.slice(1));
+  if(location.pathname==='/' && ancre && !SECTIONS_ACCUEIL.includes(ancre)){
+    const n = ANCIENNES(ancre); if(n){ history.replaceState(null,'',n); }
+  }
+  const h = cleDepuisChemin(location.pathname);
+  const section = h==='accueil' && SECTIONS_ACCUEIL.includes(ancre) ? ancre : null;
+  const cle = h;
+  const scroller = () => { if(section){ document.getElementById(section)?.scrollIntoView(); } else window.scrollTo(0,0); };
   if(cle==='accueil' && vueCourante==='accueil:data' && PRODUITS){ scroller(); return; }
   if(cle==='accueil') vueAccueil();
   else if(h==='carreaux') vueTous();
   else if(h.startsWith('collection-') && COLLECTIONS[h.slice(11)] && h!=='collection-les-embiez') vueCollection(h.slice(11));
-  else if(h==='les-embiez' || h==='collection-les-embiez') vueProduit('les-embiez');
+  else if(h==='collection-les-embiez'){ history.replaceState(null,'','/produits/les-embiez'); vueProduit('les-embiez'); }
   else if(h.startsWith('produit-')) vueProduit(h.slice(8));
   else if(h==='notre-histoire') vueHistoire();
   else if(h==='faq') vueFAQ();
   else if(h==='contact') vueContact();
-  else if(h==='panier'){ if(LIVE){ vueAccueil(); Panier.ouvrir(); } else vueAccueil(); }
+  else if(h==='panier'){ vueAccueil(); if(LIVE) Panier.ouvrir(); }
   else if(h==='merci') vueMerci();
   else if(PAGES[h]) PAGES[h]();
   else vue404();
@@ -982,6 +1192,17 @@ function route(){
   fermerMenu();
   requestAnimationFrame(scroller);
 }
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="/"]');
+  if(!a || e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target) return;
+  const url = new URL(a.href, location.origin);
+  if(url.origin!==location.origin || /^\/(api|img|data)\//.test(url.pathname) || /\.[a-z0-9]+$/i.test(url.pathname)) return;
+  e.preventDefault();
+  if(url.pathname===location.pathname && url.hash===location.hash && !url.hash){ window.scrollTo(0,0); return; }
+  history.pushState(null,'',url.pathname+url.hash);
+  route();
+});
+window.addEventListener('popstate', route);
 
 /* ===== Menu mobile ===== */
 const tiroir = $('#tiroir'), btnMenu = $('#btn-menu');
@@ -996,9 +1217,10 @@ if(TEST_BOUTIQUE){ const a=$('#annonce'); a.textContent='Mode test du paiement :
 else if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.annonce; a.hidden = false; }
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);
-route();
+if(!app.dataset.prerendu) route();
 charger();
 </script>
 
-</body>
-</html>
+
+
+</body></html>
