@@ -4,9 +4,10 @@
 const http = require('http'), fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const RACINE = path.resolve(__dirname, '..');
-const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produits.json'), 'utf8'));
+const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produits.json'), 'utf8')).filter(p => p.publie !== false);
+const collections = [...new Set(cat.map(p => p.collection_slug))].filter(c => c !== 'les-embiez');
 const pagesSimples = ['carreaux','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier'];
-const routes = ['/', '/collections/marseille', '/collections/cote-bleue', ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
+const routes = ['/', ...collections.map(c => '/collections/' + c), ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
 const types = { '.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.webp':'image/webp', '.xml':'application/xml', '.txt':'text/plain' };
 
 const serveur = http.createServer((req, res) => {
@@ -28,6 +29,7 @@ const serveur = http.createServer((req, res) => {
   await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   const erreurs = [];
   page.on('pageerror', e => erreurs.push(e.message));
+  fs.rmSync(path.join(RACINE, 'pages'), { recursive: true, force: true });
   const urls = [];
   for (const r of routes) {
     await page.goto(base + r, { waitUntil: 'networkidle' });
@@ -50,7 +52,7 @@ const serveur = http.createServer((req, res) => {
   // Flux produits pour Google Merchant Center (fiches gratuites dans Google Shopping)
   const xml = t => String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const items = cat.map(p => {
-    const region = p.collection === 'Marseille' ? 'Marseille' : p.collection === 'Côte Bleue' ? 'la Côte Bleue' : 'Méditerranée';
+    const region = p.collection === 'Marseille' ? 'Marseille' : p.collection === 'Côte Bleue' ? 'la Côte Bleue' : p.collection === 'Montagnes du Sud' ? 'Provence' : 'Méditerranée';
     return `  <item>
     <g:id>${p.slug}</g:id>
     <g:title>${xml(`Carreau décoratif ${p.nom} – céramique 15 x 15 cm`)}</g:title>

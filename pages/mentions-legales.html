@@ -137,6 +137,8 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 
 /* Cartes collections */
 .colls{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
+.colls-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1100px){.colls-4{grid-template-columns:repeat(2,1fr)}}
 .coll{display:flex;flex-direction:column;background:var(--blanc);border:1px solid var(--joint);text-decoration:none}
 .coll-img{overflow:hidden;aspect-ratio:1/1;background:var(--sable-clair)}
 .coll-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
@@ -332,6 +334,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a href="/">Accueil</a>
     <a href="/collections/marseille">Marseille</a>
     <a href="/collections/cote-bleue">Côte Bleue</a>
+    <a href="/collections/montagnes-du-sud" data-coll="montagnes-du-sud" hidden="">Les Montagnes du Sud</a>
     <a href="/produits/les-embiez">Les Embiez</a>
     <a href="/carreaux">Nos carreaux</a>
     <a href="/notre-histoire">Notre histoire</a>
@@ -366,6 +369,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
         <ul>
           <li><a href="/collections/marseille">Marseille</a></li>
           <li><a href="/collections/cote-bleue">La Côte Bleue</a></li>
+          <li data-coll="montagnes-du-sud" hidden=""><a href="/collections/montagnes-du-sud">Les Montagnes du Sud</a></li>
           <li><a href="/produits/les-embiez">Les Embiez</a></li>
           <li><a href="/carreaux">Tous les carreaux</a></li>
         </ul>
@@ -418,6 +422,7 @@ const COLLECTIONS = {
     seo:'Carreaux décoratifs Marseille | Cadeau souvenir de Marseille – K-Reau',
     seoDesc:'10 carreaux en céramique illustrés de Marseille : Vieux-Port, Notre-Dame de la Garde, Mucem, Château d’If, calanques… Idée cadeau souvenir à 19,90 €.',
     h1:'Carreaux décoratifs de Marseille',
+    offrir:'Un souvenir de Marseille à offrir',
     texte:'Des carreaux en céramique de 15 × 15 cm pour garder un morceau de Marseille chez soi ou l’offrir : la Bonne Mère, le Vieux-Port, le Mucem, La Major, le Vallon des Auffes, le Château d’If, les îles du Frioul, les calanques de Sormiou et de Morgiou ou le Palais Longchamp. Une idée cadeau souvenir de Marseille pour les Marseillais d’ici et d’ailleurs.' },
   'cote-bleue': { nom:'La Côte Bleue', titre:'Collection Côte Bleue', cle:'Côte Bleue', img:'/img/mises-en-scene/cote-bleue-calanque.webp', w:548, h:465,
     court:'De L’Estaque à Carro, des ports et des criques à garder près de soi.',
@@ -425,7 +430,16 @@ const COLLECTIONS = {
     seo:'Carreaux décoratifs Côte Bleue | Carry, Sausset, Niolon – K-Reau',
     seoDesc:'10 carreaux en céramique illustrés de la Côte Bleue : L’Estaque, Niolon, Méjean, La Redonne, Carry-le-Rouet, Sausset-les-Pins, Carro… Cadeau souvenir à 19,90 €.',
     h1:'Carreaux décoratifs de la Côte Bleue',
+    offrir:'Un souvenir de la Côte Bleue à offrir',
     texte:'De L’Estaque à Carro, en passant par Niolon, Méjean, La Redonne, Ensuès-la-Redonne, Carry-le-Rouet, Sausset-les-Pins, le Cap Couronne et la plage de Sainte-Croix : les ports et calanques de la Côte Bleue dessinés sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y ont leurs souvenirs d’été.' },
+  'montagnes-du-sud': { nom:'Les Montagnes du Sud', titre:'Collection Les Montagnes du Sud', cle:'Montagnes du Sud', img:'', w:600, h:600,
+    court:'Sainte-Victoire, Ventoux, Garlaban… Les sommets de Provence en un trait.',
+    intro:'De la Sainte-Victoire au Mont Ventoux, du Garlaban de Pagnol au Mont Faron : dix sommets de Provence et du Var dessinés au trait, chacun avec son nom en calligraphie.',
+    seo:'Carreaux décoratifs montagnes de Provence | Sainte-Victoire, Ventoux – K-Reau',
+    seoDesc:'10 carreaux en céramique illustrés des montagnes du Sud : Sainte-Victoire, Sainte-Baume, Garlaban, Mont Ventoux, Mont Faron, Mont Puget… Idée cadeau Provence à 19,90 €.',
+    h1:'Carreaux décoratifs des montagnes du Sud',
+    offrir:'Un souvenir des montagnes de Provence à offrir',
+    texte:'La Sainte-Victoire de Cézanne, la Sainte-Baume et sa forêt, le Garlaban de Marcel Pagnol, le Mont Ventoux, le Mont Puget au-dessus des Calanques, le Mont Faron, le Mont Caume et le Gros Cerveau au-dessus de Toulon et Sanary, le Mont Salva près de Six-Fours et le Rocher de Roquebrune : les sommets du Sud sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour les randonneurs et les amoureux de Provence.' },
   'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'/img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
@@ -468,11 +482,15 @@ async function charger(){
   try{
     const r = await fetch('/data/catalogue_produits.json');
     if(!r.ok) throw new Error(r.status);
-    PRODUITS = (await r.json()).map(p => ({...p, image_principale: '/'+p.image_principale.replace(/^\//,''), miniature: '/'+p.miniature.replace(/^\//,'')})); ERREUR = null;
+    PRODUITS = (await r.json()).filter(p => p.publie !== false).map(p => ({...p, image_principale: '/'+p.image_principale.replace(/^\//,''), miniature: '/'+p.miniature.replace(/^\//,'')})); ERREUR = null;
   }catch(e){ ERREUR = e; }
+  document.querySelectorAll('[data-coll]').forEach(el => el.hidden = !collPubliee(el.dataset.coll));
   route();
 }
 const parSlug = s => PRODUITS?.find(p => p.slug === s);
+const COLLS_PRINCIPALES = ['marseille','cote-bleue','montagnes-du-sud'];
+const collPubliee = k => k !== 'montagnes-du-sud' || !!PRODUITS?.some(p => p.collection_slug === k);
+const imgColl = k => COLLECTIONS[k].img || (PRODUITS?.find(p => p.collection_slug === k)?.image_principale ?? '');
 const deCollection = k => PRODUITS?.filter(p => p.collection_slug === k) || [];
 const collNom = p => p.collection === 'Signature' ? 'Les Embiez · modèle signature' : p.collection;
 
@@ -496,7 +514,7 @@ function grilleHTML(list){
   return list.map(p => carte(p)).join('');
 }
 function filtresHTML(actif, id){
-  const opts = [['tout','Tout'],['marseille','Marseille'],['cote-bleue','Côte Bleue'],['les-embiez','Les Embiez']];
+  const opts = [['tout','Tout'],['marseille','Marseille'],['cote-bleue','Côte Bleue'],['montagnes-du-sud','Montagnes'],['les-embiez','Les Embiez']].filter(([k])=>k==='tout'||collPubliee(k));
   return `<div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="${id}">${opts.map(([k,l])=>`<button type="button" class="filtre" data-f="${k}" aria-pressed="${k===actif}">${l}</button>`).join('')}</div>`;
 }
 function brancherFiltres(id, listeTout){
@@ -564,11 +582,11 @@ function vueAccueil(){
         <h2 id="t-coll">Où voulez-vous retourner ?</h2>
         <p class="lead">Un port, une crique, une colline… Il y a toujours un lieu qui nous suit partout.</p>
       </div>
-      <div class="colls">
-        ${['marseille','cote-bleue','les-embiez'].map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
+      <div class="colls${['marseille','cote-bleue','montagnes-du-sud','les-embiez'].filter(collPubliee).length===4?' colls-4':''}">
+        ${['marseille','cote-bleue','montagnes-du-sud','les-embiez'].filter(collPubliee).map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
           const href = k==='les-embiez' ? '/produits/les-embiez' : '/collections/'+k;
           return `<a class="coll" href="${href}">
-            <div class="coll-img"><img src="${c.img}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)} posé au bord de la mer"></div>
+            <div class="coll-img"><img src="${imgColl(k)}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)}"></div>
             <div class="coll-corps">
               <span class="eyebrow">${k==='les-embiez'?'Modèle signature':(PRODUITS? n+' modèles':'Collection')}</span>
               <h3>${esc(c.nom)}</h3>
@@ -685,10 +703,10 @@ function vueCollection(k){
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     <div class="grille" id="g-coll">${grilleHTML(list)}</div>
     <div class="grille-pied" style="gap:12px;flex-wrap:wrap">
-      <a class="btn btn-s" href="/collections/${k==='marseille'?'cote-bleue':'marseille'}">Voir la collection ${k==='marseille'?'Côte Bleue':'Marseille'}</a>
+      ${COLLS_PRINCIPALES.filter(x=>x!==k && collPubliee(x)).map(x=>`<a class="btn btn-s" href="/collections/${x}">Voir la collection ${esc(COLLECTIONS[x].nom.replace(/^La |^Les /,''))}</a>`).join('')}
       <a class="btn btn-s" href="/produits/les-embiez">Le modèle signature Les Embiez</a>
     </div>
-    ${c.texte ? `<div class="prose" style="margin-top:56px;max-width:760px"><h2>${k==='marseille'?'Un souvenir de Marseille à offrir':'Un souvenir de la Côte Bleue à offrir'}</h2><p>${esc(c.texte)}</p><p>Chaque carreau coûte 19,90 € ; la livraison est offerte dès 50 € d’achat.</p></div>` : ''}
+    ${c.texte ? `<div class="prose" style="margin-top:56px;max-width:760px"><h2>${esc(c.offrir||'Un souvenir à offrir')}</h2><p>${esc(c.texte)}</p><p>Chaque carreau coûte 19,90 € ; la livraison est offerte dès 50 € d’achat.</p></div>` : ''}
   </div></section>`;
 }
 
@@ -767,7 +785,7 @@ function vueProduit(slug){
   const p = parSlug(slug);
   if(!p) return vue404();
   const k = p.collection_slug, c = COLLECTIONS[k];
-  const region = k==='marseille' ? 'Marseille' : k==='cote-bleue' ? 'la Côte Bleue' : 'Méditerranée';
+  const region = k==='marseille' ? 'Marseille' : k==='cote-bleue' ? 'la Côte Bleue' : k==='montagnes-du-sud' ? 'Provence' : 'Méditerranée';
   const urlP = 'https://k-reau.fr/produits/'+p.slug;
   setMeta(`Carreau ${p.nom} | Déco céramique, cadeau ${k==='les-embiez'?'Var':region.replace('la ','')} – K-Reau`,
     `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir de ${region}. 19,90 €, livraison offerte dès 50 €.`,
