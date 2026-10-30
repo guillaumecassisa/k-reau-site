@@ -9,7 +9,7 @@
       "destination": "/pages/collections/:c.html"
     },
     {
-      "source": "/:page(carreaux|coffrets|sur-mesure|carte-cadeau|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier)",
+      "source": "/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier)",
       "destination": "/pages/:page.html"
     }
   ],
