@@ -814,22 +814,23 @@
   "image_principale": "img/10_Produits_Chateaux/chateaux-versailles.webp",
   "miniature": "img/10_Produits_Chateaux/chateaux-versailles-mini.webp",
   "alt": "Carreau décoratif K-Reau « Le Château de Versailles » en céramique blanche, dessin au trait noir et nom calligraphié",
-  "description_courte": "La façade royale, la cour de Marbre et les jardins à perte de vue.",
+  "description_courte": "Sa façade sur les jardins, ses bassins et ses ifs taillés à perte de vue.",
   "prix_eur": "19.90",
   "dimensions": "15 × 15 cm",
   "matiere_confirmee": "Céramique",
   "stock": "",
   "delai_livraison": "Expédition sous 5 à 7 jours · 7,90 €, offerte dès 50 € d’achat",
   "statut": "photo produit",
-  "description": "La façade royale, la cour de Marbre et les jardins à perte de vue. Un carreau pour garder un peu de la splendeur de Versailles chez soi.",
-  "carte": "La façade royale, la cour de Marbre et les jardins à perte de vue.",
+  "description": "Sa façade sur les jardins, ses bassins et ses ifs taillés à perte de vue. Un carreau pour garder un peu de la splendeur de Versailles chez soi.",
+  "carte": "Sa façade sur les jardins, ses bassins et ses ifs taillés à perte de vue.",
   "collection_slug": "chateaux",
   "finition": "Céramique blanche brillante, illustration noire imprimée en UV",
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Résidence de Louis XIV et des rois de France jusqu’à la Révolution, le château de Versailles, dans les Yvelines, est célèbre pour sa galerie des Glaces et ses jardins dessinés par André Le Nôtre. Il est inscrit au patrimoine mondial de l’UNESCO.",
-  "publie": false
+  "image_detail": "img/details/chateaux-versailles-detail.webp",
+  "image_coffret": "img/coffret/chateaux-versailles-coffret.webp"
  },
  {
   "id": "chateaux-chambord",
@@ -855,7 +856,8 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Commencé en 1519 pour François Ier, Chambord est le plus vaste des châteaux de la Loire. Son célèbre escalier à double révolution et sa forêt immense en font l’un des joyaux de la Renaissance française.",
-  "publie": false
+  "image_detail": "img/details/chateaux-chambord-detail.webp",
+  "image_coffret": "img/coffret/chateaux-chambord-coffret.webp"
  },
  {
   "id": "chateaux-chenonceau",
@@ -881,7 +883,8 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Surnommé le « château des Dames », Chenonceau, en Indre-et-Loire, doit beaucoup à Diane de Poitiers et à Catherine de Médicis. Sa galerie à arches posée sur le Cher en fait une silhouette unique.",
-  "publie": false
+  "image_detail": "img/details/chateaux-chenonceau-detail.webp",
+  "image_coffret": "img/coffret/chateaux-chenonceau-coffret.webp"
  },
  {
   "id": "chateaux-amboise",
@@ -907,7 +910,8 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Demeure royale dominant la Loire, le château d’Amboise a accueilli Charles VIII et François Ier. Léonard de Vinci, qui vécut ses dernières années tout près, repose dans la chapelle Saint-Hubert du château.",
-  "publie": false
+  "image_detail": "img/details/chateaux-amboise-detail.webp",
+  "image_coffret": "img/coffret/chateaux-amboise-coffret.webp"
  },
  {
   "id": "chateaux-blois",
@@ -933,7 +937,8 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Résidence de plusieurs rois de France, le château de Blois, dans le Loir-et-Cher, réunit quatre siècles d’architecture autour d’une même cour. Son escalier François Ier, à vis et à loggias, est l’un des plus célèbres de la Renaissance.",
-  "publie": false
+  "image_detail": "img/details/chateaux-blois-detail.webp",
+  "image_coffret": "img/coffret/chateaux-blois-coffret.webp"
  },
  {
   "id": "chateaux-azay-le-rideau",
@@ -959,33 +964,35 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Bâti au XVIe siècle sur une île de l’Indre, en Indre-et-Loire, Azay-le-Rideau est un chef-d’œuvre de la première Renaissance. Ses façades se reflètent dans les eaux qui l’entourent comme dans un miroir.",
-  "publie": false
+  "image_detail": "img/details/chateaux-azay-le-rideau-detail.webp",
+  "image_coffret": "img/coffret/chateaux-azay-le-rideau-coffret.webp"
  },
  {
-  "id": "chateaux-cheverny",
-  "nom": "Le Château de Cheverny",
+  "id": "chateaux-usse",
+  "nom": "Le Château d’Ussé",
   "collection": "Châteaux",
-  "slug": "chateaux-cheverny",
+  "slug": "chateaux-usse",
   "region": "Val de Loire",
-  "image_principale": "img/10_Produits_Chateaux/chateaux-cheverny.webp",
-  "miniature": "img/10_Produits_Chateaux/chateaux-cheverny-mini.webp",
-  "alt": "Carreau décoratif K-Reau « Le Château de Cheverny » en céramique blanche, dessin au trait noir et nom calligraphié",
-  "description_courte": "Sa façade classique, blanche et parfaitement symétrique au bout de sa grande allée.",
+  "image_principale": "img/10_Produits_Chateaux/chateaux-usse.webp",
+  "miniature": "img/10_Produits_Chateaux/chateaux-usse-mini.webp",
+  "alt": "Carreau décoratif K-Reau « Le Château d’Ussé » en céramique blanche, dessin au trait noir et nom calligraphié",
+  "description_courte": "Ses tours blanches et ses toits pointus à l’orée de la forêt de Chinon, comme sortis d’un conte.",
   "prix_eur": "19.90",
   "dimensions": "15 × 15 cm",
   "matiere_confirmee": "Céramique",
   "stock": "",
   "delai_livraison": "Expédition sous 5 à 7 jours · 7,90 €, offerte dès 50 € d’achat",
   "statut": "photo produit",
-  "description": "Sa façade classique, blanche et parfaitement symétrique au bout de sa grande allée. Un carreau pour les amateurs d’élégance… et de bandes dessinées.",
-  "carte": "Sa façade classique, blanche et parfaitement symétrique au bout de sa grande allée.",
+  "description": "Ses tours blanches et ses toits pointus à l’orée de la forêt de Chinon, comme sortis d’un conte. Un carreau pour ceux qui ont gardé une âme d’enfant et l’amour des contes.",
+  "carte": "Ses tours blanches et ses toits pointus à l’orée de la forêt de Chinon, comme sortis d’un conte.",
   "collection_slug": "chateaux",
   "finition": "Céramique blanche brillante, illustration noire imprimée en UV",
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Achevé au XVIIe siècle dans le Loir-et-Cher, Cheverny se distingue par sa façade classique et ses intérieurs meublés. Sa silhouette a inspiré Hergé pour le château de Moulinsart des Aventures de Tintin.",
-  "publie": false
+  "a_propos": "Dominant l’Indre à l’orée de la forêt de Chinon, en Indre-et-Loire, le château d’Ussé mêle forteresse médiévale et logis Renaissance. Charles Perrault s’en serait inspiré pour La Belle au bois dormant, d’où son surnom de « château de la Belle au bois dormant ».",
+  "image_detail": "img/details/chateaux-usse-detail.webp",
+  "image_coffret": "img/coffret/chateaux-usse-coffret.webp"
  },
  {
   "id": "chateaux-villandry",
@@ -1011,7 +1018,8 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Le château de Villandry, en Indre-et-Loire, est surtout célèbre pour ses jardins Renaissance : jardin d’ornement, potager décoratif et jardin d’eau, entretenus avec une précision remarquable.",
-  "publie": false
+  "image_detail": "img/details/chateaux-villandry-detail.webp",
+  "image_coffret": "img/coffret/chateaux-villandry-coffret.webp"
  },
  {
   "id": "chateaux-fontainebleau",
@@ -1037,32 +1045,34 @@
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "En Seine-et-Marne, Fontainebleau a été la demeure des souverains de France pendant huit siècles, de François Ier à Napoléon III. C’est dans sa cour du Cheval-Blanc que Napoléon fit ses adieux à la Garde en 1814.",
-  "publie": false
+  "image_detail": "img/details/chateaux-fontainebleau-detail.webp",
+  "image_coffret": "img/coffret/chateaux-fontainebleau-coffret.webp"
  },
  {
-  "id": "chateaux-haut-koenigsbourg",
-  "nom": "Le Château du Haut-Kœnigsbourg",
+  "id": "chateaux-saumur",
+  "nom": "Le Château de Saumur",
   "collection": "Châteaux",
-  "slug": "chateaux-haut-koenigsbourg",
-  "region": "Alsace",
-  "image_principale": "img/10_Produits_Chateaux/chateaux-haut-koenigsbourg.webp",
-  "miniature": "img/10_Produits_Chateaux/chateaux-haut-koenigsbourg-mini.webp",
-  "alt": "Carreau décoratif K-Reau « Le Château du Haut-Kœnigsbourg » en céramique blanche, dessin au trait noir et nom calligraphié",
-  "description_courte": "Ses tours de grès rose perchées au-dessus de la plaine d’Alsace.",
+  "slug": "chateaux-saumur",
+  "region": "Val de Loire",
+  "image_principale": "img/10_Produits_Chateaux/chateaux-saumur.webp",
+  "miniature": "img/10_Produits_Chateaux/chateaux-saumur-mini.webp",
+  "alt": "Carreau décoratif K-Reau « Le Château de Saumur » en céramique blanche, dessin au trait noir et nom calligraphié",
+  "description_courte": "Ses tours blanches dressées sur le coteau, au-dessus de la Loire et des toits de la ville.",
   "prix_eur": "19.90",
   "dimensions": "15 × 15 cm",
   "matiere_confirmee": "Céramique",
   "stock": "",
   "delai_livraison": "Expédition sous 5 à 7 jours · 7,90 €, offerte dès 50 € d’achat",
   "statut": "photo produit",
-  "description": "Ses tours de grès rose perchées au-dessus de la plaine d’Alsace. Un carreau pour les amoureux des châteaux forts et des grands panoramas.",
-  "carte": "Ses tours de grès rose perchées au-dessus de la plaine d’Alsace.",
+  "description": "Ses tours blanches dressées sur le coteau, au-dessus de la Loire et des toits de la ville. Un carreau pour les amoureux de l’Anjou et des bords de Loire.",
+  "carte": "Ses tours blanches dressées sur le coteau, au-dessus de la Loire et des toits de la ville.",
   "collection_slug": "chateaux",
   "finition": "Céramique blanche brillante, illustration noire imprimée en UV",
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Perché sur un éperon des Vosges, dans le Bas-Rhin, le Haut-Kœnigsbourg est un château fort médiéval restauré au début du XXe siècle. Il domine la plaine d’Alsace et offre une vue jusqu’à la Forêt-Noire par temps clair.",
-  "publie": false
+  "a_propos": "Perché sur un éperon au-dessus de la Loire, dans le Maine-et-Loire, le château de Saumur a été rebâti à la fin du XIVe siècle par les ducs d’Anjou. Sa silhouette figure dans les Très Riches Heures du duc de Berry ; il abrite aujourd’hui un musée des arts décoratifs et du cheval.",
+  "image_detail": "img/details/chateaux-saumur-detail.webp",
+  "image_coffret": "img/coffret/chateaux-saumur-coffret.webp"
  }
 ]
