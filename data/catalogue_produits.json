@@ -418,8 +418,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Tracée au XIXe siècle et rebaptisée en hommage au président John F. Kennedy, la Corniche longe la mer des Catalans jusqu’au Prado. Bordée d’un banc de pierre de plusieurs kilomètres, elle passe au-dessus du Vallon des Auffes et offre une vue sur le Frioul et le château d’If.",
   "image_detail": "img/details/marseille-corniche-kennedy-detail.webp",
-  "image_coffret": "img/coffret/marseille-corniche-kennedy-coffret.webp",
-  "publie": false
+  "image_coffret": "img/coffret/marseille-corniche-kennedy-coffret.webp"
  },
  {
   "id": "marseille-le-panier",
@@ -445,8 +444,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Perché au-dessus du Vieux-Port, le Panier est le plus ancien quartier de Marseille, à l’emplacement de la cité grecque de Massalia fondée vers 600 av. J.-C. On y flâne entre ruelles colorées, ateliers d’artisans et la Vieille Charité, bâtie au XVIIe siècle d’après les plans de Pierre Puget.",
   "image_detail": "img/details/marseille-le-panier-detail.webp",
-  "image_coffret": "img/coffret/marseille-le-panier-coffret.webp",
-  "publie": false
+  "image_coffret": "img/coffret/marseille-le-panier-coffret.webp"
  },
  {
   "id": "marseille-canebiere",
@@ -472,8 +470,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Artère historique de la ville, la Canebière relie le Vieux-Port au quartier des Réformés. Son nom vient du provençal canebe, le chanvre, rappelant les cordiers qui fabriquaient autrefois les cordages des navires. Chantée dans de nombreuses chansons, elle reste le cœur symbolique de Marseille.",
   "image_detail": "img/details/marseille-canebiere-detail.webp",
-  "image_coffret": "img/coffret/marseille-canebiere-coffret.webp",
-  "publie": false
+  "image_coffret": "img/coffret/marseille-canebiere-coffret.webp"
  },
  {
   "id": "marseille-cite-radieuse",
@@ -499,8 +496,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Achevée en 1952, la Cité radieuse est la première Unité d’habitation imaginée par Le Corbusier : une ville verticale avec logements, commerces, hôtel et toit-terrasse. Elle est inscrite au patrimoine mondial de l’UNESCO depuis 2016 avec d’autres œuvres de l’architecte.",
   "image_detail": "img/details/marseille-cite-radieuse-detail.webp",
-  "image_coffret": "img/coffret/marseille-cite-radieuse-coffret.webp",
-  "publie": false
+  "image_coffret": "img/coffret/marseille-cite-radieuse-coffret.webp"
  },
  {
   "id": "marseille-fort-saint-jean",
@@ -526,8 +522,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Bâti au XVIIe siècle sous Louis XIV autour de la tour du roi René, plus ancienne, le fort Saint-Jean veille avec le fort Saint-Nicolas sur l’entrée du Vieux-Port. Relié au Mucem par une passerelle depuis 2013, il accueille aujourd’hui des jardins et des expositions ouverts au public.",
   "image_detail": "img/details/marseille-fort-saint-jean-detail.webp",
-  "image_coffret": "img/coffret/marseille-fort-saint-jean-coffret.webp",
-  "publie": false
+  "image_coffret": "img/coffret/marseille-fort-saint-jean-coffret.webp"
  },
  {
   "id": "marseille-le-prado",
@@ -553,8 +548,7 @@
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
   "a_propos": "Au bout de l’avenue du Prado, le parc balnéaire du Prado s’étend le long de la mer avec ses plages, ses pelouses et le parc Borély tout proche. Aménagé à partir de la fin des années 1970, il est devenu le grand lieu de détente des Marseillais, autour de la statue du David.",
   "image_detail": "img/details/marseille-le-prado-detail.webp",
-  "image_coffret": "img/coffret/marseille-le-prado-coffret.webp",
-  "publie": false
+  "image_coffret": "img/coffret/marseille-le-prado-coffret.webp"
  },
  {
   "id": "cote-bleue-port-niolon",
