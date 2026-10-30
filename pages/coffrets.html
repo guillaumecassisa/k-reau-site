@@ -366,6 +366,9 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .projet-liste li{background:var(--blanc,#fff);border:1px solid var(--joint);padding:20px;display:grid;gap:6px;align-content:start}
 .projet-liste strong{font-weight:600}
 .projet-liste span{color:var(--encre-doux);font-size:.92rem}
+.sm-boutons{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.sm-projet{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between;background:var(--sable-clair);padding:clamp(24px,4vw,40px);max-width:980px}
+.sm-projet h2{margin:0 0 8px}.sm-projet p{margin:0;color:var(--encre-doux);max-width:36em}
 .projet-lien{text-align:center;margin-top:32px;color:var(--encre-doux)}
 @media(max-width:860px){.etapes{grid-template-columns:1fr 1fr}.etapes li:nth-child(3){border-left:0}.etapes li:nth-child(n+3){border-top:1px solid var(--joint)}}
 .montants{display:flex;flex-wrap:wrap;gap:10px}
@@ -1388,7 +1391,7 @@ function vueSurMesure(){
       <div class="bloc-titre" style="margin:0"><span class="eyebrow">Carreau sur mesure</span><h1>Votre lieu, votre souvenir dessiné pour vous</h1>
       <p class="lead">La maison de famille, le village de vacances, la plage de votre enfance : nous dessinons le lieu de votre choix au trait et l’imprimons sur un carreau en céramique de 15 × 15 cm, avec le nom de votre choix en calligraphie.</p>
       <p class="offre-prix" style="font-size:1.5rem">${prixEur(CONFIG.prix.surMesure)}</p>
-      <a class="btn btn-p" href="#form-sm" style="justify-self:start">Créer mon carreau</a></div>
+      <div class="sm-boutons"><a class="btn btn-p" href="#form-sm">Créer mon carreau</a><a class="btn btn-s" href="/projet-specifique">Projet en quantité ? Demande spécifique</a></div></div>
       <figure class="sm-exemple" id="sm-galerie" tabindex="-1">
         <div class="galerie-cadre">
           <img id="sm-img" src="/img/sur-mesure/${SM_EXEMPLES[0].f}.webp" srcset="/img/sur-mesure/${SM_EXEMPLES[0].f}-mini.webp 700w, /img/sur-mesure/${SM_EXEMPLES[0].f}.webp ${SM_EXEMPLES[0].w}w" sizes="(max-width:860px) 100vw, 560px" width="${SM_EXEMPLES[0].w}" height="${SM_EXEMPLES[0].h}" style="aspect-ratio:${SM_EXEMPLES[0].w}/${SM_EXEMPLES[0].h}" fetchpriority="high" alt="${esc(SM_EXEMPLES[0].alt)}">
@@ -1418,6 +1421,8 @@ function vueSurMesure(){
       <div class="retour" aria-live="polite"></div>
       <p class="small muted">Délai : dessin envoyé sous 5 jours ouvrés après la commande, puis expédition sous 5 à 7 jours après votre validation.</p>
     </form>
+    <div class="sm-projet"><div><h2>Plusieurs carreaux ou un projet particulier ?</h2><p>Entreprise, mariage, hôtel, boutique : pour une commande en quantité ou plusieurs dessins sur mesure, parlez-nous de votre projet.</p></div>
+      <a class="btn btn-p" href="/projet-specifique">Demande de projet spécifique</a></div>
   </div></section>`;
   if(SM_EXEMPLES.length > 1){
     let n = 0; const img = $('#sm-img');
