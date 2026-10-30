@@ -235,6 +235,9 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 /* Page intérieure */
 .page-tete{padding-block:clamp(40px,6vw,72px) clamp(28px,4vw,48px);border-bottom:1px solid var(--joint)}
 .page-tete .bloc-titre{margin-bottom:0}
+.tete-visuel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,420px);gap:clamp(28px,5vw,72px);align-items:center}
+.tete-img{margin:0}.tete-img img{width:100%;height:auto;display:block;border-radius:6px;box-shadow:0 18px 40px -24px rgba(40,32,20,.45)}
+@media(max-width:860px){.tete-visuel{grid-template-columns:1fr}.tete-img{max-width:420px}}
 .ariane{font-size:.82rem;color:var(--encre-doux);margin-bottom:18px}
 .ariane ol{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
 .ariane li+li::before{content:"/";margin-right:6px;color:var(--sable)}
@@ -904,7 +907,7 @@ function vueCollection(k){
 }
 
 function vueTous(){
-  setMeta('Tous les carreaux décoratifs en céramique | K-Reau','Les 21 carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue et Les Embiez. Céramique 15 × 15 cm, 19,90 €, idée cadeau souvenir.');
+  setMeta('Tous les carreaux décoratifs en céramique | K-Reau',`Les ${PRODUITS ? PRODUITS.length + " " : ""}carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez. Céramique 15 × 15 cm, 19,90 €, idée cadeau souvenir.`);
   const q = (new URLSearchParams(location.search).get('q') || '').trim();
   const res = q && PRODUITS ? chercher(q) : null;
   const offresQ = q ? chercherOffres(q) : [];
@@ -912,7 +915,8 @@ function vueTous(){
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Nos carreaux','']])}
     ${q ? `<div class="bloc-titre"><span class="eyebrow">Recherche</span><h1>Résultats pour « ${esc(q)} »</h1><p class="lead">${res ? (res.length ? res.length+' carreau'+(res.length>1?'x':'')+' trouvé'+(res.length>1?'s':'') : offresQ.length ? '' : 'Aucun carreau ne correspond à cette recherche. Essayez un autre lieu, ou parcourez tous les modèles.') : ''}</p><a class="lien" href="/carreaux">Voir tous les carreaux</a></div>`
-        : `<div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>`}
+        : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>
+          <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux K-Reau en céramique posés sur la pierre : Sausset-les-Pins, Château de Versailles, Sainte-Victoire et le Vieux-Port de Marseille" fetchpriority="high"></figure></div>`}
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     ${offresQ.length ? `<div class="offres-q">${offresQ.map(o=>`<a class="offre-q" href="${o.url}">${o.img ? `<img src="${esc(o.img)}" alt="" loading="lazy">` : `<span class="sug-ico">${ICO_CARTE}</span>`}<span><strong>${esc(o.nom)}</strong><span class="small muted">${esc(o.sous)}</span></span></a>`).join('')}</div>` : ''}
