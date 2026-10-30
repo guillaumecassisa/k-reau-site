@@ -30,6 +30,9 @@ module.exports = async function handler(req, res) {
       const desc = `Texte : « ${texte(l.texte, 40)} »${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.surMesure, product_data: { name: 'Carreau K-Reau sur mesure', description: desc.slice(0, 480) } } });
       physique += PRIX.surMesure * q(l); resume.push(`sur-mesure(${texte(l.texte, 40)})x${q(l)}`);
+    } else if (type === 'chevalet') {
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.chevalet, product_data: { name: 'Chevalet trépied en bois brut', description: 'Support pour carreau · L 8 × H 15 cm' } } });
+      physique += PRIX.chevalet * q(l); resume.push(`chevalet x${q(l)}`);
     } else if (type === 'carte' && PRIX.cartes.includes(parseInt(l.montant, 10))) {
       const m = parseInt(l.montant, 10);
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: m, product_data: { name: `Carte cadeau K-Reau ${euros(m)}`, description: 'Code envoyé après le paiement, valable 12 mois sur k-reau.fr' } } });

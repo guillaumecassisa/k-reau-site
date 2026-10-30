@@ -7,6 +7,7 @@ const PRIX = {
   carreau: 1990,
   coffret: 5490,          // 3 carreaux au choix (au lieu de 3 × 19,90 €)
   surMesure: 3490,
+  chevalet: 290,          // chevalet trépied en bois brut (accessoire)
   cartes: [2500, 5000, 7500, 10000]
 };
 const PRODUITS = Object.fromEntries(CATALOGUE.filter(p => p.publie !== false).map(p => [p.slug, p]));

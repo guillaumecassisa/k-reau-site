@@ -300,6 +300,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--joint)}
 .ligne-visuel{width:64px;height:64px;border:1px solid var(--joint);background:var(--blanc);overflow:hidden;display:grid}
 .ligne-visuel img{width:100%;height:100%;object-fit:cover}
+.ligne-visuel.chevalet{background:var(--sable-clair)}.ligne-visuel.chevalet svg{width:100%;height:100%}
+.chevalet-offre{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center;border:1px solid var(--joint);background:var(--blanc);padding:16px}
+.chevalet-visuel{background:var(--sable-clair);aspect-ratio:1}.chevalet-visuel svg{width:100%;height:100%;display:block}
+.chevalet-texte{display:grid;gap:6px}
+@media(max-width:480px){.chevalet-offre{grid-template-columns:84px 1fr;gap:12px;padding:12px}}.chevalet-texte p{margin:0}
 .ligne-visuel.trio{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--joint)}
 .ligne-visuel.trio img:first-child{grid-row:span 2}
 .ligne-visuel.icone{place-items:center;color:var(--olivier)}
@@ -694,7 +699,7 @@ const CONFIG = {
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
   legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
-  prix: { carreau: 19.90, coffret: 54.90, surMesure: 34.90, cartes: [25, 50, 75, 100] }, // alignés sur api/_commun.js
+  prix: { carreau: 19.90, coffret: 54.90, surMesure: 34.90, chevalet: 2.90, cartes: [25, 50, 75, 100] }, // alignés sur api/_commun.js
   trios: [
     { id:'trio-marseille', nom:'Trio Marseille', slugs:['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes'] },
     { id:'trio-cote-bleue', nom:'Trio Côte Bleue', slugs:['cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','cote-bleue-port-niolon'] },
@@ -1674,13 +1679,14 @@ function ouvrirLightbox(src, alt){
 
 /* ===== Panier (actif uniquement en mode live) ===== */
 const ICO_SM='<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="7" y="7" width="26" height="26"/><path d="M11 25l6-7 4 4 3-3 5 6"/><path d="M27 6l7 7-9 9-4 1 1-4z"/></svg>';
+const ILLU_CHEVALET='<svg viewBox="0 0 120 120" aria-hidden="true"><g stroke="#8A6A45" stroke-width="2" stroke-linecap="round" fill="#D9BF98"><path d="M60 14 L36 108" stroke-width="5"/><path d="M60 14 L84 108" stroke-width="5"/><path d="M60 16 L60 104" stroke="#B8966C" stroke-width="4"/></g><rect x="33" y="74" width="54" height="6" rx="1.5" fill="#CDAE84" stroke="#8A6A45" stroke-width="1.5"/><rect x="36" y="30" width="48" height="45" rx="2.5" fill="#FBFAF7" stroke="#D8D1C6" stroke-width="1.5"/><path d="M42 58 l7-8 5 5 6-9 8 12" fill="none" stroke="#2A2926" stroke-width="1.6" stroke-linejoin="round"/><path d="M47 67 h26" stroke="#2A2926" stroke-width="1.4" stroke-linecap="round"/></svg>';
 const ICO_CARTE='<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="5" y="11" width="30" height="19" rx="2"/><path d="M5 17h30M14 11v19"/><path d="M14 17c-3-4-7-3-6 0s6 0 6 0zm0 0c3-4 7-3 6 0s-6 0-6 0z"/></svg>';
 const Panier = {
   lignes: store.get('kreau-panier', []).map(l => l.type ? l : { type:'carreau', slug:l.slug, q:l.q }),
   message: store.get('kreau-message', ''),
   sauver(){ store.set('kreau-panier', this.lignes); store.set('kreau-message', this.message); this.badge(); },
-  cle(l){ return l.type==='carreau' ? 'c:'+l.slug : l.type==='coffret' ? 'k:'+l.slugs.join('+') : l.type==='carte' ? 'g:'+l.montant : 's:'+l.id; },
-  prix(l){ return l.type==='carreau' ? CONFIG.prix.carreau : l.type==='coffret' ? CONFIG.prix.coffret : l.type==='sur-mesure' ? CONFIG.prix.surMesure : l.montant/100; },
+  cle(l){ return l.type==='chevalet' ? 'v:chevalet' : l.type==='carreau' ? 'c:'+l.slug : l.type==='coffret' ? 'k:'+l.slugs.join('+') : l.type==='carte' ? 'g:'+l.montant : 's:'+l.id; },
+  prix(l){ return l.type==='chevalet' ? CONFIG.prix.chevalet : l.type==='carreau' ? CONFIG.prix.carreau : l.type==='coffret' ? CONFIG.prix.coffret : l.type==='sur-mesure' ? CONFIG.prix.surMesure : l.montant/100; },
   physique(){ return this.lignes.filter(l=>l.type!=='carte').reduce((t,l)=>t+this.prix(l)*l.q,0); },
   total(){ return this.lignes.reduce((t,l)=>t+this.prix(l)*l.q,0); },
   valide(l){ return l.type==='carreau' ? !!parSlug(l.slug) : l.type==='coffret' ? l.slugs.every(parSlug) : true; },
@@ -1694,11 +1700,13 @@ const Panier = {
   visuel(l){
     if(l.type==='carreau'){ const p=parSlug(l.slug); return `<div class="ligne-visuel"><img src="${esc(p.miniature)}" alt="" width="64" height="64"></div>`; }
     if(l.type==='coffret') return `<div class="ligne-visuel trio">${l.slugs.map(x=>`<img src="${esc(parSlug(x).miniature)}" alt="">`).join('')}</div>`;
+    if(l.type==='chevalet') return `<div class="ligne-visuel chevalet">${ILLU_CHEVALET}</div>`;
     return `<div class="ligne-visuel icone">${l.type==='carte'?ICO_CARTE:ICO_SM}</div>`;
   },
   libelle(l){
     if(l.type==='carreau') return `<strong>${esc(parSlug(l.slug).nom)}</strong><span class="sous">Carreau 15 × 15 cm</span>`;
     if(l.type==='coffret') return `<strong>${esc(l.nom||'Coffret 3 carreaux')}</strong><span class="sous">${l.slugs.map(x=>esc(parSlug(x).nom)).join(' · ')}</span>`;
+    if(l.type==='chevalet') return `<strong>Chevalet trépied en bois brut</strong><span class="sous">L 8 × H 15 cm · pour poser votre carreau</span>`;
     if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">« ${esc(l.texte)} » · ${esc(l.lieu)}</span>`;
     return `<strong>Carte cadeau ${prixEur(l.montant/100)}</strong><span class="sous">Code envoyé après le paiement</span>`;
   },
@@ -1739,8 +1747,41 @@ const Panier = {
       const sp = e.target.closest('[data-suppr]'); if(sp){ this.lignes.splice(+sp.dataset.suppr,1); this.sauver(); return this.ouvrir(); }
       const qb = e.target.closest('[data-q]'); if(qb){ const [i,d] = qb.dataset.q.split(':').map(Number); const l=this.lignes[i]; l.q += d; if(l.q<1) this.lignes.splice(i,1); else l.q=Math.min(20,l.q); this.sauver(); return this.ouvrir(); }
       const pl = e.target.closest('[data-plus]'); if(pl){ this.ajouter({ type:'carreau', slug:pl.dataset.plus }); return this.ouvrir(); }
-      if(e.target.closest('#payer')) this.payer();
+      if(e.target.closest('#payer')){ if(this.proposerChevalet()) return; this.payer(); }
     });
+  },
+  nbCarreaux(){ return this.lignes.reduce((t,l)=>t+(l.type==='carreau'||l.type==='sur-mesure' ? l.q : l.type==='coffret' ? 3*l.q : 0),0); },
+  // Étape facultative avant le paiement : le chevalet en bois pour poser le carreau
+  proposerChevalet(){
+    if(this.chevaletPropose || !this.nbCarreaux() || this.lignes.some(l=>l.type==='chevalet')) return false;
+    this.chevaletPropose = true;
+    let q = 1; const max = 20;
+    const p = $('.panier-panneau');
+    p.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center"><h2>Un dernier détail ?</h2><button class="icone-btn" type="button" data-fermer aria-label="Fermer le panier">${ICONES.croix}</button></div>
+      <div class="chevalet-offre">
+        <div class="chevalet-visuel">${ILLU_CHEVALET}</div>
+        <div class="chevalet-texte">
+          <strong>Chevalet trépied en bois brut</strong>
+          <p class="small muted">Pour poser votre carreau sur une étagère, un buffet ou un bureau, sans fixation.</p>
+          <p class="small">Dimensions : L 8 × H 15 cm</p>
+          <p class="offre-prix" style="margin:0">${prixEur(CONFIG.prix.chevalet)} <span class="small muted" style="font-weight:400">l’unité</span></p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px"><span class="small"><strong>Quantité</strong></span><div class="ligne-qte"><button type="button" id="ch-moins" aria-label="Un chevalet de moins">−</button><output id="ch-q">1</output><button type="button" id="ch-plus" aria-label="Un chevalet de plus">+</button></div></div>
+      <button class="btn btn-p" type="button" id="ch-ajouter">Ajouter et passer au paiement</button>
+      <button class="btn btn-s" type="button" id="ch-passer">Non merci, passer au paiement</button>
+      <button class="lien small" type="button" id="ch-retour" style="background:none;border:0;cursor:pointer;justify-self:start">Retour au panier</button>
+      <div id="payer-retour" aria-live="polite"></div>`;
+    const maj = () => { $('#ch-q').textContent = q; $('#ch-moins').disabled = q<=1; $('#ch-ajouter').textContent = `Ajouter (${prixEur(q*CONFIG.prix.chevalet)}) et payer`; };
+    maj();
+    $('#ch-moins').onclick = () => { q = Math.max(1,q-1); maj(); };
+    $('#ch-plus').onclick = () => { q = Math.min(max,q+1); maj(); };
+    $('#ch-retour').onclick = () => { this.chevaletPropose = false; this.ouvrir(); };
+    const go = async btn => { p.querySelectorAll('button').forEach(b=>b.disabled=true); btn.id='payer'; await this.payer(); p.querySelectorAll('button').forEach(b=>b.disabled=false); this.chevaletPropose = false; };
+    $('#ch-ajouter').onclick = e => { this.ajouter({ type:'chevalet', q }); go(e.currentTarget); };
+    $('#ch-passer').onclick = e => go(e.currentTarget);
+    return true;
   },
   async payer(){
     const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
