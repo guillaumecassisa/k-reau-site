@@ -69,7 +69,7 @@ nav.principale{margin-left:clamp(8px,2vw,28px)}
 .logo-lien{display:block;flex:none}
 .logo-lien img{height:60px;width:auto;mix-blend-mode:multiply}
 nav.principale ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
-nav.principale a{display:flex;align-items:center;min-height:44px;padding:0 14px;text-decoration:none;font-size:.9rem;font-weight:500;color:var(--encre);border-bottom:1px solid transparent}
+nav.principale a{display:flex;align-items:center;min-height:44px;padding:0 12px;white-space:nowrap;text-decoration:none;font-size:.9rem;font-weight:500;color:var(--encre);border-bottom:1px solid transparent}
 nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color:var(--olivier);color:var(--olivier)}
 .hd-actions{display:flex;align-items:center;gap:4px}
 .icone-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:none;color:var(--encre);cursor:pointer;position:relative;text-decoration:none}
@@ -277,7 +277,74 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 /* Panier latéral (mode live) */
 .panier-panneau{position:absolute;top:0;right:0;bottom:0;width:min(92vw,420px);background:var(--ceramique);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) 20px;gap:16px}
 .panier-lignes{flex:1;overflow:auto;display:grid;gap:12px;align-content:start}
-.ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:center}
+.ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--joint)}
+.ligne-visuel{width:64px;height:64px;border:1px solid var(--joint);background:var(--blanc);overflow:hidden;display:grid}
+.ligne-visuel img{width:100%;height:100%;object-fit:cover}
+.ligne-visuel.trio{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--joint)}
+.ligne-visuel.trio img:first-child{grid-row:span 2}
+.ligne-visuel.icone{place-items:center;color:var(--olivier)}
+.ligne-visuel.icone svg{width:30px;height:30px}
+.ligne strong{display:block;font-weight:600;font-size:.92rem;line-height:1.3}
+.ligne .sous{font-size:.8rem;color:var(--encre-doux);line-height:1.4}
+.ligne-qte{display:flex;align-items:center;gap:2px;margin-top:6px}
+.ligne-qte button{width:30px;height:30px;border:1px solid var(--joint);background:var(--blanc);cursor:pointer;font-size:1rem;line-height:1}
+.ligne-qte output{min-width:26px;text-align:center;font-variant-numeric:tabular-nums;font-size:.9rem}
+.ligne-prix{font-weight:600;font-variant-numeric:tabular-nums;text-align:right;font-size:.92rem}
+.ligne-prix button{display:block;margin-top:6px;margin-left:auto;font-size:.78rem}
+.jauge{height:6px;background:var(--joint);border-radius:3px;overflow:hidden}
+.jauge span{display:block;height:100%;background:var(--olivier);transition:width .4s}
+.completez{display:grid;gap:8px;padding:12px;background:var(--blanc);border:1px solid var(--joint)}
+.completez-liste{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.completez-liste button{display:grid;gap:4px;padding:0;border:1px solid var(--joint);background:var(--ceramique);cursor:pointer;text-align:left;font:inherit}
+.completez-liste img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.completez-liste span{font-size:.7rem;line-height:1.25;padding:0 6px 6px}
+.completez-liste em{font-style:normal;font-weight:700;color:var(--olivier);font-size:.72rem;padding:0 6px 6px}
+.message-cadeau textarea{min-height:76px;font-size:.88rem}
+.panier-total{display:flex;justify-content:space-between;align-items:baseline;font-size:1.05rem}
+/* Coffrets, sur mesure, carte cadeau */
+.offres{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
+@media(max-width:900px){.offres{grid-template-columns:1fr;max-width:520px;margin-inline:auto}}
+.offre{display:flex;flex-direction:column;background:var(--blanc);border:1px solid var(--joint)}
+.offre-visuel{aspect-ratio:4/3;overflow:hidden;background:var(--sable-clair);position:relative}
+.offre-visuel>img{width:100%;height:100%;object-fit:cover}
+.mosaique-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;background:var(--joint);height:100%}
+.mosaique-trio img{width:100%;height:100%;object-fit:cover}
+.offre-corps{display:grid;gap:8px;padding:20px 20px 22px;align-content:start;flex:1}
+.offre-corps h3{font-size:1.7rem}
+.offre-prix{font-weight:700;font-size:1.1rem;font-variant-numeric:tabular-nums}
+.offre-prix s{font-weight:400;color:var(--encre-doux);font-size:.9rem;margin-left:6px}
+.offre-corps .btn{justify-self:start;margin-top:6px}
+.carte-visuel{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(135deg,var(--olivier),var(--olivier-fonce))}
+.carte-visuel div{width:68%;aspect-ratio:1.6;background:var(--ceramique);border-radius:10px;box-shadow:0 18px 36px -14px rgba(0,0,0,.5);display:grid;place-items:center;align-content:center;gap:4px;text-align:center}
+.carte-visuel strong{font-family:var(--f-titre);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:500}
+.carte-visuel span{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--olivier)}
+.choix-grille{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+@media(max-width:1000px){.choix-grille{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){.choix-grille{grid-template-columns:repeat(3,1fr)}}
+.choix{position:relative;display:grid;gap:4px;padding:0;border:1px solid var(--joint);background:var(--blanc);cursor:pointer;text-align:left;font:inherit;color:inherit}
+.choix img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.choix span{font-size:.74rem;line-height:1.25;padding:0 6px 8px}
+.choix[aria-pressed="true"]{outline:2px solid var(--olivier);outline-offset:-2px}
+.choix[aria-pressed="true"]::after{content:"✓";position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;background:var(--olivier);color:var(--blanc);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.choix:disabled{opacity:.45;cursor:not-allowed}
+.barre-coffret{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:20;margin-top:24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding:12px 16px;background:var(--encre);color:var(--ceramique);box-shadow:0 14px 30px -14px rgba(0,0,0,.5)}
+.barre-coffret .places{display:flex;gap:6px}
+.barre-coffret .place{width:44px;height:44px;border:1px dashed rgba(247,245,240,.4);overflow:hidden}
+.barre-coffret .place img{width:100%;height:100%;object-fit:cover}
+.barre-coffret .btn{margin-left:auto;background:var(--sable);border-color:var(--sable);color:var(--encre)}
+.barre-coffret .btn[disabled]{opacity:.5}
+.etapes{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);counter-reset:e;margin:0;padding:0;list-style:none}
+.etapes li{padding:22px 20px;display:grid;gap:6px;counter-increment:e}
+.etapes li+li{border-left:1px solid var(--joint)}
+.etapes li::before{content:counter(e);font-family:var(--f-titre);font-size:2rem;color:var(--olivier);line-height:1}
+.etapes strong{font-weight:600}
+.etapes span{color:var(--encre-doux);font-size:.92rem}
+@media(max-width:860px){.etapes{grid-template-columns:1fr 1fr}.etapes li:nth-child(3){border-left:0}.etapes li:nth-child(n+3){border-top:1px solid var(--joint)}}
+.montants{display:flex;flex-wrap:wrap;gap:10px}
+.montants button{min-width:84px;min-height:52px;border:1px solid var(--encre);background:transparent;font:600 1.05rem var(--f-texte);cursor:pointer;color:var(--encre)}
+.montants button[aria-pressed="true"]{background:var(--encre);color:var(--ceramique)}
+.code-cadeau{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:16px 18px;background:var(--blanc);border:1px dashed var(--olivier)}
+.code-cadeau code{font:700 1.25rem/1 ui-monospace,Menlo,monospace;letter-spacing:.06em}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--encre);color:var(--blanc);padding:12px 18px;font-size:.9rem;z-index:95;max-width:calc(100% - 32px)}
 
 /* Checklist */
@@ -302,7 +369,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 @media(max-width:860px){.pied{grid-template-columns:1fr 1fr}.pied>div:first-child{grid-column:1/-1}}
 @media(max-width:420px){.pied{grid-template-columns:1fr}}
 </style>
-<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Comment choisir mon carreau ?","acceptedAnswer":{"@type":"Answer","text":"Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections Marseille et Côte Bleue, ou le modèle signature Les Embiez. Un doute ? Écrivez-nous via le formulaire de contact."}},{"@type":"Question","name":"Quelles sont ses dimensions ?","acceptedAnswer":{"@type":"Answer","text":"Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique."}},{"@type":"Question","name":"Comment le présenter chez soi ?","acceptedAnswer":{"@type":"Answer","text":"Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs."}},{"@type":"Question","name":"Quels sont les délais et frais de livraison ?","acceptedAnswer":{"@type":"Answer","text":"Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page Livraison et retours."}},{"@type":"Question","name":"Puis-je l’offrir ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c’est même l’idée : offrir un lieu qui a du sens pour quelqu’un. Pour un envoi direct, indiquez simplement l’adresse de la personne comme adresse de livraison lors du paiement."}},{"@type":"Question","name":"Quel cadeau offrir à un amoureux de Marseille ?","acceptedAnswer":{"@type":"Answer","text":"Un carreau de son lieu préféré : le Vieux-Port, Notre-Dame de la Garde, une calanque ou son quartier. Pour un cadeau plus généreux, composez un trio de carreaux : la livraison est alors offerte."}},{"@type":"Question","name":"Combien coûte un carreau K-Reau ?","acceptedAnswer":{"@type":"Answer","text":"Chaque carreau coûte 19,90 €. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux."}},{"@type":"Question","name":"Comment contacter K-Reau ?","acceptedAnswer":{"@type":"Answer","text":"Par le formulaire de contact. Nous vous répondons par e-mail."}}]}</script></head>
+<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Comment choisir mon carreau ?","acceptedAnswer":{"@type":"Answer","text":"Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections Marseille et Côte Bleue, ou le modèle signature Les Embiez. Un doute ? Écrivez-nous via le formulaire de contact."}},{"@type":"Question","name":"Quelles sont ses dimensions ?","acceptedAnswer":{"@type":"Answer","text":"Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique."}},{"@type":"Question","name":"Comment le présenter chez soi ?","acceptedAnswer":{"@type":"Answer","text":"Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs."}},{"@type":"Question","name":"Quels sont les délais et frais de livraison ?","acceptedAnswer":{"@type":"Answer","text":"Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page Livraison et retours."}},{"@type":"Question","name":"Puis-je l’offrir ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c’est même l’idée. Ajoutez un message cadeau dans le panier : il sera imprimé sur la carte glissée dans le coffret. Pour un envoi direct, indiquez l’adresse de la personne comme adresse de livraison. Vous pouvez aussi offrir un coffret de 3 carreaux ou une carte cadeau."}},{"@type":"Question","name":"Puis-je faire dessiner mon propre lieu ?","acceptedAnswer":{"@type":"Answer","text":"Oui : avec le carreau sur mesure, nous dessinons votre maison, votre village ou votre plage, avec le nom de votre choix. Le dessin vous est soumis avant impression."}},{"@type":"Question","name":"Quel cadeau offrir à un amoureux de Marseille ?","acceptedAnswer":{"@type":"Answer","text":"Un carreau de son lieu préféré : le Vieux-Port, Notre-Dame de la Garde, une calanque ou son quartier. Pour un cadeau plus généreux, composez un trio de carreaux : la livraison est alors offerte."}},{"@type":"Question","name":"Combien coûte un carreau K-Reau ?","acceptedAnswer":{"@type":"Answer","text":"Chaque carreau coûte 19,90 €. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux."}},{"@type":"Question","name":"Comment contacter K-Reau ?","acceptedAnswer":{"@type":"Answer","text":"Par le formulaire de contact. Nous vous répondons par e-mail."}}]}</script></head>
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
@@ -313,6 +380,8 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <nav class="principale" aria-label="Navigation principale">
       <ul>
         <li><a href="/carreaux" data-nav="carreaux">Nos carreaux</a></li>
+        <li><a href="/coffrets" data-nav="coffrets">Coffrets</a></li>
+        <li><a href="/sur-mesure" data-nav="sur-mesure">Sur mesure</a></li>
         <li><a href="/notre-histoire" data-nav="notre-histoire">Notre histoire</a></li>
       </ul>
     </nav>
@@ -343,6 +412,9 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a href="/collections/montagnes-du-sud" data-coll="montagnes-du-sud">Les Montagnes du Sud</a>
     <a href="/produits/les-embiez">Les Embiez</a>
     <a href="/carreaux">Nos carreaux</a>
+    <a href="/coffrets">Coffrets &amp; trios</a>
+    <a href="/sur-mesure">Carreau sur mesure</a>
+    <a href="/carte-cadeau">Carte cadeau</a>
     <a href="/notre-histoire">Notre histoire</a>
     <a href="/faq">Questions fréquentes</a>
     <a href="/contact">Contact</a>
@@ -353,7 +425,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
   <div class="page-tete"><div class="wrap"><nav class="ariane" aria-label="Fil d’Ariane"><ol><li><a href="/">Accueil</a></li><li aria-current="page">Questions fréquentes</li></ol></nav>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil"},{"@type":"ListItem","position":2,"name":"Questions fréquentes"}]}</script>
     <div class="bloc-titre"><span class="eyebrow">FAQ</span><h1>Questions fréquentes</h1></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap"><div class="faq"><details><summary>Comment choisir mon carreau ?</summary><div class="rep"><p>Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections <a class="lien" href="/collections/marseille">Marseille</a> et <a class="lien" href="/collections/cote-bleue">Côte Bleue</a>, ou le modèle signature <a class="lien" href="/produits/les-embiez">Les Embiez</a>. Un doute ? Écrivez-nous via le <a class="lien" href="/contact">formulaire de contact</a>.</p></div></details><details><summary>Quelles sont ses dimensions ?</summary><div class="rep"><p>Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique.</p></div></details><details><summary>Comment le présenter chez soi ?</summary><div class="rep"><p>Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs.</p></div></details><details><summary>Quels sont les délais et frais de livraison ?</summary><div class="rep"><p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="/livraison-retours">Livraison et retours</a>.</p></div></details><details><summary>Puis-je l’offrir ?</summary><div class="rep"><p>Oui, c’est même l’idée : offrir un lieu qui a du sens pour quelqu’un. Pour un envoi direct, indiquez simplement l’adresse de la personne comme adresse de livraison lors du paiement.</p></div></details><details><summary>Quel cadeau offrir à un amoureux de Marseille ?</summary><div class="rep"><p>Un carreau de son lieu préféré : le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, une calanque ou son quartier. Pour un cadeau plus généreux, composez un trio de carreaux : la livraison est alors offerte.</p></div></details><details><summary>Combien coûte un carreau K-Reau ?</summary><div class="rep"><p>Chaque carreau coûte 19,90 €. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux.</p></div></details><details><summary>Comment contacter K-Reau ?</summary><div class="rep"><p>Par le <a class="lien" href="/contact">formulaire de contact</a>. Nous vous répondons par e-mail.</p></div></details></div></div></section></main>
+  <section class="bloc" style="padding-top:40px"><div class="wrap"><div class="faq"><details><summary>Comment choisir mon carreau ?</summary><div class="rep"><p>Partez du lieu qui compte pour vous ou pour la personne à qui vous l’offrez : un port de vacances, une calanque, un quartier. Parcourez les collections <a class="lien" href="/collections/marseille">Marseille</a> et <a class="lien" href="/collections/cote-bleue">Côte Bleue</a>, ou le modèle signature <a class="lien" href="/produits/les-embiez">Les Embiez</a>. Un doute ? Écrivez-nous via le <a class="lien" href="/contact">formulaire de contact</a>.</p></div></details><details><summary>Quelles sont ses dimensions ?</summary><div class="rep"><p>Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique.</p></div></details><details><summary>Comment le présenter chez soi ?</summary><div class="rep"><p>Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs.</p></div></details><details><summary>Quels sont les délais et frais de livraison ?</summary><div class="rep"><p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="/livraison-retours">Livraison et retours</a>.</p></div></details><details><summary>Puis-je l’offrir ?</summary><div class="rep"><p>Oui, c’est même l’idée. Ajoutez un message cadeau dans le panier : il sera imprimé sur la carte glissée dans le coffret. Pour un envoi direct, indiquez l’adresse de la personne comme adresse de livraison. Vous pouvez aussi offrir un <a class="lien" href="/coffrets">coffret de 3 carreaux</a> ou une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p></div></details><details><summary>Puis-je faire dessiner mon propre lieu ?</summary><div class="rep"><p>Oui : avec le <a class="lien" href="/sur-mesure">carreau sur mesure</a>, nous dessinons votre maison, votre village ou votre plage, avec le nom de votre choix. Le dessin vous est soumis avant impression.</p></div></details><details><summary>Quel cadeau offrir à un amoureux de Marseille ?</summary><div class="rep"><p>Un carreau de son lieu préféré : le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, une calanque ou son quartier. Pour un cadeau plus généreux, composez un trio de carreaux : la livraison est alors offerte.</p></div></details><details><summary>Combien coûte un carreau K-Reau ?</summary><div class="rep"><p>Chaque carreau coûte 19,90 €. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux.</p></div></details><details><summary>Comment contacter K-Reau ?</summary><div class="rep"><p>Par le <a class="lien" href="/contact">formulaire de contact</a>. Nous vous répondons par e-mail.</p></div></details></div></div></section></main>
 
 <footer class="site">
   <div class="wrap">
@@ -375,6 +447,9 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <div>
         <h2>K-Reau</h2>
         <ul>
+          <li><a href="/coffrets">Coffrets &amp; trios</a></li>
+          <li><a href="/sur-mesure">Carreau sur mesure</a></li>
+          <li><a href="/carte-cadeau">Carte cadeau</a></li>
           <li><a href="/notre-histoire">Notre histoire</a></li>
           <li><a href="/faq">Questions fréquentes</a></li>
           <li><a href="/contact">Contact</a></li>
@@ -410,6 +485,12 @@ const CONFIG = {
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
   legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
+  prix: { carreau: 19.90, coffret: 54.90, surMesure: 34.90, cartes: [25, 50, 75, 100] }, // alignés sur api/_commun.js
+  trios: [
+    { id:'trio-marseille', nom:'Trio Marseille', slugs:['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes'] },
+    { id:'trio-cote-bleue', nom:'Trio Côte Bleue', slugs:['cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','cote-bleue-port-niolon'] },
+    { id:'trio-montagnes', nom:'Trio Montagnes du Sud', slugs:['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux'] }
+  ],
   livraisonGratuiteDes: 50,         // € — livraison offerte à partir de ce montant (aligné sur SEUIL_LIVRAISON_GRATUITE_CENTIMES dans Vercel)
   vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'Expédition sous 5 à 7 jours', paysLivres:'France', retours:'Remboursement sous 14 jours, frais de retour à la charge du client' }
 };
@@ -596,6 +677,13 @@ function vueAccueil(){
     </div>
   </section>
 
+  <section class="bloc fond-sable" id="offrir" aria-labelledby="t-offrir-k">
+    <div class="wrap">
+      <div class="bloc-titre centre"><span class="eyebrow">Offrir un K-Reau</span><h2 id="t-offrir-k">Coffrets, sur mesure et carte cadeau</h2></div>
+      ${offresHTML()}
+    </div>
+  </section>
+
   <section class="bloc fond-blanc joint-haut" id="carreaux-accueil" aria-labelledby="t-grille">
     <div class="wrap">
       <div class="bloc-titre">
@@ -681,7 +769,8 @@ function faqHTML(){
     ['Quelles sont ses dimensions ?', `<p>Tous les carreaux K-Reau mesurent 15 × 15 cm et sont en céramique.</p>`],
     ['Comment le présenter chez soi ?', `<p>Chaque carreau se pose sur un meuble ou s’accroche au mur avec une fixation adaptée. Pour l’entretien, un chiffon doux légèrement humide suffit ; évitez les produits abrasifs.</p>`],
     ['Quels sont les délais et frais de livraison ?', `<p>Les commandes sont expédiées sous 5 à 7 jours, en France. La livraison coûte 7,90 € et elle est offerte dès 50 € d’achat. Plus de détails sur la page <a class="lien" href="/livraison-retours">Livraison et retours</a>.</p>`],
-    ['Puis-je l’offrir ?', `<p>Oui, c’est même l’idée : offrir un lieu qui a du sens pour quelqu’un. Pour un envoi direct, indiquez simplement l’adresse de la personne comme adresse de livraison lors du paiement.</p>`],
+    ['Puis-je l’offrir ?', `<p>Oui, c’est même l’idée. Ajoutez un message cadeau dans le panier : il sera imprimé sur la carte glissée dans le coffret. Pour un envoi direct, indiquez l’adresse de la personne comme adresse de livraison. Vous pouvez aussi offrir un <a class="lien" href="/coffrets">coffret de 3 carreaux</a> ou une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p>`],
+    ['Puis-je faire dessiner mon propre lieu ?', `<p>Oui : avec le <a class="lien" href="/sur-mesure">carreau sur mesure</a>, nous dessinons votre maison, votre village ou votre plage, avec le nom de votre choix. Le dessin vous est soumis avant impression.</p>`],
     ['Quel cadeau offrir à un amoureux de Marseille ?', `<p>Un carreau de son lieu préféré : le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, une calanque ou son quartier. Pour un cadeau plus généreux, composez un trio de carreaux : la livraison est alors offerte.</p>`],
     ['Combien coûte un carreau K-Reau ?', `<p>Chaque carreau coûte 19,90 €. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux.</p>`],
     ['Comment contacter K-Reau ?', `<p>Par le ${contact}. Nous vous répondons par e-mail.</p>`]
@@ -834,6 +923,7 @@ function vueProduit(slug){
           <label for="qte-out">Quantité</label>
           <div class="qte"><button type="button" data-q="-1" aria-label="Diminuer">−</button><output id="qte-out" aria-live="polite">1</output><button type="button" data-q="1" aria-label="Augmenter">+</button></div>
           <button class="btn btn-p" type="button" id="ajout">Ajouter au panier</button>
+          <a class="lien small" href="/coffrets?avec=${esc(p.slug)}#composer">Ou composez un coffret de 3 carreaux avec celui-ci : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}</a>
         </div>` : `
         <div class="encart">
           <h2>Bientôt disponible</h2>
@@ -876,7 +966,7 @@ function vueProduit(slug){
   if(LIVE && prix){
     let q = 1; const out = $('#qte-out');
     app.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { q = Math.max(1, Math.min(20, q + +b.dataset.q)); out.textContent = q; }));
-    $('#ajout').addEventListener('click', () => { Panier.ajouter(p.slug, q); toast(`${p.nom} ajouté au panier (${q})`); });
+    $('#ajout').addEventListener('click', () => { Panier.ajouter({ type:'carreau', slug:p.slug, q }); toast(`${p.nom} ajouté au panier`); Panier.ouvrir(); });
   }
 }
 
@@ -954,7 +1044,8 @@ const PAGES = {
     <h2>2. Produits</h2>
     <p>K-Reau vend des carreaux décoratifs en céramique blanche brillante de 15 × 15 cm, illustrés d’un dessin noir imprimé en UV. Les caractéristiques essentielles de chaque modèle figurent sur sa fiche produit. Les produits sont destinés à la décoration intérieure.</p>
     <h2>3. Prix</h2>
-    <p>Les prix sont indiqués en euros, toutes taxes comprises. ${esc(L.tva)}. Les frais de livraison s’ajoutent au prix des produits : 7,90 € par commande, offerts à partir de 50 € d’achat. Le montant total est indiqué avant la validation du paiement.</p>
+    <p>Les prix sont indiqués en euros, toutes taxes comprises. ${esc(L.tva)}. Prix en vigueur : carreau 19,90 € ; coffret de 3 carreaux 54,90 € ; carreau sur mesure 34,90 € ; cartes cadeaux de 25 €, 50 €, 75 € ou 100 €. Les frais de livraison s’ajoutent au prix des produits : 7,90 € par commande, offerts à partir de 50 € d’achat (hors cartes cadeaux, qui ne sont pas expédiées). Le montant total est indiqué avant la validation du paiement.</p>
+    <h3>Carreau sur mesure</h3><p>Le client indique le texte et le lieu à représenter. K-Reau lui soumet le dessin par e-mail sous 5 jours ouvrés ; l’impression n’est lancée qu’après sa validation. Le client peut demander une retouche avant validation.</p>
     <h2>4. Commande</h2>
     <p>Le client sélectionne ses carreaux, vérifie le contenu de son panier puis valide sa commande sur la page de paiement sécurisée. La commande est ferme après confirmation du paiement. Un reçu est envoyé par e-mail. K-Reau se réserve le droit d’annuler une commande en cas de litige antérieur avec le client ou de produit indisponible ; le client est alors intégralement remboursé.</p>
     <h2>5. Paiement</h2>
@@ -962,10 +1053,13 @@ const PAGES = {
     <h2>6. Livraison</h2>
     <p>Les commandes sont livrées en France métropolitaine, à l’adresse indiquée lors du paiement. Elles sont expédiées sous 5 à 7 jours ; à défaut d’autre indication, la livraison intervient au plus tard 30 jours après la commande. Le client vérifie l’état du colis à réception. Si un carreau est cassé ou manquant, il contacte K-Reau par le formulaire de contact ou à contact@k-reau.fr, photo à l’appui : K-Reau le rembourse ou renvoie un carreau, au choix, sans frais pour le client.</p>
     <h2>7. Droit de rétractation</h2>
+    <p>Conformément à l’article L.221-28, 3° du Code de la consommation, le droit de rétractation ne s’applique pas aux carreaux sur mesure, réalisés selon les spécifications du client et nettement personnalisés.</p>
     <p>Le client dispose d’un délai de 14 jours à compter de la réception de sa commande pour se rétracter, sans avoir à se justifier. Il informe K-Reau de sa décision par une déclaration dénuée d’ambiguïté (formulaire de contact, e-mail ou formulaire type ci-dessous), puis renvoie les produits dans les 14 jours suivants, dans leur état d’origine et correctement protégés.</p>
     <p><strong>Les frais de retour sont à la charge du client.</strong> K-Reau rembourse la totalité des sommes versées, y compris les frais de livraison initiaux, dans les 14 jours suivant la notification de la rétractation, par le moyen de paiement utilisé lors de la commande. Le remboursement peut être différé jusqu’à la réception des produits ou de la preuve de leur expédition. Un produit renvoyé abîmé du fait de manipulations autres que celles nécessaires pour l’examiner peut entraîner une diminution du remboursement.</p>
     <h3>Formulaire type de rétractation</h3>
     <p class="muted">À l’attention de K-Reau, ${esc(L.adresse)}, contact@k-reau.fr :<br>Je vous notifie par la présente ma rétractation du contrat portant sur la vente du bien ci-dessous : [modèle(s)] — Commandé le [date] / reçu le [date] — Nom du client — Adresse du client — Date — Signature (en cas d’envoi papier).</p>
+    <h2>Cartes cadeaux</h2>
+    <p>La carte cadeau K-Reau prend la forme d’un code communiqué après le paiement. Elle est valable 12 mois à compter de l’achat, utilisable en une seule fois sur k-reau.fr en saisissant le code sur la page de paiement, sur tous les produits. Elle n’est ni remboursable ni échangeable contre des espèces ; si le montant de la commande est inférieur à sa valeur, la différence n’est pas conservée.</p>
     <h2>8. Garanties légales</h2>
     <p>Les produits bénéficient de la garantie légale de conformité (articles L.217-3 et suivants du Code de la consommation) pendant 2 ans à compter de la livraison, et de la garantie contre les vices cachés (articles 1641 et suivants du Code civil). En cas de produit cassé à la livraison, K-Reau rembourse ou renvoie un carreau (voir article 6). Pour tout autre défaut de conformité, le client contacte K-Reau, qui procède au remplacement ou au remboursement ; les éventuels frais de retour sont alors à la charge de K-Reau.</p>
     <h2>9. Réclamations et médiation</h2>
@@ -1023,13 +1117,149 @@ function vueChecklist(){
     <ul class="check">${items.map(([t,ok])=>`<li><span class="statut ${ok?'fait':'manque'}">${ok?'Fait':'À faire'}</span><span>${esc(t)}</span></li>`).join('')}</ul>`);
 }
 
+const prixEur = v => Number(v).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+function offresHTML(){
+  const emb = parSlug('les-embiez');
+  return `<div class="offres">
+    <article class="offre"><div class="offre-visuel"><img src="/img/coffret/les-embiez-coffret.webp" alt="Carreau K-Reau dans son coffret kraft" loading="lazy" style="object-position:60% 70%"></div>
+      <div class="offre-corps"><span class="eyebrow">Coffrets</span><h3>Le trio de carreaux</h3><p class="muted">Trois lieux réunis : un trio tout prêt ou votre propre sélection.</p>
+      <p class="offre-prix">${prixEur(CONFIG.prix.coffret)}<s>${prixEur(3*CONFIG.prix.carreau)}</s></p><p class="small muted" style="margin:0">Livraison offerte</p><a class="btn btn-s" href="/coffrets">Composer un coffret</a></div></article>
+    <article class="offre"><div class="offre-visuel"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" alt="Dessin au trait d’un paysage" loading="lazy" style="object-fit:contain;background:var(--blanc)"></div>
+      <div class="offre-corps"><span class="eyebrow">Sur mesure</span><h3>Votre lieu, dessiné pour vous</h3><p class="muted">Votre maison, votre village, votre plage : nous le dessinons et l’imprimons sur un carreau unique.</p>
+      <p class="offre-prix">${prixEur(CONFIG.prix.surMesure)}</p><a class="btn btn-s" href="/sur-mesure">Créer mon carreau</a></div></article>
+    <article class="offre"><div class="offre-visuel"><div class="carte-visuel"><div><span>Carte cadeau</span><strong>K-Reau</strong><span>De 25 € à 100 €</span></div></div></div>
+      <div class="offre-corps"><span class="eyebrow">Carte cadeau</span><h3>Laissez-les choisir</h3><p class="muted">Un code à offrir, valable 12 mois sur tous les carreaux et coffrets.</p>
+      <p class="offre-prix">25 € · 50 € · 75 € · 100 €</p><a class="btn btn-s" href="/carte-cadeau">Offrir une carte</a></div></article>
+  </div>`;
+}
+
+function vueCoffrets(){
+  setMeta('Coffret 3 carreaux décoratifs | Idée cadeau Marseille, Provence – K-Reau', `Trio de carreaux décoratifs en céramique : Marseille, Côte Bleue, Montagnes du Sud ou votre sélection. ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, livraison offerte.`);
+  const avec = new URLSearchParams(location.search).get('avec');
+  let choix = avec && parSlug(avec) ? [avec] : [];
+  const trioCarte = t => `<article class="offre"><div class="offre-visuel"><div class="mosaique-trio">${t.slugs.map(x=>`<img src="${esc(parSlug(x)?.miniature||'')}" alt="${esc(parSlug(x)?.nom||'')}" loading="lazy">`).join('')}</div></div>
+    <div class="offre-corps"><h3>${esc(t.nom)}</h3><p class="muted small">${t.slugs.map(x=>esc(parSlug(x)?.nom||'')).join(' · ')}</p>
+    <p class="offre-prix">${prixEur(CONFIG.prix.coffret)}<s>${prixEur(3*CONFIG.prix.carreau)}</s></p>
+    <button class="btn btn-p" type="button" data-trio="${t.id}">Ajouter au panier</button></div></article>`;
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Coffrets','']])}
+    <div class="bloc-titre"><span class="eyebrow">Coffrets</span><h1>Le coffret de 3 carreaux</h1>
+    <p class="lead">Trois lieux réunis dans un même envoi : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, et la livraison est offerte. Choisissez un trio tout prêt ou composez le vôtre.</p></div></div></div>
+  <section class="bloc" style="padding-top:48px"><div class="wrap">
+    <div class="bloc-titre"><h2>Nos trios</h2></div>
+    ${PRODUITS ? `<div class="offres">${CONFIG.trios.filter(t=>t.slugs.every(parSlug)).map(trioCarte).join('')}</div>` : `<div class="grille">${grilleHTML([])}</div>`}
+  </div></section>
+  <section class="bloc fond-blanc joint-haut" id="composer"><div class="wrap">
+    <div class="bloc-titre"><h2>Composez votre coffret</h2><p class="lead">Choisissez 3 carreaux parmi toutes les collections.</p></div>
+    ${filtresHTML('tout','g-choix')}
+    <div class="choix-grille" id="g-choix"></div>
+    <div class="barre-coffret" role="region" aria-label="Votre coffret">
+      <div class="places" id="places"></div><span id="compte-choix" aria-live="polite"></span>
+      <button class="btn" type="button" id="ajout-coffret" disabled>Ajouter le coffret · ${prixEur(CONFIG.prix.coffret)}</button>
+    </div>
+  </div></section>
+  <section class="bloc"><div class="wrap">${offresHTML()}</div></section>`;
+  if(!PRODUITS) return;
+  let filtre = 'tout';
+  const peindre = () => {
+    const liste = filtre==='tout' ? PRODUITS : deCollection(filtre);
+    $('#g-choix').innerHTML = liste.map(p=>`<button class="choix" type="button" data-c="${esc(p.slug)}" aria-pressed="${choix.includes(p.slug)}" ${choix.length>=3 && !choix.includes(p.slug) ? 'disabled' : ''}><img src="${esc(p.miniature)}" alt="" loading="lazy" width="600" height="600"><span>${esc(p.nom)}</span></button>`).join('');
+    $('#places').innerHTML = [0,1,2].map(i=>`<div class="place">${choix[i]?`<img src="${esc(parSlug(choix[i]).miniature)}" alt="${esc(parSlug(choix[i]).nom)}">`:''}</div>`).join('');
+    $('#compte-choix').textContent = choix.length===3 ? 'Votre coffret est complet' : `${choix.length} / 3 carreaux choisis`;
+    $('#ajout-coffret').disabled = choix.length !== 3;
+  };
+  peindre();
+  document.querySelector('[data-filtres="g-choix"]').addEventListener('click', e => { const b=e.target.closest('.filtre'); if(!b) return; filtre=b.dataset.f; document.querySelectorAll('[data-filtres="g-choix"] .filtre').forEach(x=>x.setAttribute('aria-pressed',x===b)); peindre(); });
+  $('#g-choix').addEventListener('click', e => { const b=e.target.closest('[data-c]'); if(!b) return; const sl=b.dataset.c; choix = choix.includes(sl) ? choix.filter(x=>x!==sl) : choix.length<3 ? [...choix, sl] : choix; peindre(); });
+  $('#places').addEventListener('click', e => { const im=e.target.closest('.place img'); if(!im) return; const i=[...$('#places').children].indexOf(im.parentElement); choix.splice(i,1); peindre(); });
+  $('#ajout-coffret').addEventListener('click', () => { Panier.ajouter({ type:'coffret', slugs:[...choix], nom:'Coffret 3 carreaux · votre sélection' }); toast('Coffret ajouté au panier'); choix=[]; peindre(); Panier.ouvrir(); });
+  app.querySelectorAll('[data-trio]').forEach(b => b.addEventListener('click', () => { const t=CONFIG.trios.find(x=>x.id===b.dataset.trio); Panier.ajouter({ type:'coffret', slugs:[...t.slugs], nom:t.nom }); toast(`${t.nom} ajouté au panier`); Panier.ouvrir(); }));
+}
+
+function vueSurMesure(){
+  setMeta('Carreau personnalisé sur mesure : votre lieu dessiné | K-Reau', `Votre maison, votre village ou votre plage dessiné au trait sur un carreau en céramique 15 × 15 cm, avec le nom de votre choix en calligraphie. ${prixEur(CONFIG.prix.surMesure)}.`);
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Sur mesure','']])}
+    <div class="bloc-titre"><span class="eyebrow">Carreau sur mesure</span><h1>Votre lieu, dessiné pour vous</h1>
+    <p class="lead">La maison de famille, le village de vacances, la plage de votre enfance : nous dessinons le lieu de votre choix au trait et l’imprimons sur un carreau en céramique de 15 × 15 cm, avec le nom de votre choix en calligraphie.</p>
+    <p class="offre-prix" style="font-size:1.5rem">${prixEur(CONFIG.prix.surMesure)}</p></div></div></div>
+  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:48px">
+    <ol class="etapes">
+      <li><strong>Vous décrivez votre lieu</strong><span>Son nom, où il se trouve, ce qui compte pour vous.</span></li>
+      <li><strong>Nous le dessinons</strong><span>Un dessin au trait dans le style K-Reau.</span></li>
+      <li><strong>Vous validez</strong><span>Nous vous envoyons le dessin par e-mail ; vous pouvez demander une retouche.</span></li>
+      <li><strong>Nous l’imprimons</strong><span>Puis l’expédions dans son coffret.</span></li>
+    </ol>
+    <form class="formulaire" id="form-sm" novalidate style="max-width:680px">
+      <h2>Votre carreau</h2>
+      <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="sm-lieu">Où se trouve ce lieu ?</label><input type="text" id="sm-lieu" maxlength="120" required placeholder="Ville, quartier, adresse ou nom de la plage"><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="sm-details">Ce que vous aimeriez voir sur le dessin <span class="muted" style="font-weight:400">(facultatif)</span></label><textarea id="sm-details" maxlength="300" placeholder="La façade avec les volets, le grand pin, la vue sur le port…"></textarea><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="sm-photo">Lien vers une photo <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="url" id="sm-photo" maxlength="200" placeholder="https://…"><span class="small muted">Vous pourrez aussi nous envoyer vos photos à contact@k-reau.fr après la commande.</span><span class="err" aria-live="polite"></span></div>
+      <label class="consent"><input type="checkbox" id="sm-ok" required> <span>J’ai compris qu’un carreau personnalisé ne peut pas faire l’objet d’une rétractation, et que le dessin me sera soumis avant impression.</span></label>
+      <button class="btn btn-p" type="submit" style="justify-self:start">Ajouter au panier · ${prixEur(CONFIG.prix.surMesure)}</button>
+      <div class="retour" aria-live="polite"></div>
+      <p class="small muted">Délai : dessin envoyé sous 5 jours ouvrés après la commande, puis expédition sous 5 à 7 jours après votre validation.</p>
+    </form>
+  </div></section>`;
+  const form = $('#form-sm');
+  form.addEventListener('submit', e => {
+    e.preventDefault(); e.stopPropagation();
+    if(!valider(form)) return;
+    if(!$('#sm-ok').checked){ form.querySelector('.retour').innerHTML = '<p class="msg ko">Cochez la case pour confirmer que vous avez pris connaissance des conditions du sur-mesure.</p>'; return; }
+    Panier.ajouter({ type:'sur-mesure', texte:$('#sm-texte').value.trim(), lieu:$('#sm-lieu').value.trim(), details:$('#sm-details').value.trim(), photo:$('#sm-photo').value.trim() });
+    form.reset(); form.querySelector('.retour').innerHTML = '<p class="msg ok">Votre carreau sur mesure est dans le panier.</p>';
+    Panier.ouvrir();
+  });
+}
+
+function vueCarteCadeau(){
+  setMeta('Carte cadeau K-Reau | Carreaux décoratifs à offrir', 'Offrez une carte cadeau K-Reau de 25 € à 100 €, valable 12 mois sur tous les carreaux, coffrets et créations sur mesure. Code reçu immédiatement.');
+  let montant = 50;
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Carte cadeau','']])}
+    <div class="bloc-titre"><span class="eyebrow">Carte cadeau</span><h1>La carte cadeau K-Reau</h1>
+    <p class="lead">Pour laisser choisir le lieu qui compte : un code à offrir, valable 12 mois sur tous les carreaux, coffrets et créations sur mesure.</p></div></div></div>
+  <section class="bloc" style="padding-top:48px"><div class="wrap fiche" style="padding-block:0">
+    <div class="offre-visuel" style="aspect-ratio:1.4;border:1px solid var(--joint)"><div class="carte-visuel"><div><span>Carte cadeau</span><strong>K-Reau</strong><span id="cc-montant">${prixEur(montant)}</span></div></div></div>
+    <div class="fiche-infos">
+      <h2>Choisissez le montant</h2>
+      <div class="montants" role="group" aria-label="Montant">${CONFIG.prix.cartes.map(m=>`<button type="button" data-m="${m}" aria-pressed="${m===montant}">${m} €</button>`).join('')}</div>
+      <button class="btn btn-p" type="button" id="ajout-carte" style="justify-self:start">Ajouter au panier</button>
+      <table class="carac"><tbody>
+        <tr><th scope="row">Réception</th><td>Le code s’affiche dès le paiement validé et figure sur la page de confirmation.</td></tr>
+        <tr><th scope="row">Validité</th><td>12 mois à compter de l’achat.</td></tr>
+        <tr><th scope="row">Utilisation</th><td>En une seule fois, sur k-reau.fr : saisissez le code sur la page de paiement.</td></tr>
+        <tr><th scope="row">Livraison</th><td>Aucune : pas de frais de port pour une carte seule.</td></tr>
+      </tbody></table>
+    </div>
+  </div></section>`;
+  app.querySelectorAll('[data-m]').forEach(b => b.addEventListener('click', () => { montant=+b.dataset.m; app.querySelectorAll('[data-m]').forEach(x=>x.setAttribute('aria-pressed',x===b)); $('#cc-montant').textContent = prixEur(montant); }));
+  $('#ajout-carte').addEventListener('click', () => { Panier.ajouter({ type:'carte', montant: montant*100 }); toast(`Carte cadeau ${prixEur(montant)} ajoutée`); Panier.ouvrir(); });
+}
+
 function vueMerci(){
   setMeta('Merci pour votre commande | K-Reau','');
-  Panier.lignes = []; Panier.sauver();
-  app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start;max-width:720px">
+  const sid = new URLSearchParams(location.search).get('session_id');
+  if(sid){ Panier.lignes = []; Panier.message = ''; Panier.sauver(); }
+  app.innerHTML = `<div class="wrap" style="padding-block:100px;display:grid;gap:18px;justify-items:start;max-width:760px">
     <span class="eyebrow">Commande confirmée</span><h1>Merci pour votre commande.</h1>
-    <p class="lead">Votre paiement a bien été reçu. Un reçu vous a été envoyé par e-mail ; nous vous écrirons dès l’expédition de vos carreaux.</p>
+    <p class="lead">Votre paiement a bien été reçu. Un reçu vous a été envoyé par e-mail ; nous vous écrirons dès l’expédition.</p>
+    <div id="merci-detail" style="display:grid;gap:16px;width:100%"></div>
     <a class="btn btn-p" href="/carreaux">Continuer la visite</a></div>`;
+  if(!sid) return;
+  fetch('/api/commande?session_id='+encodeURIComponent(sid)).then(r=>r.json()).then(j => {
+    if(!j.paye) return;
+    const d = $('#merci-detail'); if(!d) return;
+    let h = '';
+    if(j.cartes && j.cartes.length) h += `<h2>Vos cartes cadeaux</h2><p class="muted">Notez ou copiez ces codes : ils sont valables 12 mois, en une fois, sur la page de paiement de k-reau.fr.</p>` +
+      j.cartes.map(c=>`<div class="code-cadeau"><code>${esc(c.code)}</code><span class="offre-prix">${prixEur(c.montant/100)}</span><button class="btn btn-s" type="button" data-copier="${esc(c.code)}">Copier</button></div>`).join('');
+    if(j.cartesEnAttente) h += `<p class="msg ko">Votre code de carte cadeau vous sera envoyé par e-mail sous 24 h.</p>`;
+    if(j.surMesure) h += `<h2>Votre carreau sur mesure</h2><p class="muted">Nous vous envoyons le dessin à valider sous 5 jours ouvrés. Vous pouvez dès maintenant nous adresser vos photos du lieu à <strong>contact@k-reau.fr</strong>.</p>`;
+    if(j.message) h += `<p class="muted">Votre message cadeau sera imprimé sur la carte du coffret : « ${esc(j.message)} »</p>`;
+    d.innerHTML = h;
+    d.addEventListener('click', e => { const b=e.target.closest('[data-copier]'); if(!b) return; navigator.clipboard?.writeText(b.dataset.copier).then(()=>{ b.textContent='Copié'; }).catch(()=>{}); });
+  }).catch(()=>{});
 }
 
 function vue404(){
@@ -1049,35 +1279,79 @@ function ouvrirLightbox(src, alt){
 }
 
 /* ===== Panier (actif uniquement en mode live) ===== */
+const ICO_SM='<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="7" y="7" width="26" height="26"/><path d="M11 25l6-7 4 4 3-3 5 6"/><path d="M27 6l7 7-9 9-4 1 1-4z"/></svg>';
+const ICO_CARTE='<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="5" y="11" width="30" height="19" rx="2"/><path d="M5 17h30M14 11v19"/><path d="M14 17c-3-4-7-3-6 0s6 0 6 0zm0 0c3-4 7-3 6 0s-6 0-6 0z"/></svg>';
 const Panier = {
-  lignes: store.get('kreau-panier', []),
-  sauver(){ store.set('kreau-panier', this.lignes); this.badge(); },
-  ajouter(slug, q){ const l = this.lignes.find(x=>x.slug===slug); if(l) l.q += q; else this.lignes.push({slug,q}); this.sauver(); },
-  badge(){ const n = this.lignes.reduce((s,l)=>s+l.q,0); const b=$('#nb-panier'); b.textContent=n; b.hidden = !n; },
+  lignes: store.get('kreau-panier', []).map(l => l.type ? l : { type:'carreau', slug:l.slug, q:l.q }),
+  message: store.get('kreau-message', ''),
+  sauver(){ store.set('kreau-panier', this.lignes); store.set('kreau-message', this.message); this.badge(); },
+  cle(l){ return l.type==='carreau' ? 'c:'+l.slug : l.type==='coffret' ? 'k:'+l.slugs.join('+') : l.type==='carte' ? 'g:'+l.montant : 's:'+l.id; },
+  prix(l){ return l.type==='carreau' ? CONFIG.prix.carreau : l.type==='coffret' ? CONFIG.prix.coffret : l.type==='sur-mesure' ? CONFIG.prix.surMesure : l.montant/100; },
+  physique(){ return this.lignes.filter(l=>l.type!=='carte').reduce((t,l)=>t+this.prix(l)*l.q,0); },
+  total(){ return this.lignes.reduce((t,l)=>t+this.prix(l)*l.q,0); },
+  valide(l){ return l.type==='carreau' ? !!parSlug(l.slug) : l.type==='coffret' ? l.slugs.every(parSlug) : true; },
+  ajouter(l){
+    if(l.type==='sur-mesure') l.id = Date.now().toString(36);
+    const k = this.cle(l), ex = this.lignes.find(x=>this.cle(x)===k);
+    if(ex) ex.q = Math.min(20, ex.q + (l.q||1)); else this.lignes.push({ ...l, q: l.q||1 });
+    this.sauver();
+  },
+  badge(){ const n = this.lignes.reduce((t,l)=>t+l.q,0); const b=$('#nb-panier'); if(!b) return; b.textContent=n; b.hidden = !n; },
+  visuel(l){
+    if(l.type==='carreau'){ const p=parSlug(l.slug); return `<div class="ligne-visuel"><img src="${esc(p.miniature)}" alt="" width="64" height="64"></div>`; }
+    if(l.type==='coffret') return `<div class="ligne-visuel trio">${l.slugs.map(x=>`<img src="${esc(parSlug(x).miniature)}" alt="">`).join('')}</div>`;
+    return `<div class="ligne-visuel icone">${l.type==='carte'?ICO_CARTE:ICO_SM}</div>`;
+  },
+  libelle(l){
+    if(l.type==='carreau') return `<strong>${esc(parSlug(l.slug).nom)}</strong><span class="sous">Carreau 15 × 15 cm</span>`;
+    if(l.type==='coffret') return `<strong>${esc(l.nom||'Coffret 3 carreaux')}</strong><span class="sous">${l.slugs.map(x=>esc(parSlug(x).nom)).join(' · ')}</span>`;
+    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">« ${esc(l.texte)} » · ${esc(l.lieu)}</span>`;
+    return `<strong>Carte cadeau ${prixEur(l.montant/100)}</strong><span class="sous">Code envoyé après le paiement</span>`;
+  },
+  suggestions(){
+    const dans = new Set(this.lignes.flatMap(l => l.type==='carreau' ? [l.slug] : l.type==='coffret' ? l.slugs : []));
+    const ref = this.lignes.find(l=>l.type==='carreau'||l.type==='coffret');
+    const coll = ref ? parSlug(ref.type==='carreau'?ref.slug:ref.slugs[0])?.collection_slug : 'marseille';
+    const pool = [...deCollection(coll), ...(PRODUITS||[])].filter((p,i,a)=>!dans.has(p.slug) && a.findIndex(x=>x.slug===p.slug)===i);
+    return pool.slice(0,3);
+  },
   ouvrir(){
-    const c = $('#couche');
-    const lignes = this.lignes.map(l=>({...l,p:parSlug(l.slug)})).filter(l=>l.p);
-    const total = lignes.reduce((s,l)=>s + parseFloat(String(l.p.prix_eur).replace(',','.'))*l.q, 0);
+    this.lignes = this.lignes.filter(l=>this.valide(l));
+    const c = $('#couche'), seuil = CONFIG.livraisonGratuiteDes, phys = this.physique(), tot = this.total();
+    const reste = Math.max(0, seuil - phys);
     c.innerHTML = `<div class="tiroir"><div class="panier-panneau" role="dialog" aria-modal="true" aria-label="Panier">
       <div style="display:flex;justify-content:space-between;align-items:center"><h2>Panier</h2><button class="icone-btn" type="button" data-fermer aria-label="Fermer le panier">${ICONES.croix}</button></div>
-      <div class="panier-lignes">${lignes.length ? lignes.map(l=>`<div class="ligne"><img src="${esc(l.p.miniature)}" width="64" height="64" alt=""><div><strong>${esc(l.p.nom)}</strong><div class="small muted">Quantité : ${l.q}</div></div><button class="lien" style="background:none;border:0;cursor:pointer" data-suppr="${esc(l.slug)}">Retirer</button></div>`).join('') : '<p class="muted">Votre panier est vide.</p>'}</div>
-      ${lignes.length ? `<p style="display:flex;justify-content:space-between"><span>Sous-total TTC</span><strong>${total.toLocaleString('fr-FR',{style:'currency',currency:'EUR'})}</strong></p>
-      <p class="small muted">${(() => { const s = CONFIG.livraisonGratuiteDes; if(s && total >= s) return 'Livraison offerte'; if(s) return `Livraison 7,90 € · plus que ${(s-total).toLocaleString('fr-FR',{style:'currency',currency:'EUR'})} pour la livraison offerte`; return V.fraisLivraison ? 'Frais de livraison : '+esc(V.fraisLivraison) : 'Frais de livraison indiqués à l’étape suivante.'; })()}</p>
+      <div class="panier-lignes">
+        ${this.lignes.length ? this.lignes.map((l,i)=>`<div class="ligne">${this.visuel(l)}<div>${this.libelle(l)}
+          <div class="ligne-qte"><button type="button" data-q="${i}:-1" aria-label="Retirer un">−</button><output>${l.q}</output><button type="button" data-q="${i}:1" aria-label="Ajouter un">+</button></div></div>
+          <div class="ligne-prix">${prixEur(this.prix(l)*l.q)}<button class="lien" type="button" style="background:none;border:0;cursor:pointer" data-suppr="${i}">Retirer</button></div></div>`).join('')
+        : `<p class="muted">Votre panier est vide.</p><a class="btn btn-s" href="/carreaux" data-fermer>Découvrir les carreaux</a>`}
+        ${phys > 0 ? `<div style="display:grid;gap:6px"><p class="small" style="margin:0">${reste > 0 ? `Plus que <strong>${prixEur(reste)}</strong> pour la livraison offerte` : '<strong>Livraison offerte</strong> 🎁'.replace(' 🎁','')}</p><div class="jauge" aria-hidden="true"><span style="width:${Math.min(100, phys/seuil*100)}%"></span></div></div>` : ''}
+        ${phys > 0 && reste > 0 ? `<div class="completez"><strong class="small">Complétez avec…</strong><div class="completez-liste">${this.suggestions().map(p=>`<button type="button" data-plus="${esc(p.slug)}"><img src="${esc(p.miniature)}" alt="" loading="lazy"><span>${esc(p.nom)}</span><em>+ Ajouter</em></button>`).join('')}</div>
+          ${reste > CONFIG.prix.carreau ? `<a class="lien small" href="/coffrets" data-fermer>Ou passez au coffret de 3 carreaux à ${prixEur(CONFIG.prix.coffret)}, livraison offerte</a>` : ''}</div>` : ''}
+        ${phys > 0 ? `<div class="champ message-cadeau"><label for="msg-cadeau">Message cadeau <span class="muted" style="font-weight:400">(facultatif, imprimé sur la carte du coffret)</span></label>
+          <textarea id="msg-cadeau" maxlength="200" placeholder="Joyeux anniversaire ! Un petit bout du Vieux-Port pour toi…">${esc(this.message)}</textarea><span class="small muted" id="msg-compte">${this.message.length} / 200</span></div>` : ''}
+      </div>
+      ${this.lignes.length ? `<p class="panier-total"><span>Sous-total TTC</span><strong>${prixEur(tot)}</strong></p>
+      <p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code.' : reste > 0 ? 'Livraison France : 7,90 €.' : 'Livraison France offerte.'} Les codes cadeaux se saisissent sur la page de paiement.</p>
       <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
       <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
       <div id="payer-retour" aria-live="polite"></div>` : ''}
     </div></div>`;
     const t = c.firstElementChild;
+    const msg = $('#msg-cadeau'); if(msg) msg.addEventListener('input', () => { this.message = msg.value.slice(0,200); store.set('kreau-message', this.message); $('#msg-compte').textContent = `${this.message.length} / 200`; });
     t.addEventListener('click', e => {
       if(e.target===t || e.target.closest('[data-fermer]')) { c.innerHTML=''; return; }
-      const s = e.target.closest('[data-suppr]'); if(s){ this.lignes = this.lignes.filter(l=>l.slug!==s.dataset.suppr); this.sauver(); this.ouvrir(); }
+      const sp = e.target.closest('[data-suppr]'); if(sp){ this.lignes.splice(+sp.dataset.suppr,1); this.sauver(); return this.ouvrir(); }
+      const qb = e.target.closest('[data-q]'); if(qb){ const [i,d] = qb.dataset.q.split(':').map(Number); const l=this.lignes[i]; l.q += d; if(l.q<1) this.lignes.splice(i,1); else l.q=Math.min(20,l.q); this.sauver(); return this.ouvrir(); }
+      const pl = e.target.closest('[data-plus]'); if(pl){ this.ajouter({ type:'carreau', slug:pl.dataset.plus }); return this.ouvrir(); }
       if(e.target.closest('#payer')) this.payer();
     });
   },
   async payer(){
     const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
     try{
-      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ lignes: this.lignes }) });
+      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ lignes: this.lignes, message: this.physique() > 0 ? this.message : '' }) });
       const j = await r.json().catch(()=>({}));
       if(!r.ok || !j.url) throw new Error(j.erreur || 'Erreur');
       location.href = j.url;
@@ -1131,7 +1405,7 @@ document.addEventListener('submit', async e => {
 document.addEventListener('input', e => { const ch = e.target.closest('.champ.invalide'); if(ch){ ch.classList.remove('invalide'); ch.querySelector('.err').textContent=''; } });
 
 /* ===== Routeur (vraies adresses : /produits/…, /collections/…) ===== */
-const SECTIONS_ACCUEIL = ['collections','carreaux-accueil','faq-accueil'];
+const SECTIONS_ACCUEIL = ['collections','carreaux-accueil','faq-accueil','offrir','composer'];
 const ANCIENNES = h => h==='accueil' ? '/' : h==='les-embiez' ? '/produits/les-embiez' : h.startsWith('produit-') ? '/produits/'+h.slice(8) : h.startsWith('collection-') ? '/collections/'+h.slice(11) : SECTIONS_ACCUEIL.includes(h) ? null : '/'+h;
 function cleDepuisChemin(p){
   p = decodeURIComponent(p).replace(/\/+$/,'') || '/';
@@ -1164,6 +1438,9 @@ function route(){
   else if(h==='contact') vueContact();
   else if(h==='panier'){ vueAccueil(); if(LIVE) Panier.ouvrir(); }
   else if(h==='merci') vueMerci();
+  else if(h==='coffrets') vueCoffrets();
+  else if(h==='sur-mesure') vueSurMesure();
+  else if(h==='carte-cadeau') vueCarteCadeau();
   else if(PAGES[h]) PAGES[h]();
   else vue404();
   vueCourante = cle + (PRODUITS ? ':data' : '');

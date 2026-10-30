@@ -1,71 +1,80 @@
 // Création d'une session de paiement Stripe Checkout à partir du panier.
-// Les prix sont fixés ici, côté serveur : le navigateur n'envoie que les modèles et les quantités.
-const PRIX_CENTIMES = 1990;
-const PRODUITS = {"marseille-vieux-port": {"nom": "Le Vieux-Port de Marseille", "img": "img/03_Produits_Marseille/marseille-vieux-port.webp"}, "marseille-notre-dame-de-la-garde": {"nom": "Notre-Dame de la Garde", "img": "img/03_Produits_Marseille/marseille-notre-dame-de-la-garde.webp"}, "marseille-mucem": {"nom": "Le Mucem", "img": "img/03_Produits_Marseille/marseille-mucem.webp"}, "marseille-la-major": {"nom": "La Major", "img": "img/03_Produits_Marseille/marseille-la-major.webp"}, "marseille-vallon-des-auffes": {"nom": "Le Vallon des Auffes", "img": "img/03_Produits_Marseille/marseille-vallon-des-auffes.webp"}, "marseille-chateau-d-if": {"nom": "Le Château d’If", "img": "img/03_Produits_Marseille/marseille-chateau-d-if.webp"}, "marseille-iles-du-frioul": {"nom": "Les Îles du Frioul", "img": "img/03_Produits_Marseille/marseille-iles-du-frioul.webp"}, "marseille-calanque-sormiou": {"nom": "La Calanque de Sormiou", "img": "img/03_Produits_Marseille/marseille-calanque-sormiou.webp"}, "marseille-calanque-morgiou": {"nom": "La Calanque de Morgiou", "img": "img/03_Produits_Marseille/marseille-calanque-morgiou.webp"}, "marseille-palais-longchamp": {"nom": "Le Palais Longchamp", "img": "img/03_Produits_Marseille/marseille-palais-longchamp.webp"}, "cote-bleue-port-niolon": {"nom": "Le Port de Niolon", "img": "img/04_Produits_Cote_Bleue/cote-bleue-port-niolon.webp"}, "cote-bleue-calanque-mejean": {"nom": "La Calanque de Méjean", "img": "img/04_Produits_Cote_Bleue/cote-bleue-calanque-mejean.webp"}, "cote-bleue-port-la-redonne": {"nom": "Le Port de La Redonne", "img": "img/04_Produits_Cote_Bleue/cote-bleue-port-la-redonne.webp"}, "cote-bleue-carry-le-rouet": {"nom": "Carry-le-Rouet", "img": "img/04_Produits_Cote_Bleue/cote-bleue-carry-le-rouet.webp"}, "cote-bleue-sausset-les-pins": {"nom": "Sausset-les-Pins", "img": "img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins.webp"}, "cote-bleue-port-carro": {"nom": "Le Port de Carro", "img": "img/04_Produits_Cote_Bleue/cote-bleue-port-carro.webp"}, "cote-bleue-cap-couronne": {"nom": "Le Cap Couronne", "img": "img/04_Produits_Cote_Bleue/cote-bleue-cap-couronne.webp"}, "cote-bleue-plage-sainte-croix": {"nom": "La Plage de Sainte-Croix", "img": "img/04_Produits_Cote_Bleue/cote-bleue-plage-sainte-croix.webp"}, "cote-bleue-ensues-la-redonne": {"nom": "Ensuès-la-Redonne", "img": "img/04_Produits_Cote_Bleue/cote-bleue-ensues-la-redonne.webp"}, "cote-bleue-estaque": {"nom": "L’Estaque", "img": "img/04_Produits_Cote_Bleue/cote-bleue-estaque.webp"}, "les-embiez": {"nom": "Les Embiez", "img": "img/05_Produits_Signature/les-embiez.webp"}};
-
-function encoder(obj, prefix, out = []) {
-  for (const [k, v] of Object.entries(obj)) {
-    const cle = prefix ? `${prefix}[${k}]` : k;
-    if (v !== null && typeof v === 'object') encoder(v, cle, out);
-    else if (v !== undefined) out.push(`${encodeURIComponent(cle)}=${encodeURIComponent(v)}`);
-  }
-  return out;
-}
+// Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
+const { PRIX, PRODUITS, stripe, euros, texte } = require('./_commun');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
   if (process.env.BOUTIQUE_OUVERTE !== 'true') return res.status(503).json({ erreur: 'Les commandes ne sont pas encore ouvertes' });
-  const cle = process.env.STRIPE_SECRET_KEY;
-  if (!cle) return res.status(503).json({ erreur: 'Paiement non configuré' });
+  if (!process.env.STRIPE_SECRET_KEY) return res.status(503).json({ erreur: 'Paiement non configuré' });
+
   let corps = req.body;
   if (typeof corps === 'string') { try { corps = JSON.parse(corps); } catch { corps = {}; } }
-  const lignes = Array.isArray(corps && corps.lignes) ? corps.lignes : [];
-  const valides = lignes
-    .filter(l => l && PRODUITS[l.slug])
-    .map(l => ({ slug: l.slug, q: Math.max(1, Math.min(20, parseInt(l.q, 10) || 1)) }))
-    .slice(0, 30);
-  if (!valides.length) return res.status(400).json({ erreur: 'Panier vide' });
-
+  const lignes = Array.isArray(corps && corps.lignes) ? corps.lignes.slice(0, 30) : [];
+  const q = l => Math.max(1, Math.min(20, parseInt(l.q, 10) || 1));
   const origine = `https://${req.headers['x-forwarded-host'] || req.headers.host}`;
+  const image = slug => `${origine}/${PRODUITS[slug].image_principale.replace(/^\//, '')}`;
+
+  const items = []; const resume = []; const cartes = []; let physique = 0; let surMesure = 0;
+  for (const l of lignes) {
+    const type = l.type || 'carreau';
+    if (type === 'carreau' && PRODUITS[l.slug]) {
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.carreau, product_data: { name: `Carreau K-Reau · ${PRODUITS[l.slug].nom}`, images: [image(l.slug)] } } });
+      physique += PRIX.carreau * q(l); resume.push(`${l.slug}x${q(l)}`);
+    } else if (type === 'coffret' && Array.isArray(l.slugs) && l.slugs.length === 3 && l.slugs.every(s => PRODUITS[s])) {
+      const noms = l.slugs.map(s => PRODUITS[s].nom);
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.coffret, product_data: {
+        name: `Coffret 3 carreaux K-Reau${l.nom ? ' · ' + texte(l.nom, 40) : ''}`, description: noms.join(' · '), images: l.slugs.map(image) } } });
+      physique += PRIX.coffret * q(l); resume.push(`coffret(${l.slugs.join('+')})x${q(l)}`);
+    } else if (type === 'sur-mesure' && texte(l.texte, 40)) {
+      surMesure++;
+      const desc = `Texte : « ${texte(l.texte, 40)} »${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.surMesure, product_data: { name: 'Carreau K-Reau sur mesure', description: desc.slice(0, 480) } } });
+      physique += PRIX.surMesure * q(l); resume.push(`sur-mesure(${texte(l.texte, 40)})x${q(l)}`);
+    } else if (type === 'carte' && PRIX.cartes.includes(parseInt(l.montant, 10))) {
+      const m = parseInt(l.montant, 10);
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: m, product_data: { name: `Carte cadeau K-Reau ${euros(m)}`, description: 'Code envoyé après le paiement, valable 12 mois sur k-reau.fr' } } });
+      for (let i = 0; i < q(l); i++) cartes.push(m);
+      resume.push(`carte${m / 100}x${q(l)}`);
+    }
+  }
+  if (!items.length) return res.status(400).json({ erreur: 'Panier vide' });
+
+  const message = texte(corps.message, 250);
   const params = {
-    mode: 'payment',
-    locale: 'fr',
-    success_url: `${origine}/merci`,
+    mode: 'payment', locale: 'fr',
+    success_url: `${origine}/merci?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origine}/panier`,
     billing_address_collection: 'auto',
-    phone_number_collection: { enabled: 'true' },
-    shipping_address_collection: { allowed_countries: (process.env.PAYS_LIVRES || 'FR').split(',').map(s => s.trim()) },
-    line_items: valides.map(l => ({
-      quantity: l.q,
-      price_data: {
-        currency: 'eur',
-        unit_amount: PRIX_CENTIMES,
-        product_data: { name: `Carreau K-Reau · ${PRODUITS[l.slug].nom}`, images: [`${origine}/${PRODUITS[l.slug].img}`] }
-      }
-    })),
-    metadata: { modeles: valides.map(l => `${l.slug}x${l.q}`).join(',').slice(0, 490) }
+    allow_promotion_codes: 'true',         // saisie des codes de cartes cadeaux sur la page de paiement
+    line_items: items,
+    metadata: {
+      panier: resume.join(',').slice(0, 490),
+      cartes: cartes.join(','),
+      sur_mesure: String(surMesure),
+      message_cadeau: message
+    },
+    payment_intent_data: { description: `K-Reau · ${resume.join(', ')}`.slice(0, 990), metadata: { message_cadeau: message } }
   };
-  const frais = parseInt(process.env.FRAIS_LIVRAISON_CENTIMES || '', 10);
-  const seuil = parseInt(process.env.SEUIL_LIVRAISON_GRATUITE_CENTIMES || '', 10);
-  const sousTotal = valides.reduce((t, l) => t + l.q * PRIX_CENTIMES, 0);
-  if (frais >= 0) {
-    const offerte = seuil > 0 && sousTotal >= seuil;
-    params.shipping_options = [{ shipping_rate_data: {
-      type: 'fixed_amount',
-      display_name: offerte ? 'Livraison France offerte' : (process.env.LIBELLE_LIVRAISON || 'Livraison'),
-      fixed_amount: { amount: offerte ? 0 : frais, currency: 'eur' }
-    } }];
+  // Livraison uniquement s'il y a un objet à expédier ; offerte dès le seuil (cartes cadeaux exclues du calcul)
+  if (physique > 0) {
+    params.phone_number_collection = { enabled: 'true' };
+    params.shipping_address_collection = { allowed_countries: (process.env.PAYS_LIVRES || 'FR').split(',').map(s => s.trim()) };
+    const frais = parseInt(process.env.FRAIS_LIVRAISON_CENTIMES || '', 10);
+    const seuil = parseInt(process.env.SEUIL_LIVRAISON_GRATUITE_CENTIMES || '', 10);
+    if (frais >= 0) {
+      const offerte = seuil > 0 && physique >= seuil;
+      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount',
+        display_name: offerte ? 'Livraison France offerte' : (process.env.LIBELLE_LIVRAISON || 'Livraison'),
+        fixed_amount: { amount: offerte ? 0 : frais, currency: 'eur' } } }];
+    }
   }
+  if (message) params.custom_text = { submit: { message: `Votre message cadeau sera imprimé sur la carte du coffret : « ${message.slice(0, 200)} »` } };
+
   try {
-    const r = await fetch('https://api.stripe.com/v1/checkout/sessions', {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encoder(params).join('&')
-    });
-    const s = await r.json();
-    if (!r.ok) { console.error('Stripe', s.error && s.error.message); return res.status(502).json({ erreur: 'Le paiement n’a pas pu être préparé' }); }
+    const s = await stripe('POST', 'checkout/sessions', params);
     return res.status(200).json({ url: s.url });
   } catch (e) {
-    console.error(e); return res.status(502).json({ erreur: 'Service de paiement injoignable' });
+    console.error('Stripe', e.message);
+    return res.status(502).json({ erreur: 'Le paiement n’a pas pu être préparé' });
   }
 };

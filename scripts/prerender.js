@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const RACINE = path.resolve(__dirname, '..');
 const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produits.json'), 'utf8')).filter(p => p.publie !== false);
 const collections = [...new Set(cat.map(p => p.collection_slug))].filter(c => c !== 'les-embiez');
-const pagesSimples = ['carreaux','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier'];
+const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier'];
 const routes = ['/', ...collections.map(c => '/collections/' + c), ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
 const types = { '.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.webp':'image/webp', '.xml':'application/xml', '.txt':'text/plain' };
 
