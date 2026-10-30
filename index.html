@@ -372,7 +372,7 @@ const CONFIG = {
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
   legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
   livraisonGratuiteDes: 50,         // € — livraison offerte à partir de ce montant (aligné sur SEUIL_LIVRAISON_GRATUITE_CENTIMES dans Vercel)
-  vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'Expédition sous 5 à 7 jours', paysLivres:'France', retours:'' }
+  vente: { fraisLivraison:'7,90 € par commande, offerte dès 50 € d’achat', delaiLivraison:'Expédition sous 5 à 7 jours', paysLivres:'France', retours:'Remboursement sous 14 jours, frais de retour à la charge du client' }
 };
 const COLLECTIONS = {
   'marseille': { nom:'Marseille', titre:'Collection Marseille', cle:'Marseille', img:'img/mises-en-scene/marseille-port.webp', w:545, h:462,
@@ -765,35 +765,57 @@ function pageLegale(titre, metaT, corps){
 const L = CONFIG.legal, V = CONFIG.vente;
 const PAGES = {
   'mentions-legales': () => pageLegale('Mentions légales','Mentions légales | K-Reau', `
-    <p class="msg ko">Page en préparation : les champs signalés sont à compléter avant la mise en ligne publique.</p>
     <h2>Éditeur du site</h2>
-    <ul><li>Dénomination : K-Reau — ${aCompleter(L.raisonSociale,'raison sociale / nom de l’entrepreneur')}</li>
-    <li>Forme juridique : ${aCompleter(L.formeJuridique)}</li><li>Immatriculation : ${aCompleter(L.siret)}</li>
-    <li>N° de TVA intracommunautaire : ${aCompleter(L.tva,'à compléter ou mention « TVA non applicable, art. 293 B du CGI »')}</li>
-    <li>Adresse : ${aCompleter(L.adresse)}</li><li>Contact : par le <a class="lien" href="#contact">formulaire de contact</a></li>
-    <li>Directeur de la publication : ${aCompleter(L.directeurPublication)}</li></ul>
-    <h2>Hébergement</h2><p>${aCompleter(L.hebergeur,'nom, adresse et téléphone de l’hébergeur')}</p>
+    <ul><li>Marque : K-Reau</li><li>Éditeur : ${esc(L.raisonSociale)}</li>
+    <li>Forme juridique : ${esc(L.formeJuridique)}</li><li>Immatriculation : ${esc(L.siret)}</li>
+    <li>TVA : ${esc(L.tva)}</li>
+    <li>Adresse : ${esc(L.adresse)}</li><li>Contact : par le <a class="lien" href="#contact">formulaire de contact</a> ou à l’adresse contact@k-reau.fr</li>
+    <li>Directeur de la publication : ${esc(L.directeurPublication)}</li></ul>
+    <h2>Hébergement</h2><p>${esc(L.hebergeur)}</p>
     <h2>Propriété intellectuelle</h2><p>Le nom K-Reau, le logo, les dessins et l’ensemble des contenus de ce site sont protégés. Toute reproduction sans autorisation est interdite.</p>`),
   'cgv': () => pageLegale('Conditions générales de vente','CGV | K-Reau', `
-    <p class="msg ko">Les conditions générales de vente seront publiées avant l’ouverture des commandes. Aucune commande n’est possible pour le moment.</p>
-    <h2>Contenu à prévoir</h2>
-    <ul><li>Identité du vendeur et coordonnées : ${aCompleter(L.raisonSociale)}</li>
-    <li>Caractéristiques essentielles des produits et prix en euros TTC</li><li>Modalités de commande et de paiement : ${aCompleter('', 'prestataire de paiement')}</li>
-    <li>Frais et délais de livraison : ${aCompleter(V.fraisLivraison)}</li><li>Droit de rétractation de 14 jours et formulaire type</li>
-    <li>Garanties légales de conformité et contre les vices cachés</li><li>Service client et réclamations</li><li>Médiateur de la consommation : ${aCompleter(L.mediateur)}</li></ul>`),
+    <p class="small muted">Version du 30 octobre 2026</p>
+    <h2>1. Vendeur</h2>
+    <p>Les présentes conditions s’appliquent aux ventes conclues sur le site k-reau.fr entre ${esc(L.raisonSociale)} (${esc(L.formeJuridique)}, ${esc(L.siret)}, ${esc(L.adresse)}), ci-après « K-Reau », et toute personne physique agissant en qualité de consommateur, ci-après « le client ». Contact : <a class="lien" href="#contact">formulaire de contact</a> ou contact@k-reau.fr.</p>
+    <h2>2. Produits</h2>
+    <p>K-Reau vend des carreaux décoratifs en céramique blanche brillante de 15 × 15 cm, illustrés d’un dessin noir imprimé par sublimation. Les caractéristiques essentielles de chaque modèle figurent sur sa fiche produit. Les produits sont destinés à la décoration intérieure.</p>
+    <h2>3. Prix</h2>
+    <p>Les prix sont indiqués en euros, toutes taxes comprises. ${esc(L.tva)}. Les frais de livraison s’ajoutent au prix des produits : 7,90 € par commande, offerts à partir de 50 € d’achat. Le montant total est indiqué avant la validation du paiement.</p>
+    <h2>4. Commande</h2>
+    <p>Le client sélectionne ses carreaux, vérifie le contenu de son panier puis valide sa commande sur la page de paiement sécurisée. La commande est ferme après confirmation du paiement. Un reçu est envoyé par e-mail. K-Reau se réserve le droit d’annuler une commande en cas de litige antérieur avec le client ou de produit indisponible ; le client est alors intégralement remboursé.</p>
+    <h2>5. Paiement</h2>
+    <p>Le paiement s’effectue en ligne, par carte bancaire, Apple Pay ou Google Pay, via le prestataire sécurisé Stripe. K-Reau n’a jamais accès aux données bancaires du client. Les produits restent la propriété de K-Reau jusqu’au paiement complet.</p>
+    <h2>6. Livraison</h2>
+    <p>Les commandes sont livrées en France métropolitaine, à l’adresse indiquée lors du paiement. Elles sont expédiées sous 5 à 7 jours ; à défaut d’autre indication, la livraison intervient au plus tard 30 jours après la commande. Le client vérifie l’état du colis à réception et signale toute anomalie (produit cassé ou manquant) par le formulaire de contact, photos à l’appui, dans les meilleurs délais.</p>
+    <h2>7. Droit de rétractation</h2>
+    <p>Le client dispose d’un délai de 14 jours à compter de la réception de sa commande pour se rétracter, sans avoir à se justifier. Il informe K-Reau de sa décision par une déclaration dénuée d’ambiguïté (formulaire de contact, e-mail ou formulaire type ci-dessous), puis renvoie les produits dans les 14 jours suivants, dans leur état d’origine et correctement protégés.</p>
+    <p><strong>Les frais de retour sont à la charge du client.</strong> K-Reau rembourse la totalité des sommes versées, y compris les frais de livraison initiaux, dans les 14 jours suivant la notification de la rétractation, par le moyen de paiement utilisé lors de la commande. Le remboursement peut être différé jusqu’à la réception des produits ou de la preuve de leur expédition. Un produit renvoyé abîmé du fait de manipulations autres que celles nécessaires pour l’examiner peut entraîner une diminution du remboursement.</p>
+    <h3>Formulaire type de rétractation</h3>
+    <p class="muted">À l’attention de K-Reau, ${esc(L.adresse)}, contact@k-reau.fr :<br>Je vous notifie par la présente ma rétractation du contrat portant sur la vente du bien ci-dessous : [modèle(s)] — Commandé le [date] / reçu le [date] — Nom du client — Adresse du client — Date — Signature (en cas d’envoi papier).</p>
+    <h2>8. Garanties légales</h2>
+    <p>Les produits bénéficient de la garantie légale de conformité (articles L.217-3 et suivants du Code de la consommation) pendant 2 ans à compter de la livraison, et de la garantie contre les vices cachés (articles 1641 et suivants du Code civil). En cas de produit non conforme ou endommagé à la livraison, le client contacte K-Reau, qui procède au remplacement ou, à défaut, au remboursement ; les frais de retour sont alors à la charge de K-Reau.</p>
+    <h2>9. Réclamations et médiation</h2>
+    <p>Pour toute réclamation, le client contacte K-Reau par le <a class="lien" href="#contact">formulaire de contact</a> ou à contact@k-reau.fr. ${L.mediateur ? 'En cas de litige non résolu, le client peut recourir gratuitement au médiateur de la consommation : '+esc(L.mediateur)+'.' : 'Médiateur de la consommation : en cours de désignation.'}</p>
+    <h2>10. Données personnelles</h2>
+    <p>Les données nécessaires au traitement des commandes sont traitées conformément à la <a class="lien" href="#confidentialite">politique de confidentialité</a>.</p>
+    <h2>11. Droit applicable</h2>
+    <p>Les présentes conditions sont soumises au droit français.</p>`),
   'livraison-retours': () => pageLegale('Livraison et retours','Livraison et retours | K-Reau', `
-    <p class="msg ko">Les conditions de livraison et de retour seront publiées avant l’ouverture des commandes.</p>
-    <h2>Livraison</h2><ul><li>Zones livrées : ${aCompleter(V.paysLivres)}</li><li>Frais : ${aCompleter(V.fraisLivraison)}</li><li>Délais : ${aCompleter(V.delaiLivraison)}</li></ul>
-    <h2>Retours et rétractation</h2><p>Conformément au Code de la consommation, vous disposerez d’un délai de 14 jours à compter de la réception pour exercer votre droit de rétractation.</p><p>Modalités de retour : ${aCompleter(V.retours)}</p>`),
+    <h2>Livraison</h2>
+    <ul><li>Zone : France métropolitaine</li><li>Expédition : sous 5 à 7 jours</li><li>Frais : 7,90 € par commande, offerts dès 50 € d’achat</li></ul>
+    <p>Vérifiez votre colis à réception. Si un carreau est cassé ou abîmé, écrivez-nous par le <a class="lien" href="#contact">formulaire de contact</a> avec une photo : nous le remplaçons ou vous remboursons.</p>
+    <h2>Retours</h2>
+    <p>Vous disposez de 14 jours après réception pour changer d’avis. Prévenez-nous par le <a class="lien" href="#contact">formulaire de contact</a>, puis renvoyez le ou les carreaux dans leur état d’origine, bien protégés, dans les 14 jours suivants.</p>
+    <ul><li>Les frais de retour sont à votre charge.</li><li>Nous vous remboursons le prix des carreaux et les frais de livraison initiaux, sous 14 jours, sur votre moyen de paiement.</li></ul>
+    <p>Le détail figure dans les <a class="lien" href="#cgv">conditions générales de vente</a>.</p>`),
   'confidentialite': () => pageLegale('Confidentialité et cookies','Confidentialité | K-Reau', `
-    <p class="msg ko">Politique en préparation : les champs signalés sont à compléter avant la mise en ligne publique.</p>
-    <h2>Données collectées</h2><p>Les formulaires de ce site recueillent uniquement les informations que vous saisissez : nom, adresse e-mail et message pour le contact ; adresse e-mail pour être informé du lancement.</p>
-    <h2>Utilisation</h2><p>Ces informations servent uniquement à répondre à votre demande ou à vous prévenir de l’ouverture des commandes. Elles ne sont ni vendues ni cédées.</p>
-    <p>Les messages sont transmis par e-mail via le service FormSubmit (formsubmit.co).</p>
-    <h2>Responsable du traitement</h2><p>${aCompleter(L.raisonSociale)}</p>
-    <h2>Durée de conservation</h2><p>${aCompleter('','durée de conservation')}</p>
-    <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données en nous écrivant par le <a class="lien" href="#contact">formulaire de contact</a>. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
-    <h2>Cookies</h2><p>À ce jour, ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Si de tels outils sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser avant tout dépôt.</p>`),
+    <h2>Responsable du traitement</h2><p>${esc(L.raisonSociale)}, ${esc(L.adresse)}.</p>
+    <h2>Données collectées</h2><p>Formulaire de contact : nom, adresse e-mail et message. Inscription au lancement : adresse e-mail. Commande : nom, adresses de livraison et de facturation, e-mail, téléphone et contenu de la commande. Les données de carte bancaire sont traitées uniquement par Stripe.</p>
+    <h2>Utilisation</h2><p>Ces informations servent à répondre à vos demandes, à vous prévenir de l’ouverture des commandes si vous l’avez demandé, et à traiter et livrer vos commandes. Elles ne sont ni vendues ni cédées.</p>
+    <h2>Prestataires</h2><p>Hébergement : Vercel. Paiement : Stripe. Transmission des formulaires par e-mail : FormSubmit. Certains de ces prestataires sont situés aux États-Unis et encadrent ces transferts par des garanties contractuelles.</p>
+    <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
+    <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="#contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
+    <h2>Cookies</h2><p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Le panier est conservé dans votre navigateur (stockage local) uniquement pour le fonctionnement de la commande. Si des outils de mesure sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser.</p>`),
   'avant-lancement': vueChecklist
 };
 
