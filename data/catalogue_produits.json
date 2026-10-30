@@ -21,7 +21,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Cœur historique de Marseille depuis la fondation de Massalia par les Grecs de Phocée, il y a plus de 2 600 ans, le Vieux-Port reste le point de rendez-vous de toute la ville : marché aux poissons du quai des Belges, ferry-boat, ombrière et coucher de soleil sur le fort Saint-Jean. Un carreau du Vieux-Port, c’est le souvenir de Marseille par excellence."
+  "a_propos": "Cœur historique de Marseille depuis la fondation de Massalia par les Grecs de Phocée, il y a plus de 2 600 ans, le Vieux-Port reste le point de rendez-vous de toute la ville : marché aux poissons du quai des Belges, ferry-boat, ombrière et coucher de soleil sur le fort Saint-Jean. Un carreau du Vieux-Port, c’est le souvenir de Marseille par excellence.",
+  "image_detail": "img/details/marseille-vieux-port-detail.webp",
+  "image_coffret": "img/coffret/marseille-vieux-port-coffret.webp"
  },
  {
   "id": "marseille-notre-dame-de-la-garde",
@@ -45,7 +47,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Perchée sur la plus haute colline de la ville, la basilique Notre-Dame de la Garde, achevée au XIXe siècle, veille sur Marseille et sur les marins. Les Marseillais l’appellent affectueusement « la Bonne Mère ». Un carreau Notre-Dame de la Garde est une idée cadeau idéale pour un Marseillais exilé ou un amoureux de la ville."
+  "a_propos": "Perchée sur la plus haute colline de la ville, la basilique Notre-Dame de la Garde, achevée au XIXe siècle, veille sur Marseille et sur les marins. Les Marseillais l’appellent affectueusement « la Bonne Mère ». Un carreau Notre-Dame de la Garde est une idée cadeau idéale pour un Marseillais exilé ou un amoureux de la ville.",
+  "image_detail": "img/details/marseille-notre-dame-de-la-garde-detail.webp",
+  "image_coffret": "img/coffret/marseille-notre-dame-de-la-garde-coffret.webp"
  },
  {
   "id": "marseille-mucem",
@@ -69,7 +73,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Ouvert en 2013 à l’entrée du Vieux-Port, le Mucem, musée des Civilisations de l’Europe et de la Méditerranée, se reconnaît à sa résille de béton signée Rudy Ricciotti et à sa passerelle qui le relie au fort Saint-Jean. Un symbole du Marseille contemporain, dessiné sur un carreau en céramique."
+  "a_propos": "Ouvert en 2013 à l’entrée du Vieux-Port, le Mucem, musée des Civilisations de l’Europe et de la Méditerranée, se reconnaît à sa résille de béton signée Rudy Ricciotti et à sa passerelle qui le relie au fort Saint-Jean. Un symbole du Marseille contemporain, dessiné sur un carreau en céramique.",
+  "image_detail": "img/details/marseille-mucem-detail.webp",
+  "image_coffret": "img/coffret/marseille-mucem-coffret.webp"
  },
  {
   "id": "marseille-la-major",
@@ -93,7 +99,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "La cathédrale Sainte-Marie-Majeure, dite La Major, domine le port de la Joliette avec ses coupoles et ses pierres bicolores. Bâtie au XIXe siècle au pied du Panier, c’est l’un des monuments les plus impressionnants de Marseille."
+  "a_propos": "La cathédrale Sainte-Marie-Majeure, dite La Major, domine le port de la Joliette avec ses coupoles et ses pierres bicolores. Bâtie au XIXe siècle au pied du Panier, c’est l’un des monuments les plus impressionnants de Marseille.",
+  "image_detail": "img/details/marseille-la-major-detail.webp",
+  "image_coffret": "img/coffret/marseille-la-major-coffret.webp"
  },
  {
   "id": "marseille-vallon-des-auffes",
@@ -117,7 +125,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Niché sous le pont de la Corniche Kennedy, le Vallon des Auffes est un petit port de pêcheurs avec ses cabanons et ses pointus colorés. Ce coin secret du 7e arrondissement fait partie des lieux les plus photographiés de Marseille."
+  "a_propos": "Niché sous le pont de la Corniche Kennedy, le Vallon des Auffes est un petit port de pêcheurs avec ses cabanons et ses pointus colorés. Ce coin secret du 7e arrondissement fait partie des lieux les plus photographiés de Marseille.",
+  "image_detail": "img/details/marseille-vallon-des-auffes-detail.webp",
+  "image_coffret": "img/coffret/marseille-vallon-des-auffes-coffret.webp"
  },
  {
   "id": "marseille-chateau-d-if",
@@ -141,7 +151,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Construit au XVIe siècle sous François Ier sur un îlot face à Marseille, le château d’If est devenu célèbre grâce au Comte de Monte-Cristo d’Alexandre Dumas. On y accède en navette depuis le Vieux-Port."
+  "a_propos": "Construit au XVIe siècle sous François Ier sur un îlot face à Marseille, le château d’If est devenu célèbre grâce au Comte de Monte-Cristo d’Alexandre Dumas. On y accède en navette depuis le Vieux-Port.",
+  "image_detail": "img/details/marseille-chateau-d-if-detail.webp",
+  "image_coffret": "img/coffret/marseille-chateau-d-if-coffret.webp"
  },
  {
   "id": "marseille-iles-du-frioul",
@@ -165,7 +177,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "L’archipel du Frioul, avec ses îles calcaires de Ratonneau et Pomègues, offre criques et eaux turquoise à quelques minutes de navette du Vieux-Port. Une échappée en pleine mer, sans quitter Marseille."
+  "a_propos": "L’archipel du Frioul, avec ses îles calcaires de Ratonneau et Pomègues, offre criques et eaux turquoise à quelques minutes de navette du Vieux-Port. Une échappée en pleine mer, sans quitter Marseille.",
+  "image_detail": "img/details/marseille-iles-du-frioul-detail.webp",
+  "image_coffret": "img/coffret/marseille-iles-du-frioul-coffret.webp"
  },
  {
   "id": "marseille-calanque-sormiou",
@@ -189,7 +203,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Au cœur du Parc national des Calanques, Sormiou est l’une des plus grandes calanques de Marseille, avec sa plage, ses cabanons et ses falaises de calcaire blanc plongeant dans une eau turquoise."
+  "a_propos": "Au cœur du Parc national des Calanques, Sormiou est l’une des plus grandes calanques de Marseille, avec sa plage, ses cabanons et ses falaises de calcaire blanc plongeant dans une eau turquoise.",
+  "image_detail": "img/details/marseille-calanque-sormiou-detail.webp",
+  "image_coffret": "img/coffret/marseille-calanque-sormiou-coffret.webp"
  },
  {
   "id": "marseille-calanque-morgiou",
@@ -213,7 +229,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Morgiou abrite un petit port de pêche et des cabanons au fond d’une calanque encaissée du Parc national des Calanques. Un bout du monde à quelques kilomètres du centre de Marseille."
+  "a_propos": "Morgiou abrite un petit port de pêche et des cabanons au fond d’une calanque encaissée du Parc national des Calanques. Un bout du monde à quelques kilomètres du centre de Marseille.",
+  "image_detail": "img/details/marseille-calanque-morgiou-detail.webp",
+  "image_coffret": "img/coffret/marseille-calanque-morgiou-coffret.webp"
  },
  {
   "id": "marseille-palais-longchamp",
@@ -237,7 +255,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Édifié au XIXe siècle pour célébrer l’arrivée des eaux de la Durance à Marseille, le Palais Longchamp déploie sa colonnade, sa fontaine monumentale et abrite le musée des Beaux-Arts et le Muséum d’histoire naturelle."
+  "a_propos": "Édifié au XIXe siècle pour célébrer l’arrivée des eaux de la Durance à Marseille, le Palais Longchamp déploie sa colonnade, sa fontaine monumentale et abrite le musée des Beaux-Arts et le Muséum d’histoire naturelle.",
+  "image_detail": "img/details/marseille-palais-longchamp-detail.webp",
+  "image_coffret": "img/coffret/marseille-palais-longchamp-coffret.webp"
  },
  {
   "id": "cote-bleue-port-niolon",
@@ -261,7 +281,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Petit village du Rove accroché aux rochers, Niolon est réputé pour ses eaux claires, ses fonds marins appréciés des plongeurs et le viaduc du train de la Côte Bleue qui passe au-dessus du port."
+  "a_propos": "Petit village du Rove accroché aux rochers, Niolon est réputé pour ses eaux claires, ses fonds marins appréciés des plongeurs et le viaduc du train de la Côte Bleue qui passe au-dessus du port.",
+  "image_detail": "img/details/cote-bleue-port-niolon-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-port-niolon-coffret.webp"
  },
  {
   "id": "cote-bleue-calanque-mejean",
@@ -285,7 +307,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Sur la commune d’Ensuès-la-Redonne, la calanque de Méjean est une crique abritée bordée de cabanons, où les bateaux viennent mouiller le temps d’une baignade. Un des trésors discrets de la Côte Bleue."
+  "a_propos": "Sur la commune d’Ensuès-la-Redonne, la calanque de Méjean est une crique abritée bordée de cabanons, où les bateaux viennent mouiller le temps d’une baignade. Un des trésors discrets de la Côte Bleue.",
+  "image_detail": "img/details/cote-bleue-calanque-mejean-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-calanque-mejean-coffret.webp"
  },
  {
   "id": "cote-bleue-port-la-redonne",
@@ -309,7 +333,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Le petit port de La Redonne, à Ensuès-la-Redonne, se cache au fond d’une calanque enjambée par le viaduc de la ligne de la Côte Bleue. Barques, cabanons et pinède : le calme absolu."
+  "a_propos": "Le petit port de La Redonne, à Ensuès-la-Redonne, se cache au fond d’une calanque enjambée par le viaduc de la ligne de la Côte Bleue. Barques, cabanons et pinède : le calme absolu.",
+  "image_detail": "img/details/cote-bleue-port-la-redonne-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-port-la-redonne-coffret.webp"
  },
  {
   "id": "cote-bleue-carry-le-rouet",
@@ -333,7 +359,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Station balnéaire de la Côte Bleue, Carry-le-Rouet est connue pour son port, ses criques et ses célèbres oursinades d’hiver. Un village de bord de mer où beaucoup ont des souvenirs d’été."
+  "a_propos": "Station balnéaire de la Côte Bleue, Carry-le-Rouet est connue pour son port, ses criques et ses célèbres oursinades d’hiver. Un village de bord de mer où beaucoup ont des souvenirs d’été.",
+  "image_detail": "img/details/cote-bleue-carry-le-rouet-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-carry-le-rouet-coffret.webp"
  },
  {
   "id": "cote-bleue-sausset-les-pins",
@@ -357,7 +385,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Ancien village de pêcheurs, Sausset-les-Pins séduit avec sa corniche, son petit port et ses pins parasols au bord de l’eau. Un carreau Sausset-les-Pins, c’est un cadeau pour tous ceux qui y ont grandi ou passé leurs vacances."
+  "a_propos": "Ancien village de pêcheurs, Sausset-les-Pins séduit avec sa corniche, son petit port et ses pins parasols au bord de l’eau. Un carreau Sausset-les-Pins, c’est un cadeau pour tous ceux qui y ont grandi ou passé leurs vacances.",
+  "image_detail": "img/details/cote-bleue-sausset-les-pins-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-sausset-les-pins-coffret.webp"
  },
  {
   "id": "cote-bleue-port-carro",
@@ -381,7 +411,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "À l’extrémité de la Côte Bleue, Carro est le port de pêche de Martigues, avec son marché aux poissons et son spot apprécié des surfeurs et kitesurfeurs quand le vent se lève."
+  "a_propos": "À l’extrémité de la Côte Bleue, Carro est le port de pêche de Martigues, avec son marché aux poissons et son spot apprécié des surfeurs et kitesurfeurs quand le vent se lève.",
+  "image_detail": "img/details/cote-bleue-port-carro-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-port-carro-coffret.webp"
  },
  {
   "id": "cote-bleue-cap-couronne",
@@ -405,7 +437,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Le Cap Couronne, à Martigues, avance dans la mer avec son phare, ses rochers clairs et ses criques idéales pour la plongée et le pique-nique face au large."
+  "a_propos": "Le Cap Couronne, à Martigues, avance dans la mer avec son phare, ses rochers clairs et ses criques idéales pour la plongée et le pique-nique face au large.",
+  "image_detail": "img/details/cote-bleue-cap-couronne-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-cap-couronne-coffret.webp"
  },
  {
   "id": "cote-bleue-plage-sainte-croix",
@@ -429,7 +463,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Sur la commune de Martigues, la plage de Sainte-Croix dessine un grand arc de sable surplombé par sa petite chapelle. Une des plages les plus appréciées de la Côte Bleue."
+  "a_propos": "Sur la commune de Martigues, la plage de Sainte-Croix dessine un grand arc de sable surplombé par sa petite chapelle. Une des plages les plus appréciées de la Côte Bleue.",
+  "image_detail": "img/details/cote-bleue-plage-sainte-croix-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-plage-sainte-croix-coffret.webp"
  },
  {
   "id": "cote-bleue-ensues-la-redonne",
@@ -453,7 +489,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Entre Marseille et Carry-le-Rouet, Ensuès-la-Redonne cache plusieurs calanques (Méjean, La Redonne, les Figuières) reliées par le sentier des douaniers, entre pinèdes et eau limpide."
+  "a_propos": "Entre Marseille et Carry-le-Rouet, Ensuès-la-Redonne cache plusieurs calanques (Méjean, La Redonne, les Figuières) reliées par le sentier des douaniers, entre pinèdes et eau limpide.",
+  "image_detail": "img/details/cote-bleue-ensues-la-redonne-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-ensues-la-redonne-coffret.webp"
  },
  {
   "id": "cote-bleue-estaque",
@@ -477,7 +515,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Ancien village de pêcheurs au nord de Marseille, L’Estaque a inspiré Cézanne et Braque. Ses petits ports, ses chichis frégis et sa vue sur la rade en font la porte d’entrée de la Côte Bleue."
+  "a_propos": "Ancien village de pêcheurs au nord de Marseille, L’Estaque a inspiré Cézanne et Braque. Ses petits ports, ses chichis frégis et sa vue sur la rade en font la porte d’entrée de la Côte Bleue.",
+  "image_detail": "img/details/cote-bleue-estaque-detail.webp",
+  "image_coffret": "img/coffret/cote-bleue-estaque-coffret.webp"
  },
  {
   "id": "les-embiez",
@@ -501,7 +541,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Au large de Six-Fours-les-Plages, dans le Var, l’île des Embiez offre criques, sentiers et port de plaisance à quelques minutes de traversée. Notre modèle signature, pour les amoureux de cette île méditerranéenne."
+  "a_propos": "Au large de Six-Fours-les-Plages, dans le Var, l’île des Embiez offre criques, sentiers et port de plaisance à quelques minutes de traversée. Notre modèle signature, pour les amoureux de cette île méditerranéenne.",
+  "image_detail": "img/details/les-embiez-detail.webp",
+  "image_coffret": "img/coffret/les-embiez-coffret.webp"
  },
  {
   "id": "montagnes-sainte-victoire",
@@ -525,7 +567,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Montagne emblématique du pays d’Aix, la Sainte-Victoire dresse sa grande barre calcaire à l’est d’Aix-en-Provence. Paul Cézanne l’a peinte des dizaines de fois, et la Croix de Provence, plantée sur l’un de ses sommets, est le but de randonnée préféré des Aixois."
+  "a_propos": "Montagne emblématique du pays d’Aix, la Sainte-Victoire dresse sa grande barre calcaire à l’est d’Aix-en-Provence. Paul Cézanne l’a peinte des dizaines de fois, et la Croix de Provence, plantée sur l’un de ses sommets, est le but de randonnée préféré des Aixois.",
+  "image_detail": "img/details/montagnes-sainte-victoire-detail.webp",
+  "image_coffret": "img/coffret/montagnes-sainte-victoire-coffret.webp"
  },
  {
   "id": "montagnes-sainte-baume",
@@ -549,7 +593,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Entre Bouches-du-Rhône et Var, le massif de la Sainte-Baume aligne une longue falaise calcaire au pied de laquelle s’étend une forêt ancienne, réputée pour ses hêtres et ses ifs. Le lieu est aussi connu pour sa grotte, lieu de pèlerinage depuis des siècles."
+  "a_propos": "Entre Bouches-du-Rhône et Var, le massif de la Sainte-Baume aligne une longue falaise calcaire au pied de laquelle s’étend une forêt ancienne, réputée pour ses hêtres et ses ifs. Le lieu est aussi connu pour sa grotte, lieu de pèlerinage depuis des siècles.",
+  "image_detail": "img/details/montagnes-sainte-baume-detail.webp",
+  "image_coffret": "img/coffret/montagnes-sainte-baume-coffret.webp"
  },
  {
   "id": "montagnes-mont-salva",
@@ -573,7 +619,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Près de Six-Fours-les-Plages, dans le Var, le Mont Salva déroule ses collines boisées de pins au-dessus de la Méditerranée. Un coin de nature apprécié des promeneurs, avec des vues dégagées sur la côte varoise."
+  "a_propos": "Près de Six-Fours-les-Plages, dans le Var, le Mont Salva déroule ses collines boisées de pins au-dessus de la Méditerranée. Un coin de nature apprécié des promeneurs, avec des vues dégagées sur la côte varoise.",
+  "image_detail": "img/details/montagnes-mont-salva-detail.webp",
+  "image_coffret": "img/coffret/montagnes-mont-salva-coffret.webp"
  },
  {
   "id": "montagnes-gros-cerveau",
@@ -597,7 +645,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Le Gros Cerveau forme une longue crête au-dessus de Sanary-sur-Mer, d’Ollioules et de Bandol, dans le Var. Depuis ses hauteurs, la vue embrasse la baie de Sanary, les vignobles et les îles au large."
+  "a_propos": "Le Gros Cerveau forme une longue crête au-dessus de Sanary-sur-Mer, d’Ollioules et de Bandol, dans le Var. Depuis ses hauteurs, la vue embrasse la baie de Sanary, les vignobles et les îles au large.",
+  "image_detail": "img/details/montagnes-gros-cerveau-detail.webp",
+  "image_coffret": "img/coffret/montagnes-gros-cerveau-coffret.webp"
  },
  {
   "id": "montagnes-mont-faron",
@@ -621,7 +671,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Le Mont Faron surplombe Toulon et sa rade. On y monte en téléphérique ou par une route en lacets pour profiter d’une vue spectaculaire sur la ville, le port et la mer, et découvrir le mémorial du Débarquement de Provence."
+  "a_propos": "Le Mont Faron surplombe Toulon et sa rade. On y monte en téléphérique ou par une route en lacets pour profiter d’une vue spectaculaire sur la ville, le port et la mer, et découvrir le mémorial du Débarquement de Provence.",
+  "image_detail": "img/details/montagnes-mont-faron-detail.webp",
+  "image_coffret": "img/coffret/montagnes-mont-faron-coffret.webp"
  },
  {
   "id": "montagnes-mont-caume",
@@ -645,7 +697,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Le Mont Caume est le plus haut des monts toulonnais. Ses falaises calcaires et son sommet dégagé offrent l’un des plus beaux panoramas du Var, des massifs de l’arrière-pays jusqu’à la mer."
+  "a_propos": "Le Mont Caume est le plus haut des monts toulonnais. Ses falaises calcaires et son sommet dégagé offrent l’un des plus beaux panoramas du Var, des massifs de l’arrière-pays jusqu’à la mer.",
+  "image_detail": "img/details/montagnes-mont-caume-detail.webp",
+  "image_coffret": "img/coffret/montagnes-mont-caume-coffret.webp"
  },
  {
   "id": "montagnes-garlaban",
@@ -669,7 +723,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Au-dessus d’Aubagne, le Garlaban dresse son piton rocheux au cœur des collines chères à Marcel Pagnol. C’est le décor de ses souvenirs d’enfance, de La Gloire de mon père et du Château de ma mère."
+  "a_propos": "Au-dessus d’Aubagne, le Garlaban dresse son piton rocheux au cœur des collines chères à Marcel Pagnol. C’est le décor de ses souvenirs d’enfance, de La Gloire de mon père et du Château de ma mère.",
+  "image_detail": "img/details/montagnes-garlaban-detail.webp",
+  "image_coffret": "img/coffret/montagnes-garlaban-coffret.webp"
  },
  {
   "id": "montagnes-mont-ventoux",
@@ -693,7 +749,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Surnommé le Géant de Provence, le Mont Ventoux domine le Vaucluse de ses quelque 1 900 mètres. Son sommet pelé, visible de très loin, est entré dans la légende du Tour de France."
+  "a_propos": "Surnommé le Géant de Provence, le Mont Ventoux domine le Vaucluse de ses quelque 1 900 mètres. Son sommet pelé, visible de très loin, est entré dans la légende du Tour de France.",
+  "image_detail": "img/details/montagnes-mont-ventoux-detail.webp",
+  "image_coffret": "img/coffret/montagnes-mont-ventoux-coffret.webp"
  },
  {
   "id": "montagnes-mont-puget",
@@ -717,7 +775,9 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Point culminant du massif des Calanques, le Mont Puget domine Marseille et la Méditerranée. Ses falaises calcaires blanches offrent une vue saisissante sur les calanques et les îles de l’archipel de Riou."
+  "a_propos": "Point culminant du massif des Calanques, le Mont Puget domine Marseille et la Méditerranée. Ses falaises calcaires blanches offrent une vue saisissante sur les calanques et les îles de l’archipel de Riou.",
+  "image_detail": "img/details/montagnes-mont-puget-detail.webp",
+  "image_coffret": "img/coffret/montagnes-mont-puget-coffret.webp"
  },
  {
   "id": "montagnes-rocher-de-roquebrune",
@@ -741,6 +801,8 @@
   "forme": "Carrée, coins légèrement arrondis",
   "entretien": "Nettoyer avec un chiffon doux légèrement humide. Éviter les produits abrasifs.",
   "fixation": "Décoration intérieure : à poser sur un meuble ou à accrocher au mur avec une fixation adaptée",
-  "a_propos": "Le Rocher de Roquebrune se dresse au-dessus de Roquebrune-sur-Argens, dans le Var. Ses roches aux teintes chaudes et ses formes étonnantes en font un lieu à part, couronné de trois grandes croix visibles de loin."
+  "a_propos": "Le Rocher de Roquebrune se dresse au-dessus de Roquebrune-sur-Argens, dans le Var. Ses roches aux teintes chaudes et ses formes étonnantes en font un lieu à part, couronné de trois grandes croix visibles de loin.",
+  "image_detail": "img/details/montagnes-rocher-de-roquebrune-detail.webp",
+  "image_coffret": "img/coffret/montagnes-rocher-de-roquebrune-coffret.webp"
  }
 ]

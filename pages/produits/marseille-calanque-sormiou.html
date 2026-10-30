@@ -241,13 +241,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 @media(max-width:860px){.galerie{position:static}}
 .galerie-principale{position:relative;background:var(--blanc);border:1px solid var(--joint);overflow:hidden;cursor:zoom-in;padding:0}
 .galerie-principale img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform .35s}
-.galerie-principale.detail img{transform:scale(1.9);transform-origin:50% 76%}
 .galerie-loupe{position:absolute;right:12px;bottom:12px;background:var(--blanc);border:1px solid var(--joint);font-size:.76rem;font-weight:600;padding:8px 12px;display:flex;gap:6px;align-items:center}
 .vignettes{display:flex;gap:10px}
 .vignette{width:84px;height:84px;padding:0;border:1px solid var(--joint);background:var(--blanc);cursor:pointer;overflow:hidden}
 .vignette[aria-pressed="true"]{outline:2px solid var(--olivier);outline-offset:2px}
 .vignette img{width:100%;height:100%;object-fit:cover}
-.vignette.zoomee img{transform:scale(1.9);transform-origin:50% 76%}
 .fiche-infos{display:grid;gap:20px}
 .fiche-infos h1{font-size:clamp(2.2rem,4.5vw,3.4rem)}
 .fiche-desc{font-size:1.06rem;color:var(--encre-doux)}
@@ -296,7 +294,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 @media(max-width:860px){.pied{grid-template-columns:1fr 1fr}.pied>div:first-child{grid-column:1/-1}}
 @media(max-width:420px){.pied{grid-template-columns:1fr}}
 </style>
-<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@type":"Product","name":"Carreau décoratif La Calanque de Sormiou","sku":"marseille-calanque-sormiou","url":"https://k-reau.fr/produits/marseille-calanque-sormiou","image":["https://k-reau.fr/img/03_Produits_Marseille/marseille-calanque-sormiou.webp"],"description":"Les falaises blanches, les pins accrochés à la roche et l'eau qui change de bleu au fil de la journée. Sormiou, pour ceux qui y sont descendus à pied et en sont remontés le cœur léger. Au cœur du Parc national des Calanques, Sormiou est l’une des plus grandes calanques de Marseille, avec sa plage, ses cabanons et ses falaises de calcaire blanc plongeant dans une eau turquoise.","brand":{"@type":"Brand","name":"K-Reau"},"material":"Céramique","category":"Décoration > Carreaux décoratifs","width":{"@type":"QuantitativeValue","value":15,"unitCode":"CMT"},"height":{"@type":"QuantitativeValue","value":15,"unitCode":"CMT"},"offers":{"@type":"Offer","url":"https://k-reau.fr/produits/marseille-calanque-sormiou","price":"19.90","priceCurrency":"EUR","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","seller":{"@type":"Organization","name":"K-Reau"},"shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"7.90","currency":"EUR"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"FR"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":5,"maxValue":7,"unitCode":"DAY"}}},"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"FR","returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow","merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail","returnFees":"https://schema.org/ReturnFeesCustomerResponsibility"}}}</script></head>
+<script type="application/ld+json" id="ld-page">{"@context":"https://schema.org","@type":"Product","name":"Carreau décoratif La Calanque de Sormiou","sku":"marseille-calanque-sormiou","url":"https://k-reau.fr/produits/marseille-calanque-sormiou","image":["https://k-reau.fr/img/03_Produits_Marseille/marseille-calanque-sormiou.webp","https://k-reau.fr/img/details/marseille-calanque-sormiou-detail.webp","https://k-reau.fr/img/coffret/marseille-calanque-sormiou-coffret.webp"],"description":"Les falaises blanches, les pins accrochés à la roche et l'eau qui change de bleu au fil de la journée. Sormiou, pour ceux qui y sont descendus à pied et en sont remontés le cœur léger. Au cœur du Parc national des Calanques, Sormiou est l’une des plus grandes calanques de Marseille, avec sa plage, ses cabanons et ses falaises de calcaire blanc plongeant dans une eau turquoise.","brand":{"@type":"Brand","name":"K-Reau"},"material":"Céramique","category":"Décoration > Carreaux décoratifs","width":{"@type":"QuantitativeValue","value":15,"unitCode":"CMT"},"height":{"@type":"QuantitativeValue","value":15,"unitCode":"CMT"},"offers":{"@type":"Offer","url":"https://k-reau.fr/produits/marseille-calanque-sormiou","price":"19.90","priceCurrency":"EUR","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition","seller":{"@type":"Organization","name":"K-Reau"},"shippingDetails":{"@type":"OfferShippingDetails","shippingRate":{"@type":"MonetaryAmount","value":"7.90","currency":"EUR"},"shippingDestination":{"@type":"DefinedRegion","addressCountry":"FR"},"deliveryTime":{"@type":"ShippingDeliveryTime","handlingTime":{"@type":"QuantitativeValue","minValue":5,"maxValue":7,"unitCode":"DAY"}}},"hasMerchantReturnPolicy":{"@type":"MerchantReturnPolicy","applicableCountry":"FR","returnPolicyCategory":"https://schema.org/MerchantReturnFiniteReturnWindow","merchantReturnDays":14,"returnMethod":"https://schema.org/ReturnByMail","returnFees":"https://schema.org/ReturnFeesCustomerResponsibility"}}}</script></head>
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
@@ -352,9 +350,8 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
         <img src="/img/03_Produits_Marseille/marseille-calanque-sormiou.webp" width="1254" height="1254" alt="Carreau décoratif K-Reau « La Calanque de Sormiou » en céramique blanche, dessin au trait noir et nom calligraphié" fetchpriority="high">
         <span class="galerie-loupe"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"></circle><path d="M15 15l5 5"></path></svg> Agrandir</span>
       </button>
-      <div class="vignettes" role="group" aria-label="Vues du carreau">
-        <button class="vignette" type="button" data-v="ensemble" aria-pressed="true" aria-label="Vue d’ensemble"><img src="/img/03_Produits_Marseille/marseille-calanque-sormiou-mini.webp" width="600" height="600" alt=""></button>
-        <button class="vignette zoomee" type="button" data-v="detail" aria-pressed="false" aria-label="Détail de la calligraphie"><img src="/img/03_Produits_Marseille/marseille-calanque-sormiou-mini.webp" width="600" height="600" alt=""></button>
+      <div class="vignettes" role="group" aria-label="Photos du carreau">
+        <button class="vignette" type="button" data-i="0" aria-pressed="true" aria-label="Le carreau"><img src="/img/03_Produits_Marseille/marseille-calanque-sormiou.webp" alt="" loading="lazy" style="object-position:50% 50%"></button><button class="vignette" type="button" data-i="1" aria-pressed="false" aria-label="Détail du dessin"><img src="/img/details/marseille-calanque-sormiou-detail.webp" alt="" loading="lazy" style="object-position:50% 50%"></button><button class="vignette" type="button" data-i="2" aria-pressed="false" aria-label="Dans son coffret d’expédition"><img src="/img/coffret/marseille-calanque-sormiou-coffret.webp" alt="" loading="lazy" style="object-position:60% 72%"></button>
       </div>
     </div>
     <div class="fiche-infos">
@@ -541,7 +538,8 @@ async function charger(){
   try{
     const r = await fetch('/data/catalogue_produits.json');
     if(!r.ok) throw new Error(r.status);
-    PRODUITS = (await r.json()).filter(p => p.publie !== false).map(p => ({...p, image_principale: '/'+p.image_principale.replace(/^\//,''), miniature: '/'+p.miniature.replace(/^\//,'')})); ERREUR = null;
+    const abs = u => u ? '/'+u.replace(/^\//,'') : u;
+    PRODUITS = (await r.json()).filter(p => p.publie !== false).map(p => ({...p, image_principale: abs(p.image_principale), miniature: abs(p.miniature), image_detail: abs(p.image_detail), image_coffret: abs(p.image_coffret)})); ERREUR = null;
   }catch(e){ ERREUR = e; }
   document.querySelectorAll('[data-coll]').forEach(el => el.hidden = !collPubliee(el.dataset.coll));
   route();
@@ -849,7 +847,7 @@ function vueProduit(slug){
   setMeta(`Carreau ${p.nom} | Déco céramique, cadeau ${k==='les-embiez'?'Var':region.replace('la ','')} – K-Reau`,
     `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir de ${region}. 19,90 €, livraison offerte dès 50 €.`,
     { image: p.image_principale, ld: { '@context':'https://schema.org', '@type':'Product', name:`Carreau décoratif ${p.nom}`, sku:p.slug, url:urlP,
-      image:['https://k-reau.fr'+p.image_principale], description:`${p.description} ${p.a_propos||''}`.trim(),
+      image:[p.image_principale,p.image_detail,p.image_coffret].filter(Boolean).map(u=>'https://k-reau.fr'+u), description:`${p.description} ${p.a_propos||''}`.trim(),
       brand:{ '@type':'Brand', name:'K-Reau' }, material:'Céramique', category:'Décoration > Carreaux décoratifs',
       width:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' }, height:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' },
       offers:{ '@type':'Offer', url:urlP, price:'19.90', priceCurrency:'EUR', availability:'https://schema.org/InStock', itemCondition:'https://schema.org/NewCondition',
@@ -860,19 +858,23 @@ function vueProduit(slug){
   const prix = prixTxt(p);
   const similaires = (k==='les-embiez' ? PRODUITS.filter(x=>x.slug!==p.slug).slice(0,4) : deCollection(k).filter(x=>x.slug!==p.slug).slice(0,4));
   const val = v => v ? esc(v) : '<span class="muted">Précisé à l’ouverture des commandes</span>';
+  const vues = [
+    { src:p.image_principale, alt:p.alt, label:'Le carreau', pos:'50% 50%' },
+    p.image_detail && { src:p.image_detail, alt:`Gros plan sur le dessin au trait du carreau ${p.nom}`, label:'Détail du dessin', pos:'50% 50%' },
+    p.image_coffret && { src:p.image_coffret, alt:`Carreau ${p.nom} dans son coffret K-Reau en carton kraft, prêt à être expédié`, label:'Dans son coffret d’expédition', pos:'60% 72%' }
+  ].filter(Boolean);
   const trail = k==='les-embiez' ? [['Accueil','/'],['Les Embiez','']] : [['Accueil','/'],[c.nom,'/collections/'+k],[p.nom,'']];
   app.innerHTML = `
   <div class="wrap" style="padding-top:28px">${ariane(trail)}</div>
   <div class="wrap fiche">
     <div class="galerie">
       <button class="galerie-principale" type="button" id="g-princ" aria-label="Agrandir l’image">
-        <img src="${esc(p.image_principale)}" width="1254" height="1254" alt="${esc(p.alt)}" fetchpriority="high">
+        <img src="${esc(vues[0].src)}" width="1254" height="1254" alt="${esc(vues[0].alt)}" fetchpriority="high">
         <span class="galerie-loupe">${ICONES.loupe} Agrandir</span>
       </button>
-      <div class="vignettes" role="group" aria-label="Vues du carreau">
-        <button class="vignette" type="button" data-v="ensemble" aria-pressed="true" aria-label="Vue d’ensemble"><img src="${esc(p.miniature)}" width="600" height="600" alt=""></button>
-        <button class="vignette zoomee" type="button" data-v="detail" aria-pressed="false" aria-label="Détail de la calligraphie"><img src="${esc(p.miniature)}" width="600" height="600" alt=""></button>
-      </div>
+      ${vues.length > 1 ? `<div class="vignettes" role="group" aria-label="Photos du carreau">
+        ${vues.map((v,i)=>`<button class="vignette" type="button" data-i="${i}" aria-pressed="${i===0}" aria-label="${esc(v.label)}"><img src="${esc(v.src)}" alt="" loading="lazy" style="object-position:${v.pos}"></button>`).join('')}
+      </div>` : ''}
     </div>
     <div class="fiche-infos">
       <span class="eyebrow">${esc(collNom(p))}</span>
@@ -907,12 +909,13 @@ function vueProduit(slug){
     <div class="grille">${similaires.map(x=>carte(x)).join('')}</div>
   </div></section>` : ''}`;
   // Galerie
-  const princ = $('#g-princ');
-  app.querySelectorAll('.vignette').forEach(v => v.addEventListener('click', () => {
-    app.querySelectorAll('.vignette').forEach(x => x.setAttribute('aria-pressed', x===v));
-    princ.classList.toggle('detail', v.dataset.v==='detail');
+  const princ = $('#g-princ'); let vueActive = 0;
+  app.querySelectorAll('.vignette').forEach(b => b.addEventListener('click', () => {
+    vueActive = +b.dataset.i; const v = vues[vueActive], img = princ.querySelector('img');
+    app.querySelectorAll('.vignette').forEach(x => x.setAttribute('aria-pressed', x===b));
+    img.src = v.src; img.alt = v.alt; img.style.objectPosition = v.pos;
   }));
-  princ.addEventListener('click', () => ouvrirLightbox(p.image_principale, p.alt));
+  princ.addEventListener('click', () => ouvrirLightbox(vues[vueActive].src, vues[vueActive].alt));
   // Panier (live uniquement)
   if(LIVE && prix){
     let q = 1; const out = $('#qte-out');

@@ -59,6 +59,7 @@ const serveur = http.createServer((req, res) => {
     <g:description>${xml(`${p.description} ${p.a_propos || ''} Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir de ${region}.`)}</g:description>
     <g:link>https://k-reau.fr/produits/${p.slug}</g:link>
     <g:image_link>https://k-reau.fr/${p.image_principale.replace(/^\//,'')}</g:image_link>
+${[p.image_coffret,p.image_detail].filter(Boolean).map(u=>`    <g:additional_image_link>https://k-reau.fr/${u.replace(/^\//,'')}</g:additional_image_link>`).join('\n')}
     <g:availability>in_stock</g:availability>
     <g:price>19.90 EUR</g:price>
     <g:condition>new</g:condition>
