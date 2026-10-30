@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&amp;family=Manrope:wght@400;500;600;700&amp;display=swap">
 <link rel="preload" as="image" href="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"K-Reau","slogan":"Les lieux qu’on aime, à garder chez soi.","logo":"https://k-reau.fr/img/01_Identite/logo-kreau.webp"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"K-Reau","slogan":"Les lieux qu’on aime, à garder chez soi.","logo":"https://k-reau.fr/img/01_Identite/logo-kreau.webp","url":"https://k-reau.fr/","sameAs":["https://www.instagram.com/kreau.studio/"]}</script>
 <style>
 /* Mise en page : un « calepinage » — grilles de carreaux, joints fins couleur sable, beaucoup d'air. Thème clair unique, assumé (céramique). */
 :root{
@@ -343,7 +343,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           <li><a href="/notre-histoire">Notre histoire</a></li>
           <li><a href="/faq">Questions fréquentes</a></li>
           <li><a href="/contact">Contact</a></li>
-          <li><span class="small" style="color:#A9A398">Réseaux sociaux : bientôt</span></li>
+          <li><a href="https://www.instagram.com/kreau.studio/" target="_blank" rel="noopener" aria-label="Instagram K-Reau (@kreau.studio), nouvel onglet"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" style="margin-right:8px"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg>@kreau.studio</a></li>
         </ul>
       </div>
       <div>
@@ -852,7 +852,7 @@ function vueChecklist(){
     ['Bandeau cookies si ajout d’outils de mesure', false],
     ['Prestataire de paiement (Shopify ou Stripe) branché et testé ; CONFIG.checkoutUrl', !!CONFIG.checkoutUrl],
     ['Adresse e-mail et téléphone pros (ex. contact@k-reau.fr) pour les mentions légales et les CGV', false],
-    ['Comptes réseaux sociaux réels pour le pied de page', false],
+    ['Comptes réseaux sociaux réels pour le pied de page', true],
     ['Nom de domaine et hébergement définitif', false],
     ['Passage de CONFIG.STORE_MODE à « live »', LIVE]
   ];
