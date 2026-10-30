@@ -17,7 +17,7 @@ const serveur = http.createServer((req, res) => {
     res.writeHead(200, { 'Content-Type': types[path.extname(fichier)] || 'application/octet-stream' });
     return fs.createReadStream(fichier).pipe(res);
   }
-  if (p.startsWith('/api/')) { res.writeHead(404); return res.end(); }
+  if (p.startsWith('/api/') || p.startsWith('/_vercel/')) { res.writeHead(404); return res.end(); }
   res.writeHead(200, { 'Content-Type': 'text/html' }); fs.createReadStream(path.join(RACINE, 'app.html')).pipe(res);
 });
 
