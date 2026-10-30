@@ -1103,14 +1103,66 @@ function pageLegale(titre, metaT, corps){
 const L = CONFIG.legal, V = CONFIG.vente;
 const PAGES = {
   'mentions-legales': () => pageLegale('Mentions légales','Mentions légales | K-Reau', `
-    <h2>Éditeur du site</h2>
-    <ul><li>Marque : K-Reau</li><li>Éditeur : ${esc(L.raisonSociale)}</li>
-    <li>Forme juridique : ${esc(L.formeJuridique)}</li><li>Immatriculation : ${esc(L.siret)}</li>
-    <li>TVA : ${esc(L.tva)}</li>
-    <li>Adresse : ${esc(L.adresse)}</li><li>Contact : par le <a class="lien" href="/contact">formulaire de contact</a> ou à l’adresse contact@k-reau.fr</li>
-    <li>Directeur de la publication : ${esc(L.directeurPublication)}</li></ul>
-    <h2>Hébergement</h2><p>${esc(L.hebergeur)}</p>
-    <h2>Propriété intellectuelle</h2><p>Le nom K-Reau, le logo, les dessins et l’ensemble des contenus de ce site sont protégés. Toute reproduction sans autorisation est interdite.</p>`),
+    <p class="small muted">Mise à jour : 30 octobre 2026</p>
+    <p>Conformément aux articles 6-III et 19 de la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l’économie numérique (LCEN), les informations suivantes sont portées à la connaissance des utilisateurs du site <strong>k-reau.fr</strong>.</p>
+
+    <h2>1. Éditeur du site</h2>
+    <ul>
+      <li>Nom commercial / marque : <strong>K-Reau</strong> — « Carreaux d’ici »</li>
+      <li>Éditeur : ${esc(L.raisonSociale)}</li>
+      <li>Statut : ${esc(L.formeJuridique)}</li>
+      <li>Immatriculation : ${esc(L.siret)}, inscrite au Registre national des entreprises (RNE)</li>
+      <li>TVA : ${esc(L.tva)}</li>
+      <li>Adresse : ${esc(L.adresse)}</li>
+      <li>Adresse électronique : contact@k-reau.fr</li>
+      ${L.telephone ? `<li>Téléphone : ${esc(L.telephone)}</li>` : ''}
+      <li>Formulaire : ${F}</li>
+    </ul>
+
+    <h2>2. Directeur de la publication</h2>
+    <p>${esc(L.directeurPublication)}, en sa qualité d’entrepreneur individuel. Contact : contact@k-reau.fr.</p>
+
+    <h2>3. Hébergement</h2>
+    <p>Le site est hébergé par <strong>Vercel Inc.</strong>, 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — téléphone : +1 951 383 6898 — site : vercel.com.</p>
+    <p>Le nom de domaine k-reau.fr est enregistré auprès d’<strong>OVH SAS</strong>, 2 rue Kellermann, 59100 Roubaix, France.</p>
+
+    <h2>4. Prestataires techniques</h2>
+    <ul>
+      <li>Paiement en ligne : <strong>Stripe Payments Europe Limited</strong>, 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Irlande. K-Reau n’a jamais accès aux données de carte bancaire.</li>
+      <li>Envoi des messages des formulaires et notifications de commande : <strong>Resend, Inc.</strong> (États-Unis).</li>
+      <li>Polices de caractères : <strong>Google Fonts</strong>, service de Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande.</li>
+    </ul>
+
+    <h2>5. Activité</h2>
+    <p>Le site k-reau.fr présente et vend en ligne des carreaux décoratifs en céramique illustrés, des coffrets, des créations sur mesure et des cartes cadeaux, à destination des particuliers résidant en France. Les conditions de vente sont détaillées dans les <a class="lien" href="/cgv">conditions générales de vente</a>.</p>
+
+    <h2>6. Propriété intellectuelle</h2>
+    <p>L’ensemble des éléments du site — nom et marque K-Reau, logo, signature « Carreaux d’ici », dessins et illustrations des carreaux, calligraphies, photographies, textes, mise en page et code — est la propriété exclusive de l’éditeur ou utilisé avec autorisation, et est protégé par le Code de la propriété intellectuelle.</p>
+    <p>Toute reproduction, représentation, adaptation, modification ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit et sur quelque support que ce soit, sans l’autorisation écrite préalable de l’éditeur, est interdite et constitue une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+    <p>Pour les créations sur mesure, le client garantit disposer des droits sur les photographies et dessins qu’il transmet (par exemple ses propres photos ou les dessins de ses enfants) et autorise K-Reau à les utiliser uniquement pour réaliser sa commande.</p>
+
+    <h2>7. Photographies et visuels</h2>
+    <p>Les photographies présentent les carreaux de la façon la plus fidèle possible. De légères différences de teinte ou de rendu peuvent exister selon l’écran utilisé et la lumière. Les mises en scène (décors, accessoires) ne sont pas fournies avec les produits.</p>
+
+    <h2>8. Responsabilité</h2>
+    <p>L’éditeur s’efforce de fournir des informations exactes et à jour, mais ne peut garantir l’absence d’erreurs ou d’omissions. Il ne saurait être tenu responsable d’une interruption du site, d’un problème technique ou de dommages résultant d’une intrusion frauduleuse d’un tiers. L’utilisateur reste responsable de l’usage qu’il fait des informations présentes sur le site.</p>
+    <p>Les textes de présentation des lieux sont fournis à titre informatif et peuvent comporter des approximations.</p>
+
+    <h2>9. Liens hypertextes</h2>
+    <p>Le site peut contenir des liens vers des sites tiers (par exemple Instagram). L’éditeur n’exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu. La création d’un lien vers k-reau.fr est autorisée, à condition de ne pas porter atteinte à l’image de K-Reau et de ne pas présenter le site dans un cadre (« frame ») qui en masque l’origine.</p>
+
+    <h2>10. Données personnelles et cookies</h2>
+    <p>Les données recueillies via les formulaires et lors des commandes sont traitées conformément au Règlement général sur la protection des données (RGPD) et à la loi « Informatique et Libertés ». Le détail des traitements, des durées de conservation et de vos droits (accès, rectification, suppression, opposition) figure dans la <a class="lien" href="/confidentialite">politique de confidentialité</a>. Vous pouvez exercer ces droits à contact@k-reau.fr et introduire une réclamation auprès de la CNIL (cnil.fr).</p>
+    <p>Le site ne dépose aucun cookie publicitaire ni de mesure d’audience. Le panier est conservé dans le stockage local de votre navigateur, uniquement pour le fonctionnement de la commande.</p>
+
+    <h2>11. Médiation de la consommation</h2>
+    <p>${L.mediateur ? 'Conformément à l’article L.612-1 du Code de la consommation, le client peut recourir gratuitement au médiateur de la consommation : '+esc(L.mediateur)+'.' : 'Conformément à l’article L.612-1 du Code de la consommation, le client pourra recourir gratuitement à un médiateur de la consommation, en cours de désignation. Ses coordonnées seront indiquées ici et dans les conditions générales de vente.'} Avant toute saisine, le client adresse une réclamation écrite à contact@k-reau.fr.</p>
+
+    <h2>12. Droit applicable</h2>
+    <p>Les présentes mentions légales sont régies par le droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français sont compétents, dans les conditions prévues par le Code de la consommation pour les litiges avec les consommateurs.</p>
+
+    <h2>13. Crédits</h2>
+    <p>Conception, illustrations et contenus : K-Reau. Réalisation du site : K-Reau.</p>`),
   'cgv': () => pageLegale('Conditions générales de vente','CGV | K-Reau', `
     <p class="small muted">Version du 30 octobre 2026</p>
     <h2>1. Vendeur</h2>
@@ -1154,7 +1206,7 @@ const PAGES = {
     <h2>Responsable du traitement</h2><p>${esc(L.raisonSociale)}, ${esc(L.adresse)}.</p>
     <h2>Données collectées</h2><p>Formulaire de contact : nom, adresse e-mail et message. Inscription au lancement : adresse e-mail. Commande : nom, adresses de livraison et de facturation, e-mail, téléphone et contenu de la commande. Les données de carte bancaire sont traitées uniquement par Stripe.</p>
     <h2>Utilisation</h2><p>Ces informations servent à répondre à vos demandes, à vous prévenir de l’ouverture des commandes si vous l’avez demandé, et à traiter et livrer vos commandes. Elles ne sont ni vendues ni cédées.</p>
-    <h2>Prestataires</h2><p>Hébergement : Vercel. Paiement : Stripe. Envoi des messages des formulaires par e-mail : Resend. Certains de ces prestataires sont situés aux États-Unis et encadrent ces transferts par des garanties contractuelles.</p>
+    <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Polices de caractères : Google Fonts (Google Ireland Limited), qui reçoit à cette occasion l’adresse IP du visiteur. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
     <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
     <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
     <h2>Cookies</h2><p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Le panier est conservé dans votre navigateur (stockage local) uniquement pour le fonctionnement de la commande. Si des outils de mesure sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser.</p>`),
