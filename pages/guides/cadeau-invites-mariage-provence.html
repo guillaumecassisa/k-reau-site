@@ -385,7 +385,10 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .guide-carte{display:grid;gap:14px;align-content:start}
 .guide-visuel{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sable-clair)}.guide-visuel img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.guide-carte:hover .guide-visuel img{transform:scale(1.03)}
 .guide-txt{display:grid;gap:8px}.guide-txt h2,.guide-txt h3{font-size:1.3rem;margin:0;line-height:1.3}.guide-txt h2 a,.guide-txt h3 a{color:inherit;text-decoration:none}.guide-txt p{margin:0;color:var(--encre-doux);font-size:.95rem}.guide-txt .lien{justify-self:start}
-.guide-corps{max-width:72ch}.guide-corps h2{margin-top:12px}
+.guide-corps{max-width:72ch}
+.sommaire{background:var(--blanc);border:1px solid var(--joint);padding:18px 22px;display:grid;gap:8px}.sommaire ol{margin:0;padding-left:1.2em;display:grid;gap:4px;font-size:.95rem}.sommaire a{color:var(--encre);text-decoration:none;border-bottom:1px solid var(--joint)}.sommaire a:hover{border-color:var(--olivier)}
+.guide-faq{border-top:1px solid var(--joint);padding-top:20px;display:grid;gap:6px}.guide-faq h3{font-size:1.1rem;margin:14px 0 0}.guide-faq p{margin:0}
+.guide-corps h2{scroll-margin-top:90px}.guide-corps h2{margin-top:12px}
 .tete-visuel.tete-guide{grid-template-columns:minmax(0,1fr) minmax(220px,360px)}
 @media(max-width:860px){.tete-visuel.tete-guide{grid-template-columns:1fr}}
 .projet-lien{text-align:center;margin-top:32px;color:var(--encre-doux)}
@@ -419,7 +422,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 @media(max-width:860px){.pied{grid-template-columns:1fr 1fr}.pied>div:first-child{grid-column:1/-1}}
 @media(max-width:420px){.pied{grid-template-columns:1fr}}
 </style>
-<script type="application/ld+json" id="ld-page">[{"@context":"https://schema.org","@type":"Article","headline":"Cadeau d’invités pour un mariage en Provence : des idées originales","description":"Le lieu de la cérémonie dessiné sur un carreau, des souvenirs provençaux, un plan de table illustré : nos idées de cadeaux d’invités originaux pour un mariage en Provence.","image":"https://k-reau.fr/img/09_Produits_Montagnes/montagnes-sainte-baume.webp","datePublished":"2026-10-31","dateModified":"2026-10-31","inLanguage":"fr-FR","author":{"@type":"Organization","name":"K-Reau","url":"https://k-reau.fr/"},"publisher":{"@type":"Organization","name":"K-Reau","logo":{"@type":"ImageObject","url":"https://k-reau.fr/img/01_Identite/logo-kreau.webp"}},"mainEntityOfPage":"https://k-reau.fr/guides/cadeau-invites-mariage-provence"},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://k-reau.fr/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://k-reau.fr/guides"},{"@type":"ListItem","position":3,"name":"Cadeau d’invités pour un mariage en Provence : des idées originales","item":"https://k-reau.fr/guides/cadeau-invites-mariage-provence"}]}]</script></head>
+<script type="application/ld+json" id="ld-page">[{"@context":"https://schema.org","@type":"Article","headline":"Cadeau d’invités pour un mariage en Provence : des idées originales","description":"Le lieu de la cérémonie dessiné sur un carreau, des souvenirs provençaux, un plan de table illustré : nos idées de cadeaux d’invités originaux pour un mariage en Provence.","keywords":"cadeau invités mariage","image":"https://k-reau.fr/img/09_Produits_Montagnes/montagnes-sainte-baume.webp","datePublished":"2026-10-31","dateModified":"2026-10-31","inLanguage":"fr-FR","author":{"@type":"Organization","name":"K-Reau","url":"https://k-reau.fr/"},"publisher":{"@type":"Organization","name":"K-Reau","logo":{"@type":"ImageObject","url":"https://k-reau.fr/img/01_Identite/logo-kreau.webp"}},"mainEntityOfPage":"https://k-reau.fr/guides/cadeau-invites-mariage-provence"},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Quel cadeau original offrir aux invités d’un mariage ?","acceptedAnswer":{"@type":"Answer","text":"Un souvenir du lieu de la cérémonie, dessiné sur un carreau avec vos prénoms et la date, ou des spécialités provençales présentées dans un sachet personnalisé."}},{"@type":"Question","name":"Quel budget par invité pour un cadeau de mariage ?","acceptedAnswer":{"@type":"Answer","text":"Il varie généralement de quelques euros à une dizaine d’euros par invité. Pour un projet personnalisé en quantité, demandez un devis adapté via la page projet spécifique."}},{"@type":"Question","name":"Combien de temps à l’avance commander les cadeaux d’invités ?","acceptedAnswer":{"@type":"Answer","text":"Idéalement deux à trois mois avant le mariage, pour valider le dessin, produire les quantités et préparer la présentation."}},{"@type":"Question","name":"Que faire comme plan de table original ?","acceptedAnswer":{"@type":"Answer","text":"Nommez vos tables d’après des lieux qui comptent pour vous, avec un carreau illustré sur un chevalet au centre de chaque table."}}]},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://k-reau.fr/"},{"@type":"ListItem","position":2,"name":"Guides","item":"https://k-reau.fr/guides"},{"@type":"ListItem","position":3,"name":"Cadeau d’invités pour un mariage en Provence : des idées originales","item":"https://k-reau.fr/guides/cadeau-invites-mariage-provence"}]}]</script></head>
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
@@ -477,27 +480,31 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 <main id="app" tabindex="-1" data-prerendu="1">
   <div class="page-tete"><div class="wrap"><nav class="ariane" aria-label="Fil d’Ariane"><ol><li><a href="/">Accueil</a></li><li><a href="/guides">Guides</a></li><li aria-current="page">Cadeau d’invités pour un mariage en Provence : des idées originales</li></ol></nav>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil"},{"@type":"ListItem","position":2,"name":"Guides"},{"@type":"ListItem","position":3,"name":"Cadeau d’invités pour un mariage en Provence : des idées originales"}]}</script>
-    <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · 31 octobre 2026</span><h1>Cadeau d’invités pour un mariage en Provence : des idées originales</h1><p class="lead">Bastide au milieu des vignes, mas dans les Alpilles, domaine face à la Sainte-Victoire ou plage de la Côte Bleue : la Provence est une destination de mariage rêvée. Pour remercier vos invités, voici des idées de cadeaux qui prolongent la magie du lieu.</p></div>
-    <figure class="tete-img"><img src="/img/09_Produits_Montagnes/montagnes-sainte-baume.webp" width="1254" height="1254" alt="Cadeau d’invités pour un mariage en Provence : des idées originales" fetchpriority="high"></figure></div></div></div>
+    <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · 31 octobre 2026</span><h1>Cadeau d’invités pour un mariage en Provence : des idées originales</h1><p class="lead">Bastide au milieu des vignes, mas dans les Alpilles, domaine face à la Sainte-Victoire ou plage de la Côte Bleue : la Provence est une destination de mariage rêvée. Voici nos idées de cadeau d’invités de mariage qui prolongent la magie du lieu.</p></div>
+    <figure class="tete-img"><img src="/img/09_Produits_Montagnes/montagnes-sainte-baume.webp" width="1254" height="1254" alt="Cadeau invités mariage : carreau décoratif K-Reau en céramique illustré" fetchpriority="high"></figure></div></div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">
-<h2>Pourquoi soigner le cadeau d’invités ?</h2>
+    <nav class="sommaire" aria-label="Sommaire"><strong>Sommaire</strong><ol><li><a href="#partie-1">Pourquoi soigner le cadeau d’invités ?</a></li><li><a href="#partie-2">Le lieu de la cérémonie dessiné</a></li><li><a href="#partie-3">Un plan de table illustré</a></li><li><a href="#partie-4">Des souvenirs gourmands provençaux</a></li><li><a href="#partie-5">Des senteurs de Provence</a></li><li><a href="#partie-6">Les témoins et les proches</a></li><li><a href="#partie-7">Un cadeau pour les enfants d’honneur</a></li><li><a href="#partie-8">Bien anticiper</a></li><li><a href="#partie-9">Un souvenir qui dure</a></li><li><a href="#faq-guide">Questions fréquentes</a></li></ol></nav>
+    
+<h2 id="partie-1">Pourquoi soigner le cadeau d’invités ?</h2>
 <p>Le cadeau d’invités, ou « dragées » dans sa version traditionnelle, est le petit mot de remerciement que chaque convive emporte chez lui. Trop souvent, il finit au fond d’un tiroir. Un cadeau lié au lieu du mariage, en revanche, se garde et rappelle cette journée à chaque fois qu’on le regarde.</p>
-<h2>Le lieu de la cérémonie dessiné</h2>
+<h2 id="partie-2">Le lieu de la cérémonie dessiné</h2>
 <p>L’idée la plus marquante : faire dessiner le domaine, la chapelle ou la bastide où se déroule le mariage, et offrir à chaque invité un carreau avec le nom du lieu, ou vos prénoms et la date, en calligraphie. Chaque convive repart avec un véritable souvenir de votre journée. Pour ce type de projet, passez par notre page <a class="lien" href="/projet-specifique">projet spécifique</a> : nous vous proposons un dessin et un tarif adaptés aux quantités.</p>
-<h2>Un plan de table illustré</h2>
+<h2 id="partie-3">Un plan de table illustré</h2>
 <p>Plutôt que des numéros, nommez vos tables d’après des lieux qui comptent pour vous : <a class="lien" href="/produits/montagnes-sainte-victoire">Sainte-Victoire</a>, <a class="lien" href="/produits/marseille-calanque-sormiou">Sormiou</a>, <a class="lien" href="/produits/cote-bleue-port-niolon">Niolon</a>, <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>… Un carreau posé sur un chevalet au centre de chaque table indique le nom et sert de décoration. En fin de soirée, il devient le cadeau d’un invité de la table.</p>
-<h2>Des souvenirs gourmands provençaux</h2>
+<h2 id="partie-4">Des souvenirs gourmands provençaux</h2>
 <p>Les calissons d’Aix, les navettes, le nougat, une petite bouteille d’huile d’olive ou un pot de miel de lavande font des cadeaux d’invités appréciés et fidèles à la région. Présentez-les dans un sachet en lin ou une boîte kraft, avec une étiquette à vos prénoms.</p>
-<h2>Des senteurs de Provence</h2>
+<h2 id="partie-5">Des senteurs de Provence</h2>
 <p>Sachets de lavande, petits savons de Marseille, bougies parfumées à la figue ou au romarin : les senteurs prolongent l’ambiance du mariage. Elles se marient très bien avec une décoration champêtre.</p>
-<h2>Les témoins et les proches</h2>
+<h2 id="partie-6">Les témoins et les proches</h2>
 <p>Pour vos témoins, vos parents ou ceux qui vous ont aidés à organiser le mariage, prévoyez un cadeau plus personnel : un <a class="lien" href="/coffrets">coffret de 3 carreaux</a> réunissant le lieu de votre rencontre, celui de la demande et celui du mariage, par exemple. Un message imprimé sur la carte du coffret ajoute une touche d’émotion.</p>
-<h2>Un cadeau pour les enfants d’honneur</h2>
+<h2 id="partie-7">Un cadeau pour les enfants d’honneur</h2>
 <p>Les plus jeunes invités méritent aussi leur souvenir. Un carreau d’un lieu qu’ils connaissent, comme la plage des vacances ou la montagne qu’ils voient depuis chez leurs grands-parents, posé sur un petit chevalet en bois, trouvera facilement sa place dans une chambre d’enfant. C’est un premier objet de décoration qu’ils garderont longtemps.</p>
-<h2>Bien anticiper</h2>
+<h2 id="partie-8">Bien anticiper</h2>
 <p>Pour un cadeau d’invités personnalisé, prévoyez large : idéalement deux à trois mois avant la date. Ce délai laisse le temps de valider le dessin, de produire les quantités nécessaires et de préparer la présentation. Pensez aussi à prévoir quelques exemplaires de plus pour les invités de dernière minute.</p>
-<h2>Un souvenir qui dure</h2>
-<p>Des années plus tard, vos invités retrouveront ce carreau sur leur étagère et repenseront à votre journée sous le soleil de Provence. C’est toute la différence entre un objet que l’on reçoit et un souvenir que l’on garde. Pour vous inspirer, découvrez nos <a class="lien" href="/collections/montagnes-du-sud">montagnes de Provence</a> et notre <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>.</p></article></div></section>
+<h2 id="partie-9">Un souvenir qui dure</h2>
+<p>Des années plus tard, vos invités retrouveront ce carreau sur leur étagère et repenseront à votre journée sous le soleil de Provence. C’est toute la différence entre un objet que l’on reçoit et un souvenir que l’on garde. Pour vous inspirer, découvrez nos <a class="lien" href="/collections/montagnes-du-sud">montagnes de Provence</a> et notre <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>.</p>
+    <section class="guide-faq" id="faq-guide"><h2>Questions fréquentes : cadeau invités mariage</h2><h3>Quel cadeau original offrir aux invités d’un mariage ?</h3><p>Un souvenir du lieu de la cérémonie, dessiné sur un carreau avec vos prénoms et la date, ou des spécialités provençales présentées dans un sachet personnalisé.</p><h3>Quel budget par invité pour un cadeau de mariage ?</h3><p>Il varie généralement de quelques euros à une dizaine d’euros par invité. Pour un projet personnalisé en quantité, demandez un devis adapté via la page projet spécifique.</p><h3>Combien de temps à l’avance commander les cadeaux d’invités ?</h3><p>Idéalement deux à trois mois avant le mariage, pour valider le dessin, produire les quantités et préparer la présentation.</p><h3>Que faire comme plan de table original ?</h3><p>Nommez vos tables d’après des lieux qui comptent pour vous, avec un carreau illustré sur un chevalet au centre de chaque table.</p></section>
+  </article></div></section>
   <section class="bloc fond-blanc joint-haut"><div class="wrap">
     <div class="bloc-titre"><span class="eyebrow">À offrir ou à garder</span><h2>Les carreaux de ce guide</h2></div>
     <div class="grille"><article class="carte">
@@ -1223,11 +1230,11 @@ const GUIDES = [
 {
   slug: 'que-ramener-de-marseille',
   titre: 'Que ramener de Marseille ? 10 idées de souvenirs authentiques',
-  metaT: 'Que ramener de Marseille ? 10 souvenirs authentiques | K-Reau',
+  metaT: "Que ramener de Marseille ? 10 souvenirs authentiques à offrir | K-Reau",
   metaD: 'Savon de Marseille, navettes, santons, pastis, carreau illustré du Vieux-Port… Notre sélection de souvenirs authentiques à ramener de Marseille, loin des objets touristiques.',
   date: '2026-10-31',
   image: '/img/03_Produits_Marseille/marseille-vieux-port.webp',
-  intro: 'Le Vieux-Port, la Bonne Mère, les calanques… Marseille laisse des souvenirs forts. Encore faut-il trouver le bon objet pour les garder, ou pour les offrir. Voici dix idées qui ont vraiment le goût de la ville, loin des magnets fabriqués à l’autre bout du monde.',
+  intro: 'Le Vieux-Port, la Bonne Mère, les calanques… Marseille laisse des souvenirs forts. Encore faut-il trouver le bon objet pour les garder, ou pour les offrir. Vous vous demandez que ramener de Marseille ? Voici dix idées qui ont vraiment le goût de la ville, loin des magnets fabriqués à l’autre bout du monde.',
   corps: () => `
 <h2>1. Le savon de Marseille</h2>
 <p>Incontournable, à condition de choisir le vrai : un cube cuit au chaudron, à base d’huiles végétales, comme le fabriquent encore quelques savonneries historiques de la région. Utile, durable et typiquement marseillais.</p>
@@ -1253,16 +1260,18 @@ const GUIDES = [
 <p>Pour les produits du terroir, privilégiez les épiceries fines du centre-ville, le marché des Capucins près de Noailles ou les boutiques du Panier, où l’on trouve savons, santons et créations d’artisans locaux. Évitez les échoppes qui vendent les mêmes objets que partout ailleurs : un vrai souvenir de Marseille se reconnaît à son lien avec la ville. Et pour les carreaux K-Reau, tout se commande en ligne, avec une livraison partout en France.</p>
 <h2>Bien choisir son souvenir de Marseille</h2>
 <p>Le meilleur souvenir est celui qui rappelle un lieu précis : le quartier où l’on a vécu, le port où l’on a mangé, la calanque où l’on s’est baigné. C’est tout l’esprit de K-Reau : des <strong>carreaux d’ici</strong>, pour garder chez soi les lieux qu’on aime.</p>`,
-  produits: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-le-panier','marseille-calanque-sormiou','marseille-velodrome','marseille-panisse','marseille-mucem','marseille-vallon-des-auffes']
+  produits: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-le-panier','marseille-calanque-sormiou','marseille-velodrome','marseille-panisse','marseille-mucem','marseille-vallon-des-auffes'],
+  motCle: "que ramener de Marseille",
+  faq: [["Quel est le souvenir le plus typique de Marseille ?", "Le savon de Marseille, les navettes et les santons sont les souvenirs les plus emblématiques. Pour un objet de décoration durable, un carreau illustré d’un lieu précis, comme le Vieux-Port ou Notre-Dame de la Garde, garde le souvenir de la ville pendant des années."], ["Quel cadeau marseillais offrir à quelqu’un qui n’a jamais vu Marseille ?", "Choisissez un symbole facile à reconnaître : la Bonne Mère, le Vieux-Port ou les calanques. Un carreau en céramique dessiné au trait, accompagné de quelques navettes, fait découvrir la ville avec élégance."], ["Où acheter des souvenirs de Marseille authentiques ?", "Dans les boutiques d’artisans du Panier, les épiceries fines du centre-ville et les savonneries historiques. Les carreaux K-Reau se commandent en ligne sur k-reau.fr, avec une livraison partout en France."], ["Combien coûte un souvenir de Marseille original ?", "Comptez quelques euros pour des navettes ou un savon, et 19,90 € pour un carreau décoratif K-Reau en céramique de 15 × 15 cm, livré dans son coffret kraft."]]
 },
 {
   slug: 'idees-cadeaux-provence',
   titre: 'Idées cadeaux Provence : 8 cadeaux qui sentent le Sud',
-  metaT: 'Idées cadeaux Provence : 8 cadeaux qui sentent le Sud | K-Reau',
+  metaT: "Idée cadeau Provence : 8 cadeaux provençaux originaux | K-Reau",
   metaD: 'Lavande, huile d’olive, calissons, carreau illustré de la Sainte-Victoire ou du Ventoux… Nos idées de cadeaux provençaux originaux pour un anniversaire, Noël ou une crémaillère.',
   date: '2026-10-31',
   image: '/img/09_Produits_Montagnes/montagnes-sainte-victoire.webp',
-  intro: 'Offrir la Provence, c’est offrir un peu de soleil, de lumière et d’art de vivre. Que ce soit pour un Provençal exilé, un amoureux du Luberon ou un ami de passage, voici huit idées de cadeaux qui sentent vraiment le Sud.',
+  intro: 'Offrir la Provence, c’est offrir un peu de soleil, de lumière et d’art de vivre. Que ce soit pour un Provençal exilé, un amoureux du Luberon ou un ami de passage, voici huit idées cadeaux Provence qui sentent vraiment le Sud.',
   corps: () => `
 <h2>1. Un carreau de la montagne qu’on voit depuis chez soi</h2>
 <p>En Provence, chacun a sa montagne : la ${PL('montagnes-sainte-victoire','Sainte-Victoire')} pour les Aixois, le ${PL('montagnes-garlaban','Garlaban')} pour les amoureux de Pagnol, le ${PL('montagnes-mont-ventoux','Mont Ventoux')} pour les cyclistes, la ${PL('montagnes-sainte-baume','Sainte-Baume')} pour les randonneurs. Notre ${CL('montagnes-du-sud','collection Montagnes du Sud')} les dessine au trait sur des carreaux en céramique, à 19,90 €.</p>
@@ -1286,16 +1295,18 @@ const GUIDES = [
 <p>Les marchés de Provence, de L’Isle-sur-la-Sorgue à Aix-en-Provence, sont une mine d’idées : savons, tissus imprimés, poteries, épices, miel de lavande, olives. Composez un panier avec trois ou quatre produits choisis avec soin et ajoutez-y un objet qui dure, comme un carreau illustré : le gourmand se consomme, le souvenir reste.</p>
 <h2>Un cadeau provençal pour chaque occasion</h2>
 <p>Pour un anniversaire, une crémaillère, un départ à la retraite ou Noël, misez sur un objet qui raconte un lieu. Et si vous hésitez, la ${`<a class="lien" href="/carte-cadeau">carte cadeau K-Reau</a>`} laisse à chacun le choix de son coin de Provence.</p>`,
-  produits: ['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux','montagnes-sainte-baume','les-embiez','cote-bleue-carry-le-rouet','marseille-notre-dame-de-la-garde','montagnes-rocher-de-roquebrune']
+  produits: ['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux','montagnes-sainte-baume','les-embiez','cote-bleue-carry-le-rouet','marseille-notre-dame-de-la-garde','montagnes-rocher-de-roquebrune'],
+  motCle: "idée cadeau Provence",
+  faq: [["Quel cadeau typique de Provence offrir ?", "Les classiques sont la lavande, l’huile d’olive, les calissons d’Aix, le savon de Marseille et les santons. Pour un cadeau plus personnel, un carreau illustré de la Sainte-Victoire, du Ventoux ou d’un village provençal rappelle un lieu précis."], ["Quel cadeau offrir à un Provençal qui vit loin de chez lui ?", "Un objet qui représente son paysage d’origine : sa montagne, sa plage ou son village. Un carreau dessiné au trait se pose sur une étagère et rappelle chaque jour la Provence."], ["Quel cadeau provençal pour moins de 20 euros ?", "Un sachet de lavande, un savon de Marseille, une boîte de calissons ou un carreau décoratif K-Reau à 19,90 € sont d’excellentes idées à petit prix."], ["Peut-on offrir un cadeau provençal personnalisé ?", "Oui : le carreau sur mesure K-Reau permet de faire dessiner un mas, une bastide ou un village de Provence, avec le nom de votre choix écrit en calligraphie."]]
 },
 {
   slug: 'cote-bleue-ports-et-calanques',
   titre: 'La Côte Bleue : ses plus beaux ports et calanques, de L’Estaque à Carro',
-  metaT: 'Côte Bleue : les plus beaux ports et calanques de L’Estaque à Carro | K-Reau',
+  metaT: "Côte Bleue : plus beaux ports et calanques, de L’Estaque à Carro | K-Reau",
   metaD: 'Niolon, Méjean, La Redonne, Carry-le-Rouet, Sausset-les-Pins, Carro… Découvrez les plus beaux ports et calanques de la Côte Bleue, entre Marseille et Martigues.',
   date: '2026-10-31',
   image: '/img/04_Produits_Cote_Bleue/cote-bleue-port-niolon.webp',
-  intro: 'Entre Marseille et Martigues, la Côte Bleue déroule une vingtaine de kilomètres de criques, de petits ports et de falaises plongeant dans une eau turquoise. Moins connue que les calanques de Cassis, elle garde un charme intact. Voici ses plus beaux coins, d’est en ouest.',
+  intro: 'Entre Marseille et Martigues, la Côte Bleue déroule une vingtaine de kilomètres de criques, de petits ports et de falaises plongeant dans une eau turquoise. Moins connue que les calanques de Cassis, elle garde un charme intact. Voici les plus beaux ports et calanques de la Côte Bleue, d’est en ouest.',
   corps: () => `
 <h2>L’Estaque, la porte de la Côte Bleue</h2>
 <p>Ancien village de pêcheurs aux portes de Marseille, ${PL('cote-bleue-estaque','L’Estaque')} a inspiré Cézanne, Braque et Dufy. On y vient pour son port, ses panisses et ses chichis frégis, et pour la vue sur la rade.</p>
@@ -1317,16 +1328,18 @@ const GUIDES = [
 <p>En été, venez tôt le matin : les parkings des calanques se remplissent vite, et le train est souvent la meilleure option. Emportez des chaussures adaptées aux rochers, de l’eau et un masque pour observer les poissons. Au printemps et à l’automne, la côte est plus calme et idéale pour randonner sur le sentier du littoral, entre pinèdes et criques.</p>
 <h2>Garder la Côte Bleue chez soi</h2>
 <p>Chacun a son port ou sa crique préférée sur la Côte Bleue. Notre ${CL('cote-bleue','collection Côte Bleue')} les dessine un par un, au trait, sur des carreaux en céramique de 15 × 15 cm : un souvenir de vacances ou un cadeau pour ceux qui y ont grandi.</p>`,
-  produits: ['cote-bleue-port-niolon','cote-bleue-calanque-mejean','cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','cote-bleue-port-carro','cote-bleue-estaque','cote-bleue-cap-couronne','cote-bleue-port-la-redonne']
+  produits: ['cote-bleue-port-niolon','cote-bleue-calanque-mejean','cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','cote-bleue-port-carro','cote-bleue-estaque','cote-bleue-cap-couronne','cote-bleue-port-la-redonne'],
+  motCle: "Côte Bleue calanques",
+  faq: [["Où se trouve la Côte Bleue ?", "La Côte Bleue s’étend à l’ouest de Marseille, de L’Estaque jusqu’à Carro, sur les communes du Rove, d’Ensuès-la-Redonne, de Carry-le-Rouet, de Sausset-les-Pins et de Martigues, dans les Bouches-du-Rhône."], ["Quelle est la plus belle calanque de la Côte Bleue ?", "La calanque de Méjean et le port de Niolon sont parmi les plus réputées, pour leurs cabanons, leurs barques et leur eau limpide. La Redonne et Carro ont aussi beaucoup de charme."], ["Comment aller dans les calanques de la Côte Bleue sans voiture ?", "Le train de la Côte Bleue, au départ de Marseille, dessert Niolon, Ensuès-la-Redonne, Carry-le-Rouet et Sausset-les-Pins. C’est souvent la solution la plus simple en été."], ["Peut-on se baigner sur la Côte Bleue ?", "Oui, de nombreuses criques et plages permettent la baignade, comme Sainte-Croix, Carry-le-Rouet ou Sausset-les-Pins. Les fonds protégés par le Parc marin sont aussi parfaits pour la randonnée palmée."]]
 },
 {
   slug: 'idee-cadeau-cremaillere-originale',
   titre: 'Idée cadeau crémaillère originale : offrir un lieu qui compte',
-  metaT: 'Idée cadeau crémaillère originale et personnalisée | K-Reau',
+  metaT: "Idée cadeau crémaillère originale et personnalisée | K-Reau",
   metaD: 'Un cadeau de crémaillère qui a du sens : le quartier, la ville ou la maison des nouveaux propriétaires dessiné sur un carreau en céramique. Idées et conseils pour bien choisir.',
   date: '2026-10-31',
   image: '/img/sur-mesure/photo-vers-carreau.webp',
-  intro: 'Une plante, une bouteille, des bougies… Les cadeaux de crémaillère se ressemblent souvent. Pour marquer le coup, offrez quelque chose qui parle du nouveau lieu de vie de vos amis : leur quartier, leur ville, ou même leur maison.',
+  intro: 'Une plante, une bouteille, des bougies… Les cadeaux de crémaillère se ressemblent souvent. Pour une idée cadeau crémaillère originale, offrez quelque chose qui parle du nouveau lieu de vie de vos amis : leur quartier, leur ville, ou même leur maison.',
   corps: () => `
 <h2>Pourquoi offrir un lieu pour une crémaillère ?</h2>
 <p>Emménager, c’est commencer une nouvelle histoire avec un endroit. Un cadeau qui représente ce lieu devient vite un objet auquel on tient : on le pose dans l’entrée, sur une étagère du salon, et il rappelle chaque jour le début de cette aventure.</p>
@@ -1346,16 +1359,18 @@ const GUIDES = [
 <p>Vous ne pouvez pas être présent à la crémaillère ? Indiquez simplement la nouvelle adresse de vos amis lors du paiement et ajoutez un message cadeau. Le carreau arrive dans son coffret kraft, prêt à être ouvert, avec votre mot imprimé sur la carte.</p>
 <h2>Nos conseils pour réussir le cadeau</h2>
 <p><strong>Pensez au lieu qui compte pour eux</strong>, pas seulement à leur nouvelle adresse : le village d’enfance, le lieu de leur rencontre, la plage de leurs vacances. <strong>Ajoutez un mot</strong> : notre message cadeau est imprimé sur la carte glissée dans le coffret. <strong>Et si vous hésitez</strong>, la ${`<a class="lien" href="/carte-cadeau">carte cadeau</a>`} leur laisse le choix.</p>`,
-  produits: ['marseille-le-panier','marseille-canebiere','marseille-cite-radieuse','cote-bleue-sausset-les-pins','montagnes-sainte-victoire','marseille-corniche-kennedy','les-embiez','chateaux-chenonceau']
+  produits: ['marseille-le-panier','marseille-canebiere','marseille-cite-radieuse','cote-bleue-sausset-les-pins','montagnes-sainte-victoire','marseille-corniche-kennedy','les-embiez','chateaux-chenonceau'],
+  motCle: "idée cadeau crémaillère originale",
+  faq: [["Quel cadeau original offrir pour une crémaillère ?", "Un objet qui parle du nouveau lieu de vie : le quartier, la ville ou la maison des nouveaux propriétaires, dessiné sur un carreau en céramique. C’est un cadeau de décoration qu’ils garderont longtemps."], ["Quel budget prévoir pour un cadeau de crémaillère ?", "Entre 20 et 50 € en général. Un carreau K-Reau coûte 19,90 €, un coffret de trois carreaux 54,90 € avec la livraison offerte, idéal pour un cadeau commun."], ["Comment personnaliser un cadeau de crémaillère ?", "Faites dessiner la façade de leur maison avec le carreau sur mesure, et ajoutez un message cadeau imprimé sur la carte glissée dans le coffret."], ["Peut-on faire livrer un cadeau de crémaillère directement ?", "Oui, il suffit d’indiquer l’adresse des destinataires au moment du paiement. Le carreau arrive dans son coffret kraft, prêt à être offert."]]
 },
 {
   slug: 'chateaux-de-la-loire-incontournables',
   titre: 'Châteaux de la Loire : les incontournables à visiter (et à garder en souvenir)',
-  metaT: 'Châteaux de la Loire : les incontournables à visiter | K-Reau',
+  metaT: "Châteaux de la Loire à visiter : les incontournables | K-Reau",
   metaD: 'Chambord, Chenonceau, Amboise, Blois, Azay-le-Rideau, Villandry, Ussé, Saumur… Les châteaux de la Loire incontournables et une idée de souvenir pour les amoureux du patrimoine.',
   date: '2026-10-31',
   image: '/img/10_Produits_Chateaux/chateaux-chambord.webp',
-  intro: 'Le Val de Loire, inscrit au patrimoine mondial de l’UNESCO, rassemble certains des plus beaux châteaux de France. Voici les incontournables, pour préparer une visite ou se souvenir d’un voyage.',
+  intro: 'Le Val de Loire, inscrit au patrimoine mondial de l’UNESCO, rassemble certains des plus beaux châteaux de France. Voici les châteaux de la Loire à visiter absolument, pour préparer un séjour ou se souvenir d’un voyage.',
   corps: () => `
 <h2>Chambord, le plus spectaculaire</h2>
 <p>Commandé par François Ier, ${PL('chateaux-chambord','Chambord')} impressionne par ses toits hérissés de cheminées et de lanternons, et par son célèbre escalier à double révolution. Il se dresse au cœur du plus grand parc forestier clos d’Europe.</p>
@@ -1377,16 +1392,18 @@ const GUIDES = [
 <p>À Amboise, ne manquez pas le Clos Lucé, la dernière demeure de Léonard de Vinci, à quelques minutes du château. Autour de Saumur, on visite les caves creusées dans le tuffeau, la pierre blanche qui a servi à bâtir la plupart des châteaux de la région. Et partout, on goûte les vins de Loire, de Vouvray à Chinon.</p>
 <h2>Un souvenir de château à garder chez soi</h2>
 <p>Notre ${CL('chateaux','collection Les Châteaux')} dessine chacun de ces monuments au trait, sur un carreau en céramique de 15 × 15 cm avec son nom en calligraphie. Un cadeau idéal pour les passionnés d’histoire, ou pour se souvenir d’un voyage dans le Val de Loire.</p>`,
-  produits: ['chateaux-chambord','chateaux-chenonceau','chateaux-amboise','chateaux-blois','chateaux-azay-le-rideau','chateaux-villandry','chateaux-usse','chateaux-saumur']
+  produits: ['chateaux-chambord','chateaux-chenonceau','chateaux-amboise','chateaux-blois','chateaux-azay-le-rideau','chateaux-villandry','chateaux-usse','chateaux-saumur'],
+  motCle: "châteaux de la Loire à visiter",
+  faq: [["Quels sont les châteaux de la Loire les plus beaux ?", "Chambord, Chenonceau, Amboise, Blois, Azay-le-Rideau, Villandry, Ussé et Saumur figurent parmi les plus célèbres, chacun avec son architecture et ses jardins."], ["Combien de châteaux de la Loire visiter en une journée ?", "Deux, trois au maximum, pour profiter des intérieurs et des jardins. Alternez un grand château, comme Chambord ou Chenonceau, avec un château plus intime."], ["Quelle est la meilleure période pour visiter les châteaux de la Loire ?", "Le printemps et le début de l’automne offrent une belle lumière, des jardins en fleurs et moins d’affluence qu’en plein été."], ["Quel souvenir ramener des châteaux de la Loire ?", "Une bouteille de vin de Loire, un livre d’histoire ou un carreau décoratif représentant le château visité, dessiné au trait avec son nom en calligraphie."]]
 },
 {
   slug: 'idee-cadeau-noel-original-provence',
   titre: 'Idée cadeau de Noël original : 10 cadeaux provençaux à glisser sous le sapin',
-  metaT: 'Idée cadeau de Noël original et provençal : 10 idées | K-Reau',
+  metaT: "Idée cadeau de Noël original : 10 cadeaux provençaux | K-Reau",
   metaD: 'Santons, treize desserts, carreau illustré de Marseille ou de la Sainte-Victoire, cadeau personnalisé… 10 idées de cadeaux de Noël originaux qui sentent la Provence.',
   date: '2026-10-31',
   image: '/img/02_Accueil_et_Lifestyle/quatre-collections.webp',
-  intro: 'Chaque année, la même question revient : que glisser sous le sapin qui fasse vraiment plaisir ? En Provence, Noël a ses traditions, ses saveurs et ses lieux. Voici dix idées de cadeaux originaux, à la fois provençaux et durables, pour sortir des sentiers battus.',
+  intro: 'Chaque année, la même question revient : que glisser sous le sapin qui fasse vraiment plaisir ? En Provence, Noël a ses traditions, ses saveurs et ses lieux. Voici dix idées de cadeau de Noël original, à la fois provençales et durables, pour sortir des sentiers battus.',
   corps: () => `
 <h2>Noël en Provence, une saison à part</h2>
 <p>En Provence, les fêtes de fin d’année commencent tôt. Dès la Sainte-Barbe, le 4 décembre, on fait germer le blé dans des coupelles pour annoncer une bonne année. Les foires aux santons s’installent dans les villes, les crèches se garnissent et les familles préparent le gros souper du 24 décembre, suivi des treize desserts. Un cadeau provençal s’inscrit naturellement dans cette ambiance : il raconte un lieu, une tradition, une histoire de famille.</p>
@@ -1412,16 +1429,18 @@ const GUIDES = [
 <p>Vous ne savez pas quel lieu choisir ? La ${`<a class="lien" href="/carte-cadeau">carte cadeau K-Reau</a>`}, de 25 à 100 €, laisse à chacun le plaisir de choisir son coin de Provence. Le code est envoyé immédiatement après le paiement : idéal pour un cadeau de dernière minute.</p>
 <h2>Nos conseils pour commander à temps</h2>
 <p>Les carreaux sont expédiés sous 5 à 7 jours. Pour un cadeau sur mesure, comptez quelques jours de plus pour le dessin et sa validation. Commandez de préférence avant la mi-décembre pour recevoir vos cadeaux sereinement avant le réveillon.</p>`,
-  produits: ['marseille-vieux-port','montagnes-sainte-victoire','cote-bleue-carry-le-rouet','marseille-notre-dame-de-la-garde','chateaux-chambord','chateaux-chenonceau','les-embiez','marseille-le-panier']
+  produits: ['marseille-vieux-port','montagnes-sainte-victoire','cote-bleue-carry-le-rouet','marseille-notre-dame-de-la-garde','chateaux-chambord','chateaux-chenonceau','les-embiez','marseille-le-panier'],
+  motCle: "idée cadeau Noël original",
+  faq: [["Quel cadeau de Noël original offrir cette année ?", "Un cadeau lié à un lieu qui compte : la ville natale, la plage des vacances, la maison de famille. Un carreau illustré ou un carreau sur mesure sort des idées habituelles et se garde longtemps."], ["Quelles sont les traditions de Noël en Provence ?", "Le blé de la Sainte-Barbe semé le 4 décembre, la crèche et ses santons, le gros souper du 24 décembre et les treize desserts font partie des traditions provençales."], ["Jusqu’à quand commander un cadeau pour Noël ?", "Pour un carreau du catalogue, commandez de préférence avant la mi-décembre, les envois partant sous 5 à 7 jours. Pour un carreau sur mesure, prévoyez au moins trois semaines."], ["Quel cadeau de Noël de dernière minute offrir ?", "La carte cadeau K-Reau, de 25 à 100 €, est envoyée sous forme de code dès le paiement : idéale quand il est trop tard pour une livraison."]]
 },
 {
   slug: 'marseille-en-un-week-end',
   titre: 'Marseille en un week-end : les lieux incontournables à voir',
-  metaT: 'Marseille en un week-end : les incontournables à voir | K-Reau',
+  metaT: "Marseille en un week-end : que voir en 2 jours ? | K-Reau",
   metaD: 'Vieux-Port, Panier, Mucem, Notre-Dame de la Garde, Corniche, Vallon des Auffes, calanques… Notre itinéraire pour découvrir Marseille en deux jours.',
   date: '2026-10-31',
   image: '/img/03_Produits_Marseille/marseille-notre-dame-de-la-garde.webp',
-  intro: 'Deux jours pour découvrir Marseille, c’est court, mais suffisant pour tomber amoureux de la ville. Voici un itinéraire qui relie ses lieux les plus emblématiques, du Vieux-Port aux calanques, en passant par la Bonne Mère et la Corniche.',
+  intro: 'Deux jours pour découvrir Marseille, c’est court, mais suffisant pour tomber amoureux de la ville. Voici un itinéraire pour visiter Marseille en un week-end, du Vieux-Port aux calanques, en passant par la Bonne Mère et la Corniche.',
   corps: () => `
 <h2>Jour 1, matin : le Vieux-Port et le Panier</h2>
 <p>Tout commence sur ${PL('marseille-vieux-port','le Vieux-Port')}, cœur historique de la ville, fondée il y a plus de 2 600 ans par des marins grecs. Le matin, les pêcheurs vendent leur poisson sur le quai des Belges, à deux pas de l’ombrière miroir qui reflète les passants. Prenez ensuite les escaliers qui grimpent vers ${PL('marseille-le-panier','le Panier')}, le plus vieux quartier de Marseille : ruelles en pente, façades colorées, ateliers d’artisans et la Vieille Charité, ancien hospice devenu lieu culturel.</p>
@@ -1437,16 +1456,18 @@ const GUIDES = [
 <p>Si vous avez un peu plus de temps, ne manquez pas ${PL('marseille-cite-radieuse','la Cité radieuse')} de Le Corbusier, inscrite au patrimoine mondial de l’UNESCO, ${PL('marseille-palais-longchamp','le Palais Longchamp')} et sa cascade monumentale, ou ${PL('marseille-tour-cma-cgm','la tour CMA CGM')} qui domine le port de commerce. Les supporters, eux, feront un détour par ${PL('marseille-velodrome','le Vélodrome')}, le stade de l’OM.</p>
 <h2>Que ramener de votre week-end ?</h2>
 <p>Un week-end à Marseille laisse des images fortes. Pour les garder, notre ${CL('marseille','collection Marseille')} dessine ces lieux au trait sur des carreaux en céramique, avec leur nom en calligraphie. Et pour d’autres idées, lisez notre guide <a class="lien" href="/guides/que-ramener-de-marseille">que ramener de Marseille</a>.</p>`,
-  produits: ['marseille-vieux-port','marseille-le-panier','marseille-mucem','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-corniche-kennedy','marseille-chateau-d-if','marseille-cite-radieuse']
+  produits: ['marseille-vieux-port','marseille-le-panier','marseille-mucem','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-corniche-kennedy','marseille-chateau-d-if','marseille-cite-radieuse'],
+  motCle: "Marseille en un week-end",
+  faq: [["Que voir à Marseille en 2 jours ?", "Le Vieux-Port, le Panier, le Mucem et le Fort Saint-Jean, Notre-Dame de la Garde, la Corniche Kennedy, le Vallon des Auffes, puis les îles du Frioul ou les calanques."], ["Quel est le quartier le plus typique de Marseille ?", "Le Panier, le plus ancien quartier de la ville, avec ses ruelles en pente, ses façades colorées et la Vieille Charité. Le Vallon des Auffes est aussi très typique."], ["Comment aller au Château d’If ?", "Des navettes maritimes partent du Vieux-Port vers le Château d’If et les îles du Frioul. La traversée ne dure que quelques minutes."], ["Où voir le coucher de soleil à Marseille ?", "Depuis le parvis de Notre-Dame de la Garde, la Corniche Kennedy, le Vallon des Auffes ou les jardins du Pharo et du Fort Saint-Jean."]]
 },
 {
   slug: 'calanques-de-marseille-sormiou-morgiou',
   titre: 'Calanques de Marseille : Sormiou, Morgiou et les plus belles criques',
-  metaT: 'Calanques de Marseille : Sormiou, Morgiou et les plus belles criques | K-Reau',
+  metaT: "Calanques de Marseille : Sormiou, Morgiou, Sugiton, En-Vau | K-Reau",
   metaD: 'Sormiou, Morgiou, Sugiton, En-Vau : découvrez les plus belles calanques de Marseille, comment y accéder et comment garder un souvenir du Parc national des Calanques.',
   date: '2026-10-31',
   image: '/img/03_Produits_Marseille/marseille-calanque-sormiou.webp',
-  intro: 'Falaises de calcaire blanc, eau turquoise, pins accrochés à la roche : les calanques sont le trésor naturel de Marseille. Entre la ville et Cassis, elles forment un paysage unique en Europe. Voici les plus belles, et quelques conseils pour les découvrir.',
+  intro: 'Falaises de calcaire blanc, eau turquoise, pins accrochés à la roche : les calanques sont le trésor naturel de Marseille. Entre la ville et Cassis, elles forment un paysage unique en Europe. Voici les plus belles calanques de Marseille, et quelques conseils pour les découvrir.',
   corps: () => `
 <h2>Le Parc national des Calanques</h2>
 <p>Créé en 2012, le Parc national des Calanques s’étend sur terre et en mer, de Marseille à La Ciotat. C’est l’un des rares parcs nationaux au monde situé aux portes d’une grande ville. On y vient pour randonner, se baigner, plonger ou simplement admirer le contraste entre la roche claire et le bleu profond de la Méditerranée. Ce paysage fragile se découvre avec respect : on reste sur les sentiers, on emporte ses déchets et on ne fait jamais de feu.</p>
@@ -1462,16 +1483,18 @@ const GUIDES = [
 <p>Partez de bonne heure en été, pour éviter la chaleur et la foule. Consultez les conditions d’accès aux massifs : en cas de risque d’incendie, certains sentiers sont fermés. Emportez au moins un litre et demi d’eau par personne, de la crème solaire et un sac pour vos déchets. Enfin, pensez au bateau : des promenades en mer partent du Vieux-Port et longent les calanques.</p>
 <h2>Garder un souvenir des calanques</h2>
 <p>Après une journée dans les calanques, on rentre avec des images plein la tête. Nos carreaux de ${PL('marseille-calanque-sormiou','Sormiou')} et de ${PL('marseille-calanque-morgiou','Morgiou')} les dessinent au trait, avec leurs falaises, leurs pins et leurs barques, sur un carreau en céramique de 15 × 15 cm. Et pour prolonger la balade le long de la mer, découvrez aussi notre guide des <a class="lien" href="/guides/cote-bleue-ports-et-calanques">calanques de la Côte Bleue</a>, de l’autre côté de Marseille.</p>`,
-  produits: ['marseille-calanque-sormiou','marseille-calanque-morgiou','montagnes-mont-puget','marseille-iles-du-frioul','marseille-chateau-d-if','cote-bleue-calanque-mejean','cote-bleue-port-niolon','marseille-vallon-des-auffes']
+  produits: ['marseille-calanque-sormiou','marseille-calanque-morgiou','montagnes-mont-puget','marseille-iles-du-frioul','marseille-chateau-d-if','cote-bleue-calanque-mejean','cote-bleue-port-niolon','marseille-vallon-des-auffes'],
+  motCle: "calanques de Marseille",
+  faq: [["Quelle est la plus belle calanque de Marseille ?", "Sormiou, la plus grande, Morgiou et son petit port, Sugiton et En-Vau, côté Cassis, sont les plus réputées. Chacune a son caractère."], ["Peut-on accéder aux calanques en voiture ?", "En saison, les routes de Sormiou et de Morgiou sont réglementées : on stationne en haut et l’on descend à pied. Le reste de l’année, l’accès est plus libre, mais les parkings sont limités."], ["Faut-il réserver pour aller aux calanques ?", "Pour Sugiton, une réservation gratuite peut être demandée en période estivale afin de limiter la fréquentation. Consultez le site du Parc national des Calanques avant de partir."], ["Quand les calanques sont-elles fermées ?", "En été, l’accès aux massifs peut être limité ou interdit selon le risque d’incendie. Vérifiez les conditions du jour avant toute randonnée."]]
 },
 {
   slug: 'montagnes-de-provence-randonnees',
   titre: 'Montagnes de Provence : Sainte-Victoire, Garlaban, Ventoux et autres sommets mythiques',
-  metaT: 'Montagnes de Provence : Sainte-Victoire, Garlaban, Ventoux… | K-Reau',
+  metaT: "Montagnes de Provence : Sainte-Victoire, Garlaban, Ventoux | K-Reau",
   metaD: 'Sainte-Victoire, Garlaban, Sainte-Baume, Mont Ventoux, Mont Faron, Rocher de Roquebrune : les montagnes emblématiques de Provence, leur histoire et leurs randonnées.',
   date: '2026-10-31',
   image: '/img/09_Produits_Montagnes/montagnes-sainte-victoire.webp',
-  intro: 'En Provence, chaque ville a sa montagne, et chaque habitant la regarde un peu comme une vieille amie. Des crêtes calcaires de la Sainte-Victoire au sommet pelé du Ventoux, voici les sommets qui façonnent les paysages et l’identité provençale.',
+  intro: 'En Provence, chaque ville a sa montagne, et chaque habitant la regarde un peu comme une vieille amie. Des crêtes calcaires de la Sainte-Victoire au sommet pelé du Ventoux, voici les montagnes de Provence qui façonnent ses paysages et son identité.',
   corps: () => `
 <h2>La Sainte-Victoire, la montagne de Cézanne</h2>
 <p>À l’est d’Aix-en-Provence, ${PL('montagnes-sainte-victoire','la Sainte-Victoire')} dresse sa longue barre calcaire qui s’embrase au coucher du soleil. Paul Cézanne l’a peinte des dizaines de fois, en faisant l’une des montagnes les plus célèbres de l’histoire de l’art. La randonnée vers la Croix de Provence, plantée sur l’un de ses sommets, est un classique des Aixois, avec une vue immense sur le pays d’Aix.</p>
@@ -1491,16 +1514,18 @@ const GUIDES = [
 <p>Partez tôt le matin, surtout en été, et emportez toujours de l’eau en quantité. Entre juin et septembre, l’accès aux massifs forestiers peut être limité ou interdit selon le risque d’incendie : consultez les conditions du jour avant de partir. Le printemps et l’automne restent les plus belles saisons pour randonner.</p>
 <h2>Garder sa montagne chez soi</h2>
 <p>Notre ${CL('montagnes-du-sud','collection Montagnes du Sud')} dessine ces sommets au trait sur des carreaux en céramique de 15 × 15 cm, avec leur nom en calligraphie. Un cadeau idéal pour les randonneurs, les cyclistes ou ceux qui regardent leur montagne chaque matin par la fenêtre.</p>`,
-  produits: ['montagnes-sainte-victoire','montagnes-garlaban','montagnes-sainte-baume','montagnes-mont-ventoux','montagnes-mont-faron','montagnes-rocher-de-roquebrune','montagnes-mont-puget','montagnes-mont-caume']
+  produits: ['montagnes-sainte-victoire','montagnes-garlaban','montagnes-sainte-baume','montagnes-mont-ventoux','montagnes-mont-faron','montagnes-rocher-de-roquebrune','montagnes-mont-puget','montagnes-mont-caume'],
+  motCle: "montagnes de Provence",
+  faq: [["Quelle est la montagne la plus célèbre de Provence ?", "La Sainte-Victoire, près d’Aix-en-Provence, rendue célèbre par les tableaux de Paul Cézanne. Le Mont Ventoux est le plus haut sommet de Provence."], ["Quelle est la montagne de Marcel Pagnol ?", "Le Garlaban, au-dessus d’Aubagne, où Pagnol passait les étés de son enfance, racontés dans La Gloire de mon père et Le Château de ma mère."], ["Quelle randonnée faire sur la Sainte-Victoire ?", "La montée vers la Croix de Provence est la plus classique, avec une vue panoramique sur le pays d’Aix. Partez tôt et emportez beaucoup d’eau."], ["Quand randonner en Provence ?", "Le printemps et l’automne sont les meilleures saisons. En été, l’accès aux massifs peut être restreint en cas de risque d’incendie."]]
 },
 {
   slug: 'cadeau-pour-marseillais-expatrie',
   titre: 'Quel cadeau offrir à un Marseillais loin de Marseille ?',
-  metaT: 'Cadeau pour un Marseillais expatrié : nos idées | K-Reau',
+  metaT: "Cadeau pour un Marseillais loin de Marseille : nos idées | K-Reau",
   metaD: 'Un Marseillais à Paris, à Lyon ou à l’étranger ? Nos idées de cadeaux pour lui offrir un morceau de Marseille : Vieux-Port, Bonne Mère, OM, panisse, calanques…',
   date: '2026-10-31',
   image: '/img/03_Produits_Marseille/marseille-vieux-port.webp',
-  intro: 'On peut quitter Marseille, mais Marseille ne vous quitte jamais vraiment. Pour un ami, un parent ou un collègue marseillais installé à Paris, à Lyon ou à l’autre bout du monde, voici des idées de cadeaux qui feront revivre l’accent, la lumière et la mer.',
+  intro: 'On peut quitter Marseille, mais Marseille ne vous quitte jamais vraiment. Pour un ami, un parent ou un collègue marseillais installé à Paris, à Lyon ou à l’autre bout du monde, voici nos idées de cadeau pour un Marseillais loin de chez lui, qui feront revivre l’accent, la lumière et la mer.',
   corps: () => `
 <h2>Le mal du pays, version marseillaise</h2>
 <p>Les Marseillais expatriés le disent tous : ce qui leur manque le plus, c’est la lumière, la mer à deux pas, l’apéro sur le port et cette façon si particulière de parler fort et de rire encore plus fort. Le bon cadeau ne remplacera pas un billet de train, mais il peut rappeler chaque jour d’où l’on vient.</p>
@@ -1520,12 +1545,14 @@ const GUIDES = [
 <p>Impossible de choisir un seul lieu ? Le ${`<a class="lien" href="/coffrets">coffret de 3 carreaux</a>`} permet d’associer, par exemple, la Bonne Mère, le Vieux-Port et une calanque. Trois carreaux alignés sur une étagère ou un mur, c’est une petite fenêtre ouverte sur Marseille, où que l’on vive.</p>
 <h2>Un envoi facile, même à distance</h2>
 <p>Nos carreaux sont livrés en France dans un coffret kraft, prêts à offrir. Indiquez simplement l’adresse du destinataire lors du paiement et ajoutez un message cadeau, qui sera imprimé sur la carte glissée dans le coffret. Et pour ceux qui préfèrent choisir eux-mêmes, la ${`<a class="lien" href="/carte-cadeau">carte cadeau</a>`} est envoyée sous forme de code.</p>`,
-  produits: ['marseille-notre-dame-de-la-garde','marseille-vieux-port','marseille-velodrome','marseille-panisse','marseille-le-panier','marseille-vallon-des-auffes','marseille-corniche-kennedy','marseille-calanque-sormiou']
+  produits: ['marseille-notre-dame-de-la-garde','marseille-vieux-port','marseille-velodrome','marseille-panisse','marseille-le-panier','marseille-vallon-des-auffes','marseille-corniche-kennedy','marseille-calanque-sormiou'],
+  motCle: "cadeau Marseillais",
+  faq: [["Quel cadeau offrir à un Marseillais qui a quitté Marseille ?", "Un objet qui rappelle sa ville : la Bonne Mère, le Vieux-Port, son quartier ou le Vélodrome, dessinés sur un carreau en céramique, accompagnés de navettes ou de pastis."], ["Quel cadeau pour un supporter de l’OM ?", "Un maillot ou une écharpe, ou plus déco, un carreau du stade Vélodrome avec ses courbes blanches, à poser dans le salon."], ["Comment envoyer un cadeau à un Marseillais à Paris ou en France ?", "Commandez en ligne et indiquez l’adresse du destinataire au paiement. Le carreau est livré en France dans son coffret kraft, avec votre message imprimé."], ["Quel symbole de Marseille offrir ?", "Notre-Dame de la Garde, surnommée la Bonne Mère, reste le symbole le plus fort pour les Marseillais, suivi du Vieux-Port."]]
 },
 {
   slug: 'deco-bord-de-mer',
   titre: 'Déco bord de mer : 8 idées pour une maison à l’esprit méditerranéen',
-  metaT: 'Déco bord de mer : 8 idées pour un intérieur méditerranéen | K-Reau',
+  metaT: "Déco bord de mer : 8 idées pour un intérieur méditerranéen | K-Reau",
   metaD: 'Matières naturelles, blanc et bleu, céramique, souvenirs de ports et de calanques… Nos idées pour créer une décoration bord de mer élégante, même loin de la côte.',
   date: '2026-10-31',
   image: '/img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins.webp',
@@ -1549,16 +1576,18 @@ const GUIDES = [
 <p>Pour une déco bord de mer à l’accent marseillais, ajoutez ${PL('marseille-vallon-des-auffes','le Vallon des Auffes')}, ${PL('marseille-iles-du-frioul','les îles du Frioul')} ou ${PL('marseille-corniche-kennedy','la Corniche Kennedy')}. Trois lieux, trois souvenirs de mer, qui composent un joli triptyque dans une entrée ou une cuisine.</p>
 <h2>Créer sa propre collection</h2>
 <p>La déco bord de mer se construit au fil des voyages. Commencez par un carreau, puis complétez au gré de vos vacances et de vos coups de cœur. Notre ${CL('cote-bleue','collection Côte Bleue')} et le ${`<a class="lien" href="/coffrets">coffret de 3 carreaux</a>`} sont un bon point de départ. Et si votre plage préférée n’existe pas encore chez nous, nous pouvons la dessiner ${`<a class="lien" href="/sur-mesure">sur mesure</a>`}.</p>`,
-  produits: ['cote-bleue-port-niolon','cote-bleue-calanque-mejean','cote-bleue-sausset-les-pins','cote-bleue-port-carro','les-embiez','marseille-vallon-des-auffes','marseille-iles-du-frioul','cote-bleue-plage-sainte-croix']
+  produits: ['cote-bleue-port-niolon','cote-bleue-calanque-mejean','cote-bleue-sausset-les-pins','cote-bleue-port-carro','les-embiez','marseille-vallon-des-auffes','marseille-iles-du-frioul','cote-bleue-plage-sainte-croix'],
+  motCle: "déco bord de mer",
+  faq: [["Comment faire une déco bord de mer chic ?", "Misez sur une palette claire, des matières naturelles comme le lin, le rotin et la céramique, et quelques touches graphiques en noir et blanc plutôt que des objets marins trop chargés."], ["Quelles couleurs pour une déco méditerranéenne ?", "Le blanc cassé, le sable, le lin et le bleu profond de la Méditerranée, avec des accents de terre cuite ou de vert olive."], ["Comment avoir une déco bord de mer loin de la mer ?", "Ajoutez des souvenirs de ports et de criques, des plantes méditerranéennes et des matières naturelles. Un carreau illustré de votre plage préférée suffit à créer l’ambiance."], ["Quel objet déco offrir à un amoureux de la mer ?", "Un carreau en céramique de son port ou de sa crique préférée, comme Niolon, Méjean, Sausset-les-Pins ou les Embiez."]]
 },
 {
   slug: 'decorer-etagere-mur-de-cadres',
   titre: 'Comment décorer une étagère ou créer un mur de cadres avec des carreaux décoratifs',
-  metaT: 'Décorer une étagère ou un mur de cadres avec des carreaux | K-Reau',
+  metaT: "Décorer une étagère ou un mur de cadres : nos conseils | K-Reau",
   metaD: 'Nos conseils de déco pour composer une étagère harmonieuse ou un mur galerie avec des carreaux décoratifs en céramique : règles de composition, hauteurs, fixations et idées.',
   date: '2026-10-31',
   image: '/img/mises-en-scene/etagere-mise-en-scene.webp',
-  intro: 'Une étagère bien composée ou un mur de cadres réussi peuvent transformer une pièce. Les carreaux décoratifs, par leur format carré et leur matière, se prêtent particulièrement bien à l’exercice. Voici nos conseils pour les mettre en valeur.',
+  intro: 'Une étagère bien composée ou un mur de cadres réussi peuvent transformer une pièce. Les carreaux décoratifs, par leur format carré et leur matière, se prêtent particulièrement bien à l’exercice. Voici nos conseils pour décorer une étagère ou composer un mur de cadres avec des carreaux décoratifs.',
   corps: () => `
 <h2>Pourquoi des carreaux plutôt que des cadres ?</h2>
 <p>Un carreau en céramique a une présence que n’a pas une simple affiche : il est épais, brillant, il accroche la lumière. Son format carré de 15 × 15 cm se combine facilement avec d’autres objets, et il ne nécessite ni cadre ni verre. Il se pose sur un chevalet ou s’accroche au mur, et se déplace au gré de vos envies.</p>
@@ -1576,12 +1605,14 @@ const GUIDES = [
 <p>Pour accrocher un carreau sans l’abîmer, utilisez une fixation adaptée au poids et à la surface : pastilles adhésives double face renforcées, crochets adhésifs pour cadres ou petit support mural. Testez toujours la fixation sur un mur propre et sec, et évitez les pièces très humides.</p>
 <h2>Un mur qui évolue avec vous</h2>
 <p>L’avantage des carreaux, c’est qu’on peut compléter la collection au fil du temps : un nouveau voyage, un nouveau lieu. Commencez avec un ${`<a class="lien" href="/coffrets">coffret de 3 carreaux</a>`}, puis ajoutez des pièces à mesure. Toutes nos ${`<a class="lien" href="/carreaux">collections</a>`} partagent le même style graphique, pour un ensemble toujours harmonieux, de Marseille aux ${CL('chateaux','châteaux de France')}.</p>`,
-  produits: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-mucem','montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux','chateaux-chambord','cote-bleue-port-niolon']
+  produits: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-mucem','montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux','chateaux-chambord','cote-bleue-port-niolon'],
+  motCle: "décorer une étagère",
+  faq: [["Comment bien décorer une étagère ?", "Regroupez les objets par trois ou cinq, variez les hauteurs et la profondeur, choisissez un fil conducteur et laissez de l’espace vide pour que l’ensemble respire."], ["À quelle hauteur accrocher un mur de cadres ?", "Le centre de la composition doit se trouver à hauteur des yeux, environ 1,50 m du sol. Au-dessus d’un meuble, laissez une vingtaine de centimètres."], ["Comment accrocher un carreau décoratif au mur ?", "Avec des pastilles adhésives renforcées, des crochets adhésifs pour cadres ou un petit support mural, sur un mur propre et sec."], ["Comment poser un carreau sur une étagère ?", "Un chevalet trépied en bois permet de l’incliner et de le mettre en valeur, sans fixation ni perçage."]]
 },
 {
   slug: 'cadeau-personnalise-maison-de-famille',
   titre: 'Cadeau personnalisé : faire dessiner sa maison de famille sur un carreau',
-  metaT: 'Cadeau personnalisé : votre maison dessinée sur un carreau | K-Reau',
+  metaT: "Cadeau personnalisé : votre maison dessinée sur un carreau | K-Reau",
   metaD: 'Maison de famille, mas, bastide, maison d’enfance : offrez un cadeau personnalisé unique en faisant dessiner un lieu cher sur un carreau en céramique. Mode d’emploi et conseils photo.',
   date: '2026-10-31',
   image: '/img/sur-mesure/photo-vers-carreau.webp',
@@ -1603,16 +1634,18 @@ const GUIDES = [
 <p>Le dessin vous est envoyé sous cinq jours ouvrés après la commande. Après votre validation, le carreau est imprimé puis expédié sous cinq à sept jours. Pour une date précise, comme Noël ou un anniversaire, pensez à commander au moins trois semaines à l’avance.</p>
 <h2>Plusieurs exemplaires pour toute la famille</h2>
 <p>Vous souhaitez offrir le même carreau à chaque membre de la famille, ou faire dessiner plusieurs lieux ? Parlez-nous de votre projet via notre page ${`<a class="lien" href="/projet-specifique">projet spécifique</a>`} : nous vous proposerons une solution adaptée aux quantités.</p>`,
-  produits: ['marseille-le-panier','cote-bleue-port-carro','montagnes-sainte-victoire','chateaux-usse','marseille-vallon-des-auffes','les-embiez','cote-bleue-plage-sainte-croix','chateaux-villandry']
+  produits: ['marseille-le-panier','cote-bleue-port-carro','montagnes-sainte-victoire','chateaux-usse','marseille-vallon-des-auffes','les-embiez','cote-bleue-plage-sainte-croix','chateaux-villandry'],
+  motCle: "cadeau personnalisé maison",
+  faq: [["Comment faire dessiner sa maison ?", "Commandez un carreau sur mesure sur k-reau.fr, puis envoyez une ou plusieurs photos de la maison. Le dessin vous est soumis par e-mail avant impression."], ["Quelle photo envoyer pour un dessin de maison ?", "Une photo nette, prise de face ou de trois quarts, en plein jour et sans contre-jour, sans voiture devant la façade."], ["Combien de temps pour un carreau personnalisé ?", "Le dessin est envoyé sous cinq jours ouvrés après la commande, puis le carreau est expédié sous cinq à sept jours après votre validation."], ["Quel cadeau personnalisé offrir à ses grands-parents ?", "Leur maison, leur village ou un dessin de leurs petits-enfants reproduit sur un carreau en céramique : un souvenir de famille qui se transmet."]]
 },
 {
   slug: 'cadeau-invites-mariage-provence',
   titre: 'Cadeau d’invités pour un mariage en Provence : des idées originales',
-  metaT: 'Cadeau invités mariage en Provence : idées originales | K-Reau',
+  metaT: "Cadeau invités mariage en Provence : idées originales | K-Reau",
   metaD: 'Le lieu de la cérémonie dessiné sur un carreau, des souvenirs provençaux, un plan de table illustré : nos idées de cadeaux d’invités originaux pour un mariage en Provence.',
   date: '2026-10-31',
   image: '/img/09_Produits_Montagnes/montagnes-sainte-baume.webp',
-  intro: 'Bastide au milieu des vignes, mas dans les Alpilles, domaine face à la Sainte-Victoire ou plage de la Côte Bleue : la Provence est une destination de mariage rêvée. Pour remercier vos invités, voici des idées de cadeaux qui prolongent la magie du lieu.',
+  intro: 'Bastide au milieu des vignes, mas dans les Alpilles, domaine face à la Sainte-Victoire ou plage de la Côte Bleue : la Provence est une destination de mariage rêvée. Voici nos idées de cadeau d’invités de mariage qui prolongent la magie du lieu.',
   corps: () => `
 <h2>Pourquoi soigner le cadeau d’invités ?</h2>
 <p>Le cadeau d’invités, ou « dragées » dans sa version traditionnelle, est le petit mot de remerciement que chaque convive emporte chez lui. Trop souvent, il finit au fond d’un tiroir. Un cadeau lié au lieu du mariage, en revanche, se garde et rappelle cette journée à chaque fois qu’on le regarde.</p>
@@ -1632,16 +1665,18 @@ const GUIDES = [
 <p>Pour un cadeau d’invités personnalisé, prévoyez large : idéalement deux à trois mois avant la date. Ce délai laisse le temps de valider le dessin, de produire les quantités nécessaires et de préparer la présentation. Pensez aussi à prévoir quelques exemplaires de plus pour les invités de dernière minute.</p>
 <h2>Un souvenir qui dure</h2>
 <p>Des années plus tard, vos invités retrouveront ce carreau sur leur étagère et repenseront à votre journée sous le soleil de Provence. C’est toute la différence entre un objet que l’on reçoit et un souvenir que l’on garde. Pour vous inspirer, découvrez nos ${CL('montagnes-du-sud','montagnes de Provence')} et notre ${CL('cote-bleue','collection Côte Bleue')}.</p>`,
-  produits: ['montagnes-sainte-victoire','montagnes-sainte-baume','marseille-calanque-sormiou','cote-bleue-port-niolon','marseille-vieux-port','cote-bleue-calanque-mejean','montagnes-garlaban','chateaux-chenonceau']
+  produits: ['montagnes-sainte-victoire','montagnes-sainte-baume','marseille-calanque-sormiou','cote-bleue-port-niolon','marseille-vieux-port','cote-bleue-calanque-mejean','montagnes-garlaban','chateaux-chenonceau'],
+  motCle: "cadeau invités mariage",
+  faq: [["Quel cadeau original offrir aux invités d’un mariage ?", "Un souvenir du lieu de la cérémonie, dessiné sur un carreau avec vos prénoms et la date, ou des spécialités provençales présentées dans un sachet personnalisé."], ["Quel budget par invité pour un cadeau de mariage ?", "Il varie généralement de quelques euros à une dizaine d’euros par invité. Pour un projet personnalisé en quantité, demandez un devis adapté via la page projet spécifique."], ["Combien de temps à l’avance commander les cadeaux d’invités ?", "Idéalement deux à trois mois avant le mariage, pour valider le dessin, produire les quantités et préparer la présentation."], ["Que faire comme plan de table original ?", "Nommez vos tables d’après des lieux qui comptent pour vous, avec un carreau illustré sur un chevalet au centre de chaque table."]]
 },
 {
   slug: 'cadeau-depart-retraite-original',
   titre: 'Cadeau de départ à la retraite original : offrir un lieu à vivre',
-  metaT: 'Cadeau départ à la retraite original et personnalisé | K-Reau',
+  metaT: "Cadeau départ à la retraite original et personnalisé | K-Reau",
   metaD: 'Un collègue part à la retraite ? Offrez-lui le lieu de ses projets : sa ville, sa maison, sa montagne ou sa plage dessinée sur un carreau. Idées et conseils pour un cadeau collectif.',
   date: '2026-10-31',
   image: '/img/04_Produits_Cote_Bleue/cote-bleue-carry-le-rouet.webp',
-  intro: 'Un départ à la retraite marque la fin d’une vie professionnelle et le début de nouveaux projets. Le cadeau idéal accompagne cette transition : il rappelle les bons moments passés ensemble et ouvre sur ce qui vient. Et si vous offriez un lieu ?',
+  intro: 'Un départ à la retraite marque la fin d’une vie professionnelle et le début de nouveaux projets. Le cadeau idéal accompagne cette transition : il rappelle les bons moments passés ensemble et ouvre sur ce qui vient. Pour un cadeau de départ à la retraite original, et si vous offriez un lieu ?',
   corps: () => `
 <h2>Pourquoi un lieu plutôt qu’un objet ?</h2>
 <p>À l’approche de la retraite, beaucoup ont déjà une idée précise de l’endroit où ils vont passer leur temps : la maison au bord de la mer, le village de leurs racines, la montagne où ils comptent randonner. Leur offrir ce lieu dessiné, c’est montrer qu’on a écouté leurs projets. C’est un cadeau plus personnel qu’un bon d’achat, et plus durable qu’une bouteille.</p>
@@ -1661,7 +1696,9 @@ const GUIDES = [
 <p>Un départ à la retraite est aussi l’occasion de revenir sur une carrière. Accompagnez le carreau d’un petit livret de messages des collègues, de quelques photos d’équipe ou d’anecdotes marquantes. Le carreau, posé sur une étagère, deviendra le symbole de ces années partagées, bien après le pot de départ et les discours.</p>
 <h2>Nos conseils pour réussir le pot de départ</h2>
 <p>Recueillez discrètement quelques informations sur les projets du futur retraité auprès de ses proches collègues. Commandez au moins deux semaines avant la date pour recevoir le cadeau à temps. Et n’oubliez pas le mot : quelques lignes sincères, imprimées sur la carte du coffret, valent souvent autant que le cadeau lui-même.</p>`,
-  produits: ['cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','montagnes-sainte-victoire','montagnes-mont-ventoux','marseille-tour-cma-cgm','marseille-vieux-port','cote-bleue-port-carro','montagnes-sainte-baume']
+  produits: ['cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','montagnes-sainte-victoire','montagnes-mont-ventoux','marseille-tour-cma-cgm','marseille-vieux-port','cote-bleue-port-carro','montagnes-sainte-baume'],
+  motCle: "cadeau départ retraite original",
+  faq: [["Quel cadeau original pour un départ à la retraite ?", "Un objet lié à ses projets : la ville où il s’installe, la mer, la montagne qu’il veut parcourir, ou sa future maison dessinée sur un carreau."], ["Quel cadeau collectif pour un collègue qui part à la retraite ?", "Un coffret de trois carreaux associant un lieu lié au travail, un lieu de vacances et un lieu d’avenir, avec un message de l’équipe imprimé sur la carte."], ["Quel budget pour un cadeau de départ à la retraite ?", "Pour un cadeau collectif, comptez de quelques euros par personne à une cinquantaine d’euros au total. Le coffret de trois carreaux coûte 54,90 €, livraison offerte."], ["Que faire si l’on ne connaît pas les goûts du futur retraité ?", "Offrez une carte cadeau K-Reau : il pourra choisir lui-même le lieu qui lui ressemble."]]
 }
 ];
 /*GUIDES-FIN*/
@@ -1682,17 +1719,24 @@ function vueGuide(slug){
   const g = GUIDES.find(x=>x.slug===slug); if(!g) return vue404();
   const url = 'https://k-reau.fr/guides/'+g.slug;
   setMeta(g.metaT, g.metaD, { image: g.image, ld: [
-    { '@context':'https://schema.org', '@type':'Article', headline:g.titre, description:g.metaD, image:'https://k-reau.fr'+g.image, datePublished:g.date, dateModified:g.date, inLanguage:'fr-FR',
+    { '@context':'https://schema.org', '@type':'Article', headline:g.titre, description:g.metaD, keywords:g.motCle, image:'https://k-reau.fr'+g.image, datePublished:g.date, dateModified:g.date, inLanguage:'fr-FR',
       author:{ '@type':'Organization', name:'K-Reau', url:'https://k-reau.fr/' }, publisher:{ '@type':'Organization', name:'K-Reau', logo:{ '@type':'ImageObject', url:'https://k-reau.fr/img/01_Identite/logo-kreau.webp' } }, mainEntityOfPage:url },
+    ...(g.faq ? [{ '@context':'https://schema.org', '@type':'FAQPage', mainEntity: g.faq.map(([q,r])=>({ '@type':'Question', name:q, acceptedAnswer:{ '@type':'Answer', text:r } })) }] : []),
     { '@context':'https://schema.org', '@type':'BreadcrumbList', itemListElement:[['Accueil','https://k-reau.fr/'],['Guides','https://k-reau.fr/guides'],[g.titre,url]].map(([n,u],i)=>({ '@type':'ListItem', position:i+1, name:n, item:u })) } ] });
   const prods = g.produits.map(parSlug).filter(Boolean);
+  let n = 0; const titres = [];
+  const corps = g.corps().replace(/<h2>(.*?)<\/h2>/g, (m, t) => { n++; titres.push(t); return `<h2 id="partie-${n}">${t}</h2>`; });
   const ig = GUIDES.indexOf(g); const autres = [1,2,3].map(k=>GUIDES[(ig+k)%GUIDES.length]);
   const d = new Date(g.date).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' });
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','/guides'],[g.titre,'']])}
     <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · ${d}</span><h1>${esc(g.titre)}</h1><p class="lead">${esc(g.intro)}</p></div>
-    <figure class="tete-img"><img src="${esc(g.image)}" width="1254" height="1254" alt="${esc(g.titre)}" fetchpriority="high"></figure></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">${g.corps()}</article></div></section>
+    <figure class="tete-img"><img src="${esc(g.image)}" width="1254" height="1254" alt="${esc((g.motCle ? g.motCle.charAt(0).toUpperCase()+g.motCle.slice(1)+' : ' : '') + 'carreau décoratif K-Reau en céramique illustré')}" fetchpriority="high"></figure></div></div></div>
+  <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">
+    <nav class="sommaire" aria-label="Sommaire"><strong>Sommaire</strong><ol>${titres.map((t,i)=>`<li><a href="#partie-${i+1}">${t}</a></li>`).join('')}${g.faq ? '<li><a href="#faq-guide">Questions fréquentes</a></li>' : ''}</ol></nav>
+    ${corps}
+    ${g.faq ? `<section class="guide-faq" id="faq-guide"><h2>Questions fréquentes : ${esc(g.motCle)}</h2>${g.faq.map(([q,r])=>`<h3>${esc(q)}</h3><p>${esc(r)}</p>`).join('')}</section>` : ''}
+  </article></div></section>
   <section class="bloc fond-blanc joint-haut"><div class="wrap">
     <div class="bloc-titre"><span class="eyebrow">À offrir ou à garder</span><h2>Les carreaux de ce guide</h2></div>
     <div class="grille">${grilleHTML(prods)}</div>
