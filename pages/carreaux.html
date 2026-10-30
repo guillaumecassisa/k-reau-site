@@ -63,7 +63,9 @@ p{margin:0}
 /* Annonce + en-tête */
 .annonce{background:var(--olivier);color:var(--ceramique);font-size:.8rem;letter-spacing:.04em;text-align:center;padding-block:8px}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(247,245,240,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--joint)}
-.hd{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.hd{display:flex;align-items:center;gap:16px;min-height:76px}
+nav.principale{margin-left:clamp(8px,2vw,28px)}
+.hd-actions{margin-left:4px}
 .logo-lien{display:block;flex:none}
 .logo-lien img{height:60px;width:auto;mix-blend-mode:multiply}
 nav.principale ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
@@ -74,7 +76,26 @@ nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color
 .icone-btn svg{width:22px;height:22px}
 .pastille{position:absolute;top:6px;right:4px;min-width:18px;height:18px;border-radius:9px;background:var(--olivier);color:var(--blanc);font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
 .burger{display:none}
+.visuellement-cache{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.recherche{position:relative;margin-left:auto;flex:0 1 340px;min-width:0}
+.recherche svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--encre);pointer-events:none}
+.recherche input{width:100%;min-height:42px;padding:0 16px 0 40px;border:1px solid var(--encre);border-radius:999px;background:transparent;font:400 .88rem var(--f-texte);color:var(--encre);letter-spacing:.01em;transition:background .2s,box-shadow .2s}
+.recherche input::placeholder{color:var(--encre-doux)}
+.recherche input:hover{background:rgba(255,254,251,.5)}
+.recherche input:focus{outline:none;background:var(--blanc);box-shadow:0 0 0 3px rgba(34,33,30,.08);border-color:var(--encre)}
+.recherche input::-webkit-search-cancel-button{-webkit-appearance:none}
+.suggestions{position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:70;margin:0;padding:6px;list-style:none;background:var(--ceramique);border:1px solid var(--encre);border-radius:14px;box-shadow:0 18px 40px -18px rgba(34,33,30,.35);max-height:min(70vh,420px);overflow:auto}
+.suggestions li{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;padding:6px 8px;border-radius:9px;cursor:pointer}
+.suggestions li[aria-selected="true"],.suggestions li:hover{background:var(--sable-clair)}
+.suggestions img{width:44px;height:44px;object-fit:cover;border:1px solid var(--joint);background:var(--blanc)}
+.suggestions strong{display:block;font-weight:500;font-size:.92rem;line-height:1.25}
+.suggestions span{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mer)}
+.suggestions .vide{display:block;padding:12px;color:var(--encre-doux);font-size:.88rem;cursor:default}
+.suggestions .tous{display:block;padding:10px 8px;font-size:.84rem;font-weight:600;color:var(--olivier);border-top:1px solid var(--joint);margin-top:4px;border-radius:0}
 @media(max-width:860px){
+  .hd{flex-wrap:wrap;row-gap:0;padding-bottom:10px}
+  .recherche{order:5;flex:1 1 100%;margin-left:0}
+  .hd-actions{margin-left:auto}
   nav.principale{display:none}
   .burger{display:inline-flex}
   .logo-lien img{height:50px}
@@ -283,12 +304,16 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header.webp" alt="K-Reau" width="560" height="461"></a>
     <nav class="principale" aria-label="Navigation principale">
       <ul>
-        <li><a href="/collections/marseille" data-nav="collection-marseille">Marseille</a></li>
-        <li><a href="/collections/cote-bleue" data-nav="collection-cote-bleue">Côte Bleue</a></li>
         <li><a href="/carreaux" data-nav="carreaux" aria-current="page">Nos carreaux</a></li>
         <li><a href="/notre-histoire" data-nav="notre-histoire">Notre histoire</a></li>
       </ul>
     </nav>
+    <form class="recherche" role="search" action="/carreaux" id="recherche" autocomplete="off">
+      <label for="q" class="visuellement-cache">Rechercher un carreau</label>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="M15.5 15.5L21 21"></path></svg>
+      <input type="search" id="q" name="q" placeholder="Rechercher un lieu, une calanque…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions">
+      <ul class="suggestions" id="suggestions" role="listbox" hidden=""></ul>
+    </form>
     <div class="hd-actions">
       <button class="icone-btn" id="btn-panier" type="button" aria-label="Ouvrir le panier">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>
@@ -835,18 +860,73 @@ function vueCollection(k){
 
 function vueTous(){
   setMeta('Tous les carreaux décoratifs en céramique | K-Reau','Les 21 carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue et Les Embiez. Céramique 15 × 15 cm, 19,90 €, idée cadeau souvenir.');
+  const q = (new URLSearchParams(location.search).get('q') || '').trim();
+  const res = q && PRODUITS ? chercher(q) : null;
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Nos carreaux','']])}
-    <div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>
+    ${q ? `<div class="bloc-titre"><span class="eyebrow">Recherche</span><h1>Résultats pour « ${esc(q)} »</h1><p class="lead">${res ? (res.length ? res.length+' carreau'+(res.length>1?'x':'')+' trouvé'+(res.length>1?'s':'') : 'Aucun carreau ne correspond à cette recherche. Essayez un autre lieu, ou parcourez tous les modèles.') : ''}</p><a class="lien" href="/carreaux">Voir tous les carreaux</a></div>`
+        : `<div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>`}
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
-    ${filtresHTML('tout','g-tous')}
+    ${q ? `<div class="grille" id="g-tous">${res ? (res.length ? res.map(p=>carte(p)).join('') : grilleHTML(PRODUITS).replace(/^/, '<p class="small muted" style="grid-column:1/-1">Tous nos carreaux :</p>')) : grilleHTML([])}</div>`
+        : `${filtresHTML('tout','g-tous')}
     <p class="small muted" id="g-tous-statut" role="status" aria-live="polite">${PRODUITS? PRODUITS.length+' carreaux affichés':''}</p>
-    <div class="grille" id="g-tous">${grilleHTML(PRODUITS||[])}</div>
+    <div class="grille" id="g-tous">${grilleHTML(PRODUITS||[])}</div>`}
   </div></section>`;
-  brancherFiltres('g-tous', () => PRODUITS);
+  if(!q) brancherFiltres('g-tous', () => PRODUITS);
+  const champ = $('#q'); if(champ && q && document.activeElement !== champ) champ.value = q;
 }
+
+/* ===== Recherche ===== */
+const norm = t => String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[’']/g,' ');
+function chercher(q){
+  const mots = norm(q).split(/\s+/).filter(m => m.length > 1 && !['le','la','les','de','du','des','l','d'].includes(m));
+  if(!mots.length || !PRODUITS) return [];
+  return PRODUITS.map(p => {
+    const nom = norm(p.nom), coll = norm(p.collection==='Signature'?'Les Embiez Var':p.collection), txt = norm(p.description+' '+(p.a_propos||''));
+    let score = 0;
+    for(const m of mots){ if(nom.includes(m)) score += 10; else if(coll.includes(m)) score += 4; else if(txt.includes(m)) score += 1; else return null; }
+    return { p, score };
+  }).filter(Boolean).sort((a,b)=>b.score-a.score).map(x=>x.p);
+}
+(function(){
+  const form = $('#recherche'), champ = $('#q'), liste = $('#suggestions');
+  let choix = [], actif = -1;
+  const fermer = () => { liste.hidden = true; champ.setAttribute('aria-expanded','false'); actif = -1; };
+  const aller = url => { fermer(); champ.blur(); history.pushState(null,'',url); route(); };
+  const afficher = () => {
+    const q = champ.value.trim();
+    if(q.length < 2 || !PRODUITS){ fermer(); return; }
+    choix = chercher(q).slice(0,6);
+    liste.innerHTML = choix.length
+      ? choix.map((p,i)=>`<li role="option" id="sug-${i}" data-slug="${esc(p.slug)}" aria-selected="false"><img src="${esc(p.miniature)}" alt="" width="44" height="44"><div><strong>${esc(p.nom)}</strong><span>${esc(p.collection==='Signature'?'Les Embiez':p.collection)}</span></div></li>`).join('') + `<li class="tous" data-tous="1">Voir tous les résultats pour « ${esc(q)} »</li>`
+      : `<li class="vide">Aucun carreau pour « ${esc(q)} »</li>`;
+    liste.hidden = false; champ.setAttribute('aria-expanded','true'); actif = -1;
+  };
+  const surligner = i => { actif = i; liste.querySelectorAll('li[role=option]').forEach((li,j)=>li.setAttribute('aria-selected', j===i)); champ.setAttribute('aria-activedescendant', i>=0 ? 'sug-'+i : ''); };
+  champ.addEventListener('input', afficher);
+  champ.addEventListener('focus', afficher);
+  champ.addEventListener('keydown', e => {
+    if(liste.hidden) return;
+    if(e.key==='ArrowDown'){ e.preventDefault(); surligner(Math.min(actif+1, choix.length-1)); }
+    else if(e.key==='ArrowUp'){ e.preventDefault(); surligner(Math.max(actif-1, -1)); }
+    else if(e.key==='Escape'){ fermer(); }
+  });
+  liste.addEventListener('mousedown', e => {
+    const li = e.target.closest('li'); if(!li || li.classList.contains('vide')) return;
+    e.preventDefault();
+    if(li.dataset.tous) aller('/carreaux?q='+encodeURIComponent(champ.value.trim()));
+    else aller('/produits/'+li.dataset.slug);
+  });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const q = champ.value.trim(); if(!q) return;
+    if(actif >= 0 && choix[actif]) aller('/produits/'+choix[actif].slug);
+    else aller('/carreaux?q='+encodeURIComponent(q));
+  });
+  document.addEventListener('click', e => { if(!form.contains(e.target)) fermer(); });
+})();
 
 function vueProduit(slug){
   if(!PRODUITS){ app.innerHTML = `<div class="wrap" style="padding-block:80px"><div class="grille">${grilleHTML([])}</div></div>`; return; }
@@ -1228,8 +1308,8 @@ document.addEventListener('click', e => {
   const url = new URL(a.href, location.origin);
   if(url.origin!==location.origin || /^\/(api|img|data)\//.test(url.pathname) || /\.[a-z0-9]+$/i.test(url.pathname)) return;
   e.preventDefault();
-  if(url.pathname===location.pathname && url.hash===location.hash && !url.hash){ window.scrollTo(0,0); return; }
-  history.pushState(null,'',url.pathname+url.hash);
+  if(url.pathname===location.pathname && url.search===location.search && url.hash===location.hash && !url.hash){ window.scrollTo(0,0); return; }
+  history.pushState(null,'',url.pathname+url.search+url.hash);
   route();
 });
 window.addEventListener('popstate', route);
