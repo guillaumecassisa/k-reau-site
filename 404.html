@@ -242,6 +242,14 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .galerie-principale{position:relative;background:var(--blanc);border:1px solid var(--joint);overflow:hidden;cursor:zoom-in;padding:0}
 .galerie-principale img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform .35s}
 .galerie-loupe{position:absolute;right:12px;bottom:12px;background:var(--blanc);border:1px solid var(--joint);font-size:.76rem;font-weight:600;padding:8px 12px;display:flex;gap:6px;align-items:center}
+.galerie-cadre{position:relative}
+.fleche{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:46px;height:46px;border-radius:50%;border:1px solid var(--encre);background:rgba(255,254,251,.92);color:var(--encre);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 18px -6px rgba(34,33,30,.45);transition:background .2s,color .2s,transform .2s}
+.fleche svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.fleche:hover{background:var(--olivier);border-color:var(--olivier);color:var(--blanc);transform:translateY(-50%) scale(1.06)}
+.fleche:focus-visible{outline:2px solid var(--mer);outline-offset:3px}
+.fleche-prec{left:14px}.fleche-suiv{right:14px}
+.galerie-compteur{position:absolute;left:12px;bottom:12px;background:rgba(255,254,251,.92);border:1px solid var(--joint);font-size:.76rem;font-weight:600;padding:6px 10px;font-variant-numeric:tabular-nums}
+@media(max-width:520px){.fleche{width:40px;height:40px}.fleche-prec{left:8px}.fleche-suiv{right:8px}}
 .vignettes{display:flex;gap:10px}
 .vignette{width:84px;height:84px;padding:0;border:1px solid var(--joint);background:var(--blanc);cursor:pointer;overflow:hidden}
 .vignette[aria-pressed="true"]{outline:2px solid var(--olivier);outline-offset:2px}
@@ -798,10 +806,15 @@ function vueProduit(slug){
   <div class="wrap" style="padding-top:28px">${ariane(trail)}</div>
   <div class="wrap fiche">
     <div class="galerie">
-      <button class="galerie-principale" type="button" id="g-princ" aria-label="Agrandir l’image">
-        <img src="${esc(vues[0].src)}" width="1254" height="1254" alt="${esc(vues[0].alt)}" fetchpriority="high">
-        <span class="galerie-loupe">${ICONES.loupe} Agrandir</span>
-      </button>
+      <div class="galerie-cadre">
+        <button class="galerie-principale" type="button" id="g-princ" aria-label="Agrandir l’image">
+          <img src="${esc(vues[0].src)}" width="1254" height="1254" alt="${esc(vues[0].alt)}" fetchpriority="high">
+          <span class="galerie-loupe">${ICONES.loupe} Agrandir</span>
+        </button>
+        ${vues.length > 1 ? `<button class="fleche fleche-prec" type="button" id="g-prec" aria-label="Photo précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <button class="fleche fleche-suiv" type="button" id="g-suiv" aria-label="Photo suivante"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+        <span class="galerie-compteur" id="g-compteur" aria-live="polite">1 / ${vues.length}</span>` : ''}
+      </div>
       ${vues.length > 1 ? `<div class="vignettes" role="group" aria-label="Photos du carreau">
         ${vues.map((v,i)=>`<button class="vignette" type="button" data-i="${i}" aria-pressed="${i===0}" aria-label="${esc(v.label)}"><img src="${esc(v.src)}" alt="" loading="lazy" style="object-position:${v.pos}"></button>`).join('')}
       </div>` : ''}
@@ -840,12 +853,21 @@ function vueProduit(slug){
   </div></section>` : ''}`;
   // Galerie
   const princ = $('#g-princ'); let vueActive = 0;
-  app.querySelectorAll('.vignette').forEach(b => b.addEventListener('click', () => {
-    vueActive = +b.dataset.i; const v = vues[vueActive], img = princ.querySelector('img');
-    app.querySelectorAll('.vignette').forEach(x => x.setAttribute('aria-pressed', x===b));
+  const afficherVue = i => {
+    vueActive = (i + vues.length) % vues.length; const v = vues[vueActive], img = princ.querySelector('img');
     img.src = v.src; img.alt = v.alt; img.style.objectPosition = v.pos;
-  }));
-  princ.addEventListener('click', () => ouvrirLightbox(vues[vueActive].src, vues[vueActive].alt));
+    app.querySelectorAll('.vignette').forEach(x => x.setAttribute('aria-pressed', +x.dataset.i === vueActive));
+    const c = $('#g-compteur'); if(c) c.textContent = `${vueActive+1} / ${vues.length}`;
+  };
+  app.querySelectorAll('.vignette').forEach(b => b.addEventListener('click', () => afficherVue(+b.dataset.i)));
+  $('#g-prec')?.addEventListener('click', () => afficherVue(vueActive - 1));
+  $('#g-suiv')?.addEventListener('click', () => afficherVue(vueActive + 1));
+  // flèches du clavier quand la galerie a le focus, glissement du doigt sur mobile
+  $('.galerie')?.addEventListener('keydown', e => { if(e.key==='ArrowLeft'){ e.preventDefault(); afficherVue(vueActive-1); } if(e.key==='ArrowRight'){ e.preventDefault(); afficherVue(vueActive+1); } });
+  let x0 = null;
+  princ.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive:true });
+  princ.addEventListener('touchend', e => { if(x0===null) return; const dx = e.changedTouches[0].clientX - x0; x0 = null; if(Math.abs(dx) > 45){ afficherVue(vueActive + (dx < 0 ? 1 : -1)); princ.dataset.glisse = '1'; setTimeout(()=>delete princ.dataset.glisse, 350); } });
+  princ.addEventListener('click', () => { if(princ.dataset.glisse) return; ouvrirLightbox(vues[vueActive].src, vues[vueActive].alt); });
   // Panier (live uniquement)
   if(LIVE && prix){
     let q = 1; const out = $('#qte-out');
