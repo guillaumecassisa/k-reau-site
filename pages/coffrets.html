@@ -186,6 +186,9 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 .histoire{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:center}
 .histoire-img img{width:100%;border:10px solid var(--blanc);box-shadow:0 30px 60px -36px rgba(34,33,30,.4)}
 .histoire-texte{display:grid;gap:22px}
+.histoire-page{display:grid;gap:clamp(40px,5vw,64px)}
+.histoire-page .prose{max-width:none}
+.histoire-bas{margin:0;justify-self:center;width:min(100%,480px)}
 .histoire-texte p.corps{font-family:var(--f-titre);font-size:clamp(1.3rem,2.2vw,1.6rem);line-height:1.45;color:var(--encre)}
 .histoire-texte .btn{justify-self:start}
 @media(max-width:860px){.histoire{grid-template-columns:1fr}}
@@ -1077,8 +1080,7 @@ function vueHistoire(){
     <div class="bloc-titre"><span class="eyebrow">Notre histoire</span><h1>Un lieu. Un souvenir. Un K-Reau.</h1>
     <p class="lead">Une marque provençale de carreaux décoratifs illustrés, née entre la Durance, le Luberon et les Alpilles.</p></div>
   </div></div>
-  <section class="bloc"><div class="wrap histoire">
-    <figure class="histoire-img" style="margin:0"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" loading="lazy" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure>
+  <section class="bloc"><div class="wrap histoire-page">
     <div class="prose">
       <p class="lead" style="color:var(--encre);font-family:var(--f-titre);font-size:1.6rem;line-height:1.4">Il y a des endroits qu’on n’oublie pas. Le port des vacances, la crique qu’on connaît par cœur, la colline qu’on voit depuis sa fenêtre, la ville où tout a commencé.</p>
       <p>K-Reau est né d’une envie simple : donner une place, chez soi, à ces lieux qui nous accompagnent. Pas une carte postale qu’on range dans un tiroir, pas un souvenir de boutique fabriqué à la chaîne, mais un dessin épuré qui garde l’essentiel d’un paysage, et qu’on a plaisir à regarder tous les jours.</p>
@@ -1105,6 +1107,7 @@ function vueHistoire(){
       <p>D’autres lieux viendront, au fil des envies et de vos suggestions. Un endroit vous tient à cœur ? <a class="lien" href="/contact">Dites-le-nous</a>. Vous avez un projet pour une entreprise, un mariage ou une boutique ? <a class="lien" href="/projet-specifique">Parlez-nous de votre projet</a>.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"><a class="btn btn-p" href="/#collections">Découvrir les collections</a><a class="btn btn-s" href="/sur-mesure">Créer mon carreau sur mesure</a></div>
     </div>
+    <figure class="histoire-img histoire-bas"><img src="/img/02_Accueil_et_Lifestyle/illustration-mer-les-embiez.webp" width="1205" height="1306" loading="lazy" alt="Dessin au trait de l’île des Embiez, avec son nom en calligraphie"></figure>
   </div></section>`;
 }
 
