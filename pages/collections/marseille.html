@@ -383,6 +383,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .projet-liste li{background:var(--blanc,#fff);border:1px solid var(--joint);padding:20px;display:grid;gap:6px;align-content:start}
 .projet-liste strong{font-weight:600}
 .projet-liste span{color:var(--encre-doux);font-size:.92rem}
+.livraison-estimee{display:flex;gap:10px;align-items:flex-start;margin:-4px 0 6px;color:var(--olivier)}.livraison-estimee svg{flex:none;margin-top:2px}.livraison-estimee strong{color:var(--encre);font-weight:600}
 .sm-photos{display:grid;gap:8px}
 .sm-depot{display:flex;align-items:center;gap:14px;border:1.5px dashed #BFB4A4;background:var(--blanc);padding:18px;cursor:pointer;border-radius:var(--r)}
 .sm-depot:hover,.sm-depot:focus-within{border-color:var(--olivier)}
@@ -1209,6 +1210,7 @@ function vueProduit(slug){
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
       ${prix ? `<p class="prix">${prix}</p>` : ''}
+      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · livraison en France</span></span></p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>
@@ -2558,8 +2560,8 @@ function vueSurMesure(){
     <form class="formulaire" id="form-sm" novalidate style="max-width:680px">
       <h2>Votre carreau</h2>
       <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
-      <div class="champ"><label for="sm-lieu">Où se trouve ce lieu ?</label><input type="text" id="sm-lieu" maxlength="120" required placeholder="Ville, quartier, adresse ou nom de la plage"><span class="err" aria-live="polite"></span></div>
-      <div class="champ"><label for="sm-details">Ce que vous aimeriez voir sur le dessin <span class="muted" style="font-weight:400">(facultatif)</span></label><textarea id="sm-details" maxlength="300" placeholder="La façade avec les volets, le grand pin, la vue sur le port…"></textarea><span class="err" aria-live="polite"></span></div>
+      
+      <div class="champ"><label for="sm-details">Le lieu et ce que vous aimeriez voir sur le dessin</label><textarea id="sm-details" maxlength="300" required minlength="10" placeholder="Ex. : notre maison à Mallemort, la façade avec les volets bleus et le grand pin devant"></textarea><span class="err" aria-live="polite"></span></div>
       <div class="sm-photos"><label for="sm-fichiers"><strong>Vos photos</strong> <span class="muted" style="font-weight:400">(facultatif, jusqu’à 3)</span></label>
         <label class="sm-depot" for="sm-fichiers"><input type="file" id="sm-fichiers" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
           <span class="sm-depot-txt"><strong>Ajouter des photos</strong><span class="small muted">Photo de la maison, du lieu, ou dessin à reproduire · JPG, PNG</span></span></label>
@@ -2593,7 +2595,7 @@ function vueSurMesure(){
     if(!valider(form)) return;
     if(!$('#sm-ok').checked){ form.querySelector('.retour').innerHTML = '<p class="msg ko">Cochez la case pour confirmer que vous avez pris connaissance des conditions du sur-mesure.</p>'; return; }
     const btn = form.querySelector('button[type=submit]'), lib = btn.textContent, ret = form.querySelector('.retour');
-    const infos = { texte:$('#sm-texte').value.trim(), lieu:$('#sm-lieu').value.trim(), details:$('#sm-details').value.trim() };
+    const infos = { texte:$('#sm-texte').value.trim(), details:$('#sm-details').value.trim() };
     let photo = '';
     if(photosSM.length){
       const ref = 'SM-' + Array.from(crypto.getRandomValues(new Uint8Array(6)), x => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[x % 32]).join('');
@@ -2652,6 +2654,27 @@ function reduirePhoto(fichier){
 function afficherPhotosSM(){
   const v = $('#sm-vignettes'); if(!v) return;
   v.innerHTML = photosSM.map((p, i) => `<figure><img src="${p.apercu}" alt="Photo ${i+1} : ${esc(p.nom)}"><button type="button" data-retirer="${i}" aria-label="Retirer la photo ${i+1}">×</button></figure>`).join('');
+}
+
+// Date de livraison estimée : 5 à 7 jours à partir de la date du jour
+function feriesFR(an){
+  const a=an%19,b=Math.floor(an/100),c=an%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
+  const mois=Math.floor((h+l-7*m+114)/31), jour=((h+l-7*m+114)%31)+1, paques=new Date(an,mois-1,jour);
+  const dec=n=>{const x=new Date(paques);x.setDate(x.getDate()+n);return x;};
+  return [new Date(an,0,1),dec(1),new Date(an,4,1),new Date(an,4,8),dec(39),dec(50),new Date(an,6,14),new Date(an,7,15),new Date(an,10,1),new Date(an,10,11),new Date(an,11,25)].map(x=>x.toDateString());
+}
+function ajouterOuvres(depart, n){
+  const d=new Date(depart); let f=feriesFR(d.getFullYear());
+  while(n>0){ d.setDate(d.getDate()+1); if(d.getMonth()===0&&d.getDate()===1) f=feriesFR(d.getFullYear()); const j=d.getDay(); if(j!==0&&j!==6&&!f.includes(d.toDateString())) n--; }
+  return d;
+}
+function livraisonEstimee(){
+  // 5 à 7 jours à partir de la date du jour (pas de livraison le dimanche ni un jour férié : report au lendemain)
+  const jour = n => { const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()+n);
+    while(d.getDay()===0 || feriesFR(d.getFullYear()).includes(d.toDateString())) d.setDate(d.getDate()+1); return d; };
+  const debut = jour(5), fin = jour(7);
+  const fmt=(d,mois=true)=>d.toLocaleDateString('fr-FR',mois?{weekday:'long',day:'numeric',month:'long'}:{weekday:'long',day:'numeric'});
+  return `Reçu entre le ${fmt(debut, debut.getMonth()!==fin.getMonth())} et le ${fmt(fin)}`;
 }
 
 function vueCarteCadeau(){
@@ -2749,7 +2772,7 @@ const Panier = {
     if(l.type==='carreau') return `<strong>${esc(parSlug(l.slug).nom)}</strong><span class="sous">Carreau 15 × 15 cm</span>`;
     if(l.type==='coffret') return `<strong>${esc(l.nom||'Coffret 3 carreaux')}</strong><span class="sous">${l.slugs.map(x=>esc(parSlug(x).nom)).join(' · ')}</span>`;
     if(l.type==='chevalet') return `<strong>Chevalet trépied en bois brut</strong><span class="sous">L 8 × H 15 cm · pour poser votre carreau</span>`;
-    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">« ${esc(l.texte)} » · ${esc(l.lieu)}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
+    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">« ${esc(l.texte)} »${l.lieu ? ' · ' + esc(l.lieu) : ''}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
     return `<strong>Carte cadeau ${prixEur(l.montant/100)}</strong><span class="sous">Code envoyé après le paiement</span>`;
   },
   suggestions(){
@@ -2933,6 +2956,7 @@ function route(){
   document.querySelectorAll('[data-nav]').forEach(a => a.toggleAttribute('aria-current', false));
   const actif = document.querySelector(`[data-nav="${h}"]`); if(actif) actif.setAttribute('aria-current','page');
   fermerMenu();
+  { const le = document.querySelector('#livraison-estimee strong'); if(le) le.textContent = livraisonEstimee(); } // toujours calculée à la date du jour
   requestAnimationFrame(scroller);
 }
 document.addEventListener('click', e => {
