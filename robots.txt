@@ -4,17 +4,29 @@ Allow: /
 Disallow: /api/
 Disallow: /data/
 
-# Robots d'entraînement d'IA et aspirateurs de contenu : refusés
+# Assistants IA qui RÉPONDENT aux internautes et citent leurs sources : bienvenus
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: DuckAssistBot
+Allow: /
+User-agent: MistralAI-User
+Allow: /
+
+# Robots d'ENTRAÎNEMENT d'IA et aspirateurs de contenu : refusés
 # (réservation des droits de fouille de textes et de données, art. L122-5-3 du CPI)
 User-agent: GPTBot
 Disallow: /
-User-agent: ChatGPT-User
-Disallow: /
-User-agent: OAI-SearchBot
-Disallow: /
 User-agent: ClaudeBot
-Disallow: /
-User-agent: Claude-Web
 Disallow: /
 User-agent: anthropic-ai
 Disallow: /
@@ -23,8 +35,6 @@ Disallow: /
 User-agent: Applebot-Extended
 Disallow: /
 User-agent: CCBot
-Disallow: /
-User-agent: PerplexityBot
 Disallow: /
 User-agent: Bytespider
 Disallow: /
