@@ -1,9 +1,11 @@
 // Relais des formulaires (contact, inscription) envoyés par e-mail via Resend, côté serveur.
 // L'adresse de destination reste dans la variable d'environnement CONTACT_DESTINATION, jamais dans la page.
-const echap = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const { origineAutorisee, tropDeRequetes, echap } = require('./_commun');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
+  if (!origineAutorisee(req)) return res.status(403).json({ erreur: 'Requête refusée' });
+  if (tropDeRequetes(req, 5, 15 * 60 * 1000)) return res.status(429).json({ erreur: 'Trop de messages envoyés, réessayez plus tard' });
   const dest = process.env.CONTACT_DESTINATION;
   const cle = process.env.RESEND_API_KEY;
   if (!dest || !cle) return res.status(503).json({ erreur: 'Envoi non configuré' });
@@ -11,7 +13,7 @@ module.exports = async function handler(req, res) {
   let d = req.body;
   if (typeof d === 'string') { try { d = JSON.parse(d); } catch { d = {}; } }
   d = d && typeof d === 'object' ? d : {};
-  const champ = (k, max) => String(d[k] ?? '').slice(0, max).trim();
+  const champ = (k, max) => String(d[k] ?? '').replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '').slice(0, max).trim();
 
   const email = champ('email', 200);
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return res.status(400).json({ erreur: 'Adresse e-mail invalide' });

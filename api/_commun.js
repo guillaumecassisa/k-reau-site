@@ -70,4 +70,25 @@ async function envoyerClient(destinataire, sujet, html) {
   return r.ok;
 }
 
-module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient };
+// Sécurité : seules les pages du site peuvent appeler ces fonctions.
+const ORIGINES = ['https://k-reau.fr', 'https://www.k-reau.fr'];
+const ORIGINE_SITE = 'https://k-reau.fr';
+function origineAutorisee(req) {
+  const o = req.headers.origin || '';
+  const r = req.headers.referer || '';
+  if (o) return ORIGINES.includes(o) || /^https:\/\/k-reau-[a-z0-9-]+\.vercel\.app$/.test(o);
+  return ORIGINES.some(x => r.startsWith(x + '/'));
+}
+// Limiteur de débit simple par adresse IP (mémoire de l'instance) : freine les abus et le spam.
+const compteurs = new Map();
+function tropDeRequetes(req, max, fenetreMs) {
+  const ip = String(req.headers['x-real-ip'] || req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'inconnue';
+  const now = Date.now(), cle = ip + ':' + max;
+  const t = (compteurs.get(cle) || []).filter(x => now - x < fenetreMs);
+  t.push(now); compteurs.set(cle, t);
+  if (compteurs.size > 5000) compteurs.clear();
+  return t.length > max;
+}
+const echap = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE };

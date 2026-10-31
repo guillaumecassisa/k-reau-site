@@ -1,9 +1,11 @@
 // Création d'une session de paiement Stripe Checkout à partir du panier.
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
-const { PRIX, PRODUITS, stripe, euros, texte } = require('./_commun');
+const { PRIX, PRODUITS, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
+  if (!origineAutorisee(req)) return res.status(403).json({ erreur: 'Requête refusée' });
+  if (tropDeRequetes(req, 20, 10 * 60 * 1000)) return res.status(429).json({ erreur: 'Trop de tentatives, réessayez dans quelques minutes' });
   if (process.env.BOUTIQUE_OUVERTE !== 'true') return res.status(503).json({ erreur: 'Les commandes ne sont pas encore ouvertes' });
   if (!process.env.STRIPE_SECRET_KEY) return res.status(503).json({ erreur: 'Paiement non configuré' });
 
@@ -11,7 +13,8 @@ module.exports = async function handler(req, res) {
   if (typeof corps === 'string') { try { corps = JSON.parse(corps); } catch { corps = {}; } }
   const lignes = Array.isArray(corps && corps.lignes) ? corps.lignes.slice(0, 30) : [];
   const q = l => Math.max(1, Math.min(20, parseInt(l.q, 10) || 1));
-  const origine = `https://${req.headers['x-forwarded-host'] || req.headers.host}`;
+  const hote = String(req.headers['x-forwarded-host'] || req.headers.host || '');
+  const origine = /^(www\.)?k-reau\.fr$/.test(hote) || /^k-reau-[a-z0-9-]+\.vercel\.app$/.test(hote) ? `https://${hote}` : ORIGINE_SITE;
   const image = slug => `${origine}/${PRODUITS[slug].image_principale.replace(/^\//, '')}`;
 
   const items = []; const resume = []; const cartes = []; let physique = 0; let surMesure = 0;

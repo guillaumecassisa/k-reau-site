@@ -2,6 +2,11 @@
 <html lang="fr"><head>
 <meta charset="utf-8">
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
+<meta name="tdm-reservation" content="1">
+<meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
+<meta name="robots" content="index, follow, max-image-preview:large, noai, noimageai">
+<meta name="copyright" content="© K-Reau – GC3D. Tous droits réservés.">
+<meta name="author" content="K-Reau">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" type="image/webp" href="/img/01_Identite/logo-kreau-header.webp">
 <title>CGV | K-Reau</title>
@@ -646,7 +651,7 @@ function setMeta(title, desc, opts = {}){
   set('link[rel="canonical"]','href',url); set('meta[property="og:url"]','content',url);
   let rob = document.querySelector('meta[name="robots"]');
   const prive = ['/avant-lancement','/merci','/panier'].includes(location.pathname) || title.startsWith('Page introuvable');
-  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.remove();
+  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noai, noimageai';
 }
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),3200); }
 
@@ -1799,6 +1804,9 @@ const PAGES = {
     <h2>6. Propriété intellectuelle</h2>
     <p>L’ensemble des éléments du site — nom et marque K-Reau, logo, signature « Carreaux d’ici », dessins et illustrations des carreaux, calligraphies, photographies, textes, mise en page et code — est la propriété exclusive de l’éditeur ou utilisé avec autorisation, et est protégé par le Code de la propriété intellectuelle.</p>
     <p>Toute reproduction, représentation, adaptation, modification ou exploitation, totale ou partielle, de ces éléments, par quelque procédé que ce soit et sur quelque support que ce soit, sans l’autorisation écrite préalable de l’éditeur, est interdite et constitue une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+    <p>Il est notamment interdit, sans autorisation écrite : de reproduire ou d’imprimer les dessins des carreaux sur tout support (carreaux, affiches, textiles, objets, fichiers numériques) ; de copier les textes, descriptions et guides du site ; d’utiliser les photographies ou visuels dans une boutique en ligne, une place de marché ou sur les réseaux sociaux pour vendre des produits ; d’extraire de manière systématique le contenu du site (aspiration, « scraping »).</p>
+    <p><strong>Fouille de textes et de données.</strong> Conformément à l’article L.122-5-3 du Code de la propriété intellectuelle et à l’article 4 de la directive (UE) 2019/790, K-Reau s’oppose expressément à toute fouille de textes et de données (« text and data mining ») portant sur les contenus de ce site, y compris à des fins d’entraînement de systèmes d’intelligence artificielle. Cette réservation est également exprimée par des moyens lisibles par machine (fichier robots.txt, protocole TDMRep, en-têtes et balises dédiés).</p>
+    <p>Le partage d’un lien vers une page du site, ou d’une épingle publiée par K-Reau sur Pinterest ou Instagram, est en revanche bienvenu. Pour toute demande d’utilisation (presse, partenariat, revendeur), écrivez-nous via le <a class="lien" href="/contact">formulaire de contact</a>. Toute utilisation non autorisée constatée pourra donner lieu à une demande de retrait et à des poursuites.</p>
     <p>Pour les créations sur mesure, le client garantit disposer des droits sur les photographies et dessins qu’il transmet (par exemple ses propres photos ou les dessins de ses enfants) et autorise K-Reau à les utiliser uniquement pour réaliser sa commande.</p>
 
     <h2>7. Photographies et visuels</h2>
