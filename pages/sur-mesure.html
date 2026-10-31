@@ -383,6 +383,16 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .projet-liste li{background:var(--blanc,#fff);border:1px solid var(--joint);padding:20px;display:grid;gap:6px;align-content:start}
 .projet-liste strong{font-weight:600}
 .projet-liste span{color:var(--encre-doux);font-size:.92rem}
+.sm-photos{display:grid;gap:8px}
+.sm-depot{display:flex;align-items:center;gap:14px;border:1.5px dashed #BFB4A4;background:var(--blanc);padding:18px;cursor:pointer;border-radius:var(--r)}
+.sm-depot:hover,.sm-depot:focus-within{border-color:var(--olivier)}
+.sm-depot input{position:absolute;width:1px;height:1px;opacity:0}
+.sm-depot::before{content:'+';display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sable-clair);font-size:1.5rem;color:var(--olivier);flex:none}
+.sm-depot-txt{display:grid;gap:2px}
+.sm-vignettes{display:flex;gap:10px;flex-wrap:wrap}
+.sm-vignettes figure{position:relative;margin:0;width:84px;height:84px;border:1px solid var(--joint)}
+.sm-vignettes img{width:100%;height:100%;object-fit:cover}
+.sm-vignettes button{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;border:0;background:var(--encre);color:#fff;cursor:pointer;line-height:1}
 .sm-boutons{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .sm-projet{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between;background:var(--sable-clair);padding:clamp(24px,4vw,40px);max-width:980px}
 .sm-projet h2{margin:0 0 8px}.sm-projet p{margin:0;color:var(--encre-doux);max-width:36em}
@@ -518,7 +528,12 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required="" placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="sm-lieu">Où se trouve ce lieu ?</label><input type="text" id="sm-lieu" maxlength="120" required="" placeholder="Ville, quartier, adresse ou nom de la plage"><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="sm-details">Ce que vous aimeriez voir sur le dessin <span class="muted" style="font-weight:400">(facultatif)</span></label><textarea id="sm-details" maxlength="300" placeholder="La façade avec les volets, le grand pin, la vue sur le port…"></textarea><span class="err" aria-live="polite"></span></div>
-      <div class="champ"><label for="sm-photo">Lien vers une photo <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="url" id="sm-photo" maxlength="200" placeholder="https://…"><span class="small muted">Vous pourrez aussi nous envoyer vos photos à contact@k-reau.fr après la commande.</span><span class="err" aria-live="polite"></span></div>
+      <div class="sm-photos"><label for="sm-fichiers"><strong>Vos photos</strong> <span class="muted" style="font-weight:400">(facultatif, jusqu’à 3)</span></label>
+        <label class="sm-depot" for="sm-fichiers"><input type="file" id="sm-fichiers" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple="">
+          <span class="sm-depot-txt"><strong>Ajouter des photos</strong><span class="small muted">Photo de la maison, du lieu, ou dessin à reproduire · JPG, PNG</span></span></label>
+        <div class="sm-vignettes" id="sm-vignettes"></div>
+        <span class="small muted">Vos photos nous sont transmises en toute confidentialité et servent uniquement à réaliser votre dessin. Vous pourrez aussi en envoyer d’autres à contact@k-reau.fr après la commande.</span>
+        <span class="err" id="sm-photos-err" aria-live="polite"></span></div>
       <label class="consent"><input type="checkbox" id="sm-ok" required=""> <span>J’ai compris qu’un carreau personnalisé ne peut pas faire l’objet d’une rétractation, et que le dessin me sera soumis avant impression.</span></label>
       <button class="btn btn-p" type="submit" style="justify-self:start">Ajouter au panier · 34,90&nbsp;€</button>
       <div class="retour" aria-live="polite"></div>
@@ -2279,6 +2294,7 @@ const PAGES = {
     <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Polices de caractères : Google Fonts (Google Ireland Limited), qui reçoit à cette occasion l’adresse IP du visiteur. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
     <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
     <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
+    <h2>Photos du carreau sur mesure</h2><p>Les photos que vous ajoutez sur la page Sur mesure sont réduites dans votre navigateur, puis transmises à K-Reau par e-mail avec une référence. Elles servent uniquement à réaliser votre dessin, ne sont jamais publiées sans votre accord et sont supprimées une fois la commande terminée, ou si elle n’est pas passée.</p>
     <h2>Mesure d’audience</h2><p>Le site utilise Vercel Web Analytics pour compter les visites de façon anonyme et agrégée (pages vues, provenance, type d’appareil, pays). Cet outil ne dépose aucun cookie et ne permet pas de vous identifier.</p>
     <h2>Cookies</h2><p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Le panier est conservé dans votre navigateur (stockage local) uniquement pour le fonctionnement de la commande. Si des outils de mesure sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser.</p>`),
 
@@ -2415,7 +2431,12 @@ function vueSurMesure(){
       <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="sm-lieu">Où se trouve ce lieu ?</label><input type="text" id="sm-lieu" maxlength="120" required placeholder="Ville, quartier, adresse ou nom de la plage"><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="sm-details">Ce que vous aimeriez voir sur le dessin <span class="muted" style="font-weight:400">(facultatif)</span></label><textarea id="sm-details" maxlength="300" placeholder="La façade avec les volets, le grand pin, la vue sur le port…"></textarea><span class="err" aria-live="polite"></span></div>
-      <div class="champ"><label for="sm-photo">Lien vers une photo <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="url" id="sm-photo" maxlength="200" placeholder="https://…"><span class="small muted">Vous pourrez aussi nous envoyer vos photos à contact@k-reau.fr après la commande.</span><span class="err" aria-live="polite"></span></div>
+      <div class="sm-photos"><label for="sm-fichiers"><strong>Vos photos</strong> <span class="muted" style="font-weight:400">(facultatif, jusqu’à 3)</span></label>
+        <label class="sm-depot" for="sm-fichiers"><input type="file" id="sm-fichiers" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
+          <span class="sm-depot-txt"><strong>Ajouter des photos</strong><span class="small muted">Photo de la maison, du lieu, ou dessin à reproduire · JPG, PNG</span></span></label>
+        <div class="sm-vignettes" id="sm-vignettes"></div>
+        <span class="small muted">Vos photos nous sont transmises en toute confidentialité et servent uniquement à réaliser votre dessin. Vous pourrez aussi en envoyer d’autres à contact@k-reau.fr après la commande.</span>
+        <span class="err" id="sm-photos-err" aria-live="polite"></span></div>
       <label class="consent"><input type="checkbox" id="sm-ok" required> <span>J’ai compris qu’un carreau personnalisé ne peut pas faire l’objet d’une rétractation, et que le dessin me sera soumis avant impression.</span></label>
       <button class="btn btn-p" type="submit" style="justify-self:start">Ajouter au panier · ${prixEur(CONFIG.prix.surMesure)}</button>
       <div class="retour" aria-live="polite"></div>
@@ -2437,14 +2458,71 @@ function vueSurMesure(){
     SM_EXEMPLES.slice(1).forEach(e => { const p = new Image(); p.src = `/img/sur-mesure/${e.f}-mini.webp`; });
   }
   const form = $('#form-sm');
-  form.addEventListener('submit', e => {
+  photosSM = []; afficherPhotosSM();
+  form.addEventListener('submit', async e => {
     e.preventDefault(); e.stopPropagation();
     if(!valider(form)) return;
     if(!$('#sm-ok').checked){ form.querySelector('.retour').innerHTML = '<p class="msg ko">Cochez la case pour confirmer que vous avez pris connaissance des conditions du sur-mesure.</p>'; return; }
-    Panier.ajouter({ type:'sur-mesure', texte:$('#sm-texte').value.trim(), lieu:$('#sm-lieu').value.trim(), details:$('#sm-details').value.trim(), photo:$('#sm-photo').value.trim() });
-    form.reset(); form.querySelector('.retour').innerHTML = '<p class="msg ok">Votre carreau sur mesure est dans le panier.</p>';
+    const btn = form.querySelector('button[type=submit]'), lib = btn.textContent, ret = form.querySelector('.retour');
+    const infos = { texte:$('#sm-texte').value.trim(), lieu:$('#sm-lieu').value.trim(), details:$('#sm-details').value.trim() };
+    let photo = '';
+    if(photosSM.length){
+      const ref = 'SM-' + Array.from(crypto.getRandomValues(new Uint8Array(6)), x => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[x % 32]).join('');
+      btn.disabled = true;
+      try{
+        for(let i = 0; i < photosSM.length; i++){
+          btn.textContent = `Envoi de la photo ${i+1} sur ${photosSM.length}…`;
+          const r = await fetch('/api/photo', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ ref, index:i+1, total:photosSM.length, type:'image/jpeg', data:photosSM[i].data, ...infos }) });
+          const j = await r.json().catch(()=>({}));
+          if(!r.ok) throw new Error(j.erreur || 'Erreur ' + r.status);
+        }
+        photo = `${photosSM.length} photo${photosSM.length>1?'s':''} envoyée${photosSM.length>1?'s':''} · réf. ${ref}`;
+      }catch(err){
+        btn.disabled = false; btn.textContent = lib;
+        ret.innerHTML = `<p class="msg ko">Vos photos n’ont pas pu être envoyées (${esc(err.message)}). Réessayez, ou ajoutez le carreau sans photo et envoyez-les à contact@k-reau.fr après la commande.</p>`;
+        return;
+      }
+      btn.disabled = false; btn.textContent = lib;
+    }
+    Panier.ajouter({ type:'sur-mesure', ...infos, photo });
+    form.reset(); photosSM = []; afficherPhotosSM();
+    ret.innerHTML = `<p class="msg ok">Votre carreau sur mesure est dans le panier${photo ? ', avec vos photos' : ''}.</p>`;
     Panier.ouvrir();
   });
+  $('#sm-fichiers').addEventListener('change', async e => {
+    const err = $('#sm-photos-err'); err.textContent = '';
+    for(const f of Array.from(e.target.files)){
+      if(photosSM.length >= 3){ err.textContent = 'Trois photos maximum.'; break; }
+      if(f.size > 25 * 1024 * 1024){ err.textContent = `« ${f.name} » est trop lourde (25 Mo maximum).`; continue; }
+      try{ photosSM.push(await reduirePhoto(f)); }
+      catch{ err.textContent = `« ${f.name} » n’a pas pu être lue. Essayez une photo au format JPG ou PNG.`; }
+    }
+    e.target.value = ''; afficherPhotosSM();
+  });
+  $('#sm-vignettes').addEventListener('click', e => { const b = e.target.closest('[data-retirer]'); if(!b) return; photosSM.splice(+b.dataset.retirer, 1); afficherPhotosSM(); });
+}
+
+// Photos du sur-mesure : réduites dans le navigateur (2000 px max, JPEG) avant l'envoi
+let photosSM = [];
+function reduirePhoto(fichier){
+  return new Promise((ok, ko) => {
+    const url = URL.createObjectURL(fichier), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+      const c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+      const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      let q = 0.86, data = c.toDataURL('image/jpeg', q);
+      while(data.length > 2.6e6 && q > 0.5){ q -= 0.08; data = c.toDataURL('image/jpeg', q); }
+      ok({ nom: fichier.name, data, apercu: c.toDataURL('image/jpeg', 0.6) });
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); ko(new Error('illisible')); };
+    img.src = url;
+  });
+}
+function afficherPhotosSM(){
+  const v = $('#sm-vignettes'); if(!v) return;
+  v.innerHTML = photosSM.map((p, i) => `<figure><img src="${p.apercu}" alt="Photo ${i+1} : ${esc(p.nom)}"><button type="button" data-retirer="${i}" aria-label="Retirer la photo ${i+1}">×</button></figure>`).join('');
 }
 
 function vueCarteCadeau(){
@@ -2542,7 +2620,7 @@ const Panier = {
     if(l.type==='carreau') return `<strong>${esc(parSlug(l.slug).nom)}</strong><span class="sous">Carreau 15 × 15 cm</span>`;
     if(l.type==='coffret') return `<strong>${esc(l.nom||'Coffret 3 carreaux')}</strong><span class="sous">${l.slugs.map(x=>esc(parSlug(x).nom)).join(' · ')}</span>`;
     if(l.type==='chevalet') return `<strong>Chevalet trépied en bois brut</strong><span class="sous">L 8 × H 15 cm · pour poser votre carreau</span>`;
-    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">« ${esc(l.texte)} » · ${esc(l.lieu)}</span>`;
+    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">« ${esc(l.texte)} » · ${esc(l.lieu)}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
     return `<strong>Carte cadeau ${prixEur(l.montant/100)}</strong><span class="sous">Code envoyé après le paiement</span>`;
   },
   suggestions(){
