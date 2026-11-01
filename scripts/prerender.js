@@ -77,10 +77,9 @@ ${[p.image_en_main,p.image_etagere,p.image_coffret,p.image_detail,p.image_dimens
     <g:google_product_category>696</g:google_product_category>
     <g:product_type>${xml(`Décoration > Carreaux décoratifs > ${p.collection === 'Signature' ? 'Les Embiez' : p.collection}`)}</g:product_type>
     <g:material>Céramique</g:material>
-    <g:shipping><g:country>FR</g:country><g:price>7.90 EUR</g:price></g:shipping>
   </item>`; }).join('\n');
   fs.writeFileSync(path.join(RACINE, 'google-merchant.xml'),
-    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n<channel>\n  <title>K-Reau – carreaux décoratifs</title>\n  <link>https://k-reau.fr/</link>\n  <description>Carreaux décoratifs en céramique de Marseille et de la Côte Bleue</description>\n${items}\n</channel>\n</rss>\n`);
+    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n<channel>\n  <title>K-Reau – carreaux décoratifs</title>\n  <link>https://k-reau.fr/</link>\n  <description>Carreaux décoratifs illustrés en céramique : Marseille, Côte Bleue, montagnes de Provence, châteaux de France</description>\n${items}\n</channel>\n</rss>\n`);
   console.log(`flux Merchant : ${cat.length} produits`);
   if (erreurs.length) { console.error('Erreurs JS :', erreurs); process.exit(1); }
 })();
