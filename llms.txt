@@ -19,6 +19,7 @@
 
 - [Marseille](https://k-reau.fr/collections/marseille) : Le Vieux-Port de Marseille, Notre-Dame de la Garde, Le Mucem, La Major, Le Vallon des Auffes, Le Château d’If, Les Îles du Frioul, La Calanque de Sormiou, La Calanque de Morgiou, Le Palais Longchamp, La Tour CMA CGM, Le Vélodrome, La Panisse, Le David, La Corniche Kennedy, Le Panier, La Canebière, La Cité radieuse, Le Fort Saint-Jean, Le Prado.
 - [Côte Bleue](https://k-reau.fr/collections/cote-bleue) : Le Port de Niolon, La Calanque de Méjean, Le Port de La Redonne, Carry-le-Rouet, Sausset-les-Pins, Le Port de Carro, Le Cap Couronne, La Plage de Sainte-Croix, Ensuès-la-Redonne, L’Estaque.
+- [Côte provençale](https://k-reau.fr/collections/cote-provencale) : Le Cap Canaille (Cassis).
 - [Montagnes du Sud (Provence et Var)](https://k-reau.fr/collections/montagnes-du-sud) : La Sainte-Victoire, La Sainte-Baume, Le Mont Salva, Le Gros Cerveau, Le Mont Faron, Le Mont Caume, Le Garlaban, Le Mont Ventoux, Le Mont Puget, Le Rocher de Roquebrune.
 - [Les Châteaux (châteaux de France)](https://k-reau.fr/collections/chateaux) : Le Château de Versailles, Le Château de Chambord, Le Château de Chenonceau, Le Château d’Amboise, Le Château de Blois, Le Château d’Azay-le-Rideau, Le Château d’Ussé, Le Château de Villandry, Le Château de Fontainebleau, Le Château de Saumur.
 - [Les Embiez, modèle signature](https://k-reau.fr/produits/les-embiez)
