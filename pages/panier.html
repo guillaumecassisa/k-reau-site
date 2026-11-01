@@ -69,7 +69,8 @@ p{margin:0}
 .lien:hover{color:var(--encre)}
 
 /* Annonce + en-tête */
-.annonce{background:var(--olivier);color:var(--ceramique);font-size:.8rem;letter-spacing:.04em;text-align:center;padding-block:8px}
+.annonce{background:var(--olivier);color:var(--ceramique);font-size:.8rem;letter-spacing:.04em;text-align:center;padding:8px 16px;line-height:1.5}
+.annonce a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.annonce strong{font-weight:700}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(247,245,240,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--joint)}
 .hd{display:flex;align-items:center;gap:16px;min-height:76px}
 nav.principale{margin-left:clamp(8px,2vw,28px)}
@@ -447,7 +448,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
-<div class="annonce" id="annonce" hidden=""></div>
+<div class="annonce" id="annonce"><strong>Noël :</strong> commandez avant le 12 décembre pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · <a href="/coffrets">Voir les coffrets</a></div>
 <header class="site">
   <div class="wrap hd">
     <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header.webp" alt="K-Reau" width="560" height="461"></a>
@@ -3049,6 +3050,14 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') fermerMenu(); }
 $('#annee').textContent = new Date().getFullYear();
 if(TEST_BOUTIQUE){ const a=$('#annonce'); a.textContent='Mode test du paiement : utilisez la carte 4242 4242 4242 4242, aucune somme n’est débitée.'; a.hidden=false; }
 else if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.annonce; a.hidden = false; }
+else if(LIVE){ // Bandeau de Noël : date limite calculée sur l'année en cours
+  const a=$('#annonce'), now=new Date(), an=now.getFullYear(), j=new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const limite=new Date(an,11,12), debut=new Date(an,10,1), fin=new Date(an,11,24);
+  let msg='';
+  if(j>=debut && j<=limite) msg=`<strong>Noël :</strong> commandez avant le ${limite.toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · <a href="/coffrets">Voir les coffrets</a>`;
+  else if(j>limite && j<=fin) msg=`<strong>Trop tard pour une livraison avant Noël ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · <a href="/carte-cadeau">Offrir une carte</a>`;
+  a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
+}
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);
 if(!app.dataset.prerendu) route();
