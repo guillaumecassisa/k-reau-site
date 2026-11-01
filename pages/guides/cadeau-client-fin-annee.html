@@ -537,7 +537,6 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a href="/">Accueil</a>
     <a href="/collections/marseille">Marseille</a>
     <a href="/collections/cote-bleue">Côte Bleue</a>
-    <a href="/collections/cote-provencale" data-coll="cote-provencale">La Côte provençale</a>
     <a href="/collections/montagnes-du-sud" data-coll="montagnes-du-sud">Les Montagnes du Sud</a>
     <a href="/collections/chateaux" data-coll="chateaux">Les Châteaux</a>
     <a href="/produits/les-embiez">Les Embiez</a>
@@ -681,7 +680,6 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
         <ul>
           <li><a href="/collections/marseille">Marseille</a></li>
           <li><a href="/collections/cote-bleue">La Côte Bleue</a></li>
-          <li data-coll="cote-provencale"><a href="/collections/cote-provencale">La Côte provençale</a></li>
           <li data-coll="montagnes-du-sud"><a href="/collections/montagnes-du-sud">Les Montagnes du Sud</a></li>
           <li data-coll="chateaux"><a href="/collections/chateaux">Les Châteaux</a></li>
           <li><a href="/produits/les-embiez">Les Embiez</a></li>
@@ -751,7 +749,7 @@ const COLLECTIONS = {
     seoDesc:'Carreaux en céramique illustrés de Marseille : Vieux-Port, Notre-Dame de la Garde, le Panier, la Canebière, la Corniche, calanques… Idée cadeau souvenir à 19,90 €.',
     h1:'Carreaux décoratifs de Marseille',
     offrir:'Un souvenir de Marseille à offrir',
-    texte:'Des carreaux en céramique de 15 × 15 cm pour garder un morceau de Marseille chez soi ou l’offrir : la Bonne Mère, le Vieux-Port, le Mucem, La Major, le Vallon des Auffes, le Château d’If, les îles du Frioul, les calanques de Sormiou et de Morgiou, le Palais Longchamp, le Panier, la Canebière, la Corniche Kennedy, le Fort Saint-Jean, la Cité radieuse, les plages du Prado et le David, la tour CMA CGM, le Vélodrome… et même la panisse. Une idée cadeau souvenir de Marseille pour les Marseillais d’ici et d’ailleurs.' },
+    texte:'Des carreaux en céramique de 15 × 15 cm pour garder un morceau de Marseille chez soi ou l’offrir : la Bonne Mère, le Vieux-Port, le Mucem, La Major, le Vallon des Auffes, le Château d’If, les îles du Frioul, les calanques de Sormiou et de Morgiou, le Palais Longchamp, le Panier, la Canebière, la Corniche Kennedy, le Fort Saint-Jean, la Cité radieuse, les plages du Prado et le David, la tour CMA CGM, le Vélodrome, et jusqu’au Cap Canaille à Cassis… et même la panisse. Une idée cadeau souvenir de Marseille pour les Marseillais d’ici et d’ailleurs.' },
   'cote-bleue': { nom:'La Côte Bleue', titre:'Collection Côte Bleue', cle:'Côte Bleue', img:'/img/mises-en-scene/cote-bleue-calanque.webp', w:548, h:465,
     court:'De L’Estaque à Carro, des ports et des criques à garder près de soi.',
     intro:'Entre L’Estaque et Carro, la Côte Bleue aligne petits ports, calanques et pinèdes. Dix lieux pour ceux qui connaissent ses chemins de bord de mer.',
@@ -776,14 +774,6 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs des châteaux de France',
     offrir:'Un souvenir des châteaux de France à offrir',
     texte:'Versailles et Fontainebleau, puis les châteaux de la Loire – Chambord, Chenonceau, Amboise, Blois, Azay-le-Rideau, Villandry, Ussé et Saumur : les grands châteaux de France dessinés au trait sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour les amoureux d’histoire et de patrimoine.' },
-  'cote-provencale': { nom:'La Côte provençale', titre:'Collection Côte provençale', cle:'Côte provençale', filtre:'Côte provençale', region:'Provence', img:'/img/11_Produits_Cote_Provencale/cote-provencale-cap-canaille.webp', w:1254, h:1254,
-    court:'Cassis, le Cap Canaille… La côte à l’est de Marseille, en un trait.',
-    intro:'À l’est de Marseille, la côte provençale enchaîne falaises, petits ports et calanques : Cassis et son Cap Canaille ouvrent la collection, chaque lieu dessiné au trait avec son nom en calligraphie.',
-    seo:'Carreaux décoratifs Cassis, Cap Canaille, côte provençale – K-Reau',
-    seoDesc:'Carreaux en céramique illustrés de la côte provençale : Cassis, le Cap Canaille… Dessin au trait et nom calligraphié, 15 × 15 cm. Idée cadeau souvenir à 19,90 €.',
-    h1:'Carreaux décoratifs de la côte provençale',
-    offrir:'Un souvenir de Cassis et de la côte provençale à offrir',
-    texte:'Le Cap Canaille et sa falaise au-dessus de la baie de Cassis, bientôt rejoints par d’autres lieux de la côte : des carreaux en céramique de 15 × 15 cm pour garder chez soi un morceau de Méditerranée. Le cadeau idéal pour ceux qui ont leurs habitudes à Cassis ou y ont passé leurs plus belles vacances.' },
   'les-embiez': { nom:'Les Embiez', titre:'Les Embiez', cle:'Signature', img:'/img/mises-en-scene/les-embiez-rochers.webp', w:512, h:508,
     court:'Notre modèle signature : l’île, sa tour et ses rochers.', intro:'', seo:'', seoDesc:'' }
 };
@@ -852,7 +842,7 @@ async function charger(){
   route();
 }
 const parSlug = s => PRODUITS?.find(p => p.slug === s);
-const COLLS_PRINCIPALES = ['marseille','cote-bleue','cote-provencale','montagnes-du-sud','chateaux'];
+const COLLS_PRINCIPALES = ['marseille','cote-bleue','montagnes-du-sud','chateaux'];
 const ORDRE_COLLS = [...COLLS_PRINCIPALES, 'les-embiez'];
 // une collection n'apparaît que si elle contient au moins un carreau publié
 const collPubliee = k => ['marseille','cote-bleue','les-embiez'].includes(k) || !!PRODUITS?.some(p => p.collection_slug === k);
@@ -887,7 +877,6 @@ const INSPIRATIONS = {
   'tout': 'Tous nos carreaux partagent le même esprit : un lieu réel, dessiné au trait noir sur céramique blanche, avec son nom en calligraphie. Choisissez une collection pour découvrir d’où elle vient.',
   'marseille': 'Marseille se raconte par ses lieux : le Vieux-Port où tout a commencé, la Bonne Mère qui veille sur la ville, les calanques à vingt minutes du centre. Cette collection suit nos balades, du Panier à la Corniche, et cette lumière qui fait briller la pierre blanche.',
   'cote-bleue': 'À l’ouest de Marseille, la Côte Bleue garde un air de vacances toute l’année : petits ports, cabanons, criques à l’eau d’une clarté incroyable. Cette collection rend hommage à ces villages de pêcheurs, de L’Estaque à Carro, que l’on découvre souvent depuis le petit train qui longe la mer.',
-  'cote-provencale': 'Passé les calanques, à l’est de Marseille, la côte change de visage : la grande falaise du Cap Canaille, le port de Cassis et ses façades colorées, les criques où l’on se baigne jusqu’en octobre. Cette collection commence là, au pied de la route des Crêtes.',
   'montagnes-du-sud': 'En Provence, chacun a sa montagne : la Sainte-Victoire de Cézanne, le Garlaban de Pagnol, le Ventoux des cyclistes. On les regarde depuis sa fenêtre, on les gravit le dimanche, on les cherche du regard en rentrant de voyage. Cette collection dessine leurs crêtes, de Marseille jusqu’au Var.',
   'chateaux': 'Après la Provence, nous avons eu envie de dessiner le patrimoine de toute la France. Chambord, Chenonceau, Versailles ou Saumur : des silhouettes que tout le monde reconnaît, et autant de souvenirs de visites, de voyages scolaires ou de week-ends dans le Val de Loire.',
   'les-embiez': 'Les Embiez, c’est notre modèle signature : une petite île au large de Six-Fours, sa tour et ses rochers qui affleurent. Une île, un trait épuré et son nom en calligraphie : il résume à lui seul l’esprit K-Reau.'
@@ -1045,7 +1034,7 @@ function vueAccueil(){
   <section class="bloc fond-sable" aria-labelledby="t-seo">
     <div class="wrap prose" style="max-width:820px">
       <h2 id="t-seo">Des carreaux décoratifs de Marseille, de Provence et des châteaux de France</h2>
-      <p>K-Reau dessine au trait les lieux qu’on aime sur des carreaux décoratifs en céramique blanche de 15 × 15 cm. À Marseille, le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, le <a class="lien" href="/produits/marseille-vallon-des-auffes">Vallon des Auffes</a> et les calanques de <a class="lien" href="/produits/marseille-calanque-sormiou">Sormiou</a> et de <a class="lien" href="/produits/marseille-calanque-morgiou">Morgiou</a>. Sur la Côte Bleue, <a class="lien" href="/produits/cote-bleue-carry-le-rouet">Carry-le-Rouet</a>, <a class="lien" href="/produits/cote-bleue-sausset-les-pins">Sausset-les-Pins</a>, <a class="lien" href="/produits/cote-bleue-port-niolon">Niolon</a> ou <a class="lien" href="/produits/cote-bleue-estaque">L’Estaque</a>. Plus à l’est, le <a class="lien" href="/produits/cote-provencale-cap-canaille">Cap Canaille</a> veille sur la baie de Cassis.</p>
+      <p>K-Reau dessine au trait les lieux qu’on aime sur des carreaux décoratifs en céramique blanche de 15 × 15 cm. À Marseille, le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, le <a class="lien" href="/produits/marseille-vallon-des-auffes">Vallon des Auffes</a> et les calanques de <a class="lien" href="/produits/marseille-calanque-sormiou">Sormiou</a> et de <a class="lien" href="/produits/marseille-calanque-morgiou">Morgiou</a>. Sur la Côte Bleue, <a class="lien" href="/produits/cote-bleue-carry-le-rouet">Carry-le-Rouet</a>, <a class="lien" href="/produits/cote-bleue-sausset-les-pins">Sausset-les-Pins</a>, <a class="lien" href="/produits/cote-bleue-port-niolon">Niolon</a> ou <a class="lien" href="/produits/cote-bleue-estaque">L’Estaque</a>. Plus à l’est, le <a class="lien" href="/produits/marseille-cap-canaille">Cap Canaille</a> veille sur la baie de Cassis.</p>
       <p>Plus loin, les sommets de Provence : la <a class="lien" href="/produits/montagnes-sainte-victoire">Sainte-Victoire</a>, le <a class="lien" href="/produits/montagnes-garlaban">Garlaban</a>, le <a class="lien" href="/produits/montagnes-mont-ventoux">Mont Ventoux</a>, la <a class="lien" href="/produits/montagnes-sainte-baume">Sainte-Baume</a> ou le <a class="lien" href="/produits/montagnes-mont-faron">Mont Faron</a>. Et les grands châteaux de France : <a class="lien" href="/produits/chateaux-versailles">Versailles</a>, <a class="lien" href="/produits/chateaux-chambord">Chambord</a>, <a class="lien" href="/produits/chateaux-chenonceau">Chenonceau</a>, <a class="lien" href="/produits/chateaux-amboise">Amboise</a>, <a class="lien" href="/produits/chateaux-azay-le-rideau">Azay-le-Rideau</a> ou <a class="lien" href="/produits/chateaux-saumur">Saumur</a>.</p>
       <h3>Une idée cadeau souvenir, élégante et originale</h3>
       <p>Chaque carreau associe un dessin au trait noir et le nom du lieu en calligraphie. C’est un cadeau original pour un Marseillais exilé, un amoureux de la Provence ou du patrimoine, une crémaillère, un départ ou un anniversaire : un souvenir élégant, loin des objets touristiques. À poser sur un meuble ou à accrocher au mur, il apporte une touche de décoration à la maison.</p>

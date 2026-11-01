@@ -35,6 +35,26 @@
   ],
   "redirects": [
     {
+      "source": "/collections/cote-provencale",
+      "destination": "/collections/marseille",
+      "permanent": true
+    },
+    {
+      "source": "/en/collections/cote-provencale",
+      "destination": "/en/collections/marseille",
+      "permanent": true
+    },
+    {
+      "source": "/produits/cote-provencale-cap-canaille",
+      "destination": "/produits/marseille-cap-canaille",
+      "permanent": true
+    },
+    {
+      "source": "/en/produits/cote-provencale-cap-canaille",
+      "destination": "/en/produits/marseille-cap-canaille",
+      "permanent": true
+    },
+    {
       "source": "/en/collections/les-embiez",
       "destination": "/en/produits/les-embiez",
       "permanent": true

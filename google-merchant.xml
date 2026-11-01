@@ -406,6 +406,26 @@
     <g:shipping><g:country>FR</g:country><g:price>7.90 EUR</g:price></g:shipping>
   </item>
   <item>
+    <g:id>marseille-cap-canaille</g:id>
+    <g:title>Carreau décoratif Le Cap Canaille – céramique 15 x 15 cm</g:title>
+    <g:description>La grande falaise qui ferme la baie de Cassis, le petit phare au bout de la jetée et un voilier qui sort du port. Le Cap Canaille, on le regarde depuis la plage en fin de journée, quand la roche devient presque rouge. Entre Cassis et La Ciotat, le Cap Canaille culmine à 394 mètres au-dessus de la mer : c’est l’une des plus hautes falaises maritimes d’Europe. Ses couches de calcaire et de grès ocre se lisent comme les pages d’un livre, et la route des Crêtes, qui longe son sommet, offre une vue plongeante sur Cassis, les calanques et la Méditerranée. Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir de Marseille.</g:description>
+    <g:link>https://k-reau.fr/produits/marseille-cap-canaille</g:link>
+    <g:image_link>https://k-reau.fr/img/03_Produits_Marseille/marseille-cap-canaille.webp</g:image_link>
+    <g:additional_image_link>https://k-reau.fr/img/etagere/marseille-cap-canaille-etagere.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/coffret/marseille-cap-canaille-coffret.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/details/marseille-cap-canaille-detail.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/dimensions/marseille-cap-canaille-dimensions.webp</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>19.90 EUR</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>K-Reau</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:google_product_category>696</g:google_product_category>
+    <g:product_type>Décoration &gt; Carreaux décoratifs &gt; Marseille</g:product_type>
+    <g:material>Céramique</g:material>
+    <g:shipping><g:country>FR</g:country><g:price>7.90 EUR</g:price></g:shipping>
+  </item>
+  <item>
     <g:id>cote-bleue-port-niolon</g:id>
     <g:title>Carreau décoratif Le Port de Niolon – céramique 15 x 15 cm</g:title>
     <g:description>Il faut descendre une route en lacets pour l’atteindre. Le train passe juste au-dessus, sur son viaduc. En bas : quelques barques, des plongeurs, et une eau d’une clarté incroyable. Niolon. Petit village du Rove accroché aux rochers, Niolon est réputé pour ses eaux claires, ses fonds marins appréciés des plongeurs et le viaduc du train de la Côte Bleue qui passe au-dessus du port. Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir de la Côte Bleue.</g:description>
@@ -1022,26 +1042,6 @@
     <g:identifier_exists>no</g:identifier_exists>
     <g:google_product_category>696</g:google_product_category>
     <g:product_type>Décoration &gt; Carreaux décoratifs &gt; Châteaux</g:product_type>
-    <g:material>Céramique</g:material>
-    <g:shipping><g:country>FR</g:country><g:price>7.90 EUR</g:price></g:shipping>
-  </item>
-  <item>
-    <g:id>cote-provencale-cap-canaille</g:id>
-    <g:title>Carreau décoratif Le Cap Canaille – céramique 15 x 15 cm</g:title>
-    <g:description>La grande falaise qui ferme la baie de Cassis, le petit phare au bout de la jetée et un voilier qui sort du port. Le Cap Canaille, on le regarde depuis la plage en fin de journée, quand la roche devient presque rouge. Entre Cassis et La Ciotat, le Cap Canaille culmine à 394 mètres au-dessus de la mer : c’est l’une des plus hautes falaises maritimes d’Europe. Ses couches de calcaire et de grès ocre se lisent comme les pages d’un livre, et la route des Crêtes, qui longe son sommet, offre une vue plongeante sur Cassis, les calanques et la Méditerranée. Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir de Provence.</g:description>
-    <g:link>https://k-reau.fr/produits/cote-provencale-cap-canaille</g:link>
-    <g:image_link>https://k-reau.fr/img/11_Produits_Cote_Provencale/cote-provencale-cap-canaille.webp</g:image_link>
-    <g:additional_image_link>https://k-reau.fr/img/etagere/cote-provencale-cap-canaille-etagere.webp</g:additional_image_link>
-    <g:additional_image_link>https://k-reau.fr/img/coffret/cote-provencale-cap-canaille-coffret.webp</g:additional_image_link>
-    <g:additional_image_link>https://k-reau.fr/img/details/cote-provencale-cap-canaille-detail.webp</g:additional_image_link>
-    <g:additional_image_link>https://k-reau.fr/img/dimensions/cote-provencale-cap-canaille-dimensions.webp</g:additional_image_link>
-    <g:availability>in_stock</g:availability>
-    <g:price>19.90 EUR</g:price>
-    <g:condition>new</g:condition>
-    <g:brand>K-Reau</g:brand>
-    <g:identifier_exists>no</g:identifier_exists>
-    <g:google_product_category>696</g:google_product_category>
-    <g:product_type>Décoration &gt; Carreaux décoratifs &gt; Côte provençale</g:product_type>
     <g:material>Céramique</g:material>
     <g:shipping><g:country>FR</g:country><g:price>7.90 EUR</g:price></g:shipping>
   </item>
