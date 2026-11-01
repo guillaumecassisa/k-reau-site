@@ -1,6 +1,22 @@
 {
   "rewrites": [
     {
+      "source": "/en",
+      "destination": "/pages/en.html"
+    },
+    {
+      "source": "/en/produits/:slug",
+      "destination": "/pages/en/produits/:slug.html"
+    },
+    {
+      "source": "/en/collections/:c",
+      "destination": "/pages/en/collections/:c.html"
+    },
+    {
+      "source": "/en/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier)",
+      "destination": "/pages/en/:page.html"
+    },
+    {
       "source": "/produits/:slug",
       "destination": "/pages/produits/:slug.html"
     },
@@ -18,6 +34,21 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/en/collections/les-embiez",
+      "destination": "/en/produits/les-embiez",
+      "permanent": true
+    },
+    {
+      "source": "/en/guides",
+      "destination": "/guides",
+      "permanent": false
+    },
+    {
+      "source": "/en/guides/:g",
+      "destination": "/guides/:g",
+      "permanent": false
+    },
     {
       "source": "/collections/les-embiez",
       "destination": "/produits/les-embiez",

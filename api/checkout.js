@@ -49,10 +49,11 @@ module.exports = async function handler(req, res) {
   if (!items.length) return res.status(400).json({ erreur: 'Panier vide' });
 
   const message = texte(corps.message, 250);
+  const en = corps.lang === 'en';
   const params = {
-    mode: 'payment', locale: 'fr',
-    success_url: `${origine}/merci?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origine}/panier`,
+    mode: 'payment', locale: en ? 'en' : 'fr',
+    success_url: `${origine}${en ? '/en' : ''}/merci?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origine}${en ? '/en' : ''}/panier`,
     billing_address_collection: 'auto',
     allow_promotion_codes: 'true',         // saisie des codes de cartes cadeaux sur la page de paiement
     line_items: items,
@@ -72,21 +73,21 @@ module.exports = async function handler(req, res) {
     const frais = parseInt(process.env.FRAIS_LIVRAISON_CENTIMES || '', 10);
     const seuil = parseInt(process.env.SEUIL_LIVRAISON_GRATUITE_CENTIMES || '', 10);
     if (dest === 'CA') {
-      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount', display_name: 'Livraison Canada',
+      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount', display_name: en ? 'Shipping to Canada' : 'Livraison Canada',
         fixed_amount: { amount: parseInt(process.env.FRAIS_CANADA_CENTIMES || '3699', 10), currency: 'eur' },
         delivery_estimate: { minimum: { unit: 'business_day', value: 10 }, maximum: { unit: 'business_day', value: 20 } } } }];
     } else if (dest === 'EU') {
-      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount', display_name: 'Livraison Europe',
+      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount', display_name: en ? 'Shipping to Europe' : 'Livraison Europe',
         fixed_amount: { amount: parseInt(process.env.FRAIS_EUROPE_CENTIMES || '1650', 10), currency: 'eur' },
         delivery_estimate: { minimum: { unit: 'business_day', value: 8 }, maximum: { unit: 'business_day', value: 14 } } } }];
     } else if (frais >= 0) {
       const offerte = seuil > 0 && physique >= seuil;
       params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount',
-        display_name: offerte ? 'Livraison France offerte' : (process.env.LIBELLE_LIVRAISON || 'Livraison'),
+        display_name: offerte ? (en ? 'Free shipping in France' : 'Livraison France offerte') : (en ? 'Shipping in France' : (process.env.LIBELLE_LIVRAISON || 'Livraison')),
         fixed_amount: { amount: offerte ? 0 : frais, currency: 'eur' } } }];
     }
   }
-  if (message) params.custom_text = { submit: { message: `Votre message cadeau sera imprimé sur la carte du coffret : « ${message.slice(0, 200)} »` } };
+  if (message) params.custom_text = { submit: { message: en ? `Your gift message will be printed on the card in the box: “${message.slice(0, 200)}”` : `Votre message cadeau sera imprimé sur la carte du coffret : « ${message.slice(0, 200)} »` } };
 
   try {
     const s = await stripe('POST', 'checkout/sessions', params);

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";document.write('<script id="i18n-js" src="/i18n-en.js"><\/script>');}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -81,6 +82,11 @@ nav.principale ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
 nav.principale a{display:flex;align-items:center;min-height:44px;padding:0 12px;white-space:nowrap;text-decoration:none;font-size:.9rem;font-weight:500;color:var(--encre);border-bottom:1px solid transparent}
 nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color:var(--olivier);color:var(--olivier)}
 .hd-actions{display:flex;align-items:center;gap:4px}
+.langues{display:flex;align-items:center;gap:5px;margin-right:6px;font-size:.78rem;font-weight:600;letter-spacing:.06em;color:var(--encre-doux)}
+.langues a{color:var(--encre-doux);text-decoration:none;padding:10px 2px;min-width:22px;text-align:center}
+.langues a:hover{color:var(--encre)}
+.langues a[aria-current]{color:var(--encre);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.langues span{opacity:.45}
 .icone-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:0;background:none;color:var(--encre);cursor:pointer;position:relative;text-decoration:none}
 .icone-btn svg{width:22px;height:22px}
 .pastille{position:absolute;top:6px;right:4px;min-width:18px;height:18px;border-radius:9px;background:var(--olivier);color:var(--blanc);font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px}
@@ -447,7 +453,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 @media(max-width:860px){.pied{grid-template-columns:1fr 1fr}.pied>div:first-child{grid-column:1/-1}}
 @media(max-width:420px){.pied{grid-template-columns:1fr}}
 </style>
-</head>
+<link rel="alternate" hreflang="fr" href="https://k-reau.fr/carte-cadeau"><link rel="alternate" hreflang="en" href="https://k-reau.fr/en/carte-cadeau"><link rel="alternate" hreflang="x-default" href="https://k-reau.fr/carte-cadeau"></head>
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
@@ -470,6 +476,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <ul class="suggestions" id="suggestions" role="listbox" hidden=""></ul>
     </form>
     <div class="hd-actions">
+      <nav class="langues" aria-label="Langue / Language"><a id="langue-fr" href="/carte-cadeau" hreflang="fr" lang="fr" data-langue="" aria-current="">FR</a><span aria-hidden="true">|</span><a id="langue-en" href="/en/carte-cadeau" hreflang="en" lang="en" data-langue="">EN</a></nav>
       <button class="icone-btn" id="btn-panier" type="button" aria-label="Ouvrir le panier">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg>
         <span class="pastille" id="nb-panier" hidden="">0</span>
@@ -636,6 +643,16 @@ const LIVE = TEST_BOUTIQUE || CONFIG.STORE_MODE === 'live';
 
 /* ===== Utilitaires ===== */
 const $ = (s, r=document) => r.querySelector(s);
+/* ===== Langue : le site anglais vit sous /en (les guides restent en français) ===== */
+const LANG = /^\/en(\/|$)/.test(location.pathname) ? 'en' : 'fr', LOC = LANG === 'en' ? 'en-GB' : 'fr-FR';
+const cheminFR = (p = location.pathname) => p.replace(/^\/en(?=\/|$)/, '') || '/';
+const avecLangue = u => {
+  if(LANG !== 'en' || typeof u !== 'string' || !u.startsWith('/') || u.startsWith('//')) return u;
+  const ch = u.split(/[?#]/)[0];
+  if(/^\/(en(\/|$)|guides(\/|$)|img\/|api\/|data\/|_vercel)/.test(ch) || /\.[a-z0-9]+$/i.test(ch)) return u;
+  return ch === '/' ? '/en' + u.slice(1) : '/en' + u;
+};
+for(const f of ['pushState','replaceState']){ const o = history[f].bind(history); history[f] = (st, t, u) => o(st, t, u == null ? u : avecLangue(String(u))); }
 const app = $('#app');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) : ''; };
@@ -650,8 +667,17 @@ function setMeta(title, desc, opts = {}){
   set('meta[name="description"]','content',desc); set('meta[property="og:title"]','content',title); set('meta[property="og:description"]','content',desc);
   const url = 'https://k-reau.fr' + (location.pathname === '/' ? '/' : location.pathname.replace(/\/$/,''));
   set('link[rel="canonical"]','href',url); set('meta[property="og:url"]','content',url);
+  { // versions linguistiques (hreflang) et sélecteur FR | EN
+    const fr = cheminFR(), guide = /^\/guides(\/|$)/.test(fr), en = guide ? null : (fr === '/' ? '/en' : '/en' + fr);
+    const alt = (hl, href) => { let l = document.querySelector(`link[rel="alternate"][hreflang="${hl}"]`); if(!href){ l?.remove(); return; } if(!l){ l = document.createElement('link'); l.rel = 'alternate'; l.hreflang = hl; document.head.appendChild(l); } l.href = 'https://k-reau.fr' + href; };
+    alt('fr', fr); alt('en', en); alt('x-default', fr);
+    set('meta[property="og:locale"]','content', LANG === 'en' ? 'en_GB' : 'fr_FR');
+    const lf = document.getElementById('langue-fr'), le = document.getElementById('langue-en');
+    if(lf){ lf.href = fr; lf.toggleAttribute('aria-current', LANG === 'fr'); }
+    if(le){ le.href = en || '/en'; le.toggleAttribute('aria-current', LANG === 'en'); }
+  }
   let rob = document.querySelector('meta[name="robots"]');
-  const prive = ['/avant-lancement','/merci','/panier'].includes(location.pathname) || title.startsWith('Page introuvable');
+  const prive = ['/avant-lancement','/merci','/panier'].includes(cheminFR()) || title.startsWith('Page introuvable');
   if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noai, noimageai';
 }
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),3200); }
@@ -2251,7 +2277,7 @@ const PAGES = {
     <h2>2. Produits</h2>
     <p>K-Reau vend des carreaux décoratifs en céramique blanche brillante de 15 × 15 cm, illustrés d’un dessin noir imprimé en UV. Les caractéristiques essentielles de chaque modèle figurent sur sa fiche produit. Les produits sont destinés à la décoration intérieure.</p>
     <h2>3. Prix</h2>
-    <p>Les prix sont indiqués en euros, toutes taxes comprises. ${esc(L.tva)}. Prix en vigueur : carreau 19,90 € ; coffret de 3 carreaux 54,90 € ; carreau sur mesure 34,90 € ; cartes cadeaux de 25 €, 50 €, 75 € ou 100 €. Les frais de livraison s’ajoutent au prix des produits : 7,90 € par commande, offerts à partir de 50 € d’achat (hors cartes cadeaux, qui ne sont pas expédiées). Le montant total est indiqué avant la validation du paiement.</p>
+    <p>Les prix sont indiqués en euros, toutes taxes comprises. ${esc(L.tva)}. Prix en vigueur : carreau 19,90 € ; coffret de 3 carreaux 54,90 € ; carreau sur mesure 34,90 € ; cartes cadeaux de 25 €, 50 €, 75 € ou 100 €. Les frais de livraison s’ajoutent au prix des produits : 7,90 € par commande en France, offerts à partir de 50 € d’achat (hors cartes cadeaux, qui ne sont pas expédiées) ; 16,50 € pour les autres pays européens ; 36,99 € pour le Canada. Le montant total est indiqué avant la validation du paiement.</p>
     <h3>Carreau sur mesure</h3><p>Le client indique le texte et le lieu à représenter. K-Reau lui soumet le dessin par e-mail sous 5 jours ouvrés ; l’impression n’est lancée qu’après sa validation. Le client peut demander une retouche avant validation.</p>
     <h2>4. Commande</h2>
     <p>Le client sélectionne ses carreaux, vérifie le contenu de son panier puis valide sa commande sur la page de paiement sécurisée. La commande est ferme après confirmation du paiement. Un reçu est envoyé par e-mail. K-Reau se réserve le droit d’annuler une commande en cas de litige antérieur avec le client ou de produit indisponible ; le client est alors intégralement remboursé.</p>
@@ -2540,7 +2566,7 @@ function fenetreLivraison(base){
 }
 function livraisonEstimee(){
   const [debut, fin] = fenetreLivraison();
-  const fmt=(d,mois=true)=>d.toLocaleDateString('fr-FR',mois?{weekday:'long',day:'numeric',month:'long'}:{weekday:'long',day:'numeric'});
+  const fmt=(d,mois=true)=>d.toLocaleDateString(LOC,mois?{weekday:'long',day:'numeric',month:'long'}:{weekday:'long',day:'numeric'});
   return `Reçu entre le ${fmt(debut, debut.getMonth()!==fin.getMonth())} et le ${fmt(fin)}`;
 }
 // Dernier jour de commande pour être livré au plus tard la veille d'une fête
@@ -2733,7 +2759,7 @@ const Panier = {
   async payer(){
     const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
     try{
-      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ lignes: this.lignes, message: this.physique() > 0 ? this.message : '', destination: ['EU','CA'].includes(this.destination) ? this.destination : 'FR' }) });
+      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ lignes: this.lignes, message: this.physique() > 0 ? this.message : '', destination: ['EU','CA'].includes(this.destination) ? this.destination : 'FR', lang: LANG }) });
       const j = await r.json().catch(()=>({}));
       if(!r.ok || !j.url) throw new Error(j.erreur || 'Erreur');
       location.href = j.url;
@@ -2805,10 +2831,10 @@ let vueCourante = null;
 function route(){
   // anciennes adresses en #… → nouvelle adresse
   const ancre = decodeURIComponent(location.hash.slice(1));
-  if(location.pathname==='/' && ancre && !SECTIONS_ACCUEIL.includes(ancre)){
+  if(cheminFR()==='/' && ancre && !SECTIONS_ACCUEIL.includes(ancre)){
     const n = ANCIENNES(ancre); if(n){ history.replaceState(null,'',n); }
   }
-  const h = cleDepuisChemin(location.pathname);
+  const h = cleDepuisChemin(cheminFR());
   // ancre interne sur la même page (ex. « Créer mon carreau » → formulaire) : simple défilement
   if(ancre && vueCourante === h + (PRODUITS ? ':data' : '') && document.getElementById(ancre)){ document.getElementById(ancre).scrollIntoView({ behavior:'smooth' }); return; }
   const section = h==='accueil' && SECTIONS_ACCUEIL.includes(ancre) ? ancre : null;
@@ -2845,8 +2871,9 @@ document.addEventListener('click', e => {
   if(!a || e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.target) return;
   const url = new URL(a.href, location.origin);
   if(url.origin!==location.origin || /^\/(api|img|data)\//.test(url.pathname) || /\.[a-z0-9]+$/i.test(url.pathname)) return;
+  if(a.hasAttribute('data-langue') || (LANG==='en' && /^\/guides(\/|$)/.test(url.pathname))) return; // changement de langue ou guide (en français) : vrai chargement
   e.preventDefault();
-  if(url.pathname===location.pathname && url.search===location.search && url.hash===location.hash && !url.hash){ window.scrollTo(0,0); return; }
+  if(avecLangue(url.pathname)===location.pathname && url.search===location.search && url.hash===location.hash && !url.hash){ window.scrollTo(0,0); return; }
   history.pushState(null,'',url.pathname+url.search+url.hash);
   route();
 });
@@ -2868,7 +2895,7 @@ if(TEST_BOUTIQUE){ const a=$('#annonce'); a.textContent='Mode test du paiement :
 else if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.annonce; a.hidden = false; }
 else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des délais de livraison réels
   const a=$('#annonce'), now=new Date(), j=new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const jour = d => d.toLocaleDateString('fr-FR',{day:'numeric',month:'long'});
+  const jour = d => d.toLocaleDateString(LOC,{day:'numeric',month:'long'});
   const dimanche = (an, mois, n) => { const d = new Date(an, mois, 1); d.setDate(1 + (7 - d.getDay()) % 7 + 7 * (n - 1)); return d; }; // n-ième dimanche
   const dernierDimanche = (an, mois) => { const d = new Date(an, mois + 1, 0); d.setDate(d.getDate() - d.getDay()); return d; };
   const paques = an => { const a=an%19,b=Math.floor(an/100),c=an%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451); return new Date(an, Math.floor((h+l-7*m+114)/31)-1, ((h+l-7*m+114)%31)+1); };

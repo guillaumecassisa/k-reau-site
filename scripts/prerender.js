@@ -10,6 +10,9 @@ const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-
 const appSrc = fs.readFileSync(path.join(RACINE, 'app.html'), 'utf8');
 const guides = [...appSrc.slice(appSrc.indexOf('/*GUIDES-DEBUT*/'), appSrc.indexOf('/*GUIDES-FIN*/')).matchAll(/slug: '([a-z0-9-]+)'/g)].map(m => m[1]);
 const routes = ['/', ...guides.map(g => '/guides/' + g), ...collections.map(c => '/collections/' + c), ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
+// version anglaise (/en) : tout sauf les guides, qui restent en français
+const routesEN = ['/en', ...collections.map(c => '/en/collections/' + c), ...pagesSimples.filter(p => p !== 'guides').map(p => '/en/' + p), ...cat.map(p => '/en/produits/' + p.slug)];
+routes.splice(routes.length - 1, 0, ...routesEN);
 const types = { '.html':'text/html', '.js':'text/javascript', '.json':'application/json', '.webp':'image/webp', '.xml':'application/xml', '.txt':'text/plain' };
 
 const serveur = http.createServer((req, res) => {
@@ -36,19 +39,23 @@ const serveur = http.createServer((req, res) => {
   for (const r of routes) {
     await page.goto(base + r, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => !document.querySelector('.squelette'), null, { timeout: 10000 });
-    await page.evaluate(() => { document.getElementById('app').dataset.prerendu = '1'; document.getElementById('couche').innerHTML = ''; });
+    await page.evaluate(() => { document.getElementById('app').dataset.prerendu = '1'; document.getElementById('couche').innerHTML = ''; document.getElementById('i18n-js')?.remove(); });
     const html = '<!doctype html>\n' + await page.evaluate(() => document.documentElement.outerHTML);
     const sortie = r === '/' ? 'index.html' : r === '/404' ? '404.html' : path.join('pages', r.slice(1) + '.html');
     fs.mkdirSync(path.join(RACINE, path.dirname(sortie)), { recursive: true });
     fs.writeFileSync(path.join(RACINE, sortie), html);
-    if (!['/404', '/merci', '/panier'].includes(r)) urls.push(r);
+    if (!['/404', '/merci', '/panier', '/en/merci', '/en/panier'].includes(r)) urls.push(r);
     console.log('✓', r, '→', sortie, await page.title());
   }
   await nav.close(); serveur.close();
   const jour = new Date().toISOString().slice(0, 10);
   fs.writeFileSync(path.join(RACINE, 'sitemap.xml'),
-    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    urls.map(u => `  <url><loc>https://k-reau.fr${u}</loc><lastmod>${jour}</lastmod><priority>${u === '/' ? '1.0' : u.startsWith('/produits/') ? '0.8' : u.startsWith('/collections/') ? '0.9' : u.startsWith('/guides/') ? '0.7' : '0.5'}</priority></url>`).join('\n') +
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
+    urls.map(u => {
+      const fr = u.replace(/^\/en(?=\/|$)/, '') || '/', en = fr === '/' ? '/en' : '/en' + fr, base = fr;
+      const alt = urls.includes(en) ? `<xhtml:link rel="alternate" hreflang="fr" href="https://k-reau.fr${fr}"/><xhtml:link rel="alternate" hreflang="en" href="https://k-reau.fr${en}"/><xhtml:link rel="alternate" hreflang="x-default" href="https://k-reau.fr${fr}"/>` : '';
+      return `  <url><loc>https://k-reau.fr${u}</loc><lastmod>${jour}</lastmod><priority>${base === '/' ? (u === '/' ? '1.0' : '0.9') : base.startsWith('/produits/') ? '0.8' : base.startsWith('/collections/') ? '0.9' : base.startsWith('/guides/') ? '0.7' : '0.5'}</priority>${alt}</url>`;
+    }).join('\n') +
     '\n</urlset>\n');
   console.log(`sitemap : ${urls.length} adresses`);
   // Flux produits pour Google Merchant Center (fiches gratuites dans Google Shopping)
