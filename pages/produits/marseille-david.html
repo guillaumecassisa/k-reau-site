@@ -522,7 +522,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">« On se retrouve au David. » Tous les Marseillais ont dit cette phrase au moins une fois. La statue de marbre installée en 1903 au rond-point du Prado, face aux plages.</p>
       <p class="prix">19,90&nbsp;€</p>
-      <p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"></path><circle cx="7" cy="17" r="1.6"></circle><circle cx="17" cy="17" r="1.6"></circle></svg><span><strong>Reçu entre le vendredi 6 et le lundi 9 novembre</strong><br><span class="small muted">si vous commandez aujourd’hui · livraison en France</span></span></p>
+      <p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"></path><circle cx="7" cy="17" r="1.6"></circle><circle cx="17" cy="17" r="1.6"></circle></svg><span><strong>Reçu entre le mardi 10 et le jeudi 12 novembre</strong><br><span class="small muted">si vous commandez aujourd’hui · expédition sous 5 à 7 jours, livraison en France</span></span></p>
       
         <div class="encart">
           <label for="qte-out">Quantité</label>
@@ -1114,7 +1114,7 @@ function vueProduit(slug){
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
       ${prix ? `<p class="prix">${prix}</p>` : ''}
-      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · livraison en France</span></span></p>` : ''}
+      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · expédition sous 5 à 7 jours, livraison en France</span></span></p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>
@@ -2560,7 +2560,7 @@ function afficherPhotosSM(){
   v.innerHTML = photosSM.map((p, i) => `<figure><img src="${p.apercu}" alt="Photo ${i+1} : ${esc(p.nom)}"><button type="button" data-retirer="${i}" aria-label="Retirer la photo ${i+1}">×</button></figure>`).join('');
 }
 
-// Date de livraison estimée : 5 à 7 jours à partir de la date du jour
+// Date de livraison estimée : expédition sous 5 à 7 jours + 2 à 3 jours ouvrés d'acheminement
 function feriesFR(an){
   const a=an%19,b=Math.floor(an/100),c=an%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
   const mois=Math.floor((h+l-7*m+114)/31), jour=((h+l-7*m+114)%31)+1, paques=new Date(an,mois-1,jour);
@@ -2573,10 +2573,9 @@ function ajouterOuvres(depart, n){
   return d;
 }
 function livraisonEstimee(){
-  // 5 à 7 jours à partir de la date du jour (pas de livraison le dimanche ni un jour férié : report au lendemain)
-  const jour = n => { const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()+n);
-    while(d.getDay()===0 || feriesFR(d.getFullYear()).includes(d.toDateString())) d.setDate(d.getDate()+1); return d; };
-  const debut = jour(5), fin = jour(7);
+  // Expédition 5 à 7 jours après la commande, puis 2 à 3 jours ouvrés d'acheminement (week-ends et jours fériés exclus)
+  const exp = n => { const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()+n); return d; };
+  const debut = ajouterOuvres(exp(5), 2), fin = ajouterOuvres(exp(7), 3);
   const fmt=(d,mois=true)=>d.toLocaleDateString('fr-FR',mois?{weekday:'long',day:'numeric',month:'long'}:{weekday:'long',day:'numeric'});
   return `Reçu entre le ${fmt(debut, debut.getMonth()!==fin.getMonth())} et le ${fmt(fin)}`;
 }
