@@ -1233,7 +1233,7 @@ function vueProduit(slug){
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
       ${prix ? `<p class="prix">${prix}</p>` : ''}
-      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · expédition sous 5 à 7 jours, livraison en France</span></span></p>` : ''}
+      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · expédition sous 5 à 7 jours, livraison en ${LANG === 'en' ? 'Europe' : 'France'}</span></span></p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>
@@ -2802,13 +2802,14 @@ function ajouterOuvres(depart, n){
   while(n>0){ d.setDate(d.getDate()+1); if(d.getMonth()===0&&d.getDate()===1) f=feriesFR(d.getFullYear()); const j=d.getDay(); if(j!==0&&j!==6&&!f.includes(d.toDateString())) n--; }
   return d;
 }
-function fenetreLivraison(base){
+function fenetreLivraison(base, transit = [2, 3]){
   // Expédition 5 à 7 jours après la commande, puis 2 à 3 jours ouvrés d'acheminement (week-ends et jours fériés exclus)
   const exp = n => { const d = new Date(base || Date.now()); d.setHours(12,0,0,0); d.setDate(d.getDate()+n); return d; };
-  return [ajouterOuvres(exp(5), 2), ajouterOuvres(exp(7), 3)];
+  return [ajouterOuvres(exp(5), transit[0]), ajouterOuvres(exp(7), transit[1])];
 }
 function livraisonEstimee(){
-  const [debut, fin] = fenetreLivraison();
+  // version anglaise : estimation pour une livraison en Europe (3 à 6 jours ouvrés d'acheminement)
+  const [debut, fin] = fenetreLivraison(null, LANG === 'en' ? [3, 6] : [2, 3]);
   const fmt=(d,mois=true)=>d.toLocaleDateString(LOC,mois?{weekday:'long',day:'numeric',month:'long'}:{weekday:'long',day:'numeric'});
   return `Reçu entre le ${fmt(debut, debut.getMonth()!==fin.getMonth())} et le ${fmt(fin)}`;
 }
@@ -2892,7 +2893,7 @@ const ICO_CARTE='<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stro
 const Panier = {
   lignes: store.get('kreau-panier', []).map(l => l.type ? l : { type:'carreau', slug:l.slug, q:l.q }),
   message: store.get('kreau-message', ''),
-  destination: store.get('kreau-destination', 'FR'),
+  destination: store.get('kreau-destination', LANG === 'en' ? 'EU' : 'FR'),
   sauver(){ store.set('kreau-panier', this.lignes); store.set('kreau-message', this.message); this.badge(); },
   cle(l){ return l.type==='chevalet' ? 'v:chevalet' : l.type==='carreau' ? 'c:'+l.slug : l.type==='coffret' ? 'k:'+l.slugs.join('+') : l.type==='carte' ? 'g:'+l.montant : 's:'+l.id; },
   prix(l){ return l.type==='chevalet' ? CONFIG.prix.chevalet : l.type==='carreau' ? CONFIG.prix.carreau : l.type==='coffret' ? CONFIG.prix.coffret : l.type==='sur-mesure' ? CONFIG.prix.surMesure : l.montant/100; },
