@@ -1,6 +1,9 @@
 // Création d'une session de paiement Stripe Checkout à partir du panier.
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
 const { PRIX, PRODUITS, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
+// Pays européens livrés (hors France) au tarif Europe
+const PAYS_EUROPE = ['DE','AT','BE','BG','CY','HR','DK','ES','EE','FI','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','CZ','RO','SK','SI','SE',
+  'MC','AD','CH','GB','NO','IS','LI','SM','VA'];
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
@@ -64,10 +67,19 @@ module.exports = async function handler(req, res) {
   // Livraison uniquement s'il y a un objet à expédier ; offerte dès le seuil (cartes cadeaux exclues du calcul)
   if (physique > 0) {
     params.phone_number_collection = { enabled: 'true' };
-    params.shipping_address_collection = { allowed_countries: (process.env.PAYS_LIVRES || 'FR').split(',').map(s => s.trim()) };
+    const dest = ['EU', 'CA'].includes(corps.destination) ? corps.destination : 'FR'; // pas de livraison aux États-Unis
+    params.shipping_address_collection = { allowed_countries: dest === 'EU' ? PAYS_EUROPE : dest === 'CA' ? ['CA'] : ['FR'] };
     const frais = parseInt(process.env.FRAIS_LIVRAISON_CENTIMES || '', 10);
     const seuil = parseInt(process.env.SEUIL_LIVRAISON_GRATUITE_CENTIMES || '', 10);
-    if (frais >= 0) {
+    if (dest === 'CA') {
+      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount', display_name: 'Livraison Canada',
+        fixed_amount: { amount: parseInt(process.env.FRAIS_CANADA_CENTIMES || '3699', 10), currency: 'eur' },
+        delivery_estimate: { minimum: { unit: 'business_day', value: 10 }, maximum: { unit: 'business_day', value: 20 } } } }];
+    } else if (dest === 'EU') {
+      params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount', display_name: 'Livraison Europe',
+        fixed_amount: { amount: parseInt(process.env.FRAIS_EUROPE_CENTIMES || '1650', 10), currency: 'eur' },
+        delivery_estimate: { minimum: { unit: 'business_day', value: 8 }, maximum: { unit: 'business_day', value: 14 } } } }];
+    } else if (frais >= 0) {
       const offerte = seuil > 0 && physique >= seuil;
       params.shipping_options = [{ shipping_rate_data: { type: 'fixed_amount',
         display_name: offerte ? 'Livraison France offerte' : (process.env.LIBELLE_LIVRAISON || 'Livraison'),

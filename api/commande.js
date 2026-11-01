@@ -47,7 +47,7 @@ module.exports = async function handler(req, res) {
         ${md.message_cadeau ? `<p><b>Message cadeau à imprimer :</b><br>« ${t(md.message_cadeau, 300)} »</p>` : ''}
         ${md.sur_mesure && md.sur_mesure !== '0' ? `<p><b>Carreau sur mesure :</b> détails dans la ligne de commande ci-dessus. Envoyer le dessin au client pour validation.</p>` : ''}
         ${montants.length ? `<p><b>Cartes cadeaux :</b> ${cartes.map(c => `${c.code} (${euros(c.montant)})`).join(', ') || 'création à faire à la main dans Stripe'}${erreurCartes ? ' — ⚠ création automatique impossible, à créer dans Stripe' : ''}</p>` : ''}
-        ${adr ? `<p><b>Livraison :</b> ${t(s.shipping_details.name, 120)}, ${t(adr.line1, 160)} ${t(adr.line2, 120)}, ${t(adr.postal_code, 12)} ${t(adr.city, 80)}</p>` : ''}
+        ${adr ? `<p><b>Livraison :</b> ${t(s.shipping_details.name, 120)}, ${t(adr.line1, 160)} ${t(adr.line2, 120)}, ${t(adr.postal_code, 12)} ${t(adr.city, 80)} ${adr.country && adr.country !== 'FR' ? '(' + t(adr.country, 4) + ')' : ''}</p>` : ''}
       </div>`;
       const ok = await envoyerMail(`K-Reau · Nouvelle commande ${euros(s.amount_total)}`, html, s.customer_details && s.customer_details.email);
       if (ok) await stripe('POST', `payment_intents/${s.payment_intent}`, { metadata: { k_notifie: '1' } }).catch(() => {});
