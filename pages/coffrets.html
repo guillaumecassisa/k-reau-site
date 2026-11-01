@@ -2863,21 +2863,32 @@ else if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.
 else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des délais de livraison réels
   const a=$('#annonce'), now=new Date(), j=new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const jour = d => d.toLocaleDateString('fr-FR',{day:'numeric',month:'long'});
+  const dimanche = (an, mois, n) => { const d = new Date(an, mois, 1); d.setDate(1 + (7 - d.getDay()) % 7 + 7 * (n - 1)); return d; }; // n-ième dimanche
+  const dernierDimanche = (an, mois) => { const d = new Date(an, mois + 1, 0); d.setDate(d.getDate() - d.getDay()); return d; };
+  const paques = an => { const a=an%19,b=Math.floor(an/100),c=an%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451); return new Date(an, Math.floor((h+l-7*m+114)/31)-1, ((h+l-7*m+114)%31)+1); };
+  const fetesMeres = an => { const d = dernierDimanche(an, 4), p = paques(an); p.setDate(p.getDate()+49); return d.toDateString() === p.toDateString() ? dimanche(an, 5, 1) : d; }; // décalée si Pentecôte
+  const carte = '<a href="/carte-cadeau">Offrir une carte</a>';
   const fetes = [
-    { debut:[10,1], fete:[11,24], lien:'<a href="/coffrets">Voir les coffrets</a>',
-      avant: l => `<strong>Noël :</strong> commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · `,
-      apres: '<strong>Trop tard pour une livraison avant Noël ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ' },
-    { debut:[0,10], fete:[1,14], lien:'<a href="/carreaux">Choisir un lieu</a>',
-      avant: l => `<strong>Saint-Valentin :</strong> offrez le lieu de votre rencontre · commandez avant le ${l} pour être livré à temps · `,
-      apres: '<strong>Trop tard pour une livraison avant la Saint-Valentin ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ' }
+    { nom:'la Saint-Valentin', date: an => new Date(an, 1, 14), jours:35, lien:'<a href="/carreaux">Choisir un lieu</a>',
+      avant: l => `<strong>Saint-Valentin :</strong> offrez le lieu de votre rencontre · commandez avant le ${l} pour être livré à temps · ` },
+    { nom:'la fête des grands-mères', date: an => dimanche(an, 2, 1), jours:28, lien:'<a href="/carreaux">Choisir un lieu</a>',
+      avant: l => `<strong>Fête des grands-mères :</strong> offrez-lui la ville ou le village de son enfance · commandez avant le ${l} pour être livré à temps · ` },
+    { nom:'la fête des mères', date: fetesMeres, jours:30, lien:'<a href="/carreaux">Choisir un lieu</a>',
+      avant: l => `<strong>Fête des mères :</strong> offrez-lui le lieu qui compte pour elle · commandez avant le ${l} pour être livré à temps · ` },
+    { nom:'la fête des pères', date: an => dimanche(an, 5, 3), jours:25, lien:'<a href="/collections/montagnes-du-sud">Voir les montagnes</a>',
+      avant: l => `<strong>Fête des pères :</strong> son stade, sa montagne, son port préféré · commandez avant le ${l} pour être livré à temps · ` },
+    { nom:'la fête des grands-pères', date: an => dimanche(an, 9, 1), jours:28, lien:'<a href="/carreaux">Choisir un lieu</a>',
+      avant: l => `<strong>Fête des grands-pères :</strong> offrez-lui le lieu de ses souvenirs · commandez avant le ${l} pour être livré à temps · ` },
+    { nom:'Noël', date: an => new Date(an, 11, 24), jours:53, lien:'<a href="/coffrets">Voir les coffrets</a>',
+      avant: l => `<strong>Noël :</strong> commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · ` }
   ];
   let msg='';
   for(const f of fetes){
-    const an = j.getMonth() > f.fete[0] ? j.getFullYear()+1 : j.getFullYear();
-    const fete = new Date(an, f.fete[0], f.fete[1]), debut = new Date(an, f.debut[0], f.debut[1]);
+    const fete = f.date(j.getFullYear()), debut = new Date(fete); debut.setDate(debut.getDate() - f.jours);
     if(j < debut || j >= fete) continue;
     const limite = dateLimiteCommande(fete);
-    msg = j <= limite ? f.avant(jour(limite)) + f.lien : f.apres + '<a href="/carte-cadeau">Offrir une carte</a>';
+    msg = j <= limite ? f.avant(jour(limite)) + f.lien
+      : `<strong>Trop tard pour une livraison avant ${f.nom} ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ` + carte;
     break;
   }
   a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
