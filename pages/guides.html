@@ -386,6 +386,20 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .etapes strong{font-weight:600}
 .etapes span{color:var(--encre-doux);font-size:.92rem}
 .projet-pour{display:grid;gap:20px}
+.rev-atouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.rev-atouts div{background:var(--blanc);border:1px solid var(--joint);padding:20px}
+.rev-atouts h3{font-family:var(--f-titre);font-weight:400;font-size:1.35rem;margin:0 0 6px}
+.rev-atouts p{margin:0;font-size:.92rem;color:var(--encre-doux);line-height:1.6}
+.rev-tarifs{width:100%;max-width:760px;border-collapse:collapse;font-size:.95rem}
+.rev-tarifs th,.rev-tarifs td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--joint)}
+.rev-tarifs th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--olivier)}
+.rev-tarifs td.prix{font-family:var(--f-titre);font-size:1.7rem}
+.rev-pdf{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.rev-pdf a{display:grid;gap:10px;background:var(--blanc);border:1px solid var(--joint);padding:14px;text-decoration:none;color:var(--encre)}
+.rev-pdf a:hover{border-color:var(--olivier)}
+.rev-pdf img{width:100%;aspect-ratio:1;object-fit:cover;border:1px solid var(--joint)}
+.rev-pdf strong{font-family:var(--f-titre);font-weight:400;font-size:1.25rem}
+.rev-pdf span{font-size:.8rem;color:var(--encre-doux)}
 .projet-liste{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 .projet-liste li{background:var(--blanc,#fff);border:1px solid var(--joint);padding:20px;display:grid;gap:6px;align-content:start}
 .projet-liste strong{font-weight:600}
@@ -545,6 +559,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a href="/sur-mesure">Carreau sur mesure</a>
     <a href="/carte-cadeau">Carte cadeau</a>
     <a href="/projet-specifique">Projet spécifique</a>
+    <a href="/revendeurs">Revendeurs</a>
     <a href="/guides">Guides et idées cadeaux</a>
     <a href="/notre-histoire">Notre histoire</a>
     <a href="/faq">Questions fréquentes</a>
@@ -623,6 +638,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           <li><a href="/sur-mesure">Carreau sur mesure</a></li>
           <li><a href="/carte-cadeau">Carte cadeau</a></li>
           <li><a href="/projet-specifique">Projet spécifique</a></li>
+          <li><a href="/revendeurs">Revendeurs et offices de tourisme</a></li>
           <li><a href="/guides">Guides et idées cadeaux</a></li>
           <li><a href="/notre-histoire">Notre histoire</a></li>
           <li><a href="/faq">Questions fréquentes</a></li>
@@ -2345,7 +2361,7 @@ function vueProjet(){
         <li><strong>Entreprises</strong><span>Cadeaux clients ou salariés, séminaires, inaugurations : vos lieux, votre ville, votre siège.</span></li>
         <li><strong>Mariages et événements</strong><span>Le lieu de la cérémonie en souvenir pour chaque invité, ou en plan de table.</span></li>
         <li><strong>Hôtels, gîtes et restaurants</strong><span>Une décoration à l’image de votre établissement, ou un souvenir à proposer à vos clients.</span></li>
-        <li><strong>Boutiques et revendeurs</strong><span>Les carreaux K-Reau dans votre magasin, avec des modèles de votre région.</span></li>
+        <li><strong>Boutiques et revendeurs</strong><span>Les carreaux K-Reau dans votre magasin, avec des modèles de votre région. <a class="lien" href="/revendeurs">Tarifs et catalogues revendeurs</a></span></li>
         <li><strong>Mairies et offices de tourisme</strong><span>Les monuments et paysages de votre commune, pour vos boutiques ou vos cadeaux protocolaires.</span></li>
       </ul>
     </div>
@@ -2370,6 +2386,63 @@ function vueProjet(){
       <button class="btn btn-p" type="submit" style="justify-self:start">Envoyer ma demande</button>
       <div class="retour" aria-live="polite"></div>
       <p class="small muted">Nous vous répondons par e-mail sous 48 heures ouvrées. La demande est gratuite et sans engagement.</p>
+    </form>
+  </div></section>`;
+}
+
+function vueRevendeurs(){
+  setMeta('Revendeurs et offices de tourisme : carreaux K-Reau en boutique | K-Reau',
+    'Vendez les carreaux décoratifs K-Reau dans votre boutique ou office de tourisme : tarifs revendeurs dès 12 carreaux, dépôt-vente possible, catalogues PDF à télécharger.');
+  const opt = l => l.map(v=>`<option>${v}</option>`).join('');
+  const pdfs = [
+    ['Marseille', 'K-Reau_Revendeurs_Marseille.pdf', '/img/03_Produits_Marseille/marseille-vieux-port-mini.webp', '1,2 Mo'],
+    ['La Côte Bleue et Les Embiez', 'K-Reau_Revendeurs_Cote-Bleue.pdf', '/img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins-mini.webp', '0,9 Mo'],
+    ['Les Montagnes du Sud', 'K-Reau_Revendeurs_Montagnes-du-Sud.pdf', '/img/09_Produits_Montagnes/montagnes-sainte-victoire-mini.webp', '0,9 Mo'],
+    ['Les Châteaux', 'K-Reau_Revendeurs_Chateaux.pdf', '/img/10_Produits_Chateaux/chateaux-chambord-mini.webp', '1,2 Mo'],
+    ['Catalogue complet', 'K-Reau_Revendeurs_Catalogue-complet.pdf', '/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp', '3 Mo']];
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Revendeurs','']])}
+    <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Revendeurs et offices de tourisme</span><h1>Les carreaux K-Reau dans votre boutique</h1>
+      <p class="lead">Offices de tourisme, boutiques de créateurs, librairies, boutiques de musées : proposez à vos visiteurs un souvenir local, dessiné et imprimé en Provence. Tarifs revendeurs dès 12 carreaux, dépôt-vente possible.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-p" href="#form-revendeur">Demander un échantillon</a><a class="btn btn-s" href="#catalogues">Télécharger les catalogues</a></div></div>
+      <figure class="tete-img"><img src="/img/mises-en-scene/coffret-maquette.webp" width="540" height="508" alt="Carreau K-Reau dans son coffret kraft, prêt à être vendu en boutique" fetchpriority="high"></figure></div>
+  </div></div>
+  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:56px">
+    <div style="display:grid;gap:20px"><div class="bloc-titre"><span class="eyebrow">Pourquoi K-Reau</span><h2>Un souvenir qui se vend tout seul</h2></div>
+      <div class="rev-atouts">
+        <div><h3>Un lieu, un coup de cœur</h3><p>Des lieux précis et reconnaissables : vos visiteurs repartent avec l’endroit qu’ils viennent de découvrir.</p></div>
+        <div><h3>Prix public 19,90 €</h3><p>Le bon prix pour un cadeau ou un achat en caisse, avec une marge confortable pour vous.</p></div>
+        <div><h3>Facile à présenter</h3><p>15 × 15 cm, sur chevalet, en pile ou sur présentoir de comptoir : peu de place pour beaucoup d’effet.</p></div>
+        <div><h3>Fabriqué en Provence</h3><p>Chaque carreau est imprimé et contrôlé à Mallemort, dans les Bouches-du-Rhône, par une marque indépendante.</p></div>
+      </div></div>
+    <div style="display:grid;gap:18px"><div class="bloc-titre"><span class="eyebrow">Conditions</span><h2>Tarifs revendeurs</h2>
+      <p class="lead">Assortiment libre entre toutes les collections. Prix nets par carreau, TVA non applicable (art. 293 B du CGI).</p></div>
+      <table class="rev-tarifs"><thead><tr><th>Quantité par commande</th><th>Prix unitaire</th><th>Prix public conseillé</th></tr></thead>
+        <tbody><tr><td>De 12 à 47 carreaux</td><td class="prix">9,50 €</td><td>19,90 € TTC</td></tr><tr><td>48 carreaux et plus</td><td class="prix">8,50 €</td><td>19,90 € TTC</td></tr></tbody></table>
+      <div class="rev-atouts">
+        <div><h3>Livraison</h3><p>Frais de port offerts dès 150 € de commande ; en dessous, refacturés au coût réel. Expédition sous 7 à 10 jours.</p></div>
+        <div><h3>Présentoir offert</h3><p>Dès 24 carreaux commandés, un présentoir de comptoir est offert pour mettre la collection en valeur.</p></div>
+        <div><h3>Dépôt-vente possible</h3><p>Pour une première mise en place : nous déposons une sélection, vous ne payez que ce qui est vendu. Conditions définies ensemble.</p></div>
+        <div><h3>Réassort simple</h3><p>Minimum 12 carreaux par commande, sans minimum par modèle. Paiement par virement, ou sur facture pour les collectivités.</p></div>
+      </div></div>
+    <div id="catalogues" style="display:grid;gap:20px"><div class="bloc-titre"><span class="eyebrow">Catalogues PDF</span><h2>Télécharger les catalogues</h2>
+      <p class="lead">Un catalogue par collection, avec tous les modèles, leurs références, les conditions et nos coordonnées : à imprimer ou à transmettre à votre équipe.</p></div>
+      <div class="rev-pdf">${pdfs.map(([t,f,img,taille]) => `<a href="/revendeurs/${f}" download><img src="${img}" alt="" loading="lazy" width="600" height="600"><strong>${t}</strong><span>PDF · ${taille} · en français</span></a>`).join('')}</div></div>
+    <form class="formulaire" id="form-revendeur" data-form="projet" data-contexte="revendeurs" novalidate style="max-width:680px">
+      <h2>Demander un échantillon ou un devis</h2>
+      <div class="champ"><label for="r-nom">Nom</label><input type="text" id="r-nom" name="nom" autocomplete="name" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-org">Établissement</label><input type="text" id="r-org" name="organisation" autocomplete="organization" maxlength="150" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-ville">Ville</label><input type="text" id="r-ville" name="ville" autocomplete="address-level2" maxlength="80" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-email">Adresse e-mail</label><input type="email" id="r-email" name="email" autocomplete="email" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-tel">Téléphone <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="tel" id="r-tel" name="telephone" autocomplete="tel" maxlength="30"><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-type">Type d’établissement</label><select id="r-type" name="projet" required><option value="">Choisir…</option>${opt(['Revendeur · Office de tourisme','Revendeur · Boutique de créateurs ou concept store','Revendeur · Librairie','Revendeur · Boutique de musée ou de monument','Revendeur · Hôtel, camping ou gîte','Revendeur · Autre commerce'])}</select><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-qte">Ce qui vous intéresse</label><select id="r-qte" name="quantite" required><option value="">Choisir…</option>${opt(['Un échantillon pour découvrir','Dépôt-vente','Commande de 12 à 47 carreaux','Commande de 48 carreaux et plus','Je ne sais pas encore'])}</select><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-coll">Collections</label><select id="r-coll" name="modeles" required><option value="">Choisir…</option>${opt(['Marseille','La Côte Bleue et Les Embiez','Les Montagnes du Sud','Les Châteaux','Plusieurs collections','Un dessin de ma commune ou de mon site'])}</select><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="r-msg">Message <span class="muted" style="font-weight:400">(facultatif)</span></label><textarea id="r-msg" name="message" maxlength="4000" placeholder="Les modèles qui vous intéressent, votre clientèle, vos délais…"></textarea><span class="err" aria-live="polite"></span></div>
+      <label class="consent"><input type="checkbox" name="consent" required> <span>J’accepte que mes informations soient utilisées pour répondre à ma demande (voir <a class="lien" href="/confidentialite">confidentialité</a>).</span></label>
+      <button class="btn btn-p" type="submit" style="justify-self:start">Envoyer ma demande</button>
+      <div class="retour" aria-live="polite"></div>
+      <p class="small muted">Réponse par e-mail sous 48 heures ouvrées. Vous pouvez aussi écrire directement à contact@k-reau.fr.</p>
     </form>
   </div></section>`;
 }
@@ -3038,6 +3111,7 @@ function route(){
   else if(h==='sur-mesure') vueSurMesure();
   else if(h==='carte-cadeau') vueCarteCadeau();
   else if(h==='projet-specifique') vueProjet();
+  else if(h==='revendeurs') vueRevendeurs();
   else if(h==='guides') vueGuides();
   else if(h.startsWith('guide-')) vueGuide(h.slice(6));
   else if(PAGES[h]) PAGES[h]();

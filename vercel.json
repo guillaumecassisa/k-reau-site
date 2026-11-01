@@ -13,7 +13,7 @@
       "destination": "/pages/en/collections/:c.html"
     },
     {
-      "source": "/en/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier|avis)",
+      "source": "/en/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier|avis|revendeurs)",
       "destination": "/pages/en/:page.html"
     },
     {
@@ -29,7 +29,7 @@
       "destination": "/pages/collections/:c.html"
     },
     {
-      "source": "/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|guides|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier|avis)",
+      "source": "/:page(carreaux|coffrets|sur-mesure|carte-cadeau|projet-specifique|guides|notre-histoire|faq|contact|mentions-legales|cgv|livraison-retours|confidentialite|merci|panier|avis|revendeurs)",
       "destination": "/pages/:page.html"
     }
   ],

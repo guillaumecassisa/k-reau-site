@@ -24,12 +24,12 @@ module.exports = async function handler(req, res) {
   const nom = champ('nom', 200), sujet = champ('sujet', 200), message = champ('message', 5000), contexte = champ('contexte', 200);
   const projet = champ('projet', 120), quantite = champ('quantite', 80), modeles = champ('modeles', 80);
   const date = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
-  const objet = type === 'projets' ? `K-Reau · Projet spécifique : ${projet || 'demande'}${quantite ? ' · ' + quantite : ''}`
+  const objet = type === 'projets' ? `K-Reau · ${/^Revendeur/.test(projet) ? '' : 'Projet spécifique : '}${projet || 'demande'}${quantite ? ' · ' + quantite : ''}`
     : type === 'contacts' ? `K-Reau · Contact : ${sujet || 'message'}` : `K-Reau · Inscription (${contexte || 'site'})`;
 
   const lignes = [
     ['Type', type === 'projets' ? 'Demande de projet spécifique' : type === 'contacts' ? 'Message de contact' : 'Inscription'],
-    ['Nom', nom], ['Organisation', champ('organisation', 150)], ['E-mail', email], ['Téléphone', champ('telephone', 30)],
+    ['Nom', nom], ['Organisation', champ('organisation', 150)], ['Ville', champ('ville', 80)], ['E-mail', email], ['Téléphone', champ('telephone', 30)],
     ['Projet', projet], ['Quantité', quantite], ['Modèles', modeles], ['Échéance', champ('echeance', 80)],
     ['Sujet', sujet], ['Modèle / page', contexte], ['Date', date]
   ].filter(([, v]) => v);

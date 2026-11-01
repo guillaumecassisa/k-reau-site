@@ -1,4 +1,5 @@
 [
+  [/^PDF · ([\d,]+) Mo · en français$/, m => 'PDF · ' + m[1].replace(',', '.') + ' MB · in French'],
   [/^([\d,]+) · (\d+) avis$/, m => m[1].replace(',', '.') + ' · ' + m[2] + (m[2] === '1' ? ' review' : ' reviews')],
   [/^(\d+) avis$/, m => m[1] + (m[1] === '1' ? ' review' : ' reviews')],
   [/^([\d,]+) sur 5$/, m => m[1].replace(',', '.') + ' out of 5'],
