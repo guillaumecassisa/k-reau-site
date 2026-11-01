@@ -385,6 +385,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .projet-liste strong{font-weight:600}
 .projet-liste span{color:var(--encre-doux);font-size:.92rem}
 .livraison-estimee{display:flex;gap:10px;align-items:flex-start;margin:-4px 0 6px;color:var(--olivier)}.livraison-estimee svg{flex:none;margin-top:2px}.livraison-estimee strong{color:var(--encre);font-weight:600}
+.coll-inspi{max-width:62em;margin:4px 0 14px}.coll-inspiration{margin:0;padding-left:16px;border-left:2px solid var(--olivier);color:var(--encre-doux);font-family:var(--f-titre);font-size:1.1rem;line-height:1.55;font-style:italic;animation:apparaitre .35s ease}
+@keyframes apparaitre{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 .sm-photos{display:grid;gap:8px}
 .sm-depot{display:flex;align-items:center;gap:14px;border:1.5px dashed #BFB4A4;background:var(--blanc);padding:18px;cursor:pointer;border-radius:var(--r)}
 .sm-depot:hover,.sm-depot:focus-within{border-color:var(--olivier)}
@@ -508,7 +510,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     
-    <div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="g-tous"><button type="button" class="filtre" data-f="tout" aria-pressed="true">Tout</button><button type="button" class="filtre" data-f="marseille" aria-pressed="false">Marseille</button><button type="button" class="filtre" data-f="cote-bleue" aria-pressed="false">Côte Bleue</button><button type="button" class="filtre" data-f="montagnes-du-sud" aria-pressed="false">Montagnes</button><button type="button" class="filtre" data-f="chateaux" aria-pressed="false">Châteaux</button><button type="button" class="filtre" data-f="les-embiez" aria-pressed="false">Les Embiez</button></div>
+    <div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="g-tous"><button type="button" class="filtre" data-f="tout" aria-pressed="true">Tout</button><button type="button" class="filtre" data-f="marseille" aria-pressed="false">Marseille</button><button type="button" class="filtre" data-f="cote-bleue" aria-pressed="false">Côte Bleue</button><button type="button" class="filtre" data-f="montagnes-du-sud" aria-pressed="false">Montagnes</button><button type="button" class="filtre" data-f="chateaux" aria-pressed="false">Châteaux</button><button type="button" class="filtre" data-f="les-embiez" aria-pressed="false">Les Embiez</button></div><div class="coll-inspi" aria-live="polite"><p class="coll-inspiration">Tous nos carreaux partagent le même esprit : un lieu réel, dessiné au trait noir sur céramique blanche, avec son nom en calligraphie. Choisissez une collection pour découvrir d’où elle vient.</p></div>
     <p class="small muted" id="g-tous-statut" role="status" aria-live="polite">51 carreaux affichés</p>
     <div class="grille" id="g-tous"><article class="carte">
     <a class="carte-img" href="/produits/marseille-vieux-port" tabindex="-1" aria-hidden="true">
@@ -1105,14 +1107,28 @@ function filtresHTML(actif, id){
   const opts = [['tout','Tout'], ...ORDRE_COLLS.map(k => [k, COLLECTIONS[k].filtre || COLLECTIONS[k].nom.replace(/^La /,'')])].filter(([k])=>k==='tout'||collPubliee(k));
   return `<div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="${id}">${opts.map(([k,l])=>`<button type="button" class="filtre" data-f="${k}" aria-pressed="${k===actif}">${l}</button>`).join('')}</div>`;
 }
+const INSPIRATIONS = {
+  'tout': 'Tous nos carreaux partagent le même esprit : un lieu réel, dessiné au trait noir sur céramique blanche, avec son nom en calligraphie. Choisissez une collection pour découvrir d’où elle vient.',
+  'marseille': 'Marseille se raconte par ses lieux : le Vieux-Port où tout a commencé, la Bonne Mère qui veille sur la ville, les calanques à vingt minutes du centre. Cette collection suit nos balades, du Panier à la Corniche, et cette lumière qui fait briller la pierre blanche.',
+  'cote-bleue': 'À l’ouest de Marseille, la Côte Bleue garde un air de vacances toute l’année : petits ports, cabanons, criques à l’eau d’une clarté incroyable. Cette collection rend hommage à ces villages de pêcheurs, de L’Estaque à Carro, que l’on découvre souvent depuis le petit train qui longe la mer.',
+  'montagnes-du-sud': 'En Provence, chacun a sa montagne : la Sainte-Victoire de Cézanne, le Garlaban de Pagnol, le Ventoux des cyclistes. On les regarde depuis sa fenêtre, on les gravit le dimanche, on les cherche du regard en rentrant de voyage. Cette collection dessine leurs crêtes, de Marseille jusqu’au Var.',
+  'chateaux': 'Après la Provence, nous avons eu envie de dessiner le patrimoine de toute la France. Chambord, Chenonceau, Versailles ou Saumur : des silhouettes que tout le monde reconnaît, et autant de souvenirs de visites, de voyages scolaires ou de week-ends dans le Val de Loire.',
+  'les-embiez': 'Les Embiez, c’est notre modèle signature : une petite île au large de Six-Fours, sa tour et ses rochers qui affleurent. Une île, un trait épuré et son nom en calligraphie : il résume à lui seul l’esprit K-Reau.'
+};
+function inspirationHTML(k){ const t = INSPIRATIONS[k]; return t ? `<p class="coll-inspiration">${esc(t)}</p>` : ''; }
 function brancherFiltres(id, listeTout){
   const zone = document.querySelector(`[data-filtres="${id}"]`); if(!zone) return;
+  let insp = zone.nextElementSibling && zone.nextElementSibling.classList.contains('coll-inspi') ? zone.nextElementSibling : null;
+  if(!insp){ insp = document.createElement('div'); insp.className = 'coll-inspi'; insp.setAttribute('aria-live','polite'); zone.after(insp); }
+  const actif = zone.querySelector('.filtre[aria-pressed="true"]');
+  insp.innerHTML = inspirationHTML(actif ? actif.dataset.f : 'tout');
   zone.addEventListener('click', e => {
     const b = e.target.closest('.filtre'); if(!b) return;
     zone.querySelectorAll('.filtre').forEach(x => x.setAttribute('aria-pressed', x===b));
     const f = b.dataset.f;
     const list = f==='tout' ? listeTout() : deCollection(f);
     $('#'+id).innerHTML = grilleHTML(list);
+    insp.innerHTML = inspirationHTML(f);
     $('#'+id+'-statut').textContent = `${list.length} carreau${list.length>1?'x':''} affiché${list.length>1?'s':''}`;
   });
 }
