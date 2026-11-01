@@ -449,6 +449,49 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .pied a{color:#EDE8DE;text-decoration:none;display:inline-flex;min-height:36px;align-items:center;font-size:.92rem}
 .pied a:hover{color:var(--sable);text-decoration:underline}
 .pied-slogan{font-family:var(--f-titre);font-size:1.4rem;color:#EDE8DE;margin-top:16px;max-width:16em}
+.pied-news{display:grid;grid-template-columns:1fr 1.1fr;gap:20px 48px;align-items:center;padding-bottom:44px;margin-bottom:44px;border-bottom:1px solid #3A3832}
+.pied-news h2{font-family:var(--f-titre);font-weight:400;font-size:1.7rem;color:#F4EFE6;letter-spacing:0;text-transform:none;margin:0 0 6px}
+.pied-news p{margin:0;color:#BDB7AC;font-size:.92rem;line-height:1.6}
+.news-form{display:flex;flex-wrap:wrap;gap:10px}
+.news-form input[type=email]{flex:1 1 220px;min-width:0;height:48px;padding:0 14px;border:1px solid #5E5A52;background:#2C2B27;color:#F4EFE6;font:inherit;border-radius:var(--r)}
+.news-form input[type=email]::placeholder{color:#9C978C}
+.news-form .btn{height:48px}
+.news-form .news-mention{flex-basis:100%;font-size:.76rem;color:#9C978C;margin:0}
+.news-form .news-mention a{color:#C9C3B7}
+.news-form .news-retour{flex-basis:100%;margin:0;font-size:.9rem}
+.news-form .news-retour:empty{display:none}
+.piege{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
+.news-carte{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:80;width:min(360px,calc(100% - 32px));background:var(--blanc);border:1px solid var(--joint);box-shadow:0 18px 40px rgba(34,33,30,.16);padding:22px 22px 18px}
+.news-carte h2{font-family:var(--f-titre);font-weight:400;font-size:1.45rem;margin:0 26px 6px 0}
+.news-carte p{margin:0 0 12px;font-size:.88rem;color:var(--encre-doux);line-height:1.55}
+.news-carte .news-form input[type=email]{background:var(--blanc);color:var(--encre);border-color:var(--sable);flex-basis:100%}
+.news-carte .news-form .btn{flex:1}
+.news-carte .news-form .news-mention{color:var(--encre-doux)}
+.news-carte .news-form .news-mention a{color:var(--encre-doux)}
+.news-carte .fermer{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;cursor:pointer;color:var(--encre-doux);font-size:1.3rem}
+.etoiles{--note:0;position:relative;display:inline-block;font-size:1rem;letter-spacing:2px;line-height:1;color:#D9D2C5;white-space:nowrap}
+.etoiles::before{content:"★★★★★";position:absolute;inset:0;width:calc(var(--note) / 5 * 100%);overflow:hidden;color:#B08A3E}
+.note-resume{display:inline-flex;align-items:center;gap:10px;font-size:.88rem;color:var(--encre-doux);text-decoration:none;margin:-4px 0 4px}
+.note-resume:hover{color:var(--encre)}
+.avis-tete{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;margin-bottom:8px}
+.avis-moy{font-family:var(--f-titre);font-size:2.6rem;line-height:1}
+.avis-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:24px}
+.avis-carte{background:var(--blanc);border:1px solid var(--joint);padding:20px;display:grid;gap:10px;align-content:start}
+.avis-carte p{margin:0;line-height:1.6}
+.avis-auteur{font-size:.82rem;color:var(--encre-doux)}
+.avis-reponse{font-size:.88rem;border-left:2px solid var(--sable);padding-left:12px;color:var(--encre-doux)}
+.avis-info{font-size:.8rem;color:var(--encre-doux);max-width:60em;margin-top:18px}
+.noter{display:grid;gap:18px;max-width:720px}
+.noter-carreau{display:grid;grid-template-columns:96px 1fr;gap:16px 20px;background:var(--blanc);border:1px solid var(--joint);padding:18px}
+.noter-carreau img{width:96px;height:96px;object-fit:cover;border:1px solid var(--joint)}
+.noter-carreau h2{font-family:var(--f-titre);font-weight:400;font-size:1.35rem;margin:0}
+.noter-carreau .champ{grid-column:1/-1}
+.choix-note{display:flex;flex-direction:row-reverse;justify-content:flex-end;gap:2px;border:0;padding:0;margin:6px 0 0}
+.choix-note input{position:absolute;opacity:0;width:1px;height:1px}
+.choix-note label{font-size:2rem;line-height:1;color:#D9D2C5;cursor:pointer;padding:2px}
+.choix-note input:checked~label,.choix-note label:hover,.choix-note label:hover~label{color:#B08A3E}
+.choix-note input:focus-visible+label{outline:2px solid var(--olivier);outline-offset:2px}
+@media (max-width:760px){.pied-news{grid-template-columns:1fr}.noter-carreau{grid-template-columns:72px 1fr}.noter-carreau img{width:72px;height:72px}}
 .pied-bas{border-top:1px solid #3A3832;margin-top:48px;padding-top:20px;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;font-size:.78rem;color:#A9A398}
 @media(max-width:860px){.pied{grid-template-columns:1fr 1fr}.pied>div:first-child{grid-column:1/-1}}
 @media(max-width:420px){.pied{grid-template-columns:1fr}}
@@ -530,6 +573,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <div class="fiche-infos">
       <span class="eyebrow">Châteaux</span>
       <h1>Le Château de Chenonceau</h1>
+      <a class="note-resume" id="note-produit" href="#avis-produit" hidden=""></a>
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">Le seul château qui traverse une rivière. Sa galerie enjambe le Cher et se reflète dans l’eau. Diane de Poitiers et Catherine de Médicis s’y sont succédé.</p>
       <p class="prix">19,90&nbsp;€</p>
@@ -551,6 +595,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <p class="small"><a class="lien" href="/contact">Une question sur ce modèle ?</a></p>
     </div>
   </div>
+  <section class="bloc joint-haut" id="avis-produit" aria-labelledby="t-avis" hidden=""></section>
   <section class="bloc fond-blanc joint-haut" aria-labelledby="t-sim"><div class="wrap">
     <div class="bloc-titre"><h2 id="t-sim">Dans la même collection</h2></div>
     <div class="grille"><article class="carte">
@@ -590,6 +635,18 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <footer class="site">
   <div class="wrap">
+    <div class="pied-news" id="newsletter">
+      <div><h2>-10 % sur votre première commande</h2>
+        <p>Inscrivez-vous à nos nouvelles : les nouveaux lieux, des idées cadeaux avant les fêtes et quelques mots de l’atelier. Deux e-mails par mois au plus.</p></div>
+      <form class="news-form" novalidate="" data-branche="1">
+        <label for="news-email" class="visuellement-cache">Votre adresse e-mail</label>
+        <input type="email" id="news-email" name="email" placeholder="Votre adresse e-mail" autocomplete="email" required="">
+        <input type="text" name="site" class="piege" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-p" type="submit">Recevoir mon code</button>
+        <p class="news-retour" aria-live="polite"></p>
+        <p class="news-mention">Votre code vous est envoyé par e-mail. Désinscription en un clic dans chaque message. <a href="/confidentialite">Confidentialité</a></p>
+      </form>
+    </div>
     <div class="pied">
       <div>
         <span class="pied-logo"><img src="/img/01_Identite/logo-kreau-footer.webp" alt="K-Reau, carreaux d'ici" width="560" height="500" loading="lazy"></span>
@@ -736,7 +793,7 @@ function setMeta(title, desc, opts = {}){
     if(le){ le.href = en || '/en'; le.toggleAttribute('aria-current', LANG === 'en'); }
   }
   let rob = document.querySelector('meta[name="robots"]');
-  const prive = ['/avant-lancement','/merci','/panier'].includes(cheminFR()) || title.startsWith('Page introuvable');
+  const prive = ['/avant-lancement','/merci','/panier','/avis'].includes(cheminFR()) || title.startsWith('Page introuvable');
   if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noai, noimageai';
 }
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),3200); }
@@ -1157,6 +1214,7 @@ function vueProduit(slug){
     <div class="fiche-infos">
       <span class="eyebrow">${esc(collNom(p))}</span>
       <h1>${esc(p.nom)}</h1>
+      <a class="note-resume" id="note-produit" href="#avis-produit" hidden></a>
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
       ${prix ? `<p class="prix">${prix}</p>` : ''}
@@ -1184,6 +1242,7 @@ function vueProduit(slug){
       <p class="small"><a class="lien" href="/contact">Une question sur ce modèle ?</a></p>
     </div>
   </div>
+  <section class="bloc joint-haut" id="avis-produit" aria-labelledby="t-avis" hidden></section>
   ${similaires.length ? `<section class="bloc fond-blanc joint-haut" aria-labelledby="t-sim"><div class="wrap">
     <div class="bloc-titre"><h2 id="t-sim">${k==='les-embiez'?'D’autres lieux à découvrir':'Dans la même collection'}</h2></div>
     <div class="grille">${similaires.map(x=>carte(x)).join('')}</div>
@@ -1211,6 +1270,113 @@ function vueProduit(slug){
     app.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { q = Math.max(1, Math.min(20, q + +b.dataset.q)); out.textContent = q; }));
     $('#ajout').addEventListener('click', () => { Panier.ajouter({ type:'carreau', slug:p.slug, q }); toast(`${p.nom} ajouté au panier`); Panier.ouvrir(); });
   }
+  chargerAvis(p);
+}
+
+/* ===== Avis clients (vérifiés : déposés uniquement via le lien envoyé après une commande) ===== */
+const noteTxt = v => String(Math.round(v * 10) / 10).replace('.', ',');
+const etoiles = v => `<span class="etoiles" style="--note:${Number(v)||0}" role="img" aria-label="${noteTxt(v)} sur 5">★★★★★</span>`;
+async function chargerAvis(p){
+  let d; try{ const r = await fetch('/api/avis?slug=' + encodeURIComponent(p.slug)); if(!r.ok) return; d = await r.json(); }catch(e){ return; }
+  const sec = $('#avis-produit'), resume = $('#note-produit');
+  if(!sec || !d || !d.n || cleDepuisChemin(cheminFR()) !== 'produit-' + p.slug) return;
+  resume.innerHTML = `${etoiles(d.moy)}<span>${noteTxt(d.moy)} · ${d.n} avis</span>`; resume.hidden = false;
+  const date = x => new Date(x).toLocaleDateString(LOC, { month:'long', year:'numeric' });
+  sec.innerHTML = `<div class="wrap">
+    <div class="avis-tete"><h2 id="t-avis">Avis clients</h2><span class="avis-moy">${noteTxt(d.moy)}<span class="small muted"> / 5</span></span>${etoiles(d.moy)}<span class="small muted">${d.n} avis</span></div>
+    <div class="avis-liste">${d.avis.map(a => `<article class="avis-carte">${etoiles(a.note)}${a.texte ? `<p lang="${a.langue === 'en' ? 'en' : 'fr'}" translate="no">${esc(a.texte)}</p>` : ''}
+      <span class="avis-auteur"><span translate="no">${esc(a.prenom)}${a.ville ? ' · ' + esc(a.ville) : ''}</span> · ${date(a.date)}</span>
+      ${a.reponse ? `<p class="avis-reponse"><strong>Réponse de K-Reau</strong><br><span translate="no">${esc(a.reponse)}</span></p>` : ''}</article>`).join('')}</div>
+    <p class="avis-info">Avis vérifiés : ils ne peuvent être déposés que par des clients, via un lien personnel envoyé par e-mail après la réception de leur commande. Ils sont publiés sans modification ni contrepartie, du plus récent au plus ancien. Seuls les avis injurieux ou sans rapport avec le produit sont écartés.</p>
+  </div>`;
+  sec.hidden = false;
+  // données structurées : note moyenne et derniers avis
+  const ld = document.getElementById('ld-page');
+  if(ld){ try{ const o = JSON.parse(ld.textContent);
+    o.aggregateRating = { '@type':'AggregateRating', ratingValue: d.moy, reviewCount: d.n, bestRating: 5, worstRating: 1 };
+    o.review = d.avis.slice(0, 5).map(a => ({ '@type':'Review', author:{ '@type':'Person', name:a.prenom }, datePublished: String(a.date).slice(0,10), reviewRating:{ '@type':'Rating', ratingValue:a.note, bestRating:5 }, reviewBody: a.texte || undefined }));
+    ld.textContent = JSON.stringify(o); }catch(e){} }
+}
+
+function vueAvis(){
+  setMeta('Donner mon avis | K-Reau', 'Notez votre carreau K-Reau.');
+  const q = new URLSearchParams(location.search), c = q.get('c') || '', s = q.get('s') || '';
+  app.innerHTML = `<div class="page-tete"><div class="wrap"><div class="bloc-titre"><span class="eyebrow">Avis clients</span><h1>Votre avis sur K-Reau</h1>
+    <p class="lead">Merci de prendre une minute pour noter votre commande. Votre avis sera publié sur la fiche du carreau avec votre prénom et votre ville.</p></div></div></div>
+    <section class="bloc" style="padding-top:32px"><div class="wrap"><div id="avis-zone" class="noter"><p class="muted" role="status">Chargement de votre commande…</p></div></div></section>`;
+  const zone = $('#avis-zone');
+  if(!c || !s){ zone.innerHTML = `<p class="msg ko">Ce lien n’est pas complet. Utilisez le bouton reçu par e-mail, ou écrivez-nous via le <a href="/contact">formulaire de contact</a>.</p>`; return; }
+  fetch(`/api/avis?c=${encodeURIComponent(c)}&s=${encodeURIComponent(s)}`).then(r => r.json().then(j => ({ ok:r.ok, j }))).then(({ ok, j }) => {
+    if(!ok){ zone.innerHTML = `<p class="msg ko">Ce lien n’est pas valide ou a expiré. Écrivez-nous via le <a href="/contact">formulaire de contact</a> si vous souhaitez laisser un avis.</p>`; return; }
+    const restants = j.carreaux.filter(x => !j.deja.includes(x.slug));
+    if(!j.carreaux.length){ zone.innerHTML = `<p class="msg ok">Cette commande ne contient pas de carreau du catalogue à noter. Merci pour votre confiance !</p>`; return; }
+    if(!restants.length){ zone.innerHTML = `<p class="msg ok">Vous avez déjà donné votre avis sur cette commande. Merci beaucoup !</p><p><a class="btn btn-s" href="/carreaux">Découvrir d’autres lieux</a></p>`; return; }
+    zone.innerHTML = `<form id="form-avis" class="noter" novalidate>
+      ${restants.map((x, i) => `<div class="noter-carreau" data-slug="${esc(x.slug)}"><img src="${esc(x.image)}" alt="" width="96" height="96"><div><h2>${esc(x.nom)}</h2>
+        <fieldset class="choix-note"><legend class="visuellement-cache">Votre note pour ${esc(x.nom)}</legend>
+          ${[5,4,3,2,1].map(n => `<input type="radio" name="note-${i}" id="n-${i}-${n}" value="${n}"><label for="n-${i}-${n}" title="${n} sur 5"><span aria-hidden="true">★</span><span class="visuellement-cache">${n} sur 5</span></label>`).join('')}
+        </fieldset></div>
+        <div class="champ"><label for="t-${i}">Votre commentaire <span class="muted">(facultatif)</span></label><textarea id="t-${i}" rows="3" maxlength="1000" placeholder="Le dessin, la qualité, l’emballage, la personne à qui vous l’avez offert…"></textarea></div></div>`).join('')}
+      <div class="grille-2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+        <div class="champ"><label for="a-prenom">Prénom</label><input type="text" id="a-prenom" maxlength="40" required value="${esc(j.prenom)}" autocomplete="given-name"><span class="err" aria-live="polite"></span></div>
+        <div class="champ"><label for="a-ville">Ville <span class="muted">(facultatif)</span></label><input type="text" id="a-ville" maxlength="60" value="${esc(j.ville)}" autocomplete="address-level2"><span class="err"></span></div>
+      </div>
+      <p class="small muted">Seuls votre prénom, votre ville, votre note et votre commentaire sont publiés. Vous pouvez demander la suppression de votre avis à tout moment via le formulaire de contact.</p>
+      <div><button class="btn btn-p" type="submit">Publier mon avis</button></div>
+      <div id="avis-retour" aria-live="polite"></div></form>`;
+    $('#form-avis').addEventListener('submit', async e => {
+      e.preventDefault();
+      const avis = restants.map((x, i) => ({ slug:x.slug, note: +(document.querySelector(`input[name="note-${i}"]:checked`)?.value || 0), texte: $('#t-'+i).value.trim() })).filter(a => a.note);
+      const ret = $('#avis-retour'), btn = e.target.querySelector('button[type=submit]');
+      if(!avis.length){ ret.innerHTML = '<p class="msg ko">Choisissez une note (de 1 à 5 étoiles) pour au moins un carreau.</p>'; return; }
+      if(!$('#a-prenom').value.trim()){ ret.innerHTML = '<p class="msg ko">Indiquez votre prénom.</p>'; $('#a-prenom').focus(); return; }
+      btn.disabled = true; btn.textContent = 'Envoi…';
+      try{
+        const r = await fetch('/api/avis', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ c, s, avis, prenom: $('#a-prenom').value, ville: $('#a-ville').value, lang: LANG }) });
+        const k = await r.json().catch(() => ({})); if(!r.ok) throw new Error(k.erreur || 'Erreur');
+        zone.innerHTML = `<p class="msg ok">Merci ! Votre avis est publié. Il aidera d’autres personnes à trouver leur lieu.</p><p><a class="btn btn-s" href="/produits/${esc(avis[0].slug)}">Voir la fiche du carreau</a></p>`;
+      }catch(err){ ret.innerHTML = `<p class="msg ko">${esc(err.message)}. Réessayez dans un instant.</p>`; btn.disabled = false; btn.textContent = 'Publier mon avis'; }
+    });
+  }).catch(() => { zone.innerHTML = '<p class="msg ko">Le chargement a échoué. Vérifiez votre connexion puis rechargez la page.</p>'; });
+}
+
+/* ===== Newsletter : pied de page et petite invitation ===== */
+function brancherNewsletter(racine){
+  racine.querySelectorAll('.news-form').forEach(f => { if(f.dataset.branche) return; f.dataset.branche = '1';
+    f.addEventListener('submit', async e => {
+      e.preventDefault();
+      const champ = f.querySelector('input[type=email]'), ret = f.querySelector('.news-retour'), btn = f.querySelector('button[type=submit]');
+      const email = champ.value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ ret.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@exemple.fr.'; champ.focus(); return; }
+      btn.disabled = true; const lib = btn.textContent; btn.textContent = 'Envoi…'; ret.textContent = '';
+      try{
+        const r = await fetch('/api/newsletter', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, lang: LANG, site: f.querySelector('.piege')?.value || '' }) });
+        const j = await r.json().catch(() => ({})); if(!r.ok) throw new Error(j.erreur || 'Erreur');
+        store.set('kreau-news', { inscrit: Date.now() });
+        f.innerHTML = `<p class="news-retour">${j.deja ? 'Vous êtes déjà inscrit : votre code vous a été envoyé par e-mail lors de votre inscription.' : 'Merci ! Votre code de bienvenue vient de partir par e-mail. Pensez à regarder dans les courriers indésirables.'}</p>`;
+      }catch(err){ ret.textContent = err.message; btn.disabled = false; btn.textContent = lib; }
+    });
+  });
+}
+function inviterNewsletter(){
+  const deja = store.get('kreau-news', null);
+  if(deja && (deja.inscrit || Date.now() - (deja.ferme || 0) < 30 * 864e5)) return;
+  setTimeout(() => {
+    const ch = cleDepuisChemin(cheminFR());
+    const couche = $('#couche');
+    if(['merci','avis','panier'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
+    const d = document.createElement('aside'); d.className = 'news-carte'; d.setAttribute('aria-label', 'Inscription aux nouvelles de K-Reau');
+    d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button><h2>-10 % sur votre première commande</h2>
+      <p>Laissez votre e-mail : nous vous envoyons votre code, puis nos nouveaux lieux de temps en temps.</p>
+      <form class="news-form" novalidate><label for="news-email-2" class="visuellement-cache">Votre adresse e-mail</label>
+      <input type="email" id="news-email-2" placeholder="Votre adresse e-mail" autocomplete="email" required><input type="text" class="piege" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-p" type="submit">Recevoir mon code</button><p class="news-retour" aria-live="polite"></p>
+      <p class="news-mention">Désinscription en un clic. <a href="/confidentialite">Confidentialité</a></p></form>`;
+    document.body.appendChild(d); brancherNewsletter(d);
+    const fermer = () => { d.remove(); const v = store.get('kreau-news', null); if(!v || !v.inscrit) store.set('kreau-news', { ferme: Date.now() }); };
+    d.querySelector('.fermer').addEventListener('click', fermer);
+    document.addEventListener('keydown', function esc_(e){ if(e.key === 'Escape' && document.body.contains(d)){ fermer(); document.removeEventListener('keydown', esc_); } });
+  }, 35000);
 }
 
 function vueHistoire(){
@@ -2370,11 +2536,14 @@ const PAGES = {
     <p>Le détail figure dans les <a class="lien" href="/cgv">conditions générales de vente</a>.</p>`),
   'confidentialite': () => pageLegale('Confidentialité et cookies','Confidentialité | K-Reau', `
     <h2>Responsable du traitement</h2><p>${esc(L.raisonSociale)}, ${esc(L.adresse)}.</p>
-    <h2>Données collectées</h2><p>Formulaire de contact : nom, adresse e-mail et message. Inscription au lancement : adresse e-mail. Commande : nom, adresses de livraison et de facturation, e-mail, téléphone et contenu de la commande. Les données de carte bancaire sont traitées uniquement par Stripe.</p>
+    <h2>Données collectées</h2><p>Formulaire de contact : nom, adresse e-mail et message. Inscription au lancement ou à la newsletter : adresse e-mail. Avis clients : prénom, ville, note et commentaire. Commande : nom, adresses de livraison et de facturation, e-mail, téléphone et contenu de la commande. Les données de carte bancaire sont traitées uniquement par Stripe.</p>
     <h2>Utilisation</h2><p>Ces informations servent à répondre à vos demandes, à vous prévenir de l’ouverture des commandes si vous l’avez demandé, et à traiter et livrer vos commandes. Elles ne sont ni vendues ni cédées.</p>
-    <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Polices de caractères : Google Fonts (Google Ireland Limited), qui reçoit à cette occasion l’adresse IP du visiteur. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
+    <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Stockage des avis et des inscriptions à la newsletter : Supabase Inc. (serveurs dans l’Union européenne, à Paris). Polices de caractères : Google Fonts (Google Ireland Limited), qui reçoit à cette occasion l’adresse IP du visiteur. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
     <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
     <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
+    <h2>Newsletter et code de bienvenue</h2><p>Si vous vous inscrivez à nos nouvelles (pied de page ou petite fenêtre d’invitation), nous conservons votre adresse e-mail, la langue du site et la date d’inscription, afin de vous envoyer votre code de bienvenue puis, au plus deux fois par mois, nos nouveaux lieux et idées cadeaux. Chaque e-mail contient un lien de désinscription en un clic. Base légale : votre consentement. Conservation : jusqu’à votre désinscription, puis 3 ans sans échange au plus.</p>
+    <h2>Avis clients</h2><p>Une dizaine de jours après la livraison, nous vous envoyons un seul e-mail vous invitant à noter les carreaux achetés (intérêt légitime : recueillir l’avis de nos clients). Si vous laissez un avis, votre note, votre commentaire, votre prénom et votre ville sont publiés sur la fiche du carreau, avec la date. Vous pouvez demander la suppression de votre avis à tout moment via le formulaire de contact.</p>
+    <h2>Paiement non finalisé</h2><p>Si vous cochez, sur la page de paiement, la case acceptant de recevoir les actualités de K-Reau et que vous ne finalisez pas votre commande, nous pouvons vous envoyer un e-mail vous permettant de la reprendre. Cette case vaut aussi inscription à nos nouvelles ; vous pouvez vous désinscrire à tout moment.</p>
     <h2>Photos du carreau sur mesure</h2><p>Les photos que vous ajoutez sur la page Sur mesure sont réduites dans votre navigateur, puis transmises à K-Reau par e-mail avec une référence. Elles servent uniquement à réaliser votre dessin, ne sont jamais publiées sans votre accord et sont supprimées une fois la commande terminée, ou si elle n’est pas passée.</p>
     <h2>Mesure d’audience</h2><p>Le site utilise Vercel Web Analytics pour compter les visites de façon anonyme et agrégée (pages vues, provenance, type d’appareil, pays). Cet outil ne dépose aucun cookie et ne permet pas de vous identifier.</p>
     <h2>Cookies</h2><p>Ce site ne dépose aucun cookie de mesure d’audience ni de publicité. Le panier est conservé dans votre navigateur (stockage local) uniquement pour le fonctionnement de la commande. Si des outils de mesure sont ajoutés, un bandeau de consentement vous permettra de les accepter ou de les refuser.</p>`),
@@ -2910,6 +3079,7 @@ function route(){
   else if(h==='contact') vueContact();
   else if(h==='panier'){ vueAccueil(); if(LIVE) Panier.ouvrir(); }
   else if(h==='merci') vueMerci();
+  else if(h==='avis') vueAvis();
   else if(h==='coffrets') vueCoffrets();
   else if(h==='sur-mesure') vueSurMesure();
   else if(h==='carte-cadeau') vueCarteCadeau();
@@ -2987,6 +3157,8 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
 }
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);
+brancherNewsletter(document);
+if(LIVE && !navigator.webdriver) inviterNewsletter();
 if(!app.dataset.prerendu) route();
 charger();
 </script>

@@ -7,7 +7,7 @@
   const P = __PATTERNS__;
   const norm = s => s.replace(/\s+/g, ' ').trim();
   function tr(s){
-    const k = norm(s); if(!k || !/[A-Za-zÀ-ÿ€]/.test(k)) return null;
+    const k = norm(s); if(!k || !(/[A-Za-zÀ-ÿ€]/.test(k) || /^\d,\d$/.test(k))) return null;
     if(Object.prototype.hasOwnProperty.call(D, k)) return D[k];
     for(const [re, r] of P){ const m = k.match(re); if(m){ const t = typeof r === 'function' ? r(m, T) : k.replace(re, r); if(t != null) return t; } }
     return null;

@@ -1,4 +1,9 @@
 [
+  [/^([\d,]+) · (\d+) avis$/, m => m[1].replace(',', '.') + ' · ' + m[2] + (m[2] === '1' ? ' review' : ' reviews')],
+  [/^(\d+) avis$/, m => m[1] + (m[1] === '1' ? ' review' : ' reviews')],
+  [/^([\d,]+) sur 5$/, m => m[1].replace(',', '.') + ' out of 5'],
+  [/^(\d),(\d)$/, m => m[1] + '.' + m[2]],
+  [/^Votre note pour (.+)$/, m => 'Your rating for ' + m[1]],
   // fiches produits : titres, descriptions et intertitres construits à partir du nom du carreau
   [/^Carreau (.+) \| Déco céramique, cadeau (.+) – K-Reau$/, (m, T) => { const n = T('§n:' + m[1]); const N = n === '§n:' + m[1] ? m[1] : n.replace(/^the /, ''); return N.charAt(0).toUpperCase() + N.slice(1) + ' tile | Ceramic decor, ' + ({ 'patrimoine': 'French heritage', 'Côte Bleue': 'Côte Bleue', 'Provence': 'Provence', 'Var': 'Var', 'Marseille': 'Marseille' }[m[2]] || m[2]) + ' gift – K-Reau'; }],
   [/^Carreau décoratif (.+) en céramique 15 × 15 cm, dessin au trait et nom calligraphié\. Idée cadeau souvenir (?:de la |du |de |d’)(.+)\. 19,90 €, livraison offerte dès 50 €\.$/, (m, T) => { const n = T('§n:' + m[1]); const N = n === '§n:' + m[1] ? m[1] : n.replace(/^the /, ''); return N.charAt(0).toUpperCase() + N.slice(1) + ' decorative tile in 15 × 15 cm ceramic, with a line drawing and calligraphed name. A keepsake gift idea from ' + ({ 'Côte Bleue': 'the Côte Bleue', 'Val de Loire': 'the Loire Valley', 'Méditerranée': 'the Mediterranean' }[m[2]] || m[2]) + '. €19.90, free delivery in France from €50.'; }],

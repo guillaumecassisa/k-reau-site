@@ -58,13 +58,13 @@ async function envoyerMail(sujet, html, repondreA) {
 }
 
 // E-mail au client : uniquement si un expéditeur sur le domaine vérifié est configuré (CONTACT_EXPEDITEUR).
-async function envoyerClient(destinataire, sujet, html) {
+async function envoyerClient(destinataire, sujet, html, entetes) {
   const cle = process.env.RESEND_API_KEY, exp = process.env.CONTACT_EXPEDITEUR;
   if (!cle || !exp || !/@k-reau\.fr>?$/.test(exp) || !destinataire) return false;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: exp, to: [destinataire], reply_to: 'contact@k-reau.fr', subject: sujet, html })
+    body: JSON.stringify({ from: exp, to: [destinataire], reply_to: 'contact@k-reau.fr', subject: sujet, html, headers: entetes || undefined })
   });
   if (!r.ok) console.error('Resend client', r.status, (await r.text()).slice(0, 200));
   return r.ok;
@@ -89,6 +89,41 @@ function tropDeRequetes(req, max, fenetreMs) {
   if (compteurs.size > 5000) compteurs.clear();
   return t.length > max;
 }
+
+// Base de données K-Reau (Supabase) : une seule fonction SQL « kreau », protégée par la clé secrète KREAU_DB_CLE.
+async function base(action, data) {
+  const url = process.env.KREAU_DB_URL, anon = process.env.KREAU_DB_ANON, cle = process.env.KREAU_DB_CLE;
+  if (!url || !anon || !cle) throw new Error('Base non configurée');
+  const r = await fetch(`${url}/rest/v1/rpc/kreau`, {
+    method: 'POST',
+    headers: { apikey: anon, Authorization: `Bearer ${anon}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_cle: cle, p_action: action, p_data: data || {} })
+  });
+  const t = await r.text();
+  if (!r.ok) throw new Error(`Base ${r.status} ${t.slice(0, 160)}`);
+  return JSON.parse(t);
+}
+// Signature des liens envoyés par e-mail (avis, désinscription) : impossible à fabriquer sans la clé.
+const signer = v => crypto.createHmac('sha256', 'kreau-liens:' + (process.env.KREAU_DB_CLE || '')).update(String(v)).digest('base64url').slice(0, 22);
+const signatureOk = (v, sig) => { const a = Buffer.from(signer(v)), b = Buffer.from(String(sig || '')); return a.length === b.length && crypto.timingSafeEqual(a, b); };
+
+// Gabarit commun des e-mails clients (même présentation que l'e-mail de commande).
+function gabarit({ lang = 'fr', titre, corps, bouton, lien, pied = '' }) {
+  const en = lang === 'en';
+  return `<!doctype html><html lang="${en ? 'en' : 'fr'}"><body style="margin:0;background:#F5F1EA;font-family:Arial,Helvetica,sans-serif;color:#22211E">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F5F1EA"><tr><td align="center" style="padding:28px 12px">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#FFFEFB;border:1px solid #E6DED3">
+<tr><td align="center" style="padding:28px 28px 8px"><img src="https://k-reau.fr/img/01_Identite/logo-kreau-email.png" width="120" alt="K-Reau" style="display:block;border:0"></td></tr>
+<tr><td style="padding:8px 32px 0;font-size:15px;line-height:1.6">
+<h1 style="font-family:Georgia,serif;font-weight:400;font-size:26px;margin:12px 0 14px">${titre}</h1>
+${corps}
+</td></tr>
+${bouton ? `<tr><td align="center" style="padding:20px 32px 8px"><a href="${lien}" style="display:inline-block;background:#51573D;color:#fff;text-decoration:none;padding:12px 22px;font-weight:600">${bouton}</a></td></tr>` : ''}
+<tr><td style="padding:16px 32px 28px;font-size:13px;line-height:1.6;color:#5E5A52">${pied}
+<em style="font-family:Georgia,serif;font-size:15px;color:#22211E">${en ? 'The places we love, to keep at home.' : 'Les lieux qu’on aime, à garder chez soi.'}</em><br>K-Reau · <a href="https://k-reau.fr${en ? '/en' : ''}" style="color:#51573D">k-reau.fr</a> · <a href="https://www.instagram.com/kreau.studio/" style="color:#51573D">Instagram</a></td></tr>
+</table></td></tr></table></body></html>`;
+}
+const emailValide = v => /^[^\s@<>"]{1,64}@[^\s@<>"]+\.[a-z]{2,}$/i.test(String(v || '')) && String(v).length <= 120;
 const echap = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE };
+module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE, base, signer, signatureOk, gabarit, emailValide };

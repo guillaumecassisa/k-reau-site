@@ -61,8 +61,12 @@ module.exports = async function handler(req, res) {
       panier: resume.join(',').slice(0, 490),
       cartes: cartes.join(','),
       sur_mesure: String(surMesure),
-      message_cadeau: message
+      message_cadeau: message,
+      lang: en ? 'en' : 'fr'
     },
+    // relance si le paiement est abandonné (uniquement avec l'accord du client, case proposée par Stripe)
+    consent_collection: { promotions: 'auto' },
+    after_expiration: { recovery: { enabled: 'true', allow_promotion_codes: 'true' } },
     payment_intent_data: { description: `K-Reau · ${resume.join(', ')}`.slice(0, 990), metadata: { message_cadeau: message } }
   };
   // Livraison uniquement s'il y a un objet à expédier ; offerte dès le seuil (cartes cadeaux exclues du calcul)
@@ -90,7 +94,15 @@ module.exports = async function handler(req, res) {
   if (message) params.custom_text = { submit: { message: en ? `Your gift message will be printed on the card in the box: “${message.slice(0, 200)}”` : `Votre message cadeau sera imprimé sur la carte du coffret : « ${message.slice(0, 200)} »` } };
 
   try {
-    const s = await stripe('POST', 'checkout/sessions', params);
+    let s;
+    try { s = await stripe('POST', 'checkout/sessions', params); }
+    catch (e) {
+      // si le compte Stripe refuse l'option de relance, on paie quand même sans elle
+      if (!/consent|after_expiration|recovery|promotions/i.test(e.message)) throw e;
+      console.warn('Stripe relance désactivée :', e.message);
+      delete params.consent_collection; delete params.after_expiration;
+      s = await stripe('POST', 'checkout/sessions', params);
+    }
     return res.status(200).json({ url: s.url });
   } catch (e) {
     console.error('Stripe', e.message);
