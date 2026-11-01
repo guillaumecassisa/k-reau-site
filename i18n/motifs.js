@@ -15,7 +15,7 @@
   [/^(\d+) carreaux? affichés?$/, m => m[1] + (m[1] === '1' ? ' tile shown' : ' tiles shown')],
   [/^(\d+) carreaux? trouvés?$/, m => m[1] + (m[1] === '1' ? ' tile found' : ' tiles found')],
   [/^(\d+) modèles?$/, m => m[1] + (m[1] === '1' ? ' design' : ' designs')],
-  [/^Collection · (\d+) lieux?$/, m => 'Collection · ' + m[1] + ' places'],
+  [/^Collection · (\d+) lieux?$/, m => 'Collection · ' + m[1] + (m[1] === '1' ? ' place' : ' places')],
   [/^Voir les (\d+) carreaux$/, m => 'See all ' + m[1] + ' tiles'],
   [/^(\d) \/ 3 carreaux? choisis?$/, m => m[1] + ' / 3 tiles chosen'],
   [/^Voir tous les résultats pour « (.*) »$/, m => 'See all results for “' + m[1] + '”'],
