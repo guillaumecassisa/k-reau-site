@@ -55,11 +55,6 @@
       "permanent": true
     },
     {
-      "source": "/en/collections/les-embiez",
-      "destination": "/en/produits/les-embiez",
-      "permanent": true
-    },
-    {
       "source": "/en/guides",
       "destination": "/guides",
       "permanent": false
@@ -68,11 +63,6 @@
       "source": "/en/guides/:g",
       "destination": "/guides/:g",
       "permanent": false
-    },
-    {
-      "source": "/collections/les-embiez",
-      "destination": "/produits/les-embiez",
-      "permanent": true
     }
   ],
   "headers": [
