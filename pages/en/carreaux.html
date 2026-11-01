@@ -1295,7 +1295,7 @@ function vueAccueil(){
           return `<a class="coll" href="${href}">
             <div class="coll-img"><img src="${imgColl(k)}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)}"></div>
             <div class="coll-corps">
-              <span class="eyebrow">${k==='les-embiez'?'Modèle signature':(PRODUITS? n+' modèles':'Collection')}</span>
+              <span class="eyebrow">${k==='les-embiez'?'Modèle signature':(PRODUITS? n+(n>1?' modèles':' modèle'):'Collection')}</span>
               <h3>${esc(c.nom)}</h3>
               <p class="muted">${esc(c.court)}</p>
               <span class="btn btn-s">Voir ${k==='les-embiez'?'le modèle':'les modèles'}</span>
@@ -1425,7 +1425,7 @@ function vueCollection(k){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Collections','/#collections'],[c.nom,'']])}
-    <div class="bloc-titre"><span class="eyebrow">Collection · ${PRODUITS?list.length+' lieux':''}</span><h1>${esc(c.h1||c.nom)}</h1><p class="lead">${esc(c.intro)}</p></div>
+    <div class="bloc-titre"><span class="eyebrow">Collection · ${PRODUITS?list.length+(list.length>1?' lieux':' lieu'):''}</span><h1>${esc(c.h1||c.nom)}</h1><p class="lead">${esc(c.intro)}</p></div>
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     <div class="grille" id="g-coll">${grilleHTML(list)}</div>
