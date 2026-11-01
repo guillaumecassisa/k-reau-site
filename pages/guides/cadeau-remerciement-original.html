@@ -448,7 +448,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 <body>
 
 <a class="skip" href="#app">Aller au contenu</a>
-<div class="annonce" id="annonce"><strong>Noël :</strong> commandez avant le 12 décembre pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · <a href="/coffrets">Voir les coffrets</a></div>
+<div class="annonce" id="annonce"><strong>Noël :</strong> commandez avant le 13 décembre pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · <a href="/coffrets">Voir les coffrets</a></div>
 <header class="site">
   <div class="wrap hd">
     <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header.webp" alt="K-Reau" width="560" height="461"></a>
@@ -2598,12 +2598,22 @@ function ajouterOuvres(depart, n){
   while(n>0){ d.setDate(d.getDate()+1); if(d.getMonth()===0&&d.getDate()===1) f=feriesFR(d.getFullYear()); const j=d.getDay(); if(j!==0&&j!==6&&!f.includes(d.toDateString())) n--; }
   return d;
 }
-function livraisonEstimee(){
+function fenetreLivraison(base){
   // Expédition 5 à 7 jours après la commande, puis 2 à 3 jours ouvrés d'acheminement (week-ends et jours fériés exclus)
-  const exp = n => { const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()+n); return d; };
-  const debut = ajouterOuvres(exp(5), 2), fin = ajouterOuvres(exp(7), 3);
+  const exp = n => { const d = new Date(base || Date.now()); d.setHours(12,0,0,0); d.setDate(d.getDate()+n); return d; };
+  return [ajouterOuvres(exp(5), 2), ajouterOuvres(exp(7), 3)];
+}
+function livraisonEstimee(){
+  const [debut, fin] = fenetreLivraison();
   const fmt=(d,mois=true)=>d.toLocaleDateString('fr-FR',mois?{weekday:'long',day:'numeric',month:'long'}:{weekday:'long',day:'numeric'});
   return `Reçu entre le ${fmt(debut, debut.getMonth()!==fin.getMonth())} et le ${fmt(fin)}`;
+}
+// Dernier jour de commande pour être livré au plus tard la veille d'une fête
+function dateLimiteCommande(fete){
+  const veille = new Date(fete); veille.setDate(veille.getDate()-1); veille.setHours(23,0,0,0);
+  const d = new Date(fete); d.setHours(12,0,0,0);
+  for(let i=0;i<40;i++){ d.setDate(d.getDate()-1); if(fenetreLivraison(d)[1] <= veille) return d; }
+  return d;
 }
 
 function vueCarteCadeau(){
@@ -2914,12 +2924,26 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') fermerMenu(); }
 $('#annee').textContent = new Date().getFullYear();
 if(TEST_BOUTIQUE){ const a=$('#annonce'); a.textContent='Mode test du paiement : utilisez la carte 4242 4242 4242 4242, aucune somme n’est débitée.'; a.hidden=false; }
 else if(!LIVE && CONFIG.annonce){ const a=$('#annonce'); a.textContent = CONFIG.annonce; a.hidden = false; }
-else if(LIVE){ // Bandeau de Noël : date limite calculée sur l'année en cours
-  const a=$('#annonce'), now=new Date(), an=now.getFullYear(), j=new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const limite=new Date(an,11,12), debut=new Date(an,10,1), fin=new Date(an,11,24);
+else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des délais de livraison réels
+  const a=$('#annonce'), now=new Date(), j=new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const jour = d => d.toLocaleDateString('fr-FR',{day:'numeric',month:'long'});
+  const fetes = [
+    { debut:[10,1], fete:[11,24], lien:'<a href="/coffrets">Voir les coffrets</a>',
+      avant: l => `<strong>Noël :</strong> commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · `,
+      apres: '<strong>Trop tard pour une livraison avant Noël ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ' },
+    { debut:[0,10], fete:[1,14], lien:'<a href="/carreaux">Choisir un lieu</a>',
+      avant: l => `<strong>Saint-Valentin :</strong> offrez le lieu de votre rencontre · commandez avant le ${l} pour être livré à temps · `,
+      apres: '<strong>Trop tard pour une livraison avant la Saint-Valentin ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ' }
+  ];
   let msg='';
-  if(j>=debut && j<=limite) msg=`<strong>Noël :</strong> commandez avant le ${limite.toLocaleDateString('fr-FR',{day:'numeric',month:'long'})} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · <a href="/coffrets">Voir les coffrets</a>`;
-  else if(j>limite && j<=fin) msg=`<strong>Trop tard pour une livraison avant Noël ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · <a href="/carte-cadeau">Offrir une carte</a>`;
+  for(const f of fetes){
+    const an = j.getMonth() > f.fete[0] ? j.getFullYear()+1 : j.getFullYear();
+    const fete = new Date(an, f.fete[0], f.fete[1]), debut = new Date(an, f.debut[0], f.debut[1]);
+    if(j < debut || j >= fete) continue;
+    const limite = dateLimiteCommande(fete);
+    msg = j <= limite ? f.avant(jour(limite)) + f.lien : f.apres + '<a href="/carte-cadeau">Offrir une carte</a>';
+    break;
+  }
   a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
 }
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
