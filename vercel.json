@@ -35,6 +35,11 @@
   ],
   "redirects": [
     {
+      "source": "/carte",
+      "destination": "/?utm_source=carte-de-visite&utm_medium=print",
+      "permanent": false
+    },
+    {
       "source": "/collections/cote-provencale",
       "destination": "/collections/marseille",
       "permanent": true
