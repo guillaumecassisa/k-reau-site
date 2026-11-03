@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";document.write('<script id="i18n-js" src="/i18n-en.js"><\/script>');}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/i18n-en.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1"/>
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -10,7 +10,7 @@
 <meta name="copyright" content="© K-Reau – GC3D. Tous droits réservés.">
 <meta name="author" content="K-Reau">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<link rel="icon" type="image/webp" href="/img/01_Identite/logo-kreau-header.webp">
+<link rel="icon" type="image/webp" href="/img/01_Identite/logo-kreau-header-petit.webp">
 <title>K-Reau Carreaux d'ici</title>
 <meta name="description" content="Découvrez K-Reau, des carreaux décoratifs illustrés inspirés de Marseille, de la Côte Bleue et des Embiez. Des lieux à garder chez soi.">
 <meta property="og:title" content="K-Reau | Carreaux décoratifs des lieux qu’on aime">
@@ -21,10 +21,9 @@
 <link rel="canonical" href="https://k-reau.fr/">
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
 <script defer src="/_vercel/insights/script.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700&display=swap">
-<link rel="preload" as="image" href="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/manrope-latin-400-normal.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/cormorant-garamond-latin-400-normal.woff2" crossorigin>
+<style>@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin-600-normal.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin-400-italic.woff2) format('woff2')}@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin-500-italic.woff2) format('woff2')}@font-face{font-family:'Manrope';font-style:normal;font-weight:400;font-display:swap;src:url(/assets/fonts/manrope-latin-400-normal.woff2) format('woff2')}@font-face{font-family:'Manrope';font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/manrope-latin-500-normal.woff2) format('woff2')}@font-face{font-family:'Manrope';font-style:normal;font-weight:600;font-display:swap;src:url(/assets/fonts/manrope-latin-600-normal.woff2) format('woff2')}@font-face{font-family:'Manrope';font-style:normal;font-weight:700;font-display:swap;src:url(/assets/fonts/manrope-latin-700-normal.woff2) format('woff2')}</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"K-Reau","slogan":"Les lieux qu’on aime, à garder chez soi.","logo":"https://k-reau.fr/img/01_Identite/logo-kreau.webp","url":"https://k-reau.fr/","sameAs":["https://www.instagram.com/kreau.studio/","https://www.pinterest.com/kreaustudio/"]}</script>
 <style>
 /* Mise en page : un « calepinage » — grilles de carreaux, joints fins couleur sable, beaucoup d'air. Thème clair unique, assumé (céramique). */
@@ -270,7 +269,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 
 /* Fiche produit */
 .fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(24px,4vw,48px) clamp(56px,8vw,100px)}
-@media(max-width:860px){.fiche{grid-template-columns:1fr}}
+@media(max-width:860px){.fiche{grid-template-columns:minmax(0,1fr)}}
+.fiche>*,.galerie>*{min-width:0}
 .galerie{display:grid;gap:12px;position:sticky;top:100px}
 @media(max-width:860px){.galerie{position:static}}
 .galerie-principale{position:relative;background:var(--blanc);border:1px solid var(--joint);overflow:hidden;cursor:zoom-in;padding:0}
@@ -298,6 +298,29 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .carac td{color:var(--encre-doux)}
 .encart{background:var(--blanc);border:1px solid var(--joint);padding:22px;display:grid;gap:14px}
 .encart h2{font-size:1.5rem}
+.reassurance{min-width:0;list-style:none;margin:2px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:.8rem;color:var(--encre-doux)}
+.reassurance li{display:flex;align-items:center;gap:7px;line-height:1.3}
+.reassurance svg{flex:none;color:var(--olivier)}
+.trio-fiche{min-width:0;border-top:1px solid var(--joint);padding-top:16px;display:grid;gap:12px}
+.trio-fiche h3{font-family:var(--f-titre);font-weight:400;font-size:1.3rem;margin:0}
+.trio-vignettes{display:flex;align-items:center;gap:6px}
+.trio-vignettes a,.trio-vignettes span.moi{flex:1 1 0;min-width:0;display:block;border:1px solid var(--joint);background:var(--ceramique)}
+.trio-vignettes img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
+.trio-vignettes b{flex:none;color:var(--encre-doux);font-weight:400}
+.trio-noms{font-size:.82rem;color:var(--encre-doux);margin:0}
+.trio-prix{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;font-size:.9rem}
+.trio-prix strong{font-size:1.15rem}
+.trio-prix s{color:var(--encre-doux)}
+.barre-achat{display:none}
+@media(max-width:760px){
+  .barre-achat{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:70;align-items:center;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--blanc);border-top:1px solid var(--joint);box-shadow:0 -6px 20px rgba(34,33,30,.08);transform:translateY(110%);transition:transform .25s}
+  .barre-achat.visible{transform:none}
+  .barre-achat div{flex:1;min-width:0;display:grid;line-height:1.25}
+  .barre-achat div span{font-size:.82rem;color:var(--encre-doux);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .barre-achat div strong{font-size:1.05rem}
+  .barre-achat .btn{min-height:46px;padding:0 1.2em}
+  body.avec-barre .toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}
+}
 .qte{display:flex;align-items:center;border:1px solid #CFC5B7;width:max-content}
 .qte button{width:44px;height:48px;border:0;background:none;font-size:1.2rem;cursor:pointer}
 .qte output{min-width:36px;text-align:center;font-variant-numeric:tabular-nums}
@@ -518,7 +541,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 <div class="annonce" id="annonce" hidden></div>
 <header class="site">
   <div class="wrap hd">
-    <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header.webp" alt="K-Reau" width="560" height="461"></a>
+    <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header-petit.webp" srcset="/img/01_Identite/logo-kreau-header-petit.webp 240w, /img/01_Identite/logo-kreau-header.webp 560w" sizes="74px" alt="K-Reau" width="560" height="461"></a>
     <nav class="principale" aria-label="Navigation principale">
       <ul>
         <li><a href="/carreaux" data-nav="carreaux">Nos carreaux</a></li>
@@ -757,6 +780,7 @@ async function charger(){
     const r = await fetch('/data/catalogue_produits.json');
     if(!r.ok) throw new Error(r.status);
     const abs = u => u ? '/'+u.replace(/^\//,'') : u;
+    if(LANG === 'en' && !window.__kreauI18n) await new Promise(ok => { addEventListener('kreau-i18n', ok, { once:true }); setTimeout(ok, 4000); }); // traduction chargée avant d'afficher
     PRODUITS = (await r.json()).filter(p => p.publie !== false).map(p => ({...p, image_principale: abs(p.image_principale), miniature: abs(p.miniature), image_detail: abs(p.image_detail), image_coffret: abs(p.image_coffret), image_dimensions: abs(p.image_dimensions), image_etagere: abs(p.image_etagere), image_en_main: abs(p.image_en_main)})); ERREUR = null;
   }catch(e){ ERREUR = e; }
   document.querySelectorAll('[data-coll]').forEach(el => el.hidden = !collPubliee(el.dataset.coll));
@@ -855,7 +879,7 @@ function vueAccueil(){
         </div>
       </div>
       <figure class="hero-img" style="margin:0">
-        <img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
+        <img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" srcset="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux-mini.webp 760w, /img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp 1122w" sizes="(max-width:860px) 92vw, 520px" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
       </figure>
     </div>
   </section>
@@ -879,7 +903,7 @@ function vueAccueil(){
         ${ORDRE_COLLS.filter(collPubliee).map(k=>{ const c=COLLECTIONS[k]; const n = deCollection(k).length;
           const href = k==='les-embiez' && embiezSeul() ? '/produits/les-embiez' : '/collections/'+k;
           return `<a class="coll" href="${href}">
-            <div class="coll-img"><img src="${imgColl(k)}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)}"></div>
+            <div class="coll-img"><img src="${/\/img\/\d\d_Produits_/.test(imgColl(k)) ? imgColl(k).replace(/\.webp$/, '-mini.webp') : imgColl(k)}" width="${c.w}" height="${c.h}" loading="lazy" alt="Carreau K-Reau de la collection ${esc(c.nom)}"></div>
             <div class="coll-corps">
               <span class="eyebrow">${k==='les-embiez'&&embiezSeul()?'Modèle signature':(PRODUITS? n+(n>1?' modèles':' modèle'):'Collection')}</span>
               <h3>${esc(c.nom)}</h3>
@@ -1111,6 +1135,29 @@ function chercherOffres(q){
   document.addEventListener('click', e => { if(!form.contains(e.target)) fermer(); });
 })();
 
+// « Complétez votre trio » : le trio tout prêt s'il existe, sinon les deux carreaux suivants de la même collection
+function compagnonsTrio(p){
+  const t = CONFIG.trios.find(x => x.slugs.includes(p.slug));
+  if(t) return t.slugs.filter(s => s !== p.slug).map(parSlug).filter(Boolean);
+  let l = deCollection(p.collection_slug);
+  if(l.length < 3) l = [...l, ...deCollection(p.collection_slug === 'les-embiez' ? 'cote-bleue' : 'marseille')];
+  l = l.filter(x => x.slug !== p.slug);
+  const i = Math.max(0, deCollection(p.collection_slug).findIndex(x => x.slug === p.slug));
+  return [l[i % l.length], l[(i + 1) % l.length]].filter((x, k, a) => x && a.findIndex(y => y.slug === x.slug) === k);
+}
+function trioHTML(p){
+  const c = compagnonsTrio(p); if(c.length < 2) return '';
+  const tous = [p, ...c];
+  return `<div class="trio-fiche"><h3>Complétez votre trio</h3>
+    <div class="trio-vignettes"><span class="moi"><img src="${esc(p.miniature)}" alt="${esc(p.nom)}" loading="lazy" width="600" height="600"></span><b aria-hidden="true">+</b>
+      ${c.map(x => `<a href="/produits/${esc(x.slug)}" title="${esc(x.nom)}"><img src="${esc(x.miniature)}" alt="${esc(x.nom)}" loading="lazy" width="600" height="600"></a>`).join('<b aria-hidden="true">+</b>')}</div>
+    <p class="trio-noms">${tous.map(x => esc(x.nom)).join(' · ')}</p>
+    <div class="trio-prix"><strong>${prixEur(CONFIG.prix.coffret)}</strong><s>${prixEur(3*CONFIG.prix.carreau)}</s><span>livraison offerte</span></div>
+    <button class="btn btn-s" type="button" id="ajout-trio" data-slugs="${esc(tous.map(x => x.slug).join(','))}">Ajouter le trio au panier</button>
+    <a class="lien small" href="/coffrets?avec=${esc(p.slug)}#composer">Choisir d’autres carreaux pour le coffret</a>
+  </div>`;
+}
+
 function vueProduit(slug){
   if(!PRODUITS){ app.innerHTML = `<div class="wrap" style="padding-block:80px"><div class="grille">${grilleHTML([])}</div></div>`; return; }
   const p = parSlug(slug);
@@ -1147,7 +1194,7 @@ function vueProduit(slug){
     <div class="galerie">
       <div class="galerie-cadre">
         <button class="galerie-principale" type="button" id="g-princ" aria-label="Agrandir l’image">
-          <img src="${esc(vues[0].src)}" width="1254" height="1254" alt="${esc(vues[0].alt)}" fetchpriority="high">
+          <img src="${esc(vues[0].src)}" srcset="${esc(p.miniature)} 600w, ${esc(vues[0].src)} 1254w" sizes="(max-width:860px) 92vw, 640px" width="1254" height="1254" alt="${esc(vues[0].alt)}" fetchpriority="high">
           <span class="galerie-loupe">${ICONES.loupe} Agrandir</span>
         </button>
         ${vues.length > 1 ? `<button class="fleche fleche-prec" type="button" id="g-prec" aria-label="Photo précédente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
@@ -1155,7 +1202,7 @@ function vueProduit(slug){
         <span class="galerie-compteur" id="g-compteur" aria-live="polite">1 / ${vues.length}</span>` : ''}
       </div>
       ${vues.length > 1 ? `<div class="vignettes" role="group" aria-label="Photos du carreau">
-        ${vues.map((v,i)=>`<button class="vignette" type="button" data-i="${i}" aria-pressed="${i===0}" aria-label="${esc(v.label)}"><img src="${esc(v.src)}" alt="" loading="lazy" style="object-position:${v.pos}"></button>`).join('')}
+        ${vues.map((v,i)=>`<button class="vignette" type="button" data-i="${i}" aria-pressed="${i===0}" aria-label="${esc(v.label)}"><img src="${esc(v.src.replace(/^\/img\//, '/img/vignettes/'))}" alt="" loading="lazy" width="130" height="130" style="object-position:${v.pos}"></button>`).join('')}
       </div>` : ''}
     </div>
     <div class="fiche-infos">
@@ -1171,7 +1218,13 @@ function vueProduit(slug){
           <label for="qte-out">Quantité</label>
           <div class="qte"><button type="button" data-q="-1" aria-label="Diminuer">−</button><output id="qte-out" aria-live="polite">1</output><button type="button" data-q="1" aria-label="Augmenter">+</button></div>
           <button class="btn btn-p" type="button" id="ajout">Ajouter au panier</button>
-          <a class="lien small" href="/coffrets?avec=${esc(p.slug)}#composer">Ou composez un coffret de 3 carreaux avec celui-ci : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}</a>
+          <ul class="reassurance">
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-6h4v6"/></svg>Fabriqué à Mallemort</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Paiement sécurisé</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></svg>Retours sous 14 jours</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="9" width="16" height="12"/><path d="M3 9h18M12 9v12"/><path d="M12 9c-2-4-6-4-5-1s5 1 5 1zm0 0c2-4 6-4 5-1s-5 1-5 1z"/></svg>Coffret cadeau inclus</li>
+          </ul>
+          ${trioHTML(p)}
         </div>` : `
         <div class="encart">
           <h2>Bientôt disponible</h2>
@@ -1189,6 +1242,7 @@ function vueProduit(slug){
       <p class="small"><a class="lien" href="/contact">Une question sur ce modèle ?</a></p>
     </div>
   </div>
+  ${LIVE && prix ? `<div class="barre-achat" id="barre-achat" aria-hidden="true"><div><span>${esc(p.nom)}</span><strong>${prix}</strong></div><button class="btn btn-p" type="button" id="ajout-barre" tabindex="-1">Ajouter au panier</button></div>` : ''}
   <section class="bloc joint-haut" id="avis-produit" aria-labelledby="t-avis" hidden></section>
   ${similaires.length ? `<section class="bloc fond-blanc joint-haut" aria-labelledby="t-sim"><div class="wrap">
     <div class="bloc-titre"><h2 id="t-sim">${k==='les-embiez'?'D’autres lieux à découvrir':'Dans la même collection'}</h2></div>
@@ -1198,7 +1252,7 @@ function vueProduit(slug){
   const princ = $('#g-princ'); let vueActive = 0;
   const afficherVue = i => {
     vueActive = (i + vues.length) % vues.length; const v = vues[vueActive], img = princ.querySelector('img');
-    img.src = v.src; img.alt = v.alt; img.style.objectPosition = v.pos;
+    img.srcset = vueActive === 0 ? `${p.miniature} 600w, ${v.src} 1254w` : ''; img.src = v.src; img.alt = v.alt; img.style.objectPosition = v.pos;
     app.querySelectorAll('.vignette').forEach(x => x.setAttribute('aria-pressed', +x.dataset.i === vueActive));
     const c = $('#g-compteur'); if(c) c.textContent = `${vueActive+1} / ${vues.length}`;
   };
@@ -1216,6 +1270,21 @@ function vueProduit(slug){
     let q = 1; const out = $('#qte-out');
     app.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { q = Math.max(1, Math.min(20, q + +b.dataset.q)); out.textContent = q; }));
     $('#ajout').addEventListener('click', () => { Panier.ajouter({ type:'carreau', slug:p.slug, q }); toast(`${p.nom} ajouté au panier`); Panier.ouvrir(); });
+    // barre d'achat fixe sur mobile : visible quand le bouton principal sort de l'écran
+    const barre = $('#barre-achat');
+    if(barre && 'IntersectionObserver' in window){
+      $('#ajout-barre').addEventListener('click', () => { Panier.ajouter({ type:'carreau', slug:p.slug, q:1 }); toast(`${p.nom} ajouté au panier`); Panier.ouvrir(); });
+      const obs = new IntersectionObserver(([e]) => {
+        if(!document.body.contains(barre)){ obs.disconnect(); document.body.classList.remove('avec-barre'); return; }
+        const montrer = !e.isIntersecting && e.boundingClientRect.top < 0;
+        barre.classList.toggle('visible', montrer); barre.setAttribute('aria-hidden', !montrer); $('#ajout-barre').tabIndex = montrer ? 0 : -1;
+        document.body.classList.toggle('avec-barre', montrer);
+      });
+      obs.observe($('#ajout'));
+    }
+    // complétez votre trio
+    const bt = $('#ajout-trio');
+    if(bt) bt.addEventListener('click', () => { const sl = bt.dataset.slugs.split(','); Panier.ajouter({ type:'coffret', slugs: sl, nom:'Coffret 3 carreaux · votre sélection' }); toast('Coffret ajouté au panier'); Panier.ouvrir(); });
   }
   chargerAvis(p);
 }
@@ -2463,7 +2532,6 @@ const PAGES = {
     <ul>
       <li>Paiement en ligne : <strong>Stripe Payments Europe Limited</strong>, 1 Grand Canal Street Lower, Grand Canal Dock, Dublin, D02 H210, Irlande. K-Reau n’a jamais accès aux données de carte bancaire.</li>
       <li>Envoi des messages des formulaires et notifications de commande : <strong>Resend, Inc.</strong> (États-Unis).</li>
-      <li>Polices de caractères : <strong>Google Fonts</strong>, service de Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande.</li>
     </ul>
 
     <h2>5. Activité</h2>
@@ -2543,7 +2611,7 @@ const PAGES = {
     <h2>Responsable du traitement</h2><p>${esc(L.raisonSociale)}, ${esc(L.adresse)}.</p>
     <h2>Données collectées</h2><p>Formulaire de contact : nom, adresse e-mail et message. Inscription au lancement ou à la newsletter : adresse e-mail. Avis clients : prénom, ville, note et commentaire. Commande : nom, adresses de livraison et de facturation, e-mail, téléphone et contenu de la commande. Les données de carte bancaire sont traitées uniquement par Stripe.</p>
     <h2>Utilisation</h2><p>Ces informations servent à répondre à vos demandes, à vous prévenir de l’ouverture des commandes si vous l’avez demandé, et à traiter et livrer vos commandes. Elles ne sont ni vendues ni cédées.</p>
-    <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Stockage des avis et des inscriptions à la newsletter : Supabase Inc. (serveurs dans l’Union européenne, à Paris). Polices de caractères : Google Fonts (Google Ireland Limited), qui reçoit à cette occasion l’adresse IP du visiteur. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
+    <h2>Prestataires</h2><p>Hébergement : Vercel Inc. Paiement : Stripe Payments Europe Limited. Envoi des messages des formulaires et des notifications de commande : Resend, Inc. Stockage des avis et des inscriptions à la newsletter : Supabase Inc. (serveurs dans l’Union européenne, à Paris). Les polices de caractères sont hébergées directement sur le site : aucune donnée n’est transmise à un service tiers pour les afficher. Certains de ces prestataires sont situés aux États-Unis ; ces transferts sont encadrés par des clauses contractuelles types de la Commission européenne ou par le cadre de protection des données UE–États-Unis.</p>
     <h2>Durée de conservation</h2><p>Messages de contact : 3 ans après le dernier échange. Inscriptions au lancement : jusqu’à votre désinscription, et au plus 3 ans. Commandes : durée de la relation commerciale, puis pièces comptables 10 ans conformément aux obligations légales.</p>
     <h2>Vos droits</h2><p>Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur utilisation, en nous écrivant par le <a class="lien" href="/contact">formulaire de contact</a> ou à contact@k-reau.fr. Vous pouvez aussi adresser une réclamation à la CNIL.</p>
     <h2>Newsletter et code de bienvenue</h2><p>Si vous vous inscrivez à nos nouvelles (pied de page ou petite fenêtre d’invitation), nous conservons votre adresse e-mail, la langue du site et la date d’inscription, afin de vous envoyer votre code de bienvenue puis, au plus deux fois par mois, nos nouveaux lieux et idées cadeaux. Chaque e-mail contient un lien de désinscription en un clic. Base légale : votre consentement. Conservation : jusqu’à votre désinscription, puis 3 ans sans échange au plus.</p>
@@ -2614,7 +2682,7 @@ function vueCoffrets(){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Coffrets','']])}
     <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Coffrets</span><h1>Le coffret de 3 carreaux</h1>
     <p class="lead">Trois lieux réunis dans un même envoi : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, et la livraison est offerte. Choisissez un trio tout prêt ou composez le vôtre.</p></div>
-    <figure class="tete-img"><img src="/img/coffret/coffret-trio.webp" srcset="/img/coffret/coffret-trio-mini.webp 640w, /img/coffret/coffret-trio.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Coffret cadeau K-Reau en carton kraft avec trois carreaux en céramique : Le Vélodrome, Sainte-Victoire et Le Mucem" fetchpriority="high"></figure></div></div></div>
+    <figure class="tete-img"><img src="/img/coffret/coffret-trio.webp" srcset="/img/coffret/coffret-trio-mini.webp 640w, /img/coffret/coffret-trio-moyen.webp 900w, /img/coffret/coffret-trio.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Coffret cadeau K-Reau en carton kraft avec trois carreaux en céramique : Le Vélodrome, Sainte-Victoire et Le Mucem" fetchpriority="high"></figure></div></div></div>
   <section class="bloc" style="padding-top:48px"><div class="wrap">
     <div class="bloc-titre"><h2>Nos trios</h2></div>
     ${PRODUITS ? `<div class="offres">${CONFIG.trios.filter(t=>t.slugs.every(parSlug)).map(trioCarte).join('')}</div>` : `<div class="grille">${grilleHTML([])}</div>`}
@@ -3075,6 +3143,7 @@ function route(){
   const cle = h;
   const scroller = () => { if(section){ document.getElementById(section)?.scrollIntoView(); } else window.scrollTo(0,0); };
   if(cle==='accueil' && vueCourante==='accueil:data' && PRODUITS){ scroller(); return; }
+  const imgGardee = app.dataset.prerendu ? app.querySelector('img[fetchpriority="high"]') : null;
   if(cle==='accueil') vueAccueil();
   else if(h==='carreaux') vueTous();
   else if(h==='collection-les-embiez' && PRODUITS && embiezSeul()){ history.replaceState(null,'','/produits/les-embiez'); vueProduit('les-embiez'); }
@@ -3095,6 +3164,7 @@ function route(){
   else if(h.startsWith('guide-')) vueGuide(h.slice(6));
   else if(PAGES[h]) PAGES[h]();
   else vue404();
+  if(imgGardee){ const n = app.querySelector('img[fetchpriority="high"]'); if(n && n !== imgGardee && n.getAttribute('src') === imgGardee.getAttribute('src')) n.replaceWith(imgGardee); }
   vueCourante = cle + (PRODUITS ? ':data' : '');
   document.querySelectorAll('[data-nav]').forEach(a => a.toggleAttribute('aria-current', false));
   const actif = document.querySelector(`[data-nav="${h}"]`); if(actif) actif.setAttribute('aria-current','page');

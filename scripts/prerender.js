@@ -9,6 +9,19 @@ const collections = [...new Set(cat.map(p => p.collection_slug))].filter(c => c 
 const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-specifique','guides','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier','avis','revendeurs'];
 const appSrc = fs.readFileSync(path.join(RACINE, 'app.html'), 'utf8');
 const guides = [...appSrc.slice(appSrc.indexOf('/*GUIDES-DEBUT*/'), appSrc.indexOf('/*GUIDES-FIN*/')).matchAll(/slug: '([a-z0-9-]+)'/g)].map(m => m[1]);
+// Fichiers externes versionnés (mis en cache un an par le navigateur) : le script principal et la traduction anglaise
+const crypto = require('crypto');
+const empreinte = t => crypto.createHash('sha256').update(t).digest('hex').slice(0, 10);
+const debutScript = appSrc.lastIndexOf('<script>', appSrc.indexOf('const CONFIG'));
+const scriptPrincipal = appSrc.slice(debutScript + 8, appSrc.indexOf('</script>', debutScript));
+fs.mkdirSync(path.join(RACINE, 'assets'), { recursive: true });
+for (const f of fs.readdirSync(path.join(RACINE, 'assets'))) if (/^(app|i18n-en)\.[0-9a-f]{10}\.js$/.test(f)) fs.rmSync(path.join(RACINE, 'assets', f));
+const JS_APP = `/assets/app.${empreinte(scriptPrincipal)}.js`;
+fs.writeFileSync(path.join(RACINE, JS_APP), scriptPrincipal);
+const i18nSrc = fs.readFileSync(path.join(RACINE, 'i18n-en.js'), 'utf8');
+const JS_I18N = `/assets/i18n-en.${empreinte(i18nSrc)}.js`;
+fs.writeFileSync(path.join(RACINE, JS_I18N), i18nSrc);
+require('child_process').execFileSync('python3', [path.join(__dirname, 'vignettes.py')], { stdio: 'inherit' });
 const routes = ['/', ...guides.map(g => '/guides/' + g), ...collections.map(c => '/collections/' + c), ...pagesSimples.map(p => '/' + p), ...cat.map(p => '/produits/' + p.slug), '/404'];
 // version anglaise (/en) : tout sauf les guides, qui restent en français
 const routesEN = ['/en', ...collections.map(c => '/en/collections/' + c), ...pagesSimples.filter(p => p !== 'guides').map(p => '/en/' + p), ...cat.map(p => '/en/produits/' + p.slug)];
@@ -39,8 +52,14 @@ const serveur = http.createServer((req, res) => {
   for (const r of routes) {
     await page.goto(base + r, { waitUntil: 'networkidle' });
     await page.waitForFunction(() => !document.querySelector('.squelette'), null, { timeout: 10000 });
-    await page.evaluate(() => { document.getElementById('app').dataset.prerendu = '1'; document.getElementById('couche').innerHTML = ''; document.getElementById('i18n-js')?.remove(); });
-    const html = '<!doctype html>\n' + await page.evaluate(() => document.documentElement.outerHTML);
+    await page.evaluate(js => {
+      document.getElementById('app').dataset.prerendu = '1'; document.getElementById('couche').innerHTML = ''; document.getElementById('i18n-js')?.remove();
+      document.querySelectorAll('.news-carte').forEach(e => e.remove());
+      const s = [...document.querySelectorAll('script:not([src]):not([type])')].find(x => x.textContent.includes('const CONFIG'));
+      if (s) { s.textContent = ''; s.setAttribute('src', js); s.defer = true; }
+    }, JS_APP);
+    const html = ('<!doctype html>\n' + await page.evaluate(() => document.documentElement.outerHTML)).replace('t.src="/i18n-en.js"', `t.src="${JS_I18N}"`)
+      .replace('</title>', ['/', '/en'].includes(r) ? '</title>\n<link rel="preload" as="image" href="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" imagesrcset="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux-mini.webp 760w, /img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp 1122w" imagesizes="(max-width:860px) 92vw, 520px" fetchpriority="high">' : '</title>');
     const sortie = r === '/' ? 'index.html' : r === '/404' ? '404.html' : path.join('pages', r.slice(1) + '.html');
     fs.mkdirSync(path.join(RACINE, path.dirname(sortie)), { recursive: true });
     fs.writeFileSync(path.join(RACINE, sortie), html);

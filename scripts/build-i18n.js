@@ -13,11 +13,12 @@ const n = s => s.replace(/\s+/g, ' ').trim();
 const manquants = [];
 for (const p of cat) {
   const e = prods[p.slug]; if (!e) { manquants.push(p.slug); continue; }
-  dict[n(p.description)] = e.d; if (p.a_propos) { dict[n(p.a_propos)] = e.a; dict[n(p.description + ' ' + p.a_propos)] = e.d + ' ' + e.a; }
+  prods.__liste = prods.__liste || [];
+  prods.__liste.push([n(p.description), n(p.a_propos || ''), e.d, e.a || '']);   // textes des fiches (la combinaison « description + à propos » est recréée par le moteur)
   dict['§n:' + p.nom] = e.n;
 }
 if (manquants.length) console.warn('Carreaux sans traduction :', manquants.join(', '));
 const motifs = fs.readFileSync(path.join(dir, 'motifs.js'), 'utf8').trim().replace(/;$/, '');
-const js = fs.readFileSync(path.join(dir, 'moteur.js'), 'utf8').replace('__DICT__', JSON.stringify(dict)).replace('__PATTERNS__', motifs);
+const js = fs.readFileSync(path.join(dir, 'moteur.js'), 'utf8').replace('__DICT__', JSON.stringify(dict)).replace('__PATTERNS__', motifs).replace('__PROD__', JSON.stringify(prods.__liste || []));
 fs.writeFileSync(path.join(R, 'i18n-en.js'), js);
 console.log('i18n-en.js :', Object.keys(dict).length, 'entrées,', Math.round(js.length / 1024), 'Ko');

@@ -3,6 +3,7 @@
 (function(){
   if(window.__kreauI18n) return; window.__kreauI18n = true;
   const D = __DICT__;
+  for(const [fd, fa, ed, ea] of __PROD__){ D[fd] = ed; if(fa){ D[fa] = ea; D[fd + ' ' + fa] = ed + ' ' + ea; } }
   const T = s => Object.prototype.hasOwnProperty.call(D, s) ? D[s] : s;
   const P = __PATTERNS__;
   const norm = s => s.replace(/\s+/g, ' ').trim();
@@ -73,5 +74,6 @@
   });
   obs.observe(document.documentElement, { childList:true, subtree:true, characterData:true, attributes:true, attributeFilter:['placeholder','aria-label','alt','title','content','href','action','value'] });
   tout(document.documentElement);
-  document.addEventListener('DOMContentLoaded', () => tout(document.documentElement));
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => tout(document.documentElement));
+  window.dispatchEvent(new Event('kreau-i18n'));
 })();
