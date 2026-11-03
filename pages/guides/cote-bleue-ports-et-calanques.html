@@ -684,6 +684,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
         <ul>
           <li><a href="/collections/marseille">Marseille</a></li>
           <li><a href="/collections/cote-bleue">La Côte Bleue</a></li>
+          <li data-coll="luberon"><a href="/collections/luberon">Le Luberon</a></li>
           <li data-coll="montagnes-du-sud"><a href="/collections/montagnes-du-sud">Les Montagnes du Sud</a></li>
           <li data-coll="chateaux"><a href="/collections/chateaux">Les Châteaux</a></li>
           <li><a href="/collections/les-embiez">Les Embiez et les îles</a></li>
@@ -771,6 +772,14 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs des montagnes du Sud',
     offrir:'Un souvenir des montagnes de Provence à offrir',
     texte:'La Sainte-Victoire de Cézanne, la Sainte-Baume et sa forêt, le Garlaban de Marcel Pagnol, le Mont Ventoux, le Mont Puget au-dessus des Calanques, le Mont Faron, le Mont Caume et le Gros Cerveau au-dessus de Toulon et Sanary, le Mont Salva près de Six-Fours et le Rocher de Roquebrune : les sommets du Sud sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour les randonneurs et les amoureux de Provence.' },
+  'luberon': { nom:'Le Luberon', titre:'Collection Luberon', cle:'Luberon', filtre:'Luberon', region:'Luberon', img:'/img/12_Produits_Luberon/luberon-gordes.webp', w:1254, h:1254,
+    court:'Gordes, Lourmarin, Fontaine-de-Vaucluse… Les villages du Luberon en un trait.',
+    intro:'Gordes, Lourmarin, Ansouis, Cucuron, Rustrel, L’Isle-sur-la-Sorgue, Fontaine-de-Vaucluse et Mallemort : les villages du Luberon et des bords de Sorgue dessinés au trait, chacun avec son nom en calligraphie.',
+    seo:'Carreaux décoratifs Luberon | Gordes, Lourmarin, L’Isle-sur-la-Sorgue – K-Reau',
+    seoDesc:'8 carreaux en céramique illustrés du Luberon : Gordes, Lourmarin, Ansouis, Cucuron, Rustrel, L’Isle-sur-la-Sorgue, Fontaine-de-Vaucluse, Mallemort. Idée cadeau Provence à 19,90 €.',
+    h1:'Carreaux décoratifs du Luberon',
+    offrir:'Un souvenir du Luberon à offrir',
+    texte:'Les villages perchés de Gordes, Lourmarin et Ansouis, le bassin de Cucuron, les ocres de Rustrel, les roues à aubes de L’Isle-sur-la-Sorgue, la source de Fontaine-de-Vaucluse et le pont suspendu de Mallemort : le Luberon dessiné sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y passent leurs vacances ou qui ont la chance d’y vivre.' },
   'chateaux': { nom:'Les Châteaux', titre:'Collection Les Châteaux', cle:'Châteaux', img:'/img/10_Produits_Chateaux/chateaux-chambord.webp', w:1254, h:1254, filtre:'Châteaux', region:'France',
     court:'Versailles, Chambord, Chenonceau… Les grands châteaux de France en un trait.',
     intro:'De Versailles à Chambord, de Chenonceau à Saumur : dix châteaux emblématiques de France dessinés au trait, chacun avec son nom en calligraphie.',
@@ -853,7 +862,7 @@ async function charger(){
   route();
 }
 const parSlug = s => PRODUITS?.find(p => p.slug === s);
-const COLLS_PRINCIPALES = ['marseille','cote-bleue','montagnes-du-sud','chateaux'];
+const COLLS_PRINCIPALES = ['marseille','cote-bleue','luberon','montagnes-du-sud','chateaux'];
 const ORDRE_COLLS = [...COLLS_PRINCIPALES, 'les-embiez'];
 // une collection n'apparaît que si elle contient au moins un carreau publié
 const collPubliee = k => ['marseille','cote-bleue','les-embiez'].includes(k) || !!PRODUITS?.some(p => p.collection_slug === k);
@@ -889,6 +898,7 @@ const INSPIRATIONS = {
   'tout': 'Tous nos carreaux partagent le même esprit : un lieu réel, dessiné au trait noir sur céramique blanche, avec son nom en calligraphie. Choisissez une collection pour découvrir d’où elle vient.',
   'marseille': 'Marseille se raconte par ses lieux : le Vieux-Port où tout a commencé, la Bonne Mère qui veille sur la ville, les calanques à vingt minutes du centre. Cette collection suit nos balades, du Panier à la Corniche, et cette lumière qui fait briller la pierre blanche.',
   'cote-bleue': 'À l’ouest de Marseille, la Côte Bleue garde un air de vacances toute l’année : petits ports, cabanons, criques à l’eau d’une clarté incroyable. Cette collection rend hommage à ces villages de pêcheurs, de L’Estaque à Carro, que l’on découvre souvent depuis le petit train qui longe la mer.',
+  'luberon': 'Le Luberon, c’est chez nous : Mallemort est juste de l’autre côté de la Durance. Villages perchés, falaises d’ocre, platanes au bord des bassins et rivières claires de la Sorgue : cette collection dessine les lieux où l’on aime s’arrêter un dimanche, entre un marché et une terrasse à l’ombre.',
   'montagnes-du-sud': 'En Provence, chacun a sa montagne : la Sainte-Victoire de Cézanne, le Garlaban de Pagnol, le Ventoux des cyclistes. On les regarde depuis sa fenêtre, on les gravit le dimanche, on les cherche du regard en rentrant de voyage. Cette collection dessine leurs crêtes, de Marseille jusqu’au Var.',
   'chateaux': 'Après la Provence, nous avons eu envie de dessiner le patrimoine de toute la France. Chambord, Chenonceau, Versailles ou Saumur : des silhouettes que tout le monde reconnaît, et autant de souvenirs de visites, de voyages scolaires ou de week-ends dans le Val de Loire.',
   'les-embiez': 'Les Embiez, c’est notre modèle signature : une petite île au large de Six-Fours, sa tour et ses rochers qui affleurent. Porquerolles l’a rejointe, avec son port, ses pins parasols et le fort Sainte-Agathe : deux îles du Var où l’on arrive en bateau et dont on repart à regret.'
@@ -1047,6 +1057,7 @@ function vueAccueil(){
     <div class="wrap prose" style="max-width:820px">
       <h2 id="t-seo">Des carreaux décoratifs de Marseille, de Provence et des châteaux de France</h2>
       <p>K-Reau dessine au trait les lieux qu’on aime sur des carreaux décoratifs en céramique blanche de 15 × 15 cm. À Marseille, le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, le <a class="lien" href="/produits/marseille-vallon-des-auffes">Vallon des Auffes</a> et les calanques de <a class="lien" href="/produits/marseille-calanque-sormiou">Sormiou</a> et de <a class="lien" href="/produits/marseille-calanque-morgiou">Morgiou</a>. Sur la Côte Bleue, <a class="lien" href="/produits/cote-bleue-carry-le-rouet">Carry-le-Rouet</a>, <a class="lien" href="/produits/cote-bleue-sausset-les-pins">Sausset-les-Pins</a>, <a class="lien" href="/produits/cote-bleue-port-niolon">Niolon</a> ou <a class="lien" href="/produits/cote-bleue-estaque">L’Estaque</a>. Plus à l’est, le <a class="lien" href="/produits/marseille-cap-canaille">Cap Canaille</a> veille sur la baie de Cassis.</p>
+      <p>Dans le <a class="lien" href="/collections/luberon">Luberon</a>, les villages de <a class="lien" href="/produits/luberon-gordes">Gordes</a>, <a class="lien" href="/produits/luberon-lourmarin">Lourmarin</a> et <a class="lien" href="/produits/luberon-l-isle-sur-la-sorgue">L’Isle-sur-la-Sorgue</a>.</p>
       <p>Plus loin, les sommets de Provence : la <a class="lien" href="/produits/montagnes-sainte-victoire">Sainte-Victoire</a>, le <a class="lien" href="/produits/montagnes-garlaban">Garlaban</a>, le <a class="lien" href="/produits/montagnes-mont-ventoux">Mont Ventoux</a>, la <a class="lien" href="/produits/montagnes-sainte-baume">Sainte-Baume</a> ou le <a class="lien" href="/produits/montagnes-mont-faron">Mont Faron</a>. Et les grands châteaux de France : <a class="lien" href="/produits/chateaux-versailles">Versailles</a>, <a class="lien" href="/produits/chateaux-chambord">Chambord</a>, <a class="lien" href="/produits/chateaux-chenonceau">Chenonceau</a>, <a class="lien" href="/produits/chateaux-amboise">Amboise</a>, <a class="lien" href="/produits/chateaux-azay-le-rideau">Azay-le-Rideau</a> ou <a class="lien" href="/produits/chateaux-saumur">Saumur</a>.</p>
       <h3>Une idée cadeau souvenir, élégante et originale</h3>
       <p>Chaque carreau associe un dessin au trait noir et le nom du lieu en calligraphie. C’est un cadeau original pour un Marseillais exilé, un amoureux de la Provence ou du patrimoine, une crémaillère, un départ ou un anniversaire : un souvenir élégant, loin des objets touristiques. À poser sur un meuble ou à accrocher au mur, il apporte une touche de décoration à la maison.</p>
@@ -2672,7 +2683,7 @@ function vueChecklist(){
     <ul class="check">${items.map(([t,ok])=>`<li><span class="statut ${ok?'fait':'manque'}">${ok?'Fait':'À faire'}</span><span>${esc(t)}</span></li>`).join('')}</ul>`);
 }
 
-const deLieu = r => /^(Val |Var$)/.test(r) ? 'du '+r : /^[AEIOUÎÉaeiou]/.test(r) ? 'd’'+r : 'de '+r;
+const deLieu = r => /^(Val |Var$|Luberon$)/.test(r) ? 'du '+r : /^[AEIOUÎÉaeiou]/.test(r) ? 'd’'+r : 'de '+r;
 const prixEur = v => Number(v).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 function offresHTML(){
   const emb = parSlug('les-embiez');
