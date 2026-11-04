@@ -13,7 +13,10 @@ const CONFIG = {
   trios: [
     { id:'trio-marseille', nom:'Trio Marseille', slugs:['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes'] },
     { id:'trio-cote-bleue', nom:'Trio Côte Bleue', slugs:['cote-bleue-carry-le-rouet','cote-bleue-sausset-les-pins','cote-bleue-port-niolon'] },
-    { id:'trio-montagnes', nom:'Trio Montagnes du Sud', slugs:['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux'] }
+    { id:'trio-montagnes', nom:'Trio Montagnes du Sud', slugs:['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux'] },
+    { id:'trio-calanques', nom:'Trio Calanques', slugs:['marseille-calanque-sormiou','marseille-calanque-morgiou','marseille-cap-canaille'] },
+    { id:'trio-luberon', nom:'Trio Luberon', slugs:['luberon-gordes','luberon-lourmarin','luberon-l-isle-sur-la-sorgue'] },
+    { id:'trio-loire', nom:'Trio Châteaux de la Loire', slugs:['chateaux-chambord','chateaux-chenonceau','chateaux-amboise'] }
   ],
   livraisonGratuiteDes: 50,
   livraisonEurope: 16.50,
