@@ -234,6 +234,7 @@ function vueAccueil(){
       <div class="hero-texte">
         <span class="eyebrow">K-REAU · CARREAUX D’ICI</span>
         <h1 id="h1">Les lieux qu’on aime, <em>à garder chez soi.</em></h1>
+        <p class="hero-promesse"><img src="/img/en-main/marseille-vieux-port-en-main-petit.webp" width="140" height="140" alt="Un carreau K-Reau « Le Vieux-Port de Marseille » tenu à la main devant le Vieux-Port"><span>Carreaux en céramique 15 × 15 cm, dessinés et imprimés à Mallemort, <strong>dès 19,90 €</strong></span></p>
         <p class="lead">Des paysages méditerranéens dessinés avec délicatesse sur des carreaux décoratifs. Pour se souvenir d’un endroit, raconter une histoire ou offrir un petit bout d’ailleurs.</p>
         <div class="hero-btns">
           <a class="btn btn-p" href="/#collections">Découvrir les collections</a>
@@ -2364,7 +2365,7 @@ const Panier = {
           <label><input type="radio" name="dest" value="FR" ${eu?'':'checked'}> France · ${phys < seuil ? prixEur(7.90) : 'offerte'}</label>
           <label><input type="radio" name="dest" value="EU" ${eu&&!ca?'checked':''}> Autre pays d’Europe · ${prixEur(CONFIG.livraisonEurope)}</label>
           <label><input type="radio" name="dest" value="CA" ${ca?'checked':''}> Canada · ${prixEur(CONFIG.livraisonCanada)}</label></div>` : ''}
-        ${phys > 0 && !eu ? `<div style="display:grid;gap:6px"><p class="small" style="margin:0">${reste > 0 ? `Plus que <strong>${prixEur(reste)}</strong> pour la livraison offerte` : '<strong>Livraison offerte</strong> 🎁'.replace(' 🎁','')}</p><div class="jauge" aria-hidden="true"><span style="width:${Math.min(100, phys/seuil*100)}%"></span></div></div>` : ''}
+        ${phys > 0 && !eu ? `<div style="display:grid;gap:6px"><p class="small" style="margin:0">${reste > 0 && reste <= CONFIG.prix.carreau ? `${this.nbCarreaux() === 2 ? 'Votre troisième carreau' : 'Un carreau de plus'} ne vous coûte que <strong>${prixEur(CONFIG.prix.carreau - 7.90)}</strong> : la livraison devient offerte` : reste > 0 ? `Plus que <strong>${prixEur(reste)}</strong> pour la livraison offerte` : '<strong>Livraison offerte</strong>'}</p><div class="jauge" aria-hidden="true"><span style="width:${Math.min(100, phys/seuil*100)}%"></span></div></div>` : ''}
         ${phys > 0 && reste > 0 ? `<div class="completez"><strong class="small">Complétez avec…</strong><div class="completez-liste">${this.suggestions().map(p=>`<button type="button" data-plus="${esc(p.slug)}"><img src="${esc(p.miniature)}" alt="" loading="lazy"><span>${esc(p.nom)}</span><em>+ Ajouter</em></button>`).join('')}${this.nbCarreaux() ? `<button type="button" data-chevalet class="completez-chevalet"><div class="chevalet-mini">${ILLU_CHEVALET}</div><span>Chevalet en bois brut · ${prixEur(CONFIG.prix.chevalet)}</span><em>+ Ajouter</em></button>` : ''}</div>
           ${reste > CONFIG.prix.carreau ? `<a class="lien small" href="/coffrets" data-fermer>Ou passez au coffret de 3 carreaux à ${prixEur(CONFIG.prix.coffret)}, livraison offerte</a>` : ''}</div>` : ''}
         ${phys > 0 ? `<div class="champ message-cadeau"><label for="msg-cadeau">Message cadeau <span class="muted" style="font-weight:400">(facultatif, imprimé sur la carte du coffret)</span></label>
