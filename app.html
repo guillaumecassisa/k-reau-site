@@ -363,6 +363,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .completez-liste span{font-size:.7rem;line-height:1.25;padding:0 6px 6px}
 .completez-liste em{font-style:normal;font-weight:700;color:var(--olivier);font-size:.72rem;padding:0 6px 6px}
 .message-cadeau textarea{min-height:76px;font-size:.88rem}
+.panier-recap{display:grid;gap:4px}.panier-sous{display:flex;justify-content:space-between;align-items:baseline;margin:0;font-size:.92rem;color:var(--encre-doux)}
 .panier-total{display:flex;justify-content:space-between;align-items:baseline;font-size:1.05rem}
 /* Coffrets, sur mesure, carte cadeau */
 .offres{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
@@ -3004,6 +3005,7 @@ const Panier = {
     const c = $('#couche'), seuil = CONFIG.livraisonGratuiteDes, phys = this.physique(), tot = this.total();
     const eu = this.destination === 'EU' || this.destination === 'CA', ca = this.destination === 'CA';
     const reste = eu ? 0 : Math.max(0, seuil - phys);
+    const port = phys === 0 ? 0 : ca ? CONFIG.livraisonCanada : eu ? CONFIG.livraisonEurope : (phys < seuil ? 7.90 : 0); // mêmes règles que api/checkout.js
     c.innerHTML = `<div class="tiroir"><div class="panier-panneau" role="dialog" aria-modal="true" aria-label="Panier">
       <div style="display:flex;justify-content:space-between;align-items:center"><h2>Panier</h2><button class="icone-btn" type="button" data-fermer aria-label="Fermer le panier">${ICONES.croix}</button></div>
       <div class="panier-lignes">
@@ -3021,8 +3023,11 @@ const Panier = {
         ${phys > 0 ? `<div class="champ message-cadeau"><label for="msg-cadeau">Message cadeau <span class="muted" style="font-weight:400">(facultatif, imprimé sur la carte du coffret)</span></label>
           <textarea id="msg-cadeau" maxlength="200" placeholder="Joyeux anniversaire ! Un petit bout du Vieux-Port pour toi…">${esc(this.message)}</textarea><span class="small muted" id="msg-compte">${this.message.length} / 200</span></div>` : ''}
       </div>
-      ${this.lignes.length ? `<p class="panier-total"><span>Sous-total TTC</span><strong>${prixEur(tot)}</strong></p>
-      <p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code.' : ca ? `Livraison Canada : ${prixEur(CONFIG.livraisonCanada)}. D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis.` : eu ? `Livraison Europe : ${prixEur(CONFIG.livraisonEurope)}. Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire.` : reste > 0 ? 'Livraison France : 7,90 €.' : 'Livraison France offerte.'} Les codes cadeaux se saisissent sur la page de paiement.</p>
+      ${this.lignes.length ? `<div class="panier-recap">
+        ${phys > 0 ? `<p class="panier-sous"><span>Sous-total</span><span>${prixEur(tot)}</span></p>
+        <p class="panier-sous"><span>${ca ? 'Livraison Canada' : eu ? 'Livraison Europe' : 'Livraison France'}</span><span>${port > 0 ? prixEur(port) : 'Offerte'}</span></p>` : ''}
+        <p class="panier-total"><span>Total TTC</span><strong>${prixEur(tot + port)}</strong></p></div>
+      <p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code. ' : ca ? 'D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis. ' : eu ? 'Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire. ' : ''}Les codes cadeaux se saisissent sur la page de paiement.</p>
       <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
       <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
       <div id="payer-retour" aria-live="polite"></div>` : ''}
