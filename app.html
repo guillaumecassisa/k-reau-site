@@ -608,6 +608,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
         <ul>
           <li><a href="/collections/marseille">Marseille</a></li>
           <li><a href="/collections/cote-bleue">La Côte Bleue</a></li>
+          <li data-coll="aix-en-provence" hidden><a href="/collections/aix-en-provence">Aix-en-Provence</a></li>
           <li data-coll="luberon" hidden><a href="/collections/luberon">Le Luberon</a></li>
           <li data-coll="montagnes-du-sud" hidden><a href="/collections/montagnes-du-sud">Les Montagnes du Sud</a></li>
           <li data-coll="chateaux" hidden><a href="/collections/chateaux">Les Châteaux</a></li>
@@ -704,6 +705,14 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs du Luberon',
     offrir:'Un souvenir du Luberon à offrir',
     texte:'Les villages perchés de Gordes, Lourmarin, Lacoste et Ansouis, le bassin de Cucuron, les ocres de Rustrel, les roues à aubes de L’Isle-sur-la-Sorgue, la source de Fontaine-de-Vaucluse et le pont suspendu de Mallemort : le Luberon dessiné sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y passent leurs vacances ou qui ont la chance d’y vivre.' },
+  'aix-en-provence': { nom:'Aix-en-Provence', titre:'Collection Aix-en-Provence', cle:'Aix-en-Provence', filtre:'Aix', region:'Aix-en-Provence', img:'/img/13_Produits_Aix/aix-la-rotonde.webp', w:1254, h:1254,
+    court:'La Rotonde, la Sainte-Victoire… Le pays d’Aix en un trait.',
+    intro:'La fontaine de la Rotonde au bout du cours Mirabeau et la Sainte-Victoire de Cézanne : Aix-en-Provence et son pays dessinés au trait, chacun avec son nom en calligraphie.',
+    seo:'Carreaux décoratifs Aix-en-Provence | La Rotonde, Sainte-Victoire – K-Reau',
+    seoDesc:'Carreaux en céramique illustrés d’Aix-en-Provence : la fontaine de la Rotonde et la Sainte-Victoire. Dessin au trait et nom calligraphié, 15 × 15 cm, idée cadeau à 19,90 €.',
+    h1:'Carreaux décoratifs d’Aix-en-Provence',
+    offrir:'Un souvenir d’Aix-en-Provence à offrir',
+    texte:'La fontaine de la Rotonde, ses statues, ses lions et ses jets d’eau sous les platanes, et la Sainte-Victoire qui veille sur le pays d’Aix : Aix-en-Provence dessinée sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour les Aixois, les étudiants qui y ont passé leurs plus belles années et tous ceux qui ont flâné sur le cours Mirabeau.' },
   'chateaux': { nom:'Les Châteaux', titre:'Collection Les Châteaux', cle:'Châteaux', img:'/img/10_Produits_Chateaux/chateaux-chambord.webp', w:1254, h:1254, filtre:'Châteaux', region:'France',
     court:'Versailles, Chambord, Chenonceau… Les grands châteaux de France en un trait.',
     intro:'De Versailles à Chambord, de Chenonceau à Saumur : dix châteaux emblématiques de France dessinés au trait, chacun avec son nom en calligraphie.',
@@ -787,12 +796,13 @@ async function charger(){
   route();
 }
 const parSlug = s => PRODUITS?.find(p => p.slug === s);
-const COLLS_PRINCIPALES = ['marseille','cote-bleue','luberon','montagnes-du-sud','chateaux'];
+const COLLS_PRINCIPALES = ['marseille','cote-bleue','aix-en-provence','luberon','montagnes-du-sud','chateaux'];
 const ORDRE_COLLS = [...COLLS_PRINCIPALES, 'les-embiez'];
 // une collection n'apparaît que si elle contient au moins un carreau publié
-const collPubliee = k => ['marseille','cote-bleue','les-embiez'].includes(k) || !!PRODUITS?.some(p => p.collection_slug === k);
+const dansColl = (p, k) => p.collection_slug === k || (p.collections_sup || []).includes(k);
+const collPubliee = k => ['marseille','cote-bleue','les-embiez'].includes(k) || !!PRODUITS?.some(p => dansColl(p, k));
 const imgColl = k => COLLECTIONS[k].img || (PRODUITS?.find(p => p.collection_slug === k)?.image_principale ?? '');
-const deCollection = k => PRODUITS?.filter(p => p.collection_slug === k) || [];
+const deCollection = k => (PRODUITS?.filter(p => dansColl(p, k)) || []).sort((a, b) => (a.collection_slug !== k) - (b.collection_slug !== k));
 const collNom = p => p.collection === 'Signature' ? 'Les Embiez · modèle signature' : p.collection;
 const embiezSeul = () => deCollection('les-embiez').length <= 1; // tant qu'il n'y a qu'un carreau, la « collection » mène directement à sa fiche
 
@@ -823,6 +833,7 @@ const INSPIRATIONS = {
   'tout': 'Tous nos carreaux partagent le même esprit : un lieu réel, dessiné au trait noir sur céramique blanche, avec son nom en calligraphie. Choisissez une collection pour découvrir d’où elle vient.',
   'marseille': 'Marseille se raconte par ses lieux : le Vieux-Port où tout a commencé, la Bonne Mère qui veille sur la ville, les calanques à vingt minutes du centre. Cette collection suit nos balades, du Panier à la Corniche, et cette lumière qui fait briller la pierre blanche.',
   'cote-bleue': 'À l’ouest de Marseille, la Côte Bleue garde un air de vacances toute l’année : petits ports, cabanons, criques à l’eau d’une clarté incroyable. Cette collection rend hommage à ces villages de pêcheurs, de L’Estaque à Carro, que l’on découvre souvent depuis le petit train qui longe la mer.',
+  'aix-en-provence': 'Aix, c’est la ville des fontaines : on y entre par la Rotonde, on remonte le cours Mirabeau à l’ombre des platanes, et partout la Sainte-Victoire se découpe au bout des rues. Cette collection commence par ces deux silhouettes que tous les Aixois reconnaissent au premier coup d’œil.',
   'luberon': 'Le Luberon, c’est chez nous : Mallemort est juste de l’autre côté de la Durance. Villages perchés, falaises d’ocre, platanes au bord des bassins et rivières claires de la Sorgue : cette collection dessine les lieux où l’on aime s’arrêter un dimanche, entre un marché et une terrasse à l’ombre.',
   'montagnes-du-sud': 'En Provence, chacun a sa montagne : la Sainte-Victoire de Cézanne, le Garlaban de Pagnol, le Ventoux des cyclistes. On les regarde depuis sa fenêtre, on les gravit le dimanche, on les cherche du regard en rentrant de voyage. Cette collection dessine leurs crêtes, de Marseille jusqu’au Var.',
   'chateaux': 'Après la Provence, nous avons eu envie de dessiner le patrimoine de toute la France. Chambord, Chenonceau, Versailles ou Saumur : des silhouettes que tout le monde reconnaît, et autant de souvenirs de visites, de voyages scolaires ou de week-ends dans le Val de Loire.',
@@ -1177,7 +1188,7 @@ function vueProduit(slug){
           deliveryTime:{ '@type':'ShippingDeliveryTime', handlingTime:{ '@type':'QuantitativeValue', minValue:5, maxValue:7, unitCode:'DAY' } } },
         hasMerchantReturnPolicy:{ '@type':'MerchantReturnPolicy', applicableCountry:'FR', returnPolicyCategory:'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays:14, returnMethod:'https://schema.org/ReturnByMail', returnFees:'https://schema.org/ReturnFeesCustomerResponsibility' } } } });
   const prix = prixTxt(p);
-  const similaires = (k==='les-embiez' ? [...deCollection(k), ...PRODUITS.filter(x=>x.collection_slug!==k)].filter(x=>x.slug!==p.slug).slice(0,4) : deCollection(k).filter(x=>x.slug!==p.slug).slice(0,4));
+  const similaires = [...deCollection(k), ...(deCollection(k).length < 5 ? PRODUITS.filter(x=>!dansColl(x,k) && x.collection_slug!=='chateaux') : [])].filter(x=>x.slug!==p.slug).slice(0,4);
   const val = v => v ? esc(v) : '<span class="muted">Précisé à l’ouverture des commandes</span>';
   const vues = [
     { src:p.image_principale, alt:p.alt, label:'Le carreau', pos:'50% 50%' },
@@ -1245,7 +1256,7 @@ function vueProduit(slug){
   ${LIVE && prix ? `<div class="barre-achat" id="barre-achat" aria-hidden="true"><div><span>${esc(p.nom)}</span><strong>${prix}</strong></div><button class="btn btn-p" type="button" id="ajout-barre" tabindex="-1">Ajouter au panier</button></div>` : ''}
   <section class="bloc joint-haut" id="avis-produit" aria-labelledby="t-avis" hidden></section>
   ${similaires.length ? `<section class="bloc fond-blanc joint-haut" aria-labelledby="t-sim"><div class="wrap">
-    <div class="bloc-titre"><h2 id="t-sim">${k==='les-embiez'?'D’autres lieux à découvrir':'Dans la même collection'}</h2></div>
+    <div class="bloc-titre"><h2 id="t-sim">${deCollection(k).length < 5 ? 'D’autres lieux à découvrir' : 'Dans la même collection'}</h2></div>
     <div class="grille">${similaires.map(x=>carte(x)).join('')}</div>
   </div></section>` : ''}`;
   // Galerie
