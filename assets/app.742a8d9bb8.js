@@ -234,7 +234,7 @@ function vueAccueil(){
       <div class="hero-texte">
         <span class="eyebrow">K-REAU · CARREAUX D’ICI</span>
         <h1 id="h1">Les lieux qu’on aime, <em>à garder chez soi.</em></h1>
-        <p class="hero-promesse"><img src="/img/en-main/marseille-vieux-port-en-main-petit.webp" width="140" height="140" alt="Un carreau K-Reau « Le Vieux-Port de Marseille » tenu à la main devant le Vieux-Port"><span>Carreaux en céramique 15 × 15 cm, dessinés et imprimés à Mallemort, <strong>dès 19,90 €</strong></span></p>
+        <p class="hero-promesse"><img src="/img/en-main/marseille-vieux-port-en-main-petit.webp" width="180" height="180" alt="Un carreau K-Reau « Le Vieux-Port de Marseille » tenu à la main devant le Vieux-Port"><span>Carreaux en céramique 15 × 15 cm, dessinés et imprimés à Mallemort, <strong>dès 19,90 €</strong></span></p>
         <p class="lead">Des paysages méditerranéens dessinés avec délicatesse sur des carreaux décoratifs. Pour se souvenir d’un endroit, raconter une histoire ou offrir un petit bout d’ailleurs.</p>
         <div class="hero-btns">
           <a class="btn btn-p" href="/#collections">Découvrir les collections</a>
