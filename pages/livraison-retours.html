@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.6d19fe6de2.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.daeaaf1eca.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -421,6 +421,29 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .rev-tarifs th,.rev-tarifs td{text-align:left;padding:14px 12px;border-bottom:1px solid var(--joint)}
 .rev-tarifs th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--olivier)}
 .rev-tarifs td.prix{font-family:var(--f-titre);font-size:1.7rem}
+.carte-onglets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.carte-grille{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:start}
+.carte-zone{border:1px solid var(--joint);background:#E8EDEF;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.carte-zone svg{display:block;width:100%;min-width:720px;height:auto}
+.carte-zone .terre{fill:var(--blanc);stroke:var(--encre);stroke-width:1.1;stroke-linejoin:round}
+.carte-zone .front{fill:none;stroke:var(--sable);stroke-width:1;stroke-dasharray:3 4}
+.carte-zone .ville{font:500 13px var(--f-texte);fill:var(--encre-doux);letter-spacing:.04em}
+.carte-zone .ville-pt{fill:var(--encre-doux)}
+.carte-zone .lien-pt{stroke:var(--olivier);stroke-width:1}
+.carte-zone a.pt circle{fill:var(--olivier);stroke:var(--blanc);stroke-width:2.5;transition:r .15s}
+.carte-zone a.pt:hover circle,.carte-zone a.pt:focus circle,.carte-zone a.pt.actif circle{fill:var(--mer)}
+.carte-zone a.pt:focus{outline:none}.carte-zone a.pt:focus-visible circle{stroke:var(--encre);stroke-width:3}
+.carte-zone a.amas circle{fill:var(--encre);stroke:var(--blanc);stroke-width:3}.carte-zone a.amas text{fill:var(--blanc);font:600 15px var(--f-texte)}
+.carte-zone a.amas:hover circle,.carte-zone a.amas:focus-visible circle{fill:var(--olivier)}
+.carte-fiche{border:1px solid var(--joint);background:var(--blanc);padding:16px;display:grid;gap:10px;position:sticky;top:96px}
+.carte-fiche img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--ceramique)}
+.carte-fiche h3{font-family:var(--f-titre);font-weight:400;font-size:1.5rem;margin:0}
+.carte-aide{font-size:.82rem;color:var(--encre-doux);margin:10px 0 0}
+@media(min-width:861px){.carte-aide{display:none}}
+.carte-listes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:28px 32px}
+.carte-listes h3{font-family:var(--f-titre);font-weight:400;font-size:1.35rem;margin:0 0 8px}
+.carte-listes ul{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:.92rem}
+@media(max-width:860px){.carte-grille{grid-template-columns:minmax(0,1fr)}.carte-fiche{position:static;grid-template-columns:96px 1fr;align-items:center}.carte-fiche img{grid-row:span 3}}
 .rev-pdf{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
 .rev-pdf a{display:grid;gap:10px;background:var(--blanc);border:1px solid var(--joint);padding:14px;text-decoration:none;color:var(--encre)}
 .rev-pdf a:hover{border-color:var(--olivier)}
@@ -637,6 +660,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           <li><a href="/sur-mesure">Carreau sur mesure</a></li>
           <li><a href="/carte-cadeau">Carte cadeau</a></li>
           <li><a href="/projet-specifique">Projet spécifique</a></li>
+          <li><a href="/carte-des-lieux">La carte des lieux</a></li>
           <li><a href="/revendeurs">Revendeurs et offices de tourisme</a></li>
           <li><a href="/guides">Guides et idées cadeaux</a></li>
           <li><a href="/notre-histoire">Notre histoire</a></li>
@@ -664,7 +688,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.0e216766fa.js" defer=""></script>
+<script src="/assets/app.f30996eb94.js" defer=""></script>
 
 
 

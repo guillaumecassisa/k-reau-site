@@ -420,7 +420,7 @@ function vueTous(){
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Nos carreaux','']])}
     ${q ? `<div class="bloc-titre"><span class="eyebrow">Recherche</span><h1>Résultats pour « ${esc(q)} »</h1><p class="lead">${res ? (res.length ? res.length+' carreau'+(res.length>1?'x':'')+' trouvé'+(res.length>1?'s':'') : offresQ.length ? '' : 'Aucun carreau ne correspond à cette recherche. Essayez un autre lieu, ou parcourez tous les modèles.') : ''}</p><a class="lien" href="/carreaux">Voir tous les carreaux</a></div>`
-        : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p></div>
+        : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
           <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux K-Reau en céramique posés sur la pierre : Sausset-les-Pins, Château de Versailles, Sainte-Victoire et le Vieux-Port de Marseille" fetchpriority="high"></figure></div>`}
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
@@ -1800,6 +1800,92 @@ function vueProjet(){
   </div></section>`;
 }
 
+/* ===== Carte des lieux ===== */
+let FOND_CARTE = null;
+const ZONES_CARTE = [
+  ['Marseille', p => p.collection_slug==='marseille'], ['La Côte Bleue', p => p.collection_slug==='cote-bleue'],
+  ['Aix-en-Provence', p => p.collection_slug==='aix-en-provence'], ['Le Luberon', p => p.collection_slug==='luberon'],
+  ['Les Montagnes du Sud', p => p.collection_slug==='montagnes-du-sud'], ['Les îles du Var', p => p.collection_slug==='les-embiez'],
+  ['Les Châteaux de France', p => p.collection_slug==='chateaux']];
+function svgCarte(vue, fond, liste){
+  const [x0, y0, x1, y1] = fond.bbox, c = Math.cos((y0 + y1) / 2 * Math.PI / 180), k = fond.w / ((x1 - x0) * c);
+  const P = (lat, lon) => [(lon - x0) * c * k, (y1 - lat) * k];
+  const dedans = p => p.geo && p.geo[1] >= x0 && p.geo[1] <= x1 && p.geo[0] >= y0 && p.geo[0] <= y1;
+  const R = vue === 'provence' ? 9 : 10, D = 2 * R + 3;
+  let pts = [], amas = null;
+  const zoom = FOND_CARTE.marseille.bbox, dansZoom = p => p.geo[1] >= zoom[0] && p.geo[1] <= zoom[2] && p.geo[0] >= zoom[1] && p.geo[0] <= zoom[3];
+  liste.filter(dedans).forEach(p => {
+    if(vue === 'provence' && dansZoom(p)){ amas = amas || { n:0 }; amas.n++; return; }
+    const [x, y] = P(p.geo[0], p.geo[1]); pts.push({ p, ox:x, oy:y, x, y });
+  });
+  // écarte les points trop proches (quartiers de Marseille) en gardant un trait vers leur vraie position
+  for(let it = 0; it < 300; it++){
+    for(let i = 0; i < pts.length; i++) for(let j = i + 1; j < pts.length; j++){
+      const a = pts[i], b = pts[j]; let dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+      if(d < D){ if(d < .01){ dx = Math.cos(i + j); dy = Math.sin(i + j); d = 1; } const m = (D - d) / 2 / d; a.x -= dx * m; a.y -= dy * m; b.x += dx * m; b.y += dy * m; }
+    }
+    pts.forEach(q => { q.x += (q.ox - q.x) * .02; q.y += (q.oy - q.y) * .02; });
+  }
+  const [ax, ay] = P(43.275, 5.27);
+  return `<svg viewBox="0 0 ${fond.w} ${fond.h}" role="group" aria-label="${vue==='provence'?'Carte de la Provence':'Carte de Marseille et de la Côte Bleue'} avec l’emplacement de chaque carreau">
+    <path class="terre" d="${fond.terre}"/><path class="front" d="${fond.frontieres}"/>
+    ${fond.villes.map(v => `<circle class="ville-pt" cx="${v.x}" cy="${v.y}" r="2.5"/><text class="ville" x="${v.x + 6}" y="${v.y - 6}">${esc(v.nom)}</text>`).join('')}
+    ${pts.filter(q => Math.hypot(q.x - q.ox, q.y - q.oy) > 3).map(q => `<line class="lien-pt" x1="${q.ox.toFixed(1)}" y1="${q.oy.toFixed(1)}" x2="${q.x.toFixed(1)}" y2="${q.y.toFixed(1)}"/>`).join('')}
+    ${amas ? `<a class="amas" href="#" data-vue="marseille" aria-label="Zoomer sur Marseille et la Côte Bleue (${amas.n} carreaux)"><circle cx="${ax}" cy="${ay}" r="24"/><text x="${ax}" y="${ay + 5}" text-anchor="middle">${amas.n}</text></a>` : ''}
+    ${pts.map(q => `<a class="pt" href="/produits/${esc(q.p.slug)}" data-s="${esc(q.p.slug)}" aria-label="${esc(q.p.nom)}"><circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="${R}"/></a>`).join('')}
+  </svg>`;
+}
+function vueCarte(){
+  setMeta('Carte des lieux : tous nos carreaux de Provence sur une carte | K-Reau',
+    'Retrouvez sur une carte les lieux dessinés sur nos carreaux en céramique : Marseille, la Côte Bleue, Aix, le Luberon, les montagnes et les îles du Var. Trouvez le vôtre, à partir de 19,90 €.');
+  const liste = PRODUITS || [];
+  const nbProv = liste.filter(p => p.geo && p.collection_slug !== 'chateaux').length;
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Carte des lieux','']])}
+    <div class="bloc-titre"><span class="eyebrow">Carte des lieux</span><h1>Trouvez votre lieu sur la carte</h1>
+    <p class="lead"><span>${nbProv || 50}</span> lieux de Provence dessinés sur nos carreaux, chacun à sa place. Survolez un point pour voir le carreau, cliquez pour l’ouvrir.</p></div>
+  </div></div>
+  <section class="bloc" style="padding-top:32px"><div class="wrap">
+    <div class="carte-onglets" role="group" aria-label="Choisir la vue">
+      <button type="button" class="filtre" data-vue="provence" aria-pressed="true">Toute la Provence</button>
+      <button type="button" class="filtre" data-vue="marseille" aria-pressed="false">Marseille et la Côte Bleue</button>
+    </div>
+    <div class="carte-grille">
+      <div><div class="carte-zone" id="carte-zone"><div class="squelette" style="aspect-ratio:1000/763"></div></div>
+        <p class="carte-aide">Sur téléphone, faites glisser la carte vers la droite pour voir l’est de la Provence.</p></div>
+      <aside class="carte-fiche" id="carte-fiche" aria-live="polite">
+        <img src="/img/03_Produits_Marseille/marseille-vieux-port-mini.webp" alt="" width="600" height="600" loading="lazy">
+        <h3>Votre lieu est-il sur la carte ?</h3>
+        <p class="small muted" style="margin:0">Chaque point est un carreau en céramique 15 × 15 cm, à 19,90 €.</p>
+      </aside>
+    </div>
+  </div></section>
+  <section class="bloc" style="padding-top:8px"><div class="wrap">
+    <div class="bloc-titre"><h2>Tous les lieux, par région</h2></div>
+    <div class="carte-listes">${ZONES_CARTE.map(([t, f]) => { const l = liste.filter(f); return l.length ? `<div><h3>${t}</h3><ul>${l.map(p => `<li><a class="lien" href="/produits/${esc(p.slug)}">${esc(p.nom)}</a></li>`).join('')}</ul></div>` : ''; }).join('')}</div>
+    <p class="muted" style="margin-top:28px">Votre lieu n’y est pas ? <a class="lien" href="/sur-mesure">Nous le dessinons sur mesure</a>, d’après votre photo.</p>
+  </div></section>`;
+  let vue = 'provence';
+  const zone = $('#carte-zone'), fiche = $('#carte-fiche');
+  const montrer = slug => {
+    const p = parSlug(slug); if(!p) return;
+    zone.querySelectorAll('a.pt').forEach(a => a.classList.toggle('actif', a.dataset.s === slug));
+    fiche.innerHTML = `<img src="${esc(p.miniature)}" alt="${esc(p.alt || p.nom)}" width="600" height="600"><h3>${esc(p.nom)}</h3>
+      <p class="small muted" style="margin:0"><span>${esc(collNom(p))}</span> · <span>${prixEur(CONFIG.prix.carreau)}</span></p><a class="btn btn-s" href="/produits/${esc(p.slug)}">Voir le carreau</a>`;
+  };
+  const dessiner = () => {
+    if(!FOND_CARTE || !PRODUITS) return;
+    zone.innerHTML = svgCarte(vue, FOND_CARTE[vue], liste);
+    document.querySelectorAll('.carte-onglets .filtre').forEach(b => b.setAttribute('aria-pressed', b.dataset.vue === vue));
+  };
+  const changer = v => { vue = v; dessiner(); };
+  document.querySelector('.carte-onglets').addEventListener('click', e => { const b = e.target.closest('[data-vue]'); if(b) changer(b.dataset.vue); });
+  zone.addEventListener('click', e => { const a = e.target.closest('a.amas'); if(a){ e.preventDefault(); changer('marseille'); } });
+  ['pointerover','focusin'].forEach(t => zone.addEventListener(t, e => { const a = e.target.closest('a.pt'); if(a) montrer(a.dataset.s); }));
+  if(FOND_CARTE) dessiner();
+  else fetch('/data/carte.json').then(r => r.json()).then(d => { FOND_CARTE = d; if(document.body.contains(zone)) dessiner(); }).catch(() => { zone.innerHTML = '<p class="etat">La carte n’a pas pu être chargée. Retrouvez tous les lieux dans la liste ci-dessous.</p>'; });
+}
+
 function vueRevendeurs(){
   setMeta('Revendeurs et offices de tourisme : carreaux K-Reau en boutique | K-Reau',
     'Vendez les carreaux décoratifs K-Reau dans votre boutique ou office de tourisme : tarifs revendeurs dès 12 carreaux, dépôt-vente possible, catalogues PDF à télécharger.');
@@ -2527,6 +2613,7 @@ function route(){
   else if(h==='carte-cadeau') vueCarteCadeau();
   else if(h==='projet-specifique') vueProjet();
   else if(h==='revendeurs') vueRevendeurs();
+  else if(h==='carte-des-lieux') vueCarte();
   else if(h==='guides') vueGuides();
   else if(h.startsWith('guide-')) vueGuide(h.slice(6));
   else if(PAGES[h]) PAGES[h]();

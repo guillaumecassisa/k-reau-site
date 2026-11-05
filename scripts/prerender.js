@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const RACINE = path.resolve(__dirname, '..');
 const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produits.json'), 'utf8')).filter(p => p.publie !== false);
 const collections = [...new Set(cat.map(p => p.collection_slug))].filter(c => c !== 'les-embiez' || cat.filter(p => p.collection_slug === c).length > 1);
-const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-specifique','guides','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier','avis','revendeurs'];
+const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-specifique','guides','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier','avis','revendeurs','carte-des-lieux'];
 const appSrc = fs.readFileSync(path.join(RACINE, 'app.html'), 'utf8');
 const guides = [...appSrc.slice(appSrc.indexOf('/*GUIDES-DEBUT*/'), appSrc.indexOf('/*GUIDES-FIN*/')).matchAll(/slug: '([a-z0-9-]+)'/g)].map(m => m[1]);
 // Fichiers externes versionnés (mis en cache un an par le navigateur) : le script principal et la traduction anglaise

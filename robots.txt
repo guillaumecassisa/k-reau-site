@@ -3,6 +3,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /data/
+Allow: /data/carte.json
 
 # Assistants IA qui RÉPONDENT aux internautes et citent leurs sources : bienvenus
 User-agent: OAI-SearchBot
