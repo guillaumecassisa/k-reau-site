@@ -575,7 +575,8 @@ function vueProduit(slug){
       <p class="small muted" style="margin-top:-8px">Carreau décoratif en céramique · 15 × 15 cm</p>
       <p class="fiche-desc">${esc(p.description)}</p>
       ${prix ? `<p class="prix">${prix}</p>` : ''}
-      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · expédition sous 5 à 7 jours, livraison en ${LANG === 'en' ? 'Europe' : 'France'}</span></span></p>` : ''}
+      ${prix ? `<p class="livraison-estimee" id="livraison-estimee"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg><span><strong>${livraisonEstimee()}</strong><br><span class="small muted">si vous commandez aujourd’hui · expédition sous 5 à 7 jours, livraison en ${LANG === 'en' ? 'Europe' : 'France'}</span></span></p>
+      <p class="noel-fiche" id="noel-fiche" hidden></p>` : ''}
       ${LIVE && prix ? `
         <div class="encart">
           <label for="qte-out">Quantité</label>
@@ -2360,11 +2361,35 @@ function livraisonEstimee(){
   return `Reçu entre le ${fmt(debut, debut.getMonth()!==fin.getMonth())} et le ${fmt(fin)}`;
 }
 // Dernier jour de commande pour être livré au plus tard la veille d'une fête
-function dateLimiteCommande(fete){
+function dateLimiteCommande(fete, transit = [2, 3]){
   const veille = new Date(fete); veille.setDate(veille.getDate()-1); veille.setHours(23,0,0,0);
   const d = new Date(fete); d.setHours(12,0,0,0);
-  for(let i=0;i<40;i++){ d.setDate(d.getDate()-1); if(fenetreLivraison(d)[1] <= veille) return d; }
+  for(let i=0;i<40;i++){ d.setDate(d.getDate()-1); if(fenetreLivraison(d, transit)[1] <= veille) return d; }
   return d;
+}
+
+// Fiche produit : « livré avant Noël » avec compte à rebours les 7 derniers jours (même calcul que le bandeau)
+let minuterieNoel = null;
+function noelFiche(){
+  const el = document.getElementById('noel-fiche'); if(!el) return;
+  clearInterval(minuterieNoel);
+  const maint = new Date(), fete = new Date(maint.getFullYear(), 11, 24), debut = new Date(fete); debut.setDate(debut.getDate() - 53);
+  if(maint < debut || maint >= fete){ el.hidden = true; return; }
+  const limite = dateLimiteCommande(fete, LANG === 'en' ? [3, 6] : [2, 3]);
+  const fin = new Date(limite); fin.setHours(23, 59, 59, 0);
+  const date = limite.toLocaleDateString(LOC, { weekday:'long', day:'numeric', month:'long' });
+  const peindre = () => {
+    const reste = fin - new Date();
+    if(reste <= 0){ el.innerHTML = '<strong>Trop tard pour une livraison avant Noël ?</strong> <a class="lien" href="/carte-cadeau">La carte cadeau</a> est envoyée immédiatement par e-mail.'; el.classList.add('tard'); clearInterval(minuterieNoel); return; }
+    const jours = Math.ceil(reste / 864e5);
+    const eu = LANG === 'en' ? ' (livraison en Europe)' : '';
+    if(jours > 7) el.innerHTML = `<strong>Livré avant Noël</strong> si vous commandez avant le <span>${date}</span>${eu}`;
+    else if(jours > 1) el.innerHTML = `Plus que <strong>${jours}</strong> jours pour être livré avant Noël : commandez avant le <span>${date}</span>${eu}`;
+    else { const h = Math.floor(reste / 36e5), m = Math.floor(reste % 36e5 / 6e4); el.innerHTML = `<strong>Dernier jour</strong> pour être livré avant Noël : il reste <span>${h} h ${String(m).padStart(2,'0')} min</span>`; }
+    el.classList.toggle('urgent', jours <= 7);
+  };
+  peindre(); el.hidden = false;
+  minuterieNoel = setInterval(() => { if(document.body.contains(el)) peindre(); else clearInterval(minuterieNoel); }, 30000);
 }
 
 function vueCarteCadeau(){
@@ -2664,6 +2689,7 @@ function route(){
   const actif = document.querySelector(`[data-nav="${h}"]`); if(actif) actif.setAttribute('aria-current','page');
   fermerMenu();
   { const le = document.querySelector('#livraison-estimee strong'); if(le) le.textContent = livraisonEstimee(); } // toujours calculée à la date du jour
+  noelFiche();
   requestAnimationFrame(scroller);
 }
 document.addEventListener('click', e => {

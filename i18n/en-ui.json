@@ -592,5 +592,14 @@
 "Envoyer ma proposition": "Send my suggestion",
 "Merci ! Votre lieu est bien noté. Si nous le dessinons, vous serez parmi les premiers prévenus.": "Thank you! Your place has been noted. If we draw it, you will be among the first to know.",
 "Et votre lieu à vous ?": "What about your place?",
-"Un port, un village, une calanque qui compte pour vous ? Proposez-le : nos prochains carreaux sont choisis parmi vos idées.": "A harbour, a village, a calanque that matters to you? Suggest it: our next tiles are chosen from your ideas."
+"Un port, un village, une calanque qui compte pour vous ? Proposez-le : nos prochains carreaux sont choisis parmi vos idées.": "A harbour, a village, a calanque that matters to you? Suggest it: our next tiles are chosen from your ideas.",
+"{0} si vous commandez avant le {1}": "{0} if you order by {1}",
+"Livré avant Noël": "Delivered before Christmas",
+"Plus que {0} jours pour être livré avant Noël : commandez avant le {1}": "Only {0} days left for delivery before Christmas: order by {1}",
+"{0} pour être livré avant Noël : il reste {1}": "{0} for delivery before Christmas: {1} left",
+"Dernier jour": "Last day",
+"{0} {1} est envoyée immédiatement par e-mail.": "{0} {1} is sent instantly by email.",
+"La carte cadeau": "The gift card",
+"{0} si vous commandez avant le {1} (livraison en Europe)": "{0} if you order by {1} (delivery in Europe)",
+"Plus que {0} jours pour être livré avant Noël : commandez avant le {1} (livraison en Europe)": "Only {0} days left for delivery before Christmas: order by {1} (delivery in Europe)"
 }
