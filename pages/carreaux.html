@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.2f059796a4.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.4ec1a0ce69.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -11,9 +11,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" type="image/webp" href="/img/01_Identite/logo-kreau-header-petit.webp">
 <title>Tous les carreaux décoratifs en céramique | K-Reau</title>
-<meta name="description" content="Les 64 carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez. Céramique 15 × 15 cm, 19,90 €, idée cadeau souvenir.">
+<meta name="description" content="Tous nos carreaux illustrés : Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, les montagnes, les îles du Var et les Châteaux. Céramique 15 × 15 cm, 19,90 €.">
 <meta property="og:title" content="Tous les carreaux décoratifs en céramique | K-Reau">
-<meta property="og:description" content="Les 64 carreaux décoratifs illustrés K-Reau : Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez. Céramique 15 × 15 cm, 19,90 €, idée cadeau souvenir.">
+<meta property="og:description" content="Tous nos carreaux illustrés : Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, les montagnes, les îles du Var et les Châteaux. Céramique 15 × 15 cm, 19,90 €.">
 <meta property="og:image" content="https://k-reau.fr/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:url" content="https://k-reau.fr/carreaux">
@@ -187,7 +187,7 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 .carte-img{display:block;background:var(--blanc);border:1px solid var(--joint);overflow:hidden}
 .carte-img img{width:100%;aspect-ratio:1/1;object-fit:cover;transition:transform .5s}
 .carte:hover .carte-img img{transform:scale(1.04)}
-.carte-coll{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mer)}
+.carte-coll{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#3F6378}
 .carte h3{font-size:1.35rem;line-height:1.15}
 .carte h3 a{text-decoration:none}
 .carte-prix{font-weight:600;font-variant-numeric:tabular-nums}
@@ -304,7 +304,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .reassurance li{display:flex;align-items:center;gap:7px;line-height:1.3}
 .reassurance svg{flex:none;color:var(--olivier)}
 .trio-fiche{min-width:0;border-top:1px solid var(--joint);padding-top:16px;display:grid;gap:12px}
-.trio-fiche h3{font-family:var(--f-titre);font-weight:400;font-size:1.3rem;margin:0}
+.trio-fiche .trio-titre{font-family:var(--f-titre);font-weight:400;font-size:1.3rem;margin:0}
 .trio-vignettes{display:flex;align-items:center;gap:6px}
 .trio-vignettes a,.trio-vignettes span.moi{flex:1 1 0;min-width:0;display:block;border:1px solid var(--joint);background:var(--ceramique)}
 .trio-vignettes img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
@@ -439,7 +439,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .carte-zone a.amas:hover circle,.carte-zone a.amas:focus-visible circle{fill:var(--olivier)}
 .carte-fiche{border:1px solid var(--joint);background:var(--blanc);padding:16px;display:grid;gap:10px;position:sticky;top:96px}
 .carte-fiche img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--ceramique)}
-.carte-fiche h3{font-family:var(--f-titre);font-weight:400;font-size:1.5rem;margin:0}
+.carte-fiche .carte-fiche-titre{font-family:var(--f-titre);font-weight:400;font-size:1.5rem;margin:0;line-height:1.2}
 .carte-aide{font-size:.82rem;color:var(--encre-doux);margin:10px 0 0}
 @media(min-width:861px){.carte-aide{display:none}}
 .carte-listes{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:28px 32px}
@@ -617,13 +617,14 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
   <div class="page-tete"><div class="wrap">
     <nav class="ariane" aria-label="Fil d’Ariane"><ol><li><a href="/">Accueil</a></li><li aria-current="page">Nos carreaux</li></ol></nav>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil"},{"@type":"ListItem","position":2,"name":"Nos carreaux"}]}</script>
-    <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, les Montagnes du Sud, les Châteaux et Les Embiez : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
+    <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, les Montagnes du Sud, les îles du Var et les Châteaux : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
           <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux K-Reau en céramique posés sur la pierre : Sausset-les-Pins, Château de Versailles, Sainte-Victoire et le Vieux-Port de Marseille" fetchpriority="high"></figure></div>
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     
     <div class="filtres" role="group" aria-label="Filtrer par collection" data-filtres="g-tous"><button type="button" class="filtre" data-f="tout" aria-pressed="true">Tout</button><button type="button" class="filtre" data-f="marseille" aria-pressed="false">Marseille</button><button type="button" class="filtre" data-f="cote-bleue" aria-pressed="false">Côte Bleue</button><button type="button" class="filtre" data-f="aix-en-provence" aria-pressed="false">Aix</button><button type="button" class="filtre" data-f="luberon" aria-pressed="false">Luberon</button><button type="button" class="filtre" data-f="montagnes-du-sud" aria-pressed="false">Montagnes</button><button type="button" class="filtre" data-f="chateaux" aria-pressed="false">Châteaux</button><button type="button" class="filtre" data-f="les-embiez" aria-pressed="false">Les Embiez</button></div><div class="coll-inspi" aria-live="polite"><p class="coll-inspiration">Tous nos carreaux partagent le même esprit : un lieu réel, dessiné au trait noir sur céramique blanche, avec son nom en calligraphie. Choisissez une collection pour découvrir d’où elle vient.</p></div>
     <p class="small muted" id="g-tous-statut" role="status" aria-live="polite">64 carreaux affichés</p>
+    <h2 class="visuellement-cache">Tous les carreaux</h2>
     <div class="grille" id="g-tous"><article class="carte">
     <a class="carte-img" href="/produits/marseille-vieux-port" tabindex="-1" aria-hidden="true">
       <img src="/img/03_Produits_Marseille/marseille-vieux-port-mini.webp" srcset="/img/03_Produits_Marseille/marseille-vieux-port-mini.webp 600w, /img/03_Produits_Marseille/marseille-vieux-port.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Le Vieux-Port de Marseille » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
@@ -1206,7 +1207,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.8d2dc85fa4.js" defer=""></script>
+<script src="/assets/app.df8bc96b20.js" defer=""></script>
 
 
 
