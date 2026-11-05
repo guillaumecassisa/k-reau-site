@@ -1849,6 +1849,7 @@ function vueCarte(){
     <div class="carte-onglets" role="group" aria-label="Choisir la vue">
       <button type="button" class="filtre" data-vue="provence" aria-pressed="true">Toute la Provence</button>
       <button type="button" class="filtre" data-vue="marseille" aria-pressed="false">Marseille et la Côte Bleue</button>
+      <a class="btn btn-p carte-proposer" href="#proposer">Proposer un lieu</a>
     </div>
     <div class="carte-grille">
       <div><div class="carte-zone" id="carte-zone"><div class="squelette" style="aspect-ratio:1000/763"></div></div>
@@ -1863,7 +1864,23 @@ function vueCarte(){
   <section class="bloc" style="padding-top:8px"><div class="wrap">
     <div class="bloc-titre"><h2>Tous les lieux, par région</h2></div>
     <div class="carte-listes">${ZONES_CARTE.map(([t, f]) => { const l = liste.filter(f); return l.length ? `<div><h3>${t}</h3><ul>${l.map(p => `<li><a class="lien" href="/produits/${esc(p.slug)}">${esc(p.nom)}</a></li>`).join('')}</ul></div>` : ''; }).join('')}</div>
-    <p class="muted" style="margin-top:28px">Votre lieu n’y est pas ? <a class="lien" href="/sur-mesure">Nous le dessinons sur mesure</a>, d’après votre photo.</p>
+  </div></section>
+  <section class="bloc" id="proposer" style="background:var(--sable-clair)"><div class="wrap" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;align-items:start">
+    <div class="bloc-titre"><span class="eyebrow">Votre lieu n’est pas sur la carte ?</span><h2>Proposez-nous un lieu</h2>
+      <p>Un port, une place, un village, une calanque : dites-nous quel lieu vous aimeriez voir dessiné. Nous choisissons nos prochains carreaux parmi vos propositions, et nous vous prévenons s’il rejoint la collection.</p>
+      <p class="small muted">Vous le voulez tout de suite, d’après votre propre photo ? <a class="lien" href="/sur-mesure">Commandez un carreau sur mesure</a>.</p></div>
+    <form class="formulaire" id="form-lieu" data-form="projet" data-contexte="carte-des-lieux" data-merci="Merci ! Votre lieu est bien noté. Si nous le dessinons, vous serez parmi les premiers prévenus." novalidate>
+      <input type="hidden" name="projet" value="Proposition de lieu">
+      <div class="champ"><label for="l-lieu">Le lieu</label><input type="text" id="l-lieu" name="modeles" maxlength="80" placeholder="Ex. : le port de Cassis, la place des Cardeurs…" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-ville">Commune</label><input type="text" id="l-ville" name="ville" autocomplete="address-level2" maxlength="80" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-msg">Pourquoi ce lieu ? <span class="muted" style="font-weight:400">(facultatif)</span></label><textarea id="l-msg" name="message" maxlength="2000" placeholder="Un souvenir, une vue que vous aimez, un lien vers une photo…"></textarea><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-nom">Prénom</label><input type="text" id="l-nom" name="nom" autocomplete="given-name" maxlength="80" required><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-email">Adresse e-mail</label><input type="email" id="l-email" name="email" autocomplete="email" required><span class="err" aria-live="polite"></span></div>
+      <input class="piege" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="consent"><input type="checkbox" name="consent" required> <span>J’accepte que mes informations soient utilisées pour répondre à ma proposition (voir <a class="lien" href="/confidentialite">confidentialité</a>).</span></label>
+      <button class="btn btn-p" type="submit" style="justify-self:start">Envoyer ma proposition</button>
+      <div class="retour" aria-live="polite"></div>
+    </form>
   </div></section>`;
   let vue = 'provence';
   const zone = $('#carte-zone'), fiche = $('#carte-fiche');
@@ -2558,7 +2575,8 @@ document.addEventListener('submit', async e => {
   try{
     await enregistrer(form.dataset.form==='contact' ? 'contacts' : form.dataset.form==='projet' ? 'projets' : 'interets', data);
     form.reset();
-    retour.innerHTML = form.dataset.form==='projet'
+    retour.innerHTML = form.dataset.merci ? `<p class="msg ok">${esc(form.dataset.merci)}</p>`
+      : form.dataset.form==='projet'
       ? '<p class="msg ok">Merci, votre demande a bien été envoyée. Nous revenons vers vous par e-mail sous 48 heures ouvrées.</p>'
       : form.dataset.form==='contact'
       ? '<p class="msg ok">Merci, votre message a bien été envoyé. Nous vous répondrons par e-mail.</p>'

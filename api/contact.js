@@ -24,13 +24,14 @@ module.exports = async function handler(req, res) {
   const nom = champ('nom', 200), sujet = champ('sujet', 200), message = champ('message', 5000), contexte = champ('contexte', 200);
   const projet = champ('projet', 120), quantite = champ('quantite', 80), modeles = champ('modeles', 80);
   const date = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
-  const objet = type === 'projets' ? `K-Reau · ${/^Revendeur/.test(projet) ? '' : 'Projet spécifique : '}${projet || 'demande'}${quantite ? ' · ' + quantite : ''}`
+  const objet = projet === 'Proposition de lieu' ? `K-Reau · Lieu proposé : ${modeles || 'sans nom'}${champ('ville', 80) ? ' (' + champ('ville', 80) + ')' : ''}`
+    : type === 'projets' ? `K-Reau · ${/^Revendeur/.test(projet) ? '' : 'Projet spécifique : '}${projet || 'demande'}${quantite ? ' · ' + quantite : ''}`
     : type === 'contacts' ? `K-Reau · Contact : ${sujet || 'message'}` : `K-Reau · Inscription (${contexte || 'site'})`;
 
   const lignes = [
-    ['Type', type === 'projets' ? 'Demande de projet spécifique' : type === 'contacts' ? 'Message de contact' : 'Inscription'],
+    ['Type', projet === 'Proposition de lieu' ? 'Proposition de lieu (carte des lieux)' : type === 'projets' ? 'Demande de projet spécifique' : type === 'contacts' ? 'Message de contact' : 'Inscription'],
     ['Nom', nom], ['Organisation', champ('organisation', 150)], ['Ville', champ('ville', 80)], ['E-mail', email], ['Téléphone', champ('telephone', 30)],
-    ['Projet', projet], ['Quantité', quantite], ['Modèles', modeles], ['Échéance', champ('echeance', 80)],
+    ['Projet', projet], ['Quantité', quantite], [projet === 'Proposition de lieu' ? 'Lieu proposé' : 'Modèles', modeles], ['Échéance', champ('echeance', 80)],
     ['Sujet', sujet], ['Modèle / page', contexte], ['Date', date]
   ].filter(([, v]) => v);
   const html = `<table style="font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse">${lignes.map(([k, v]) =>

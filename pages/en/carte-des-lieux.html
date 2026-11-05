@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.daeaaf1eca.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.5fff63f452.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -422,6 +422,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .rev-tarifs th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--olivier)}
 .rev-tarifs td.prix{font-family:var(--f-titre);font-size:1.7rem}
 .carte-onglets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.carte-proposer{margin-left:auto;min-height:44px}
+@media(max-width:600px){.carte-proposer{margin-left:0;width:100%}}
 .carte-grille{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:24px;align-items:start}
 .carte-zone{border:1px solid var(--joint);background:#E8EDEF;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .carte-zone svg{display:block;width:100%;min-width:720px;height:auto}
@@ -618,6 +620,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <div class="carte-onglets" role="group" aria-label="Choose the view">
       <button type="button" class="filtre" data-vue="provence" aria-pressed="true">All of Provence</button>
       <button type="button" class="filtre" data-vue="marseille" aria-pressed="false">Marseille and the Côte Bleue</button>
+      <a class="btn btn-p carte-proposer" href="#proposer">Suggest a place</a>
     </div>
     <div class="carte-grille">
       <div><div class="carte-zone" id="carte-zone"><svg viewBox="0 0 1000 763" role="group" aria-label="Map of Provence showing where each tile is">
@@ -638,7 +641,23 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
   <section class="bloc" style="padding-top:8px"><div class="wrap">
     <div class="bloc-titre"><h2>All the places, by area</h2></div>
     <div class="carte-listes"><div><h3>Marseille</h3><ul><li><a class="lien" href="/en/produits/marseille-vieux-port">Le Vieux-Port de Marseille</a></li><li><a class="lien" href="/en/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a></li><li><a class="lien" href="/en/produits/marseille-mucem">Le Mucem</a></li><li><a class="lien" href="/en/produits/marseille-la-major">La Major</a></li><li><a class="lien" href="/en/produits/marseille-vallon-des-auffes">Le Vallon des Auffes</a></li><li><a class="lien" href="/en/produits/marseille-chateau-d-if">Le Château d’If</a></li><li><a class="lien" href="/en/produits/marseille-iles-du-frioul">Les Îles du Frioul</a></li><li><a class="lien" href="/en/produits/marseille-calanque-sormiou">La Calanque de Sormiou</a></li><li><a class="lien" href="/en/produits/marseille-calanque-morgiou">La Calanque de Morgiou</a></li><li><a class="lien" href="/en/produits/marseille-palais-longchamp">Le Palais Longchamp</a></li><li><a class="lien" href="/en/produits/marseille-tour-cma-cgm">La Tour CMA CGM</a></li><li><a class="lien" href="/en/produits/marseille-velodrome">Le Vélodrome</a></li><li><a class="lien" href="/en/produits/marseille-panisse">La Panisse</a></li><li><a class="lien" href="/en/produits/marseille-david">Le David</a></li><li><a class="lien" href="/en/produits/marseille-corniche-kennedy">La Corniche Kennedy</a></li><li><a class="lien" href="/en/produits/marseille-le-panier">Le Panier</a></li><li><a class="lien" href="/en/produits/marseille-canebiere">La Canebière</a></li><li><a class="lien" href="/en/produits/marseille-cite-radieuse">La Cité radieuse</a></li><li><a class="lien" href="/en/produits/marseille-fort-saint-jean">Le Fort Saint-Jean</a></li><li><a class="lien" href="/en/produits/marseille-le-prado">Le Prado</a></li><li><a class="lien" href="/en/produits/marseille-cap-canaille">Le Cap Canaille</a></li><li><a class="lien" href="/en/produits/marseille-la-ciotat">La Ciotat</a></li></ul></div><div><h3>The Côte Bleue</h3><ul><li><a class="lien" href="/en/produits/cote-bleue-port-niolon">Le Port de Niolon</a></li><li><a class="lien" href="/en/produits/cote-bleue-calanque-mejean">La Calanque de Méjean</a></li><li><a class="lien" href="/en/produits/cote-bleue-port-la-redonne">Le Port de La Redonne</a></li><li><a class="lien" href="/en/produits/cote-bleue-carry-le-rouet">Carry-le-Rouet</a></li><li><a class="lien" href="/en/produits/cote-bleue-sausset-les-pins">Sausset-les-Pins</a></li><li><a class="lien" href="/en/produits/cote-bleue-port-carro">Le Port de Carro</a></li><li><a class="lien" href="/en/produits/cote-bleue-cap-couronne">Le Cap Couronne</a></li><li><a class="lien" href="/en/produits/cote-bleue-plage-sainte-croix">La Plage de Sainte-Croix</a></li><li><a class="lien" href="/en/produits/cote-bleue-ensues-la-redonne">Ensuès-la-Redonne</a></li><li><a class="lien" href="/en/produits/cote-bleue-estaque">L’Estaque</a></li></ul></div><div><h3>Aix-en-Provence</h3><ul><li><a class="lien" href="/en/produits/aix-la-rotonde">La Rotonde</a></li></ul></div><div><h3>The Luberon</h3><ul><li><a class="lien" href="/en/produits/luberon-rustrel">Rustrel</a></li><li><a class="lien" href="/en/produits/luberon-cucuron">Cucuron</a></li><li><a class="lien" href="/en/produits/luberon-l-isle-sur-la-sorgue">L’Isle-sur-la-Sorgue</a></li><li><a class="lien" href="/en/produits/luberon-fontaine-de-vaucluse">Fontaine de Vaucluse</a></li><li><a class="lien" href="/en/produits/luberon-ansouis">Ansouis</a></li><li><a class="lien" href="/en/produits/luberon-mallemort">Mallemort</a></li><li><a class="lien" href="/en/produits/luberon-lourmarin">Lourmarin</a></li><li><a class="lien" href="/en/produits/luberon-gordes">Gordes</a></li><li><a class="lien" href="/en/produits/luberon-lacoste">Lacoste</a></li></ul></div><div><h3>Mountains of the South</h3><ul><li><a class="lien" href="/en/produits/montagnes-sainte-victoire">La Sainte-Victoire</a></li><li><a class="lien" href="/en/produits/montagnes-sainte-baume">La Sainte-Baume</a></li><li><a class="lien" href="/en/produits/montagnes-mont-salva">Le Mont Salva</a></li><li><a class="lien" href="/en/produits/montagnes-gros-cerveau">Le Gros Cerveau</a></li><li><a class="lien" href="/en/produits/montagnes-mont-faron">Le Mont Faron</a></li><li><a class="lien" href="/en/produits/montagnes-mont-caume">Le Mont Caume</a></li><li><a class="lien" href="/en/produits/montagnes-garlaban">Le Garlaban</a></li><li><a class="lien" href="/en/produits/montagnes-mont-ventoux">Le Mont Ventoux</a></li><li><a class="lien" href="/en/produits/montagnes-mont-puget">Le Mont Puget</a></li><li><a class="lien" href="/en/produits/montagnes-rocher-de-roquebrune">Le Rocher de Roquebrune</a></li></ul></div><div><h3>The islands of the Var</h3><ul><li><a class="lien" href="/en/produits/les-embiez">Les Embiez</a></li><li><a class="lien" href="/en/produits/porquerolles">Porquerolles</a></li></ul></div><div><h3>The châteaux of France</h3><ul><li><a class="lien" href="/en/produits/chateaux-versailles">Le Château de Versailles</a></li><li><a class="lien" href="/en/produits/chateaux-chambord">Le Château de Chambord</a></li><li><a class="lien" href="/en/produits/chateaux-chenonceau">Le Château de Chenonceau</a></li><li><a class="lien" href="/en/produits/chateaux-amboise">Le Château d’Amboise</a></li><li><a class="lien" href="/en/produits/chateaux-blois">Le Château de Blois</a></li><li><a class="lien" href="/en/produits/chateaux-azay-le-rideau">Le Château d’Azay-le-Rideau</a></li><li><a class="lien" href="/en/produits/chateaux-usse">Le Château d’Ussé</a></li><li><a class="lien" href="/en/produits/chateaux-villandry">Le Château de Villandry</a></li><li><a class="lien" href="/en/produits/chateaux-fontainebleau">Le Château de Fontainebleau</a></li><li><a class="lien" href="/en/produits/chateaux-saumur">Le Château de Saumur</a></li></ul></div></div>
-    <p class="muted" style="margin-top:28px">Your place isn’t here? <a class="lien" href="/en/sur-mesure">We draw it to order</a>, from your photo.</p>
+  </div></section>
+  <section class="bloc" id="proposer" style="background:var(--sable-clair)"><div class="wrap" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;align-items:start">
+    <div class="bloc-titre"><span class="eyebrow">Your place isn’t on the map?</span><h2>Suggest a place to us</h2>
+      <p>A harbour, a square, a village, a calanque: tell us which place you would love to see drawn. We choose our next tiles from your suggestions, and we will let you know if yours joins the collection.</p>
+      <p class="small muted">Want it right away, from your own photo? <a class="lien" href="/en/sur-mesure">Order a custom tile</a>.</p></div>
+    <form class="formulaire" id="form-lieu" data-form="projet" data-contexte="carte-des-lieux" data-merci="Merci ! Votre lieu est bien noté. Si nous le dessinons, vous serez parmi les premiers prévenus." novalidate="">
+      <input type="hidden" name="projet" value="Proposition de lieu">
+      <div class="champ"><label for="l-lieu">The place</label><input type="text" id="l-lieu" name="modeles" maxlength="80" placeholder="E.g. the port of Cassis, Place des Cardeurs…" required=""><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-ville">Town</label><input type="text" id="l-ville" name="ville" autocomplete="address-level2" maxlength="80" required=""><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-msg">Why this place? <span class="muted" style="font-weight:400">(optional)</span></label><textarea id="l-msg" name="message" maxlength="2000" placeholder="A memory, a view you love, a link to a photo…"></textarea><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-nom">First name</label><input type="text" id="l-nom" name="nom" autocomplete="given-name" maxlength="80" required=""><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="l-email">Email address</label><input type="email" id="l-email" name="email" autocomplete="email" required=""><span class="err" aria-live="polite"></span></div>
+      <input class="piege" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="consent"><input type="checkbox" name="consent" required=""> <span>I agree that my details may be used to reply to my suggestion (see <a class="lien" href="/en/confidentialite">privacy</a>).</span></label>
+      <button class="btn btn-p" type="submit" style="justify-self:start">Send my suggestion</button>
+      <div class="retour" aria-live="polite"></div>
+    </form>
   </div></section></main>
 
 <footer class="site">
@@ -708,7 +727,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.f30996eb94.js" defer=""></script>
+<script src="/assets/app.2519bc3fc3.js" defer=""></script>
 
 
 
