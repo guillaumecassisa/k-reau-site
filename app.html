@@ -529,6 +529,8 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .news-form .news-retour:empty{display:none}
 .piege{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}
 .news-carte{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:80;width:min(360px,calc(100% - 32px));background:var(--blanc);border:1px solid var(--joint);box-shadow:0 18px 40px rgba(34,33,30,.16);padding:22px 22px 18px}
+.lieu-carte img{width:64px;height:64px;object-fit:cover;float:right;margin:4px 0 8px 12px;border:3px solid var(--blanc);box-shadow:0 1px 0 var(--joint)}
+.lieu-carte .btn{width:100%}
 .news-carte h2{font-family:var(--f-titre);font-weight:400;font-size:1.45rem;margin:0 26px 6px 0}
 .news-carte p{margin:0 0 12px;font-size:.88rem;color:var(--encre-doux);line-height:1.55}
 .news-carte .news-form input[type=email]{background:var(--blanc);color:var(--encre);border-color:var(--sable);flex-basis:100%}
@@ -1419,13 +1421,35 @@ function brancherNewsletter(racine){
     });
   });
 }
+// Accueil : petite invitation à proposer un lieu (une fois par mois au plus), avant celle de la newsletter
+let invitationMontree = false;
+function inviterLieu(){
+  const deja = store.get('kreau-lieu', null);
+  if(deja && Date.now() - (deja.vu || 0) < 30 * 864e5) return;
+  setTimeout(() => {
+    const couche = $('#couche');
+    if(cleDepuisChemin(cheminFR()) !== 'accueil' || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim())) return;
+    invitationMontree = true; store.set('kreau-lieu', { vu: Date.now() });
+    const d = document.createElement('aside'); d.className = 'news-carte lieu-carte'; d.setAttribute('aria-label', 'Proposer un lieu');
+    d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button>
+      <img src="/img/en-main/marseille-vieux-port-en-main-petit.webp" alt="" width="140" height="140">
+      <h2>Et votre lieu à vous ?</h2>
+      <p>Un port, un village, une calanque qui compte pour vous ? Proposez-le : nos prochains carreaux sont choisis parmi vos idées.</p>
+      <a class="btn btn-p" href="/carte-des-lieux#proposer">Proposer un lieu</a>`;
+    document.body.appendChild(d);
+    const fermer = () => d.remove();
+    d.querySelector('.fermer').addEventListener('click', fermer);
+    d.querySelector('a.btn').addEventListener('click', () => setTimeout(fermer, 0));
+    document.addEventListener('keydown', function esc_(e){ if(e.key === 'Escape' && document.body.contains(d)){ fermer(); document.removeEventListener('keydown', esc_); } });
+  }, 15000);
+}
 function inviterNewsletter(){
   const deja = store.get('kreau-news', null);
   if(deja && (deja.inscrit || Date.now() - (deja.ferme || 0) < 30 * 864e5)) return;
   setTimeout(() => {
     const ch = cleDepuisChemin(cheminFR());
     const couche = $('#couche');
-    if(['merci','avis','panier'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
+    if(invitationMontree || ['merci','avis','panier'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
     const d = document.createElement('aside'); d.className = 'news-carte'; d.setAttribute('aria-label', 'Inscription aux nouvelles de K-Reau');
     d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button><h2>-10 % sur votre première commande</h2>
       <p>Laissez votre e-mail : nous vous envoyons votre code, puis nos nouveaux lieux de temps en temps.</p>
@@ -3294,7 +3318,7 @@ function route(){
   if(ancre && vueCourante === h + (PRODUITS ? ':data' : '') && document.getElementById(ancre)){ document.getElementById(ancre).scrollIntoView({ behavior:'smooth' }); return; }
   const section = h==='accueil' && SECTIONS_ACCUEIL.includes(ancre) ? ancre : null;
   const cle = h;
-  const scroller = () => { if(section){ document.getElementById(section)?.scrollIntoView(); } else window.scrollTo(0,0); };
+  const scroller = () => { const cible = section || (ancre && document.getElementById(ancre) ? ancre : null); if(cible){ document.getElementById(cible)?.scrollIntoView(); } else window.scrollTo(0,0); };
   if(cle==='accueil' && vueCourante==='accueil:data' && PRODUITS){ scroller(); return; }
   const imgGardee = app.dataset.prerendu ? app.querySelector('img[fetchpriority="high"]') : null;
   if(cle==='accueil') vueAccueil();
@@ -3389,7 +3413,7 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);
 brancherNewsletter(document);
-if(LIVE && !navigator.webdriver) inviterNewsletter();
+if(LIVE && !navigator.webdriver){ inviterLieu(); inviterNewsletter(); }
 if(!app.dataset.prerendu) route();
 charger();
 </script>
