@@ -1,11 +1,13 @@
 // Tâche quotidienne (Vercel Cron, chaque matin) :
 //  1. demande d'avis environ 10 jours après la livraison (une seule fois par commande) ;
 //  2. relance des paiements abandonnés, uniquement si le client a accepté les e-mails sur la page de paiement Stripe ;
-//  3. ajout à la newsletter des clients qui l'ont acceptée au paiement.
+//  3. ajout à la newsletter des clients qui l'ont acceptée au paiement ;
+//  4. secours : e-mail « nouvelle commande » et confirmation client si la page Merci n'a pas été affichée.
 // Chaque envoi est « réservé » en base avant d'être fait : un même e-mail n'est jamais envoyé deux fois.
 const { PRODUITS, stripe, base, signer, gabarit, envoyerClient, envoyerMail, echap, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
 const { carreauxDeLaCommande } = require('./avis');
 const { lienDesinscription } = require('./newsletter');
+const { traiterCommande } = require('./commande');
 
 const JOUR = 24 * 3600;
 // délai entre la commande et la demande d'avis : expédition (5 à 7 j) + acheminement + ~10 jours
@@ -60,7 +62,7 @@ module.exports = async function handler(req, res) {
   if (process.env.CRON_SECRET && req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) return res.status(401).json({ erreur: 'Non autorisé' });
   if (tropDeRequetes(req, 3, 60 * 60 * 1000)) return res.status(429).json({ erreur: 'Trop de requêtes' });
   if (!process.env.STRIPE_SECRET_KEY) return res.status(503).json({ erreur: 'Paiement non configuré' });
-  const bilan = { avis: 0, relances: 0, abonnes: 0, erreurs: [] };
+  const bilan = { avis: 0, relances: 0, abonnes: 0, rattrapees: 0, erreurs: [] };
   const maintenant = Math.floor(Date.now() / 1000);
   let sessions;
   try { sessions = await sessionsRecentes(maintenant - 50 * JOUR); }
@@ -77,6 +79,13 @@ module.exports = async function handler(req, res) {
     const en = s.metadata && s.metadata.lang === 'en';
     const accord = s.consent && s.consent.promotions === 'opt_in';
     try {
+      if (s.status === 'complete' && s.payment_status === 'paid' && s.payment_intent && maintenant - s.created < 4 * JOUR) {
+        const pi = await stripe('GET', `payment_intents/${s.payment_intent}`);
+        if (!(pi.metadata || {}).k_notifie || !(pi.metadata || {}).k_client) {
+          await traiterCommande(await stripe('GET', `checkout/sessions/${s.id}`, { 'expand[]': 'line_items' }));
+          bilan.rattrapees++;
+        }
+      }
       if (s.status === 'complete' && s.payment_status === 'paid' && email) {
         if (accord) { const r = await base('abonne_ajout', { email, source: 'commande', langue: en ? 'en' : 'fr' }); if (r.nouveau) bilan.abonnes++; }
         const pays = s.shipping_details && s.shipping_details.address && s.shipping_details.address.country;

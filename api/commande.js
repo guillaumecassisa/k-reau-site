@@ -25,7 +25,21 @@ module.exports = async function handler(req, res) {
   try { s = await stripe('GET', `checkout/sessions/${id}`, { 'expand[]': 'line_items' }); }
   catch (e) { return res.status(404).json({ erreur: 'Commande introuvable' }); }
   if (s.payment_status !== 'paid') return res.status(200).json({ paye: false });
+  const { md, cartes, erreurCartes } = await traiterCommande(s);
+  return res.status(200).json({
+    paye: true,
+    email: s.customer_details && s.customer_details.email,
+    cartes: cartes.map(c => ({ code: c.code, montant: c.montant })),
+    cartesEnAttente: erreurCartes,
+    surMesure: md.sur_mesure && md.sur_mesure !== '0',
+    message: md.message_cadeau || ''
+  });
+};
 
+// Cartes cadeaux + e-mail à K-Reau + confirmation au client, chacun une seule fois par commande.
+// Appelée par la page « Merci » et, en secours, par la tâche quotidienne (client qui a fermé la page après avoir payé).
+async function traiterCommande(s) {
+  const id = s.id;
   const md = s.metadata || {};
   const montants = (md.cartes || '').split(',').map(n => parseInt(n, 10)).filter(Boolean);
   const cartes = []; let erreurCartes = false;
@@ -63,16 +77,9 @@ module.exports = async function handler(req, res) {
       if (ok) await stripe('POST', `payment_intents/${s.payment_intent}`, { metadata: { k_client: '1' } }).catch(() => {});
     }
   } catch (e) { console.error('Confirmation client', e.message); }
-
-  return res.status(200).json({
-    paye: true,
-    email: s.customer_details && s.customer_details.email,
-    cartes: cartes.map(c => ({ code: c.code, montant: c.montant })),
-    cartesEnAttente: erreurCartes,
-    surMesure: md.sur_mesure && md.sur_mesure !== '0',
-    message: md.message_cadeau || ''
-  });
-};
+  return { md, cartes, erreurCartes, montants };
+}
+module.exports.traiterCommande = traiterCommande;
 
 function mailClient(s, md, cartes, cartesEnAttente) {
   const e = v => texte(v, 300).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
