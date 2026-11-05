@@ -1094,7 +1094,7 @@ function vueCollection(k){
       ${COLLS_PRINCIPALES.filter(x=>x!==k && collPubliee(x)).map(x=>`<a class="btn btn-s" href="/collections/${x}">Voir la collection ${esc(COLLECTIONS[x].nom.replace(/^La |^Les /,''))}</a>`).join('')}
       ${k!=='les-embiez' ? `<a class="btn btn-s" href="${embiezSeul() ? '/produits/les-embiez' : '/collections/les-embiez'}">${embiezSeul() ? 'Le modèle signature Les Embiez' : 'Voir la collection Les Embiez'}</a>` : ''}
     </div>
-    ${c.texte ? `<div class="prose" style="margin-top:56px;max-width:760px"><h2>${esc(c.offrir||'Un souvenir à offrir')}</h2><p>${esc(c.texte)}</p><p>Chaque carreau coûte 19,90 € ; la livraison est offerte dès 50 € d’achat.</p></div>` : ''}
+    ${c.texte ? `<div class="prose" style="margin-top:56px;max-width:760px"><h2>${esc(c.offrir||'Un souvenir à offrir')}</h2><p>${esc(c.texte)}</p><p>Chaque carreau coûte 19,90 € ; la livraison est offerte dès 50 € d’achat.</p>${(g => g && LANG !== 'en' ? `<p>À lire : <a class="lien" href="/guides/${g.slug}">${esc(g.titre)}</a></p>` : '')(GUIDES.find(x => x.slug === GUIDE_COLL[k]))}</div>` : ''}
   </div></section>`;
 }
 
@@ -1549,6 +1549,7 @@ function vueContact(){
 }
 
 /*GUIDES-DEBUT*/
+const GUIDE_COLL = { marseille:'que-ramener-de-marseille', 'cote-bleue':'cote-bleue-ports-et-calanques', 'aix-en-provence':'que-voir-a-aix-en-provence', luberon:'plus-beaux-villages-du-luberon', 'montagnes-du-sud':'montagnes-de-provence-randonnees', 'les-embiez':'iles-du-var-embiez-porquerolles', chateaux:'chateaux-de-la-loire-incontournables' };
 const PL = (s, t) => `<a class="lien" href="/produits/${s}">${t}</a>`;
 const CL = (c, t) => `<a class="lien" href="/collections/${c}">${t}</a>`;
 const GUIDES = [
@@ -2419,19 +2420,116 @@ const GUIDES = [
    ['Que mettre dans un welcome pack original ?', 'En plus des classiques, un objet plus personnel comme un carreau de la ville ou du bâtiment de l’entreprise, et un mot de bienvenue signé de l’équipe.'],
    ['Comment accueillir un collaborateur en télétravail ?', 'Faites livrer le cadeau de bienvenue chez lui avant son premier jour, avec un message de l’équipe.'],
    ['Peut-on personnaliser un cadeau de bienvenue au nom de l’entreprise ?', 'Oui, avec un carreau sur mesure représentant votre bâtiment ou votre siège, avec le nom de l’entreprise en calligraphie.']]
+},
+{
+  slug: 'plus-beaux-villages-du-luberon',
+  titre: 'Les plus beaux villages du Luberon : Gordes, Lourmarin, Lacoste et les autres',
+  metaT: 'Plus beaux villages du Luberon : Gordes, Lourmarin | K-Reau',
+  metaD: 'Gordes, Lourmarin, Lacoste, Ansouis, Cucuron, L’Isle-sur-la-Sorgue, Fontaine-de-Vaucluse : les villages du Luberon à voir, et nos conseils pour les visiter.',
+  date: '2026-11-05',
+  image: '/img/12_Produits_Luberon/luberon-gordes.webp',
+  intro: 'Villages perchés sur leur rocher, falaises d’ocre, bassins ombragés de platanes et rivières d’une clarté étonnante : le Luberon concentre quelques-uns des plus beaux paysages de Provence. Voici les villages à ne pas manquer, de Gordes aux bords de la Durance, racontés par un atelier installé juste en face, à Mallemort.',
+  corps: () => `
+<h2>Gordes, la carte postale du Luberon</h2>
+<p>Accroché à un éperon des monts de Vaucluse, face à la vallée et au Luberon, ${PL('luberon-gordes','Gordes')} empile ses maisons de pierre sèche autour d’un château Renaissance et de son église. Classé parmi les Plus Beaux Villages de France, c’est le village le plus photographié de la région. À quelques kilomètres, l’abbaye de Sénanque et ses champs de lavande forment l’autre image incontournable du Luberon.</p>
+<h2>Lourmarin, le village de Camus</h2>
+<p>Au pied du versant sud, ${PL('luberon-lourmarin','Lourmarin')} se reconnaît à son château Renaissance posé à l’écart du village, entre cyprès et oliviers. L’écrivain Albert Camus y a vécu ses dernières années et repose au cimetière du village. Ruelles animées, terrasses et galeries d’art en font l’un des villages les plus vivants du Luberon.</p>
+<h2>Lacoste, le village du marquis de Sade</h2>
+<p>Face à Bonnieux, ${PL('luberon-lacoste','Lacoste')} grimpe jusqu’aux ruines du château qui appartint au marquis de Sade, en partie restauré par le couturier Pierre Cardin. Calades pavées, murets de pierre sèche et anciennes carrières : c’est l’un des villages perchés les plus authentiques, et souvent l’un des plus calmes.</p>
+<h2>Ansouis et Cucuron, côté Pays d’Aigues</h2>
+<p>Au sud du massif, ${PL('luberon-ansouis','Ansouis')}, lui aussi parmi les Plus Beaux Villages de France, s’enroule autour d’un château qui domine la vallée d’Aigues depuis le Moyen Âge. Tout près, ${PL('luberon-cucuron','Cucuron')} est célèbre pour son bassin de l’Étang, creusé au XVe siècle et bordé de platanes centenaires, où ont été tournées des scènes du film Le Hussard sur le toit.</p>
+<h2>Rustrel et le Colorado provençal</h2>
+<p>Au nord-est d’Apt, ${PL('luberon-rustrel','le Colorado provençal de Rustrel')} est un ancien site d’extraction d’ocre. Falaises rouges et jaunes, cheminées de fée et sables colorés se découvrent par des sentiers balisés. Avec les ocres de Roussillon, c’est le paysage le plus surprenant du Luberon.</p>
+<h2>L’Isle-sur-la-Sorgue et Fontaine-de-Vaucluse, au fil de la Sorgue</h2>
+<p>Surnommée la Venise comtadine, ${PL('luberon-l-isle-sur-la-sorgue','L’Isle-sur-la-Sorgue')} est entourée par les bras de la Sorgue, où tournent encore de vieilles roues à aubes. La ville est réputée pour ses antiquaires et ses brocantes. En remontant la rivière, on arrive à ${PL('luberon-fontaine-de-vaucluse','Fontaine-de-Vaucluse')}, où la Sorgue jaillit d’une grotte au pied d’une immense falaise. Le poète Pétrarque y a vécu au XIVe siècle.</p>
+<h2>Mallemort, au bord de la Durance</h2>
+<p>De l’autre côté de la Durance, face au Luberon, ${PL('luberon-mallemort','Mallemort')} garde son pont suspendu du XIXe siècle, son clocher et les vestiges de son château. C’est là que nous dessinons et imprimons nos carreaux : un point de départ idéal pour rayonner dans tout le Luberon.</p>
+<h2>Visiter le Luberon : nos conseils</h2>
+<p>Le printemps et le début de l’automne sont les plus belles saisons : lumière douce, moins de monde, villages animés sans être saturés. Les lavandes fleurissent en général de mi-juin à mi-juillet. En été, visitez les villages perchés tôt le matin ou en fin de journée, et prévoyez des chaussures confortables pour les calades. Les marchés provençaux, un jour différent dans chaque village, sont la meilleure façon de découvrir la région.</p>
+<h2>Rapporter un souvenir du Luberon</h2>
+<p>Notre ${CL('luberon','collection Luberon')} dessine ces villages au trait sur des carreaux en céramique de 15 × 15 cm, avec leur nom en calligraphie. Un souvenir à poser sur une étagère ou à offrir, pour ceux qui y passent leurs vacances ou qui ont la chance d’y vivre. Le ${'<a class="lien" href="/coffrets">Trio Luberon</a>'} réunit Gordes, Lourmarin et L’Isle-sur-la-Sorgue dans un même coffret.</p>`,
+  produits: ['luberon-gordes','luberon-lourmarin','luberon-lacoste','luberon-ansouis','luberon-cucuron','luberon-rustrel','luberon-l-isle-sur-la-sorgue','luberon-fontaine-de-vaucluse'],
+  motCle: 'villages du Luberon',
+  faq: [
+   ['Quel est le plus beau village du Luberon ?', 'Gordes est le plus célèbre et le plus photographié. Lourmarin, Lacoste, Ansouis et Roussillon sont aussi parmi les plus beaux, chacun avec son caractère.'],
+   ['Quand visiter le Luberon ?', 'Au printemps et au début de l’automne, pour la lumière et le calme. Les lavandes fleurissent en général de mi-juin à mi-juillet.'],
+   ['Quels villages voir en une journée dans le Luberon ?', 'Gordes le matin, puis Lacoste ou Bonnieux, et Lourmarin en fin de journée. Ou bien L’Isle-sur-la-Sorgue et Fontaine-de-Vaucluse, au fil de la Sorgue.'],
+   ['Quel souvenir rapporter du Luberon ?', 'Un objet qui rappelle un village précis, comme un carreau en céramique de Gordes ou de Lourmarin dessiné au trait, plutôt qu’un souvenir générique.']]
+},
+{
+  slug: 'que-voir-a-aix-en-provence',
+  titre: 'Que voir à Aix-en-Provence : la Rotonde, le cours Mirabeau et la Sainte-Victoire',
+  metaT: 'Que voir à Aix-en-Provence : Rotonde, cours Mirabeau | K-Reau',
+  metaD: 'La fontaine de la Rotonde, le cours Mirabeau, le vieil Aix, l’atelier de Cézanne et la Sainte-Victoire : les incontournables d’Aix-en-Provence.',
+  date: '2026-11-05',
+  image: '/img/13_Produits_Aix/aix-la-rotonde.webp',
+  intro: 'Ville d’eau, de fontaines et de lumière, Aix-en-Provence se découvre à pied, des platanes du cours Mirabeau aux places du vieil Aix. Voici ce qu’il ne faut pas manquer, de la fontaine de la Rotonde à la montagne Sainte-Victoire que Cézanne a tant peinte.',
+  corps: () => `
+<h2>La fontaine de la Rotonde, la porte d’Aix</h2>
+<p>Inaugurée en 1860 sur la place du Général-de-Gaulle, ${PL('aix-la-rotonde','la fontaine de la Rotonde')} est la plus grande fontaine de la ville. Ses trois statues représentent la Justice, l’Agriculture et les Beaux-Arts, tournées vers le cours Mirabeau, Marseille et Avignon. Lions, cygnes et chérubins entourent son grand bassin : c’est le point de départ naturel de toute visite.</p>
+<h2>Le cours Mirabeau, sous les platanes</h2>
+<p>Depuis la Rotonde, le cours Mirabeau file tout droit sous une voûte de platanes. D’un côté, les terrasses de cafés ; de l’autre, les façades des hôtels particuliers des XVIIe et XVIIIe siècles. Sur le cours, la fontaine Moussue, couverte de mousse, laisse couler une eau tiède venue des sources thermales qui ont fait la réputation d’Aix depuis l’Antiquité.</p>
+<h2>Le vieil Aix et ses places</h2>
+<p>Au nord du cours, le vieil Aix est un dédale de ruelles et de places : la place de l’Hôtel-de-Ville et sa tour de l’Horloge, la place des Cardeurs et ses terrasses, la place Richelme et son marché quotidien. Plus haut, la cathédrale Saint-Sauveur réunit des éléments de presque toutes les époques, du baptistère paléochrétien au gothique.</p>
+<h2>Sur les pas de Cézanne</h2>
+<p>Né à Aix, Paul Cézanne y a passé l’essentiel de sa vie. Son atelier des Lauves, au nord de la ville, se visite tel qu’il l’a laissé. Un peu plus haut, le terrain des peintres offre la vue sur la Sainte-Victoire qu’il a représentée tant de fois.</p>
+<h2>La Sainte-Victoire, à l’horizon</h2>
+<p>À l’est de la ville, ${PL('montagnes-sainte-victoire','la Sainte-Victoire')} dresse sa barre calcaire qui s’embrase au coucher du soleil. Depuis Le Tholonet ou Vauvenargues, des sentiers mènent à la Croix de Provence, plantée sur l’un de ses sommets. C’est la randonnée préférée des Aixois, à faire tôt le matin et de préférence hors des jours de forte chaleur.</p>
+<h2>Les douceurs d’Aix</h2>
+<p>Impossible de quitter Aix sans goûter le calisson, petite confiserie en forme de navette à base d’amandes et de melon confit, glacée de sucre. Les confiseurs de la ville en proposent toute l’année, souvent dans de jolies boîtes à offrir.</p>
+<h2>Un souvenir d’Aix-en-Provence</h2>
+<p>Notre ${CL('aix-en-provence','collection Aix-en-Provence')} dessine la Rotonde et la Sainte-Victoire au trait sur des carreaux en céramique de 15 × 15 cm, avec leur nom en calligraphie. Un cadeau pour les Aixois, les anciens étudiants de la ville et tous ceux qui ont flâné sur le cours Mirabeau. Un autre lieu d’Aix vous tient à cœur ? <a class="lien" href="/carte-des-lieux#proposer">Proposez-le-nous</a>.</p>`,
+  produits: ['aix-la-rotonde','montagnes-sainte-victoire','montagnes-garlaban','montagnes-sainte-baume','luberon-lourmarin','luberon-ansouis','marseille-vieux-port','luberon-mallemort'],
+  motCle: 'que voir à Aix-en-Provence',
+  faq: [
+   ['Que voir à Aix-en-Provence en une journée ?', 'La fontaine de la Rotonde, le cours Mirabeau et la fontaine Moussue, le vieil Aix et ses places, la cathédrale Saint-Sauveur, puis l’atelier de Cézanne ou le terrain des peintres.'],
+   ['Quelle est la fontaine la plus célèbre d’Aix-en-Provence ?', 'La fontaine de la Rotonde, inaugurée en 1860 au bout du cours Mirabeau. C’est la plus grande fontaine de la ville.'],
+   ['Où voir la Sainte-Victoire depuis Aix ?', 'Depuis le terrain des peintres, près de l’atelier de Cézanne, ou en allant vers Le Tholonet et Vauvenargues, d’où partent les sentiers vers la Croix de Provence.'],
+   ['Quel souvenir rapporter d’Aix-en-Provence ?', 'Des calissons, la spécialité de la ville, ou un objet durable comme un carreau en céramique de la Rotonde ou de la Sainte-Victoire.']]
+},
+{
+  slug: 'iles-du-var-embiez-porquerolles',
+  titre: 'Les îles du Var : Les Embiez, Porquerolles et les îles d’Or',
+  metaT: 'Îles du Var : Les Embiez, Porquerolles, îles d’Or | K-Reau',
+  metaD: 'L’île des Embiez au large de Six-Fours, Porquerolles et les îles d’Or au large de Hyères : comment y aller, que voir, et nos conseils de visite.',
+  date: '2026-11-05',
+  image: '/img/05_Produits_Signature/porquerolles.webp',
+  intro: 'Quelques minutes de bateau suffisent pour changer de monde. Au large du Var, les îles offrent des criques d’eau claire, des pinèdes et des villages sans voitures. Voici les îles à découvrir, de l’île des Embiez, notre modèle signature, à Porquerolles et aux îles d’Or.',
+  corps: () => `
+<h2>L’île des Embiez, au large de Six-Fours</h2>
+<p>À quelques minutes de traversée depuis le port du Brusc, ${PL('les-embiez','l’île des Embiez')} est la plus grande de l’archipel des Embiez. Acquise par Paul Ricard en 1958, elle abrite un port de plaisance, des sentiers en bord de mer, des criques et l’Institut océanographique Paul Ricard. Calme, familiale et facile d’accès, c’est l’île idéale pour une journée de balade. C’est aussi notre modèle signature, celui par lequel K-Reau a commencé.</p>
+<h2>Porquerolles, la plus grande des îles d’Or</h2>
+<p>Au large de la presqu’île de Giens, ${PL('porquerolles','Porquerolles')} est la plus grande des îles d’Or, avec Port-Cros et l’île du Levant. Acquise par l’État en 1971 pour la préserver, elle fait partie du Parc national de Port-Cros. On y vient pour la plage Notre-Dame, les pinèdes, les vignes et le fort Sainte-Agathe qui domine le village. La traversée part de la Tour Fondue, à Hyères.</p>
+<h2>Port-Cros, l’île du parc national</h2>
+<p>Plus sauvage, Port-Cros est le cœur du premier parc national marin d’Europe. Ses sentiers forestiers et son sentier sous-marin, à explorer avec palmes et masque, en font un paradis pour les marcheurs et les amateurs de nature.</p>
+<h2>Bendor, l’île face à Bandol</h2>
+<p>Face au port de Bandol, la petite île de Bendor, elle aussi aménagée par Paul Ricard, se rejoint en quelques minutes. Une escapade courte, pour une promenade autour de l’île et une baignade.</p>
+<h2>Visiter les îles du Var : nos conseils</h2>
+<p>En été, partez tôt : les premières traversées sont les plus agréables, et la fréquentation de certaines îles est encadrée pendant la haute saison. Sur Porquerolles, le vélo est le meilleur moyen de rejoindre les plages. Emportez de l’eau, un chapeau et respectez les règles du parc national : on ne cueille rien, on ne fume pas dans les zones boisées, et on rapporte ses déchets.</p>
+<h2>Les sommets qui regardent les îles</h2>
+<p>Depuis la côte, les reliefs de l’arrière-pays offrent une vue sur les îles : ${PL('montagnes-mont-salva','le Mont Salva')} près de Six-Fours, ${PL('montagnes-gros-cerveau','le Gros Cerveau')} au-dessus de Sanary et Bandol, ou ${PL('montagnes-mont-faron','le Mont Faron')} au-dessus de la rade de Toulon.</p>
+<h2>Garder un morceau d’île chez soi</h2>
+<p>Notre ${CL('les-embiez','collection Les Embiez et les îles')} dessine Les Embiez et Porquerolles au trait sur des carreaux en céramique de 15 × 15 cm, avec leur nom en calligraphie. Un souvenir de vacances à poser dans une maison de bord de mer, ou loin de la mer, pour garder un peu de bleu toute l’année.</p>`,
+  produits: ['les-embiez','porquerolles','montagnes-mont-salva','montagnes-gros-cerveau','montagnes-mont-faron','montagnes-mont-caume','cote-bleue-port-carro','marseille-iles-du-frioul'],
+  motCle: 'îles du Var',
+  faq: [
+   ['Comment aller sur l’île des Embiez ?', 'En bateau depuis le port du Brusc, à Six-Fours-les-Plages : la traversée dure quelques minutes.'],
+   ['Comment aller à Porquerolles ?', 'En bateau depuis la Tour Fondue, sur la presqu’île de Giens à Hyères. Des liaisons partent aussi d’autres ports du Var en saison.'],
+   ['Quelles sont les îles d’Or ?', 'Porquerolles, Port-Cros et l’île du Levant, au large de Hyères. Porquerolles et Port-Cros font partie du Parc national de Port-Cros.'],
+   ['Quel souvenir rapporter des îles du Var ?', 'Un objet qui rappelle l’île précise de vos vacances, comme un carreau en céramique des Embiez ou de Porquerolles dessiné au trait.']]
 }
 ];
 /*GUIDES-FIN*/
 
 const guideImg = g => g.image.replace(/\.webp$/, '-mini.webp');
 function vueGuides(){
-  setMeta('Guides K-Reau : idées cadeaux, souvenirs de Marseille et de Provence', 'Nos guides pour choisir un souvenir de Marseille, une idée cadeau provençale, découvrir la Côte Bleue ou les châteaux de la Loire.');
+  setMeta('Guides K-Reau : idées cadeaux, souvenirs de Marseille et de Provence', 'Nos guides pour choisir un souvenir de Marseille, une idée cadeau provençale, découvrir la Côte Bleue, le Luberon, Aix-en-Provence ou les îles du Var.');
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','']])}
     <div class="bloc-titre"><span class="eyebrow">Guides</span><h1>Idées, conseils et beaux lieux</h1>
     <p class="lead">Que ramener de Marseille, quel cadeau offrir à un client ou à ses salariés, où se baigner sur la Côte Bleue : nos guides pour trouver l’inspiration, et le bon souvenir.</p></div></div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap guides-liste">
-    ${GUIDES.map(g=>`<article class="guide-carte"><a href="/guides/${g.slug}" class="guide-visuel"><img src="${esc(guideImg(g))}" alt="" loading="lazy" width="600" height="600"></a>
+    ${[...GUIDES].sort((a,b)=>b.date.localeCompare(a.date)).map(g=>`<article class="guide-carte"><a href="/guides/${g.slug}" class="guide-visuel"><img src="${esc(guideImg(g))}" alt="" loading="lazy" width="600" height="600"></a>
       <div class="guide-txt"><h2><a href="/guides/${g.slug}">${esc(g.titre)}</a></h2><p>${esc(g.intro)}</p><a class="lien" href="/guides/${g.slug}">Lire le guide</a></div></article>`).join('')}
   </div></section>`;
 }
