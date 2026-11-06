@@ -823,8 +823,8 @@ function vueHistoire(){
       <div class="signature">
         <img src="/img/01_Identite/guillaume.webp" width="160" height="160" loading="lazy" alt="Guillaume, créateur de K-Reau">
         <div>
-          <p>Moi, c’est Guillaume. J’ai créé K-Reau à Mallemort, entre la Durance et les Alpilles, et c’est ici que j’imprime chaque carreau, que je le contrôle et que je le glisse dans son coffret avant de l’expédier.</p>
-          <p>Je ne suis pas une grande enseigne : derrière chaque commande, il y a une personne qui la prépare. Si vous m’écrivez, c’est moi qui vous réponds. Et si un lieu vous manque dans les collections, dites-le-moi : c’est souvent comme ça que naissent les prochains carreaux.</p>
+          <p>Moi, c’est Guillaume. Passionné par l’impression 3D et les technologies de fabrication, j’ai créé K-Reau à Mallemort, entre la Durance et les Alpilles, pour mettre ce savoir-faire au service des lieux que vous aimez.</p>
+          <p>Je dessine chaque lieu, je l’imprime sur céramique, je contrôle chaque carreau et je le glisse moi-même dans son coffret. Et avec le <a class="lien" href="/sur-mesure">sur mesure</a>, je transforme vos photos et vos idées en pièces uniques, avec soin, précision et créativité. Une question, un lieu qui vous manque ? Écrivez-moi : c’est moi qui vous réponds.</p>
           <p class="signature-nom">Guillaume, fondateur de K-Reau</p>
         </div>
       </div>
