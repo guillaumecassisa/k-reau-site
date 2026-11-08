@@ -1368,6 +1368,9 @@ function vueProduit(slug){
 /* ===== Avis clients (vérifiés : déposés uniquement via le lien envoyé après une commande) ===== */
 const noteTxt = v => String(Math.round(v * 10) / 10).replace('.', ',');
 const etoiles = v => `<span class="etoiles" style="--note:${Number(v)||0}" role="img" aria-label="${noteTxt(v)} sur 5">★★★★★</span>`;
+// Majuscules propres pour les prénoms et villes saisis en minuscules (« six fours les plages » → « Six Fours les Plages »)
+const MINUS = new Set(['de','du','des','la','le','les','sur','en','et','d','l']);
+const joliNom = t => String(t || '').trim().toLowerCase().replace(/[\p{L}]+/gu, (m, i) => i > 0 && MINUS.has(m) ? m : m.charAt(0).toUpperCase() + m.slice(1));
 // Accueil : bandeau des derniers avis vérifiés (défile s'il y en a au moins 3 ; masqué s'il n'y en a aucun)
 async function bandeauAvis(){
   let l; try{ const r = await fetch('/api/avis?derniers=1'); if(!r.ok) return; l = await r.json(); }catch(e){ return; }
@@ -1376,7 +1379,7 @@ async function bandeauAvis(){
   const carte = (a, cache) => `<a class="ab-carte" href="/produits/${esc(a.slug)}"${cache ? ' aria-hidden="true" tabindex="-1"' : ''}>
     <img src="${esc(a.image)}" alt="" width="64" height="64" loading="lazy">
     <span class="ab-txt">${etoiles(a.note)}${a.texte ? `<span class="ab-cit" lang="${a.langue === 'en' ? 'en' : 'fr'}" translate="no">« ${esc(court(a.texte))} »</span>` : ''}
-    <span class="ab-auteur"><span translate="no">${esc(a.prenom)}${a.ville ? ' · ' + esc(a.ville) : ''}</span> · <span>${esc(a.nom)}</span></span></span></a>`;
+    <span class="ab-auteur"><span translate="no">${esc(joliNom(a.prenom))}${a.ville ? ' · ' + esc(joliNom(a.ville)) : ''}</span> · <span>${esc(a.nom)}</span></span></span></a>`;
   const defile = l.length >= 3;
   const moy = Math.round(l.reduce((x, a) => x + a.note, 0) / l.length * 10) / 10;
   sec.innerHTML = `<div class="wrap ab-tete"><h2 id="t-avis-bandeau">Ils ont adopté leur carreau</h2><span class="ab-moy">${etoiles(moy)}<span class="small muted">Avis vérifiés de clients</span></span></div>
@@ -1394,7 +1397,7 @@ async function chargerAvis(p){
   sec.innerHTML = `<div class="wrap">
     <div class="avis-tete"><h2 id="t-avis">Avis clients</h2><span class="avis-moy">${noteTxt(d.moy)}<span class="small muted"> / 5</span></span>${etoiles(d.moy)}<span class="small muted">${d.n} avis</span></div>
     <div class="avis-liste">${d.avis.map(a => `<article class="avis-carte">${etoiles(a.note)}${a.texte ? `<p lang="${a.langue === 'en' ? 'en' : 'fr'}" translate="no">${esc(a.texte)}</p>` : ''}
-      <span class="avis-auteur"><span translate="no">${esc(a.prenom)}${a.ville ? ' · ' + esc(a.ville) : ''}</span> · ${date(a.date)}</span>
+      <span class="avis-auteur"><span translate="no">${esc(joliNom(a.prenom))}${a.ville ? ' · ' + esc(joliNom(a.ville)) : ''}</span> · ${date(a.date)}</span>
       ${a.reponse ? `<p class="avis-reponse"><strong>Réponse de K-Reau</strong><br><span translate="no">${esc(a.reponse)}</span></p>` : ''}</article>`).join('')}</div>
     <p class="avis-info">Avis vérifiés : ils ne peuvent être déposés que par des clients, via un lien personnel envoyé par e-mail après la réception de leur commande. Ils sont publiés sans modification ni contrepartie, du plus récent au plus ancien. Seuls les avis injurieux ou sans rapport avec le produit sont écartés.</p>
   </div>`;
