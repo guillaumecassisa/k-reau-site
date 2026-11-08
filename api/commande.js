@@ -1,6 +1,6 @@
 // Récapitulatif affiché sur la page « Merci » : vérifie le paiement, crée les codes des cartes cadeaux
 // (une seule fois par commande) et prévient K-Reau par e-mail des éléments à préparer.
-const { stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, tropDeRequetes, echap } = require('./_commun');
+const { stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, tropDeRequetes, echap, base, payee } = require('./_commun');
 const t = (v, n) => echap(texte(v, n));
 
 async function carteCadeau(sessionId, i, montant) {
@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
   let s;
   try { s = await stripe('GET', `checkout/sessions/${id}`, { 'expand[]': 'line_items' }); }
   catch (e) { return res.status(404).json({ erreur: 'Commande introuvable' }); }
-  if (s.payment_status !== 'paid') return res.status(200).json({ paye: false });
+  if (!payee(s)) return res.status(200).json({ paye: false });
   const { md, cartes, erreurCartes } = await traiterCommande(s);
   return res.status(200).json({
     paye: true,
@@ -38,6 +38,13 @@ module.exports = async function handler(req, res) {
 
 // Cartes cadeaux + e-mail à K-Reau + confirmation au client, chacun une seule fois par commande.
 // Appelée par la page « Merci » et, en secours, par la tâche quotidienne (client qui a fermé la page après avoir payé).
+// « Envoyé une seule fois » : marqueur sur le paiement Stripe ; pour une commande offerte (0 €, pas de paiement), réservation en base.
+async function dejaFait(s, nom) {
+  if (s.payment_intent) { const pi = await stripe('GET', `payment_intents/${s.payment_intent}`); return { fait: !!(pi.metadata || {})[nom], marquer: () => stripe('POST', `payment_intents/${s.payment_intent}`, { metadata: { [nom]: '1' } }).catch(() => {}), annuler: async () => {} }; }
+  const r = await base('envoi_reserver', { type: nom, ref: s.id, email: (s.customer_details && s.customer_details.email) || '' });
+  return { fait: !r.reserve, marquer: async () => {}, annuler: () => base('envoi_annuler', { type: nom, ref: s.id }).catch(() => {}) };
+}
+
 async function traiterCommande(s) {
   const id = s.id;
   const md = s.metadata || {};
@@ -50,31 +57,32 @@ async function traiterCommande(s) {
 
   // E-mail à K-Reau, une seule fois par commande (marqueur posé sur le paiement)
   try {
-    const pi = s.payment_intent ? await stripe('GET', `payment_intents/${s.payment_intent}`) : null;
-    if (pi && !(pi.metadata || {}).k_notifie) {
+    const d = await dejaFait(s, 'k_notifie');
+    if (!d.fait) {
       const lignes = (s.line_items && s.line_items.data || []).map(l => `<li>${l.quantity} × ${t(l.description, 200)}</li>`).join('');
       const adr = s.shipping_details && s.shipping_details.address;
       const html = `<div style="font-family:Arial,sans-serif;font-size:14px">
         <h2 style="color:#51573D">Nouvelle commande K-Reau · ${euros(s.amount_total)}</h2>
         <p><b>Client :</b> ${t(s.customer_details && s.customer_details.name, 120)} — ${t(s.customer_details && s.customer_details.email, 160)}</p>
         <ul>${lignes}</ul>
+        ${md.code ? `<p><b>Code utilisé :</b> ${t(md.code, 60)}</p>` : ''}
         ${md.message_cadeau ? `<p><b>Message cadeau à imprimer :</b><br>« ${t(md.message_cadeau, 300)} »</p>` : ''}
         ${md.sur_mesure && md.sur_mesure !== '0' ? `<p><b>Carreau sur mesure :</b> détails dans la ligne de commande ci-dessus. Envoyer le dessin au client pour validation.</p>` : ''}
         ${montants.length ? `<p><b>Cartes cadeaux :</b> ${cartes.map(c => `${c.code} (${euros(c.montant)})`).join(', ') || 'création à faire à la main dans Stripe'}${erreurCartes ? ' — ⚠ création automatique impossible, à créer dans Stripe' : ''}</p>` : ''}
         ${adr ? `<p><b>Livraison :</b> ${t(s.shipping_details.name, 120)}, ${t(adr.line1, 160)} ${t(adr.line2, 120)}, ${t(adr.postal_code, 12)} ${t(adr.city, 80)} ${adr.country && adr.country !== 'FR' ? '(' + t(adr.country, 4) + ')' : ''}</p>` : ''}
       </div>`;
       const ok = await envoyerMail(`K-Reau · Nouvelle commande ${euros(s.amount_total)}`, html, s.customer_details && s.customer_details.email);
-      if (ok) await stripe('POST', `payment_intents/${s.payment_intent}`, { metadata: { k_notifie: '1' } }).catch(() => {});
+      if (ok) await d.marquer(); else await d.annuler();
     }
   } catch (e) { console.error('Notification', e.message); }
 
   // E-mail de confirmation au client, une seule fois par commande
   try {
-    const pi = s.payment_intent ? await stripe('GET', `payment_intents/${s.payment_intent}`) : null;
     const email = s.customer_details && s.customer_details.email;
-    if (pi && email && !(pi.metadata || {}).k_client) {
+    const d = email ? await dejaFait(s, 'k_client') : { fait: true };
+    if (!d.fait) {
       const ok = await envoyerClient(email, `Merci pour votre commande K-Reau · ${euros(s.amount_total)}`, mailClient(s, md, cartes, montants.length && erreurCartes));
-      if (ok) await stripe('POST', `payment_intents/${s.payment_intent}`, { metadata: { k_client: '1' } }).catch(() => {});
+      if (ok) await d.marquer(); else await d.annuler();
     }
   } catch (e) { console.error('Confirmation client', e.message); }
   return { md, cartes, erreurCartes, montants };

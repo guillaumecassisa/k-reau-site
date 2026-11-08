@@ -2652,11 +2652,16 @@ const Panier = {
         <p class="panier-sous"><span>${ca ? 'Livraison Canada' : eu ? 'Livraison Europe' : 'Livraison France'}</span><span>${port > 0 ? prixEur(port) : 'Offerte'}</span></p>` : ''}
         <p class="panier-total"><span>Total</span><strong>${prixEur(tot + port)}</strong></p></div>
       <p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code. ' : ca ? 'D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis. ' : eu ? 'Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire. ' : ''}Les codes cadeaux se saisissent sur la page de paiement.</p>
+      <details class="code-promo"${this.code ? ' open' : ''}><summary>Vous avez un code ?</summary>
+        <label class="visuellement-cache" for="code-promo">Code promo ou carte cadeau</label>
+        <input id="code-promo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" placeholder="Code promo ou carte cadeau" value="${esc(this.code || '')}">
+        <p class="small muted" style="margin:6px 0 0">Il sera appliqué sur la page de paiement.</p></details>
       <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
       <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
       <div id="payer-retour" aria-live="polite"></div>` : ''}
     </div></div>`;
     const t = c.firstElementChild;
+    const cp = $('#code-promo'); if(cp) cp.addEventListener('input', () => { this.code = cp.value.trim().toUpperCase(); });
     const msg = $('#msg-cadeau'); if(msg) msg.addEventListener('input', () => { this.message = msg.value.slice(0,200); store.set('kreau-message', this.message); $('#msg-compte').textContent = `${this.message.length} / 200`; });
     t.addEventListener('click', e => {
       if(e.target===t || e.target.closest('[data-fermer]')) { c.innerHTML=''; return; }
@@ -2704,12 +2709,12 @@ const Panier = {
   async payer(){
     const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
     try{
-      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ lignes: this.lignes, message: this.physique() > 0 ? this.message : '', destination: ['EU','CA'].includes(this.destination) ? this.destination : 'FR', lang: LANG }) });
+      const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code: this.code || '', lignes: this.lignes, message: this.physique() > 0 ? this.message : '', destination: ['EU','CA'].includes(this.destination) ? this.destination : 'FR', lang: LANG }) });
       const j = await r.json().catch(()=>({}));
-      if(!r.ok || !j.url) throw new Error(j.erreur || 'Erreur');
+      if(!r.ok || !j.url){ const e = new Error(j.erreur || 'Erreur'); e.court = r.status === 400 && /code/i.test(j.erreur || ''); throw e; }
       location.href = j.url;
     }catch(err){
-      ret.innerHTML = `<p class="msg ko">${esc(err.message)}. Réessayez dans un instant ou écrivez-nous via le formulaire de contact.</p>`;
+      ret.innerHTML = err.court ? `<p class="msg ko">${esc(err.message)}.</p>` : `<p class="msg ko">${esc(err.message)}. Réessayez dans un instant ou écrivez-nous via le formulaire de contact.</p>`;
       b.disabled = false; b.textContent = 'Passer au paiement sécurisé';
     }
   }

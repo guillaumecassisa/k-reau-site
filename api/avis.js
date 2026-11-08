@@ -4,7 +4,7 @@
 //  GET  /api/avis?derniers=1          → derniers avis publiés, tous carreaux confondus (bandeau de l'accueil)
 //  GET  /api/avis?c=<session>&s=<sig> → carreaux d'une commande à noter (lien reçu par e-mail)
 //  POST /api/avis                      → enregistre les avis d'une commande (lien signé obligatoire)
-const { PRODUITS, stripe, base, signatureOk, texte, echap, envoyerMail, origineAutorisee, tropDeRequetes } = require('./_commun');
+const { PRODUITS, stripe, base, payee, signatureOk, texte, echap, envoyerMail, origineAutorisee, tropDeRequetes } = require('./_commun');
 
 // Carreaux d'une commande, d'après le résumé enregistré dans Stripe (« slugx1,coffret(a+b+c)x1,… »)
 function carreauxDeLaCommande(panier) {
@@ -21,7 +21,7 @@ function carreauxDeLaCommande(panier) {
 async function commandeValide(sid, sig) {
   if (!/^cs_(live|test)_[A-Za-z0-9]{10,}$/.test(String(sid || '')) || !signatureOk(sid, sig)) return null;
   const s = await stripe('GET', `checkout/sessions/${sid}`);
-  if (s.payment_status !== 'paid') return null;
+  if (!payee(s)) return null;
   return s;
 }
 

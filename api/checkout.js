@@ -2,6 +2,21 @@
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
 const { PRIX, PRODUITS, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
 // Pays européens livrés (hors France) au tarif Europe
+// Codes « commande offerte » : listés dans la variable Vercel KREAU_CODES_OFFERTS (séparés par des virgules).
+// Chacun devient à sa première utilisation un code Stripe à 100 %, utilisable une seule fois ; la livraison est alors offerte aussi.
+const COUPON_OFFERT = 'COMMANDE-OFFERTE-100';
+async function codePromo(code) {
+  const liste = await stripe('GET', 'promotion_codes', { code, limit: 1 });
+  let p = liste.data && liste.data[0];
+  const offerts = (process.env.KREAU_CODES_OFFERTS || '').toUpperCase().split(',').map(x => x.trim()).filter(Boolean);
+  if (!p && offerts.includes(code)) {
+    try { await stripe('GET', `coupons/${COUPON_OFFERT}`); }
+    catch (e) { if (e.statut !== 404) throw e; await stripe('POST', 'coupons', { id: COUPON_OFFERT, percent_off: 100, duration: 'once', name: 'Commande offerte' }); }
+    p = await stripe('POST', 'promotion_codes', { coupon: COUPON_OFFERT, code, max_redemptions: 1, metadata: { offert: '1' } });
+  }
+  return p || null;
+}
+
 const PAYS_EUROPE = ['DE','AT','BE','BG','CY','HR','DK','ES','EE','FI','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','CZ','RO','SK','SI','SE',
   'MC','AD','CH','GB','NO','IS','LI','SM','VA'];
 
@@ -48,6 +63,17 @@ module.exports = async function handler(req, res) {
   }
   if (!items.length) return res.status(400).json({ erreur: 'Panier vide' });
 
+  // Code saisi sur le site (facultatif) : vérifié ici ; sinon, les codes restent saisissables sur la page Stripe
+  const code = String(corps.code || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 40);
+  let promo = null, offert = false;
+  if (code) {
+    try { promo = await codePromo(code); } catch (e) { console.error('Code promo', e.message); return res.status(502).json({ erreur: 'Le code n’a pas pu être vérifié' }); }
+    if (!promo) return res.status(400).json({ erreur: corps.lang === 'en' ? 'Unknown code' : 'Code inconnu' });
+    if (!promo.active) return res.status(400).json({ erreur: corps.lang === 'en' ? 'This code has already been used or has expired' : 'Ce code a déjà été utilisé ou a expiré' });
+    const cp = promo.coupon || (promo.promotion && promo.promotion.coupon) || {};
+    offert = (promo.metadata && promo.metadata.offert === '1') || (typeof cp === 'object' && cp.id === COUPON_OFFERT);
+  }
+
   const message = texte(corps.message, 250);
   const en = corps.lang === 'en';
   const params = {
@@ -91,6 +117,16 @@ module.exports = async function handler(req, res) {
         fixed_amount: { amount: offerte ? 0 : frais, currency: 'eur' } } }];
     }
   }
+  if (promo) {
+    params.discounts = [{ promotion_code: promo.id }];
+    delete params.allow_promotion_codes;
+    params.after_expiration = { recovery: { enabled: 'true' } };
+    params.metadata.code = code + (offert ? ' (offert)' : '');
+    if (offert && params.shipping_options) params.shipping_options.forEach(o => {
+      o.shipping_rate_data.fixed_amount.amount = 0;
+      o.shipping_rate_data.display_name = en ? 'Free shipping (gift order)' : 'Livraison offerte';
+    });
+  }
   if (message) params.custom_text = { submit: { message: en ? `Your gift message will be printed on the card in the box: “${message.slice(0, 200)}”` : `Votre message cadeau sera imprimé sur la carte du coffret : « ${message.slice(0, 200)} »` } };
 
   try {
@@ -106,6 +142,7 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ url: s.url });
   } catch (e) {
     console.error('Stripe', e.message);
+    if (promo && /minimum|promotion|coupon|discount/i.test(e.message)) return res.status(400).json({ erreur: en ? 'This code cannot be used with this basket' : 'Ce code ne peut pas être utilisé avec ce panier' });
     return res.status(502).json({ erreur: 'Le paiement n’a pas pu être préparé' });
   }
 };

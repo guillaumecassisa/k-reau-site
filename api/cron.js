@@ -4,7 +4,7 @@
 //  3. ajout à la newsletter des clients qui l'ont acceptée au paiement ;
 //  4. secours : e-mail « nouvelle commande » et confirmation client si la page Merci n'a pas été affichée.
 // Chaque envoi est « réservé » en base avant d'être fait : un même e-mail n'est jamais envoyé deux fois.
-const { PRODUITS, stripe, base, signer, gabarit, envoyerClient, envoyerMail, echap, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
+const { PRODUITS, stripe, base, signer, gabarit, envoyerClient, envoyerMail, echap, tropDeRequetes, ORIGINE_SITE, payee } = require('./_commun');
 const { carreauxDeLaCommande } = require('./avis');
 const { lienDesinscription } = require('./newsletter');
 const { traiterCommande } = require('./commande');
@@ -81,14 +81,14 @@ module.exports = async function handler(req, res) {
     const en = s.metadata && s.metadata.lang === 'en';
     const accord = s.consent && s.consent.promotions === 'opt_in';
     try {
-      if (s.status === 'complete' && s.payment_status === 'paid' && s.payment_intent && maintenant - s.created < 4 * JOUR) {
-        const pi = await stripe('GET', `payment_intents/${s.payment_intent}`);
-        if (!(pi.metadata || {}).k_notifie || !(pi.metadata || {}).k_client) {
+      if (s.status === 'complete' && payee(s) && maintenant - s.created < 4 * JOUR) {
+        const pi = s.payment_intent ? await stripe('GET', `payment_intents/${s.payment_intent}`) : null;
+        if (!pi || !(pi.metadata || {}).k_notifie || !(pi.metadata || {}).k_client) {   // sans paiement (commande offerte) : traiterCommande vérifie en base
           await traiterCommande(await stripe('GET', `checkout/sessions/${s.id}`, { 'expand[]': 'line_items' }));
           bilan.rattrapees++;
         }
       }
-      if (s.status === 'complete' && s.payment_status === 'paid' && email) {
+      if (s.status === 'complete' && payee(s) && email) {
         if (accord) { const r = await base('abonne_ajout', { email, source: 'commande', langue: en ? 'en' : 'fr' }); if (r.nouveau) bilan.abonnes++; }
         const pays = s.shipping_details && s.shipping_details.address && s.shipping_details.address.country;
         const age = maintenant - s.created, delai = delaiAvis(pays);

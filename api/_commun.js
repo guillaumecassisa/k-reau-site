@@ -126,4 +126,6 @@ ${bouton ? `<tr><td align="center" style="padding:20px 32px 8px"><a href="${lien
 const emailValide = v => /^[^\s@<>"]{1,64}@[^\s@<>"]+\.[a-z]{2,}$/i.test(String(v || '')) && String(v).length <= 120;
 const echap = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE, base, signer, signatureOk, gabarit, emailValide };
+// Commande réglée : payée, ou offerte à 100 % (Stripe : « no_payment_required »)
+const payee = s => !!s && (s.payment_status === 'paid' || s.payment_status === 'no_payment_required');
+module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE, base, signer, signatureOk, gabarit, emailValide, payee };
