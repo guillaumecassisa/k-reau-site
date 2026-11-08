@@ -1,5 +1,5 @@
 // Tâche quotidienne (Vercel Cron, chaque matin) :
-//  1. demande d'avis environ 10 jours après la livraison (une seule fois par commande) ;
+//  1. demande d'avis quelques jours après la livraison (14 j après la commande en France) (une seule fois par commande) ;
 //  2. relance des paiements abandonnés, uniquement si le client a accepté les e-mails sur la page de paiement Stripe ;
 //  3. ajout à la newsletter des clients qui l'ont acceptée au paiement ;
 //  4. secours : e-mail « nouvelle commande » et confirmation client si la page Merci n'a pas été affichée.
@@ -10,8 +10,8 @@ const { lienDesinscription } = require('./newsletter');
 const { traiterCommande } = require('./commande');
 
 const JOUR = 24 * 3600;
-// délai entre la commande et la demande d'avis : expédition (5 à 7 j) + acheminement + ~10 jours
-const delaiAvis = pays => (pays === 'FR' || pays === 'MC' ? 20 : pays === 'CA' ? 32 : 25) * JOUR;
+// délai entre la commande et la demande d'avis : expédition (5 à 7 j) + acheminement + quelques jours
+const delaiAvis = pays => (pays === 'FR' || pays === 'MC' ? 14 : pays === 'CA' ? 26 : 19) * JOUR;
 
 function mailAvis(s, en) {
   const slugs = carreauxDeLaCommande(s.metadata && s.metadata.panier);
