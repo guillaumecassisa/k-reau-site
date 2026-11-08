@@ -11,6 +11,8 @@ const { traiterCommande } = require('./commande');
 
 const JOUR = 24 * 3600;
 // délai entre la commande et la demande d'avis : expédition (5 à 7 j) + acheminement + quelques jours
+// Clients déjà livrés à qui envoyer la demande d'avis sans attendre (variable Vercel KREAU_AVIS_IMMEDIAT : e-mails ou identifiants de session, séparés par des virgules)
+const AVIS_IMMEDIAT = (process.env.KREAU_AVIS_IMMEDIAT || '').toLowerCase().split(',').map(x => x.trim()).filter(Boolean);
 const delaiAvis = pays => (pays === 'FR' || pays === 'MC' ? 14 : pays === 'CA' ? 26 : 19) * JOUR;
 
 function mailAvis(s, en) {
@@ -90,7 +92,8 @@ module.exports = async function handler(req, res) {
         if (accord) { const r = await base('abonne_ajout', { email, source: 'commande', langue: en ? 'en' : 'fr' }); if (r.nouveau) bilan.abonnes++; }
         const pays = s.shipping_details && s.shipping_details.address && s.shipping_details.address.country;
         const age = maintenant - s.created, delai = delaiAvis(pays);
-        if (pays && carreauxDeLaCommande(s.metadata && s.metadata.panier).length && age >= delai && age <= delai + 14 * JOUR) {
+        const immediat = AVIS_IMMEDIAT.includes(email.toLowerCase()) || AVIS_IMMEDIAT.includes(s.id.toLowerCase());
+        if (pays && carreauxDeLaCommande(s.metadata && s.metadata.panier).length && ((age >= delai && age <= delai + 14 * JOUR) || immediat)) {
           const r = await base('envoi_reserver', { type: 'avis', ref: s.id, email });
           if (r.reserve) {
             const ok = await envoyerClient(email, en ? 'How do you like your K-Reau tile?' : 'Alors, ce carreau K-Reau ?', mailAvis(s, en));
