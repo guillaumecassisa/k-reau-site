@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.8ee7a50c54.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.e96b18af7a.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -539,6 +539,24 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .news-carte .news-form .news-mention{color:var(--encre-doux)}
 .news-carte .news-form .news-mention a{color:var(--encre-doux)}
 .news-carte .fermer{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;cursor:pointer;color:var(--encre-doux);font-size:1.3rem}
+.avis-bandeau{padding:34px 0 30px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
+.ab-tete{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:18px}
+.ab-tete h2{font-family:var(--f-titre);font-weight:400;font-size:clamp(1.5rem,3vw,2rem);margin:0}
+.ab-moy{display:inline-flex;align-items:center;gap:10px}
+.ab-piste{overflow:hidden}
+.ab-fixe{width:auto;flex-wrap:wrap}
+.ab-piste.defile{padding:0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ab-rail{display:flex;gap:18px;width:max-content}
+.ab-piste.defile .ab-rail{animation:ab-defile var(--duree) linear infinite}
+.ab-piste.defile:hover .ab-rail,.ab-piste.defile:focus-within .ab-rail{animation-play-state:paused}
+@keyframes ab-defile{to{transform:translateX(calc(-50% - 9px))}}
+@media(prefers-reduced-motion:reduce){.ab-piste.defile .ab-rail{animation:none}.ab-piste.defile{overflow-x:auto}}
+.ab-carte{display:flex;gap:14px;align-items:flex-start;width:min(360px,80vw);padding:16px 18px;background:var(--ceramique);border:1px solid var(--joint);color:var(--encre);text-decoration:none}
+.ab-carte:hover{border-color:var(--olivier)}
+.ab-carte img{flex:none;width:64px;height:64px;object-fit:cover;border:3px solid var(--blanc)}
+.ab-txt{display:grid;gap:6px;min-width:0}
+.ab-cit{font-size:.92rem;line-height:1.45}
+.ab-auteur{font-size:.8rem;color:var(--encre-doux)}
 .etoiles{--note:0;position:relative;display:inline-block;font-size:1rem;letter-spacing:2px;line-height:1;color:#D9D2C5;white-space:nowrap}
 .etoiles::before{content:"★★★★★";position:absolute;inset:0;width:calc(var(--note) / 5 * 100%);overflow:hidden;color:#B08A3E}
 .note-resume{display:inline-flex;align-items:center;gap:10px;font-size:.88rem;color:var(--encre-doux);text-decoration:none;margin:-4px 0 4px}
@@ -727,7 +745,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.44482179f6.js" defer=""></script>
+<script src="/assets/app.fd87f5bd4a.js" defer=""></script>
 
 
 

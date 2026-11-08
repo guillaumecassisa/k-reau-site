@@ -1,6 +1,7 @@
 // Avis clients vérifiés.
 //  GET  /api/avis?slug=…              → avis publiés d'un carreau (public, mis en cache)
 //  GET  /api/avis?stats=1             → note moyenne et nombre d'avis par carreau
+//  GET  /api/avis?derniers=1          → derniers avis publiés, tous carreaux confondus (bandeau de l'accueil)
 //  GET  /api/avis?c=<session>&s=<sig> → carreaux d'une commande à noter (lien reçu par e-mail)
 //  POST /api/avis                      → enregistre les avis d'une commande (lien signé obligatoire)
 const { PRODUITS, stripe, base, signatureOk, texte, echap, envoyerMail, origineAutorisee, tropDeRequetes } = require('./_commun');
@@ -34,6 +35,11 @@ module.exports = async function handler(req, res) {
         res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
         const n = avis.length, moy = n ? Math.round(avis.reduce((a, x) => a + x.note, 0) / n * 10) / 10 : 0;
         return res.status(200).json({ n, moy, avis });
+      }
+      if (q.derniers) {
+        const liste = (await base('avis_derniers', { n: 12 })).filter(a => PRODUITS[a.slug]);
+        res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
+        return res.status(200).json(liste.map(a => ({ ...a, nom: PRODUITS[a.slug].nom, image: '/' + PRODUITS[a.slug].miniature.replace(/^\//, '') })));
       }
       if (q.stats) {
         res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=3600');

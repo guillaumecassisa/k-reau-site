@@ -540,6 +540,24 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .news-carte .news-form .news-mention{color:var(--encre-doux)}
 .news-carte .news-form .news-mention a{color:var(--encre-doux)}
 .news-carte .fermer{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;cursor:pointer;color:var(--encre-doux);font-size:1.3rem}
+.avis-bandeau{padding:34px 0 30px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
+.ab-tete{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:18px}
+.ab-tete h2{font-family:var(--f-titre);font-weight:400;font-size:clamp(1.5rem,3vw,2rem);margin:0}
+.ab-moy{display:inline-flex;align-items:center;gap:10px}
+.ab-piste{overflow:hidden}
+.ab-fixe{width:auto;flex-wrap:wrap}
+.ab-piste.defile{padding:0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.ab-rail{display:flex;gap:18px;width:max-content}
+.ab-piste.defile .ab-rail{animation:ab-defile var(--duree) linear infinite}
+.ab-piste.defile:hover .ab-rail,.ab-piste.defile:focus-within .ab-rail{animation-play-state:paused}
+@keyframes ab-defile{to{transform:translateX(calc(-50% - 9px))}}
+@media(prefers-reduced-motion:reduce){.ab-piste.defile .ab-rail{animation:none}.ab-piste.defile{overflow-x:auto}}
+.ab-carte{display:flex;gap:14px;align-items:flex-start;width:min(360px,80vw);padding:16px 18px;background:var(--ceramique);border:1px solid var(--joint);color:var(--encre);text-decoration:none}
+.ab-carte:hover{border-color:var(--olivier)}
+.ab-carte img{flex:none;width:64px;height:64px;object-fit:cover;border:3px solid var(--blanc)}
+.ab-txt{display:grid;gap:6px;min-width:0}
+.ab-cit{font-size:.92rem;line-height:1.45}
+.ab-auteur{font-size:.8rem;color:var(--encre-doux)}
 .etoiles{--note:0;position:relative;display:inline-block;font-size:1rem;letter-spacing:2px;line-height:1;color:#D9D2C5;white-space:nowrap}
 .etoiles::before{content:"★★★★★";position:absolute;inset:0;width:calc(var(--note) / 5 * 100%);overflow:hidden;color:#B08A3E}
 .note-resume{display:inline-flex;align-items:center;gap:10px;font-size:.88rem;color:var(--encre-doux);text-decoration:none;margin:-4px 0 4px}
@@ -933,6 +951,8 @@ function vueAccueil(){
     </div>
   </section>
 
+  <section class="avis-bandeau" id="avis-bandeau" aria-labelledby="t-avis-bandeau" hidden></section>
+
   <div class="wrap">
     <h2 class="visuellement-cache">Pourquoi choisir K-Reau</h2>
     <div class="args">
@@ -1057,6 +1077,7 @@ function vueAccueil(){
     </div>
   </section>`;
   brancherFiltres('g-accueil', homeList);
+  if(LIVE) bandeauAvis();
 }
 
 function faqQuestions(){ const tmp = document.createElement('div'); tmp.innerHTML = faqHTML(); return [...tmp.querySelectorAll('details')].map(d => [d.querySelector('summary').textContent, d.querySelector('.rep').textContent.trim()]); }
@@ -1347,6 +1368,23 @@ function vueProduit(slug){
 /* ===== Avis clients (vérifiés : déposés uniquement via le lien envoyé après une commande) ===== */
 const noteTxt = v => String(Math.round(v * 10) / 10).replace('.', ',');
 const etoiles = v => `<span class="etoiles" style="--note:${Number(v)||0}" role="img" aria-label="${noteTxt(v)} sur 5">★★★★★</span>`;
+// Accueil : bandeau des derniers avis vérifiés (défile s'il y en a au moins 3 ; masqué s'il n'y en a aucun)
+async function bandeauAvis(){
+  let l; try{ const r = await fetch('/api/avis?derniers=1'); if(!r.ok) return; l = await r.json(); }catch(e){ return; }
+  const sec = $('#avis-bandeau'); if(!sec || !Array.isArray(l) || !l.length) return;
+  const court = t => { t = String(t || ''); return t.length > 150 ? t.slice(0, 147).replace(/\s+\S*$/, '') + '…' : t; };
+  const carte = (a, cache) => `<a class="ab-carte" href="/produits/${esc(a.slug)}"${cache ? ' aria-hidden="true" tabindex="-1"' : ''}>
+    <img src="${esc(a.image)}" alt="" width="64" height="64" loading="lazy">
+    <span class="ab-txt">${etoiles(a.note)}${a.texte ? `<span class="ab-cit" lang="${a.langue === 'en' ? 'en' : 'fr'}" translate="no">« ${esc(court(a.texte))} »</span>` : ''}
+    <span class="ab-auteur"><span translate="no">${esc(a.prenom)}${a.ville ? ' · ' + esc(a.ville) : ''}</span> · <span>${esc(a.nom)}</span></span></span></a>`;
+  const defile = l.length >= 3;
+  const moy = Math.round(l.reduce((x, a) => x + a.note, 0) / l.length * 10) / 10;
+  sec.innerHTML = `<div class="wrap ab-tete"><h2 id="t-avis-bandeau">Ils ont adopté leur carreau</h2><span class="ab-moy">${etoiles(moy)}<span class="small muted">Avis vérifiés de clients</span></span></div>
+    ${defile ? `<div class="ab-piste defile" style="--duree:${Math.max(30, l.length * 9)}s"><div class="ab-rail">${l.map(a => carte(a)).join('')}${l.map(a => carte(a, true)).join('')}</div></div>`
+      : `<div class="wrap"><div class="ab-rail ab-fixe">${l.map(a => carte(a)).join('')}</div></div>`}`;
+  sec.hidden = false;
+}
+
 async function chargerAvis(p){
   let d; try{ const r = await fetch('/api/avis?slug=' + encodeURIComponent(p.slug)); if(!r.ok) return; d = await r.json(); }catch(e){ return; }
   const sec = $('#avis-produit'), resume = $('#note-produit');

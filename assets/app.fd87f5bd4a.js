@@ -247,6 +247,8 @@ function vueAccueil(){
     </div>
   </section>
 
+  <section class="avis-bandeau" id="avis-bandeau" aria-labelledby="t-avis-bandeau" hidden></section>
+
   <div class="wrap">
     <h2 class="visuellement-cache">Pourquoi choisir K-Reau</h2>
     <div class="args">
@@ -371,6 +373,7 @@ function vueAccueil(){
     </div>
   </section>`;
   brancherFiltres('g-accueil', homeList);
+  if(LIVE) bandeauAvis();
 }
 
 function faqQuestions(){ const tmp = document.createElement('div'); tmp.innerHTML = faqHTML(); return [...tmp.querySelectorAll('details')].map(d => [d.querySelector('summary').textContent, d.querySelector('.rep').textContent.trim()]); }
@@ -661,6 +664,23 @@ function vueProduit(slug){
 /* ===== Avis clients (vérifiés : déposés uniquement via le lien envoyé après une commande) ===== */
 const noteTxt = v => String(Math.round(v * 10) / 10).replace('.', ',');
 const etoiles = v => `<span class="etoiles" style="--note:${Number(v)||0}" role="img" aria-label="${noteTxt(v)} sur 5">★★★★★</span>`;
+// Accueil : bandeau des derniers avis vérifiés (défile s'il y en a au moins 3 ; masqué s'il n'y en a aucun)
+async function bandeauAvis(){
+  let l; try{ const r = await fetch('/api/avis?derniers=1'); if(!r.ok) return; l = await r.json(); }catch(e){ return; }
+  const sec = $('#avis-bandeau'); if(!sec || !Array.isArray(l) || !l.length) return;
+  const court = t => { t = String(t || ''); return t.length > 150 ? t.slice(0, 147).replace(/\s+\S*$/, '') + '…' : t; };
+  const carte = (a, cache) => `<a class="ab-carte" href="/produits/${esc(a.slug)}"${cache ? ' aria-hidden="true" tabindex="-1"' : ''}>
+    <img src="${esc(a.image)}" alt="" width="64" height="64" loading="lazy">
+    <span class="ab-txt">${etoiles(a.note)}${a.texte ? `<span class="ab-cit" lang="${a.langue === 'en' ? 'en' : 'fr'}" translate="no">« ${esc(court(a.texte))} »</span>` : ''}
+    <span class="ab-auteur"><span translate="no">${esc(a.prenom)}${a.ville ? ' · ' + esc(a.ville) : ''}</span> · <span>${esc(a.nom)}</span></span></span></a>`;
+  const defile = l.length >= 3;
+  const moy = Math.round(l.reduce((x, a) => x + a.note, 0) / l.length * 10) / 10;
+  sec.innerHTML = `<div class="wrap ab-tete"><h2 id="t-avis-bandeau">Ils ont adopté leur carreau</h2><span class="ab-moy">${etoiles(moy)}<span class="small muted">Avis vérifiés de clients</span></span></div>
+    ${defile ? `<div class="ab-piste defile" style="--duree:${Math.max(30, l.length * 9)}s"><div class="ab-rail">${l.map(a => carte(a)).join('')}${l.map(a => carte(a, true)).join('')}</div></div>`
+      : `<div class="wrap"><div class="ab-rail ab-fixe">${l.map(a => carte(a)).join('')}</div></div>`}`;
+  sec.hidden = false;
+}
+
 async function chargerAvis(p){
   let d; try{ const r = await fetch('/api/avis?slug=' + encodeURIComponent(p.slug)); if(!r.ok) return; d = await r.json(); }catch(e){ return; }
   const sec = $('#avis-produit'), resume = $('#note-produit');
