@@ -45,13 +45,13 @@ function codeCadeau(sessionId, i) {
   return `KREAU-${c.slice(0, 4)}-${c.slice(4)}`;
 }
 
-async function envoyerMail(sujet, html, repondreA) {
+async function envoyerMail(sujet, html, repondreA, pieces) {
   const cle = process.env.RESEND_API_KEY, dest = process.env.CONTACT_DESTINATION;
   if (!cle || !dest) return false;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: process.env.CONTACT_EXPEDITEUR || 'Site K-Reau <onboarding@resend.dev>', to: [dest], reply_to: repondreA || undefined, subject: sujet, html })
+    body: JSON.stringify({ from: process.env.CONTACT_EXPEDITEUR || 'Site K-Reau <onboarding@resend.dev>', to: [dest], reply_to: repondreA || undefined, subject: sujet, html, attachments: pieces && pieces.length ? pieces : undefined })
   });
   if (!r.ok) console.error('Resend', r.status, (await r.text()).slice(0, 200));
   return r.ok;

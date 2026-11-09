@@ -162,6 +162,14 @@
     {
       "path": "/api/cron",
       "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/rapport",
+      "schedule": "0 17 * * *"
+    },
+    {
+      "path": "/api/rapport",
+      "schedule": "0 18 * * *"
     }
   ]
 }
