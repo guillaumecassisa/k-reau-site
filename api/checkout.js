@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
   const origine = /^(www\.)?k-reau\.fr$/.test(hote) || /^k-reau-[a-z0-9-]+\.vercel\.app$/.test(hote) ? `https://${hote}` : ORIGINE_SITE;
   const image = slug => `${origine}/${PRODUITS[slug].image_principale.replace(/^\//, '')}`;
 
-  const items = []; const resume = []; const cartes = []; let physique = 0; let surMesure = 0;
+  const items = []; const resume = []; const cartes = []; let physique = 0; let surMesure = 0; const smDetails = [];
   for (const l of lignes) {
     const type = l.type || 'carreau';
     if (type === 'carreau' && PRODUITS[l.slug]) {
@@ -51,6 +51,7 @@ module.exports = async function handler(req, res) {
       const desc = `Texte : « ${texte(l.texte, 40)} »${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.surMesure, product_data: { name: 'Carreau K-Reau sur mesure', description: desc.slice(0, 480) } } });
       physique += PRIX.surMesure * q(l); resume.push(`sur-mesure(${texte(l.texte, 40)})x${q(l)}`);
+      smDetails.push(desc);
     } else if (type === 'chevalet') {
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.chevalet, product_data: { name: 'Chevalet trépied en bois brut', description: 'Support pour carreau · L 8 × H 15 cm' } } });
       physique += PRIX.chevalet * q(l); resume.push(`chevalet x${q(l)}`);
@@ -87,6 +88,7 @@ module.exports = async function handler(req, res) {
       panier: resume.join(',').slice(0, 490),
       cartes: cartes.join(','),
       sur_mesure: String(surMesure),
+      sur_mesure_details: smDetails.join(' ‖ ').slice(0, 490),
       message_cadeau: message,
       lang: en ? 'en' : 'fr'
     },
