@@ -336,7 +336,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 
 /* Panier latéral (mode live) */
 .panier-panneau{position:absolute;top:0;right:0;bottom:0;width:min(92vw,420px);background:var(--ceramique);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) 20px;gap:16px}
-.panier-lignes{flex:1;overflow:auto;display:grid;gap:12px;align-content:start}
+.panier-lignes{display:grid;gap:12px;align-content:start}
+.panier-panneau{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.panier-panneau>*{flex-shrink:0}
 .ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--joint)}
 .ligne-visuel{width:64px;height:64px;border:1px solid var(--joint);background:var(--blanc);overflow:hidden;display:grid}
 .ligne-visuel img{width:100%;height:100%;object-fit:cover}
@@ -652,7 +653,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <a class="btn btn-s" href="/en/produits/luberon-rustrel">See the tile</a>
   </article><article class="carte">
     <a class="carte-img" href="/en/produits/luberon-cucuron" tabindex="-1" aria-hidden="true">
-      <img src="/img/12_Produits_Luberon/luberon-cucuron-v2-mini.webp" srcset="/img/12_Produits_Luberon/luberon-cucuron-v2-mini.webp 600w, /img/12_Produits_Luberon/luberon-cucuron-v2.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="K-Reau decorative tile “Cucuron” in white ceramic, black line drawing and calligraphed name" loading="lazy" decoding="async">
+      <img src="/img/12_Produits_Luberon/luberon-cucuron-v3-mini.webp" srcset="/img/12_Produits_Luberon/luberon-cucuron-v3-mini.webp 600w, /img/12_Produits_Luberon/luberon-cucuron-v3.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="K-Reau decorative tile “Cucuron” in white ceramic, black line drawing and calligraphed name" loading="lazy" decoding="async">
     </a>
     <span class="carte-coll">Luberon</span>
     <h3><a href="/en/produits/luberon-cucuron">Cucuron</a></h3>

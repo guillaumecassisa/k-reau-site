@@ -336,7 +336,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 
 /* Panier latéral (mode live) */
 .panier-panneau{position:absolute;top:0;right:0;bottom:0;width:min(92vw,420px);background:var(--ceramique);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) 20px;gap:16px}
-.panier-lignes{flex:1;overflow:auto;display:grid;gap:12px;align-content:start}
+.panier-lignes{display:grid;gap:12px;align-content:start}
+.panier-panneau{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.panier-panneau>*{flex-shrink:0}
 .ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--joint)}
 .ligne-visuel{width:64px;height:64px;border:1px solid var(--joint);background:var(--blanc);overflow:hidden;display:grid}
 .ligne-visuel img{width:100%;height:100%;object-fit:cover}
@@ -674,7 +675,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           </ul>
           <div class="trio-fiche"><p class="trio-titre">Complétez votre trio</p>
     <div class="trio-vignettes"><span class="moi"><img src="/img/12_Produits_Luberon/luberon-rustrel-mini.webp" alt="Rustrel" loading="lazy" width="600" height="600"></span><b aria-hidden="true">+</b>
-      <a href="/produits/luberon-cucuron" title="Cucuron"><img src="/img/12_Produits_Luberon/luberon-cucuron-v2-mini.webp" alt="Cucuron" loading="lazy" width="600" height="600"></a><b aria-hidden="true">+</b><a href="/produits/luberon-l-isle-sur-la-sorgue" title="L’Isle-sur-la-Sorgue"><img src="/img/12_Produits_Luberon/luberon-l-isle-sur-la-sorgue-mini.webp" alt="L’Isle-sur-la-Sorgue" loading="lazy" width="600" height="600"></a></div>
+      <a href="/produits/luberon-cucuron" title="Cucuron"><img src="/img/12_Produits_Luberon/luberon-cucuron-v3-mini.webp" alt="Cucuron" loading="lazy" width="600" height="600"></a><b aria-hidden="true">+</b><a href="/produits/luberon-l-isle-sur-la-sorgue" title="L’Isle-sur-la-Sorgue"><img src="/img/12_Produits_Luberon/luberon-l-isle-sur-la-sorgue-mini.webp" alt="L’Isle-sur-la-Sorgue" loading="lazy" width="600" height="600"></a></div>
     <p class="trio-noms">Rustrel · Cucuron · L’Isle-sur-la-Sorgue</p>
     <div class="trio-prix"><strong>54,90&nbsp;€</strong><s>59,70&nbsp;€</s><span>livraison offerte</span></div>
     <button class="btn btn-s" type="button" id="ajout-trio" data-slugs="luberon-rustrel,luberon-cucuron,luberon-l-isle-sur-la-sorgue">Ajouter le trio au panier</button>
@@ -697,7 +698,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
     <div class="bloc-titre"><h2 id="t-sim">Dans la même collection</h2></div>
     <div class="grille"><article class="carte">
     <a class="carte-img" href="/produits/luberon-cucuron" tabindex="-1" aria-hidden="true">
-      <img src="/img/12_Produits_Luberon/luberon-cucuron-v2-mini.webp" srcset="/img/12_Produits_Luberon/luberon-cucuron-v2-mini.webp 600w, /img/12_Produits_Luberon/luberon-cucuron-v2.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Cucuron » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
+      <img src="/img/12_Produits_Luberon/luberon-cucuron-v3-mini.webp" srcset="/img/12_Produits_Luberon/luberon-cucuron-v3-mini.webp 600w, /img/12_Produits_Luberon/luberon-cucuron-v3.webp 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="Carreau décoratif K-Reau « Cucuron » en céramique blanche, dessin au trait noir et nom calligraphié" loading="lazy" decoding="async">
     </a>
     <span class="carte-coll">Luberon</span>
     <h3><a href="/produits/luberon-cucuron">Cucuron</a></h3>
