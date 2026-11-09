@@ -2651,11 +2651,11 @@ const Panier = {
         ${phys > 0 ? `<p class="panier-sous"><span>Sous-total</span><span>${prixEur(tot)}</span></p>
         <p class="panier-sous"><span>${ca ? 'Livraison Canada' : eu ? 'Livraison Europe' : 'Livraison France'}</span><span>${port > 0 ? prixEur(port) : 'Offerte'}</span></p>` : ''}
         <p class="panier-total"><span>Total</span><strong>${prixEur(tot + port)}</strong></p></div>
-      <p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code. ' : ca ? 'D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis. ' : eu ? 'Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire. ' : ''}Les codes cadeaux se saisissent sur la page de paiement.</p>
-      <details class="code-promo"${this.code ? ' open' : ''}><summary>Vous avez un code ?</summary>
-        <label class="visuellement-cache" for="code-promo">Code promo ou carte cadeau</label>
+      ${phys === 0 || ca || eu ? `<p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code.' : ca ? 'D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis.' : 'Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire.'}</p>` : ''}
+      <div class="code-promo">
+        <label for="code-promo"><strong>Code promo ou carte cadeau</strong></label>
         <input id="code-promo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" placeholder="Code promo ou carte cadeau" value="${esc(this.code || '')}">
-        <p class="small muted" style="margin:6px 0 0">Il sera appliqué sur la page de paiement.</p></details>
+        <p class="small muted" style="margin:6px 0 0">Facultatif. Le code est vérifié puis déduit au moment du paiement.</p></div>
       <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
       <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
       <div id="payer-retour" aria-live="polite"></div>` : ''}

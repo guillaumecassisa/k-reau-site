@@ -624,5 +624,9 @@
 "Avis vérifiés de clients": "Verified customer reviews",
 "Vous avez un code ?": "Have a code?",
 "Code promo ou carte cadeau": "Promo code or gift card",
-"Il sera appliqué sur la page de paiement.": "It will be applied on the payment page."
+"Il sera appliqué sur la page de paiement.": "It will be applied on the payment page.",
+"Aucune livraison : carte cadeau envoyée par code.": "No delivery: the gift card is sent as a code.",
+"D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis.": "Any import duties and taxes are paid by the recipient. No delivery to the United States.",
+"Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire.": "Outside the European Union (Switzerland, the United Kingdom…), any customs duties are paid by the recipient.",
+"Facultatif. Le code est vérifié puis déduit au moment du paiement.": "Optional. The code is checked and deducted at checkout."
 }
