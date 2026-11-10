@@ -1147,7 +1147,7 @@ function vueTous(){
   <div class="page-tete"><div class="wrap">
     ${ariane([['Accueil','/'],['Nos carreaux','']])}
     ${q ? `<div class="bloc-titre"><span class="eyebrow">Recherche</span><h1>Résultats pour « ${esc(q)} »</h1><p class="lead">${res ? (res.length ? res.length+' carreau'+(res.length>1?'x':'')+' trouvé'+(res.length>1?'s':'') : offresQ.length ? '' : 'Aucun carreau ne correspond à cette recherche. Essayez un autre lieu, ou parcourez tous les modèles.') : ''}</p><a class="lien" href="/carreaux">Voir tous les carreaux</a></div>`
-        : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, les Montagnes du Sud, les îles du Var et les Châteaux : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
+        : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, la Côte d’Azur, les Montagnes du Sud, les îles du Var et les Châteaux : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
           <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux K-Reau en céramique posés sur la pierre : Sausset-les-Pins, Château de Versailles, Sainte-Victoire et le Vieux-Port de Marseille" fetchpriority="high"></figure></div>`}
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
@@ -1513,10 +1513,17 @@ function inviterLieu(){
 function inviterNewsletter(){
   const deja = store.get('kreau-news', null);
   if(deja && (deja.inscrit || Date.now() - (deja.ferme || 0) < 30 * 864e5)) return;
-  setTimeout(() => {
+  // Déclencheurs : 12 s sur le site, la moitié de la page parcourue, ou la souris qui part vers le haut (ordinateur)
+  const debut = Date.now(); let fait = false, lieuVu = 0;
+  const montrer = () => {
+    if(fait) return;
     const ch = cleDepuisChemin(cheminFR());
     const couche = $('#couche');
-    if(invitationMontree || ['merci','avis','panier'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
+    if(invitationMontree && !lieuVu) lieuVu = Date.now();
+    if(ch === 'accueil' && !invitationMontree && Date.now() - debut < 20000) return;   // l'accueil montre d'abord « Proposer un lieu »
+    if(lieuVu && Date.now() - lieuVu < 60000) return;
+    if(['merci','avis','panier','sur-mesure','contact'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
+    fait = true; clearInterval(minuteur); removeEventListener('scroll', auDefilement); document.removeEventListener('mouseout', aLaSortie);
     const d = document.createElement('aside'); d.className = 'news-carte'; d.setAttribute('aria-label', 'Inscription aux nouvelles de K-Reau');
     d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button><h2>-10 % sur votre première commande</h2>
       <p>Laissez votre e-mail : nous vous envoyons votre code, puis nos nouveaux lieux de temps en temps.</p>
@@ -1528,7 +1535,12 @@ function inviterNewsletter(){
     const fermer = () => { d.remove(); const v = store.get('kreau-news', null); if(!v || !v.inscrit) store.set('kreau-news', { ferme: Date.now() }); };
     d.querySelector('.fermer').addEventListener('click', fermer);
     document.addEventListener('keydown', function esc_(e){ if(e.key === 'Escape' && document.body.contains(d)){ fermer(); document.removeEventListener('keydown', esc_); } });
-  }, 35000);
+  };
+  const minuteur = setInterval(() => { if(Date.now() - debut >= 12000) montrer(); }, 1000);
+  const auDefilement = () => { const h = document.documentElement; if(Date.now() - debut > 5000 && (scrollY + innerHeight) / h.scrollHeight > 0.5) montrer(); };
+  const aLaSortie = e => { if(!e.relatedTarget && e.clientY < 8 && Date.now() - debut > 5000) montrer(); };
+  addEventListener('scroll', auDefilement, { passive:true });
+  document.addEventListener('mouseout', aLaSortie);
 }
 
 function vueHistoire(){

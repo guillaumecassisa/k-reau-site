@@ -83,7 +83,9 @@ module.exports = async function handler(req, res) {
     try { suivis = cmds.length ? await base('commandes_statuts', { ids: cmds.map(c => c.id) }) : {}; } catch (e) { console.error('gestion base', e.message); }
     let couts = {};
     try { couts = await base('reglages_lire', { cle: 'couts' }); } catch (e) { console.error('gestion couts', e.message); }
-    return res.status(200).json({ couts, commandes: cmds.map(c => ({ ...c, suivi: suivis[c.id] || { statut: 'a-faire', suivi: '', note: '' } })) });
+    let abonnes = null;
+    try { abonnes = await base('abonnes_stats', {}); } catch (e) { console.error('gestion abonnes', e.message); }
+    return res.status(200).json({ couts, abonnes, commandes: cmds.map(c => ({ ...c, suivi: suivis[c.id] || { statut: 'a-faire', suivi: '', note: '' } })) });
   } catch (e) {
     console.error('gestion', e.message);
     return res.status(502).json({ erreur: 'Service indisponible pour le moment' });

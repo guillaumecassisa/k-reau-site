@@ -86,6 +86,9 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 .urssaf div span{display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
 .urssaf div strong{font-size:1.3rem}
 .urssaf p{margin:0;color:var(--doux);font-size:.85rem;width:100%}
+.news{background:var(--blanc);border:1px solid var(--joint);padding:10px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;font-size:.92rem}
+.news b{font-size:1.15rem}
+.news span.t{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
 .alerte{background:#FBF1E6;border:1px solid #E9C9A6;padding:10px 14px;margin-bottom:12px;font-size:.9rem}
 .alerte a{color:var(--olivier);font-weight:600;cursor:pointer;text-decoration:underline}
 @media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.panneau-corps{grid-template-columns:1fr}.couts{grid-template-columns:1fr 1fr}.panneau-corps{overflow-x:auto}}
@@ -102,7 +105,7 @@ const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currenc
 const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
 const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
 const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
-let COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+let ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
 try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
 
 async function api(corps) {
@@ -129,7 +132,7 @@ function vueConnexion(msg) {
 
 async function charger() {
   const j = await api({ action:'liste', jours });
-  CMDS = j.commandes || []; COUTS = j.couts || {};
+  CMDS = j.commandes || []; COUTS = j.couts || {}; ABONNES = j.abonnes || null;
   $('#deco').hidden = false;
   vueListe();
 }
@@ -240,6 +243,7 @@ function peindreStats() {
       <div class="stat"><span>Coûts (produits, envoi, URSSAF)</span><strong>${euros(r.produits + r.envoi + r.urssaf)}</strong><small>${r.colis} colis</small></div>
       <div class="stat cle ${r.net < 0 ? 'neg' : ''}"><span>Résultat net</span><strong>${euros(r.net)}</strong><small>marge ${pct(r.net, r.ca)}${sansCouts ? ' · coûts à renseigner' : ''}</small></div>
     </div>
+    ${ABONNES ? `<div class="news"><span class="t">Newsletter</span><span><b>${ABONNES.actifs}</b> abonné${ABONNES.actifs > 1 ? 's' : ''}</span><span>+${ABONNES.semaine} sur 7 jours</span><span>+${ABONNES.mois} sur 30 jours</span><span>${ABONNES.desinscrits} désinscrit${ABONNES.desinscrits > 1 ? 's' : ''}</span>${ABONNES.dernier ? `<span class="meta">dernière inscription le ${new Date(ABONNES.dernier).toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</span>` : ''}</div>` : ''}
     <details class="panneau"><summary>Détail du résultat, par mois et meilleures ventes</summary><div class="panneau-corps">
       <div><table class="t"><tr><th>Sur ${jours} jours, hors annulées</th><th>Montant</th></tr>
         <tr><td>Chiffre d’affaires encaissé</td><td>${euros(r.ca)}</td></tr>
