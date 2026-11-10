@@ -56,6 +56,14 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs du Luberon',
     offrir:'Un souvenir du Luberon à offrir',
     texte:'Les villages perchés de Gordes, Lourmarin, Lacoste et Ansouis, le bassin de Cucuron, les ocres de Rustrel, les roues à aubes de L’Isle-sur-la-Sorgue, la source de Fontaine-de-Vaucluse et le pont suspendu de Mallemort : le Luberon dessiné sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y passent leurs vacances ou qui ont la chance d’y vivre.' },
+  'cote-d-azur': { nom:'La Côte d’Azur', titre:'Collection Côte d’Azur', cle:'Côte d’Azur', filtre:'Côte d’Azur', region:'Côte d’Azur', img:'/img/14_Produits_Cote_Azur/cote-d-azur-saint-tropez-port.webp', w:1254, h:1254,
+    court:'Saint-Tropez, Port Grimaud, Nice… La Côte d’Azur en un trait.',
+    intro:'Le port et les terrasses de Saint-Tropez, les canaux de Port Grimaud, le front de mer de Sainte-Maxime et la Promenade des Anglais à Nice : la Côte d’Azur dessinée au trait, chaque lieu avec son nom en calligraphie.',
+    seo:'Carreaux décoratifs Côte d’Azur | Saint-Tropez, Port Grimaud, Nice – K-Reau',
+    seoDesc:'Carreaux en céramique illustrés de la Côte d’Azur : Saint-Tropez, Port Grimaud, Sainte-Maxime, Nice et sa chaise bleue. Dessin au trait, nom calligraphié, 15 × 15 cm, idée cadeau à 19,90 €.',
+    h1:'Carreaux décoratifs de la Côte d’Azur',
+    offrir:'Un souvenir de la Côte d’Azur à offrir',
+    texte:'Les terrasses rouges et les voiliers du port de Saint-Tropez, les canaux et les petits ponts de Port Grimaud, les pins parasols de Sainte-Maxime, la chaise bleue de la Promenade des Anglais et la place de village à l’ombre des platanes : la Côte d’Azur dessinée sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y passent leurs étés ou qui ont la chance d’y vivre.' },
   'aix-en-provence': { nom:'Aix-en-Provence', titre:'Collection Aix-en-Provence', cle:'Aix-en-Provence', filtre:'Aix', region:'Aix-en-Provence', img:'/img/13_Produits_Aix/aix-la-rotonde.webp', w:1254, h:1254,
     court:'La Rotonde, la Sainte-Victoire… Le pays d’Aix en un trait.',
     intro:'La fontaine de la Rotonde au bout du cours Mirabeau et la Sainte-Victoire de Cézanne : Aix-en-Provence et son pays dessinés au trait, chacun avec son nom en calligraphie.',
@@ -147,7 +155,7 @@ async function charger(){
   route();
 }
 const parSlug = s => PRODUITS?.find(p => p.slug === s);
-const COLLS_PRINCIPALES = ['marseille','cote-bleue','aix-en-provence','luberon','montagnes-du-sud','chateaux'];
+const COLLS_PRINCIPALES = ['marseille','cote-bleue','aix-en-provence','luberon','cote-d-azur','montagnes-du-sud','chateaux'];
 const ORDRE_COLLS = [...COLLS_PRINCIPALES, 'les-embiez'];
 // une collection n'apparaît que si elle contient au moins un carreau publié
 const dansColl = (p, k) => p.collection_slug === k || (p.collections_sup || []).includes(k);
@@ -186,6 +194,7 @@ const INSPIRATIONS = {
   'cote-bleue': 'À l’ouest de Marseille, la Côte Bleue garde un air de vacances toute l’année : petits ports, cabanons, criques à l’eau d’une clarté incroyable. Cette collection rend hommage à ces villages de pêcheurs, de L’Estaque à Carro, que l’on découvre souvent depuis le petit train qui longe la mer.',
   'aix-en-provence': 'Aix, c’est la ville des fontaines : on y entre par la Rotonde, on remonte le cours Mirabeau à l’ombre des platanes, et partout la Sainte-Victoire se découpe au bout des rues. Cette collection commence par ces deux silhouettes que tous les Aixois reconnaissent au premier coup d’œil.',
   'luberon': 'Le Luberon, c’est chez nous : Mallemort est juste de l’autre côté de la Durance. Villages perchés, falaises d’ocre, platanes au bord des bassins et rivières claires de la Sorgue : cette collection dessine les lieux où l’on aime s’arrêter un dimanche, entre un marché et une terrasse à l’ombre.',
+  'cote-d-azur': 'Plus à l’est, la lumière change : pins parasols, palmiers et eau turquoise. Cette collection suit la côte depuis le golfe de Saint-Tropez jusqu’à Nice, ses ports, ses terrasses et ses promenades au bord de l’eau, avec pour la première fois une touche de couleur : le rouge des terrasses de Saint-Tropez et le bleu de la chaise niçoise.',
   'montagnes-du-sud': 'En Provence, chacun a sa montagne : la Sainte-Victoire de Cézanne, le Garlaban de Pagnol, le Ventoux des cyclistes. On les regarde depuis sa fenêtre, on les gravit le dimanche, on les cherche du regard en rentrant de voyage. Cette collection dessine leurs crêtes, de Marseille jusqu’au Var.',
   'chateaux': 'Après la Provence, nous avons eu envie de dessiner le patrimoine de toute la France. Chambord, Chenonceau, Versailles ou Saumur : des silhouettes que tout le monde reconnaît, et autant de souvenirs de visites, de voyages scolaires ou de week-ends dans le Val de Loire.',
   'les-embiez': 'Les Embiez, c’est notre modèle signature : une petite île au large de Six-Fours, sa tour et ses rochers qui affleurent. Porquerolles l’a rejointe, avec son port, ses pins parasols et le fort Sainte-Agathe : deux îles du Var où l’on arrive en bateau et dont on repart à regret.'
@@ -353,7 +362,7 @@ function vueAccueil(){
       <h3>Une idée cadeau souvenir, élégante et originale</h3>
       <p>Chaque carreau associe un dessin au trait noir et le nom du lieu en calligraphie. C’est un cadeau original pour un Marseillais exilé, un amoureux de la Provence ou du patrimoine, une crémaillère, un départ ou un anniversaire : un souvenir élégant, loin des objets touristiques. À poser sur un meuble ou à accrocher au mur, il apporte une touche de décoration à la maison.</p>
       <p>Pour offrir, composez un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, faites dessiner <a class="lien" href="/sur-mesure">votre propre lieu sur mesure</a> ou choisissez une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p>
-      <p>Tous les carreaux sont à 19,90 €, expédiés en France sous 5 à 7 jours, avec la livraison offerte dès 50 € d’achat. Découvrez la <a class="lien" href="/collections/marseille">collection Marseille</a>, la <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>, <a class="lien" href="/collections/aix-en-provence">Aix-en-Provence</a>, <a class="lien" href="/collections/luberon">le Luberon</a>, <a class="lien" href="/collections/montagnes-du-sud">les Montagnes du Sud</a>, <a class="lien" href="/collections/les-embiez">les îles du Var</a> et <a class="lien" href="/collections/chateaux">les Châteaux</a>, ou cherchez votre lieu sur <a class="lien" href="/carte-des-lieux">la carte</a>.</p>
+      <p>Tous les carreaux sont à 19,90 €, expédiés en France sous 5 à 7 jours, avec la livraison offerte dès 50 € d’achat. Découvrez la <a class="lien" href="/collections/marseille">collection Marseille</a>, la <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>, <a class="lien" href="/collections/aix-en-provence">Aix-en-Provence</a>, <a class="lien" href="/collections/luberon">le Luberon</a>, <a class="lien" href="/collections/cote-d-azur">la Côte d’Azur</a>, <a class="lien" href="/collections/montagnes-du-sud">les Montagnes du Sud</a>, <a class="lien" href="/collections/les-embiez">les îles du Var</a> et <a class="lien" href="/collections/chateaux">les Châteaux</a>, ou cherchez votre lieu sur <a class="lien" href="/carte-des-lieux">la carte</a>.</p>
       <p>Besoin d’inspiration ? Lisez nos guides : <a class="lien" href="/guides/que-ramener-de-marseille">que ramener de Marseille</a>, <a class="lien" href="/guides/idees-cadeaux-provence">idées cadeaux Provence</a>, <a class="lien" href="/guides/cote-bleue-ports-et-calanques">les plus beaux ports de la Côte Bleue</a>.</p>
     </div>
   </section>
@@ -2133,7 +2142,7 @@ function vueProjet(){
 let FOND_CARTE = null;
 const ZONES_CARTE = [
   ['Marseille', p => p.collection_slug==='marseille'], ['La Côte Bleue', p => p.collection_slug==='cote-bleue'],
-  ['Aix-en-Provence', p => p.collection_slug==='aix-en-provence'], ['Le Luberon', p => p.collection_slug==='luberon'],
+  ['Aix-en-Provence', p => p.collection_slug==='aix-en-provence'], ['Le Luberon', p => p.collection_slug==='luberon'], ['La Côte d’Azur', p => p.collection_slug==='cote-d-azur'],
   ['Les Montagnes du Sud', p => p.collection_slug==='montagnes-du-sud'], ['Les îles du Var', p => p.collection_slug==='les-embiez'],
   ['Les Châteaux de France', p => p.collection_slug==='chateaux']];
 function svgCarte(vue, fond, liste){
