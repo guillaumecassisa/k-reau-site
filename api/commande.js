@@ -48,6 +48,11 @@ async function dejaFait(s, nom) {
 async function traiterCommande(s) {
   const id = s.id;
   const md = s.metadata || {};
+  // case « newsletter » cochée dans le panier : inscription + code -10 % pour la prochaine commande (une seule fois : abonne_ajout est idempotent)
+  if (md.newsletter === '1' && s.customer_details && s.customer_details.email) {
+    try { await require('./newsletter').inscrire(String(s.customer_details.email).toLowerCase(), { en: md.lang === 'en', source: 'commande', apresAchat: true }); }
+    catch (e) { console.error('newsletter commande', e.message); }
+  }
   const montants = (md.cartes || '').split(',').map(n => parseInt(n, 10)).filter(Boolean);
   const cartes = []; let erreurCartes = false;
   for (let i = 0; i < montants.length; i++) {

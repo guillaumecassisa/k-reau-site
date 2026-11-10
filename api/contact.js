@@ -59,6 +59,10 @@ module.exports = async function handler(req, res) {
       console.error('Resend', r.status, (await r.text()).slice(0, 300));
       return res.status(502).json({ erreur: `Service d’envoi indisponible (${r.status})` });
     }
+    // case « Je m'inscris aussi à la newsletter » cochée : inscription + code de bienvenue (sans bloquer le formulaire)
+    if (['oui', 'on', 'true', true].includes(d.newsletter) && !raisons.length) {
+      try { await require('./newsletter').inscrire(email, { en: d.lang === 'en', source: 'formulaire' }); } catch (e) { console.error('newsletter formulaire', e.message); }
+    }
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error('Resend', e);

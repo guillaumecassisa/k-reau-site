@@ -90,7 +90,8 @@ module.exports = async function handler(req, res) {
       sur_mesure: String(surMesure),
       sur_mesure_details: smDetails.join(' ‖ ').slice(0, 490),
       message_cadeau: message,
-      lang: en ? 'en' : 'fr'
+      lang: en ? 'en' : 'fr',
+      newsletter: corps.newsletter === true ? '1' : ''
     },
     // relance si le paiement est abandonné (uniquement avec l'accord du client, case proposée par Stripe)
     consent_collection: { promotions: 'auto' },
