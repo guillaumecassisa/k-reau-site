@@ -81,6 +81,11 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 .couts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;padding:4px 16px 16px}
 .couts label{text-transform:none;letter-spacing:0;font-weight:600;font-size:.82rem;color:var(--encre)}
 .couts small{display:block;color:var(--doux);font-weight:400;font-size:.75rem}
+.urssaf{background:var(--blanc);border:1px solid var(--joint);border-left:5px solid var(--olivier);padding:14px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
+.urssaf h2{font-size:1.35rem;width:100%;margin:0}
+.urssaf div span{display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
+.urssaf div strong{font-size:1.3rem}
+.urssaf p{margin:0;color:var(--doux);font-size:.85rem;width:100%}
 .alerte{background:#FBF1E6;border:1px solid #E9C9A6;padding:10px 14px;margin-bottom:12px;font-size:.9rem}
 .alerte a{color:var(--olivier);font-weight:600;cursor:pointer;text-decoration:underline}
 @media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.panneau-corps{grid-template-columns:1fr}.couts{grid-template-columns:1fr 1fr}.panneau-corps{overflow-x:auto}}
@@ -202,7 +207,7 @@ function peindreStats() {
   const mois = new Map();
   for (const c of valides) { const d = new Date(c.heure); const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); if (!mois.has(k)) mois.set(k, []); mois.get(k).push(c); }
   const lignesMois = [...mois].sort((a, b) => b[0].localeCompare(a[0])).map(([k, l]) => { const m = chiffres(l); const [a, mm] = k.split('-');
-    return `<tr><td>${new Date(+a, +mm - 1, 1).toLocaleDateString('fr-FR', { month:'long', year:'numeric' })}</td><td>${m.n}</td><td>${m.carreaux}</td><td>${euros(m.ca)}</td><td>${euros(m.net)}</td></tr>`; }).join('');
+    return `<tr><td>${new Date(+a, +mm - 1, 1).toLocaleDateString('fr-FR', { month:'long', year:'numeric' })}</td><td>${m.n}</td><td>${m.carreaux}</td><td>${euros(m.ca)}</td><td>${euros(m.urssaf)}</td><td>${euros(m.net)}</td></tr>`; }).join('');
   // modèles les plus vendus
   const top = new Map();
   for (const c of valides) for (const a of c.articles) {
@@ -210,7 +215,20 @@ function peindreStats() {
     if (a.type === 'coffret') for (const m of a.modeles || []) top.set(m, (top.get(m) || 0) + a.q);
   }
   const lignesTop = [...top].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([m, q]) => `<tr><td>${esc(m)}</td><td>${q}</td></tr>`).join('');
+  const parMois = k => valides.filter(c => { const d = new Date(c.heure); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') === k; });
+  const auj = new Date(), cle = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  const precedent = new Date(auj.getFullYear(), auj.getMonth() - 1, 1), finMois = new Date(auj.getFullYear(), auj.getMonth() + 1, 0);
+  const caPrec = parMois(cle(precedent)).reduce((t, c) => t + c.total, 0), caCours = parMois(cle(auj)).reduce((t, c) => t + c.total, 0);
+  const cotis = ca => Math.round(ca * cout('urssaf') / 10000);
+  const nomMois = d => d.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
+  const blocUrssaf = `<div class="urssaf"><h2>Déclaration URSSAF</h2>
+      <div><span>CA à déclarer · ${nomMois(precedent)}</span><strong>${euros(caPrec)}</strong></div>
+      <div><span>Cotisations à payer</span><strong>${euros(cotis(caPrec))}</strong></div>
+      <div><span>À déclarer avant le</span><strong>${finMois.toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</strong></div>
+      <div><span>Mois en cours · ${nomMois(auj)}</span><strong>${euros(caCours)}</strong> <small class="meta">(cotisations ≈ ${euros(cotis(caCours))})</small></div>
+      <p>Chiffre d’affaires encaissé dans le mois, frais de port compris, sur autoentrepreneur.urssaf.fr (rubrique « Vente de marchandises »). Taux appliqué : ${(cout('urssaf') / 100).toLocaleString('fr-FR')} %. Les commandes offertes ne sont pas à déclarer (0 €). Si vous déclarez au trimestre, additionnez les trois mois du tableau ci-dessous.${jours < 62 ? ' Choisissez au moins 90 jours pour voir le mois précédent complet.' : ''}</p></div>`;
   $('#stats').innerHTML = `
+    ${blocUrssaf}
     ${sansCouts ? `<p class="alerte">Pour un résultat net juste, renseignez vos coûts (carreau, emballage, envoi…) dans <a id="ouvrir-couts">Mes coûts</a> ci-dessous.</p>` : ''}
     <div class="stats">
       <div class="stat"><span>Commandes</span><strong>${r.n}</strong><small>${r.payantes} payée${r.payantes > 1 ? 's' : ''} · ${r.offertes} offerte${r.offertes > 1 ? 's' : ''}</small></div>
@@ -231,7 +249,7 @@ function peindreStats() {
         <tr><td>− URSSAF (${(cout('urssaf') / 100).toLocaleString('fr-FR')} % du CA)</td><td>${euros(-r.urssaf)}</td></tr>
         <tr class="total"><td>Résultat net</td><td>${euros(r.net)}</td></tr></table>
         <p class="meta" style="font-size:.8rem;margin-top:8px">Les commandes offertes (code 100 %) n’apportent pas de CA mais leurs coûts sont comptés.</p></div>
-      <div><table class="t"><tr><th>Mois</th><th>Cmd</th><th>Carreaux</th><th>CA</th><th>Résultat</th></tr>${lignesMois || '<tr><td colspan="5">—</td></tr>'}</table>
+      <div><table class="t"><tr><th>Mois</th><th>Cmd</th><th>Carreaux</th><th>CA à déclarer</th><th>URSSAF</th><th>Résultat</th></tr>${lignesMois || '<tr><td colspan="6">—</td></tr>'}</table>
         <table class="t" style="margin-top:16px"><tr><th>Meilleures ventes</th><th>Carreaux</th></tr>${lignesTop || '<tr><td colspan="2">—</td></tr>'}</table></div>
     </div></details>
     <details class="panneau" id="panneau-couts"><summary>Mes coûts (servent au calcul du résultat net)</summary>
