@@ -11,6 +11,9 @@ const PRIX = {
   cartes: [2500, 5000, 7500, 10000]
 };
 const PRODUITS = Object.fromEntries(CATALOGUE.filter(p => p.publie !== false).map(p => [p.slug, p]));
+// prix d’un carreau (modèles rehaussés de couleur : 21,90 €) et d’un coffret (54,90 € + supplément couleur par carreau)
+const prixCarreau = slug => { const n = Math.round(parseFloat((PRODUITS[slug] || {}).prix_eur) * 100); return n > 0 ? n : PRIX.carreau; };
+const prixCoffret = slugs => PRIX.coffret + slugs.reduce((t, s) => t + prixCarreau(s) - PRIX.carreau, 0);
 const STRIPE_VERSION = '2024-06-20'; // version d'API figée : paramètres stables
 
 function encoder(obj, prefix, out = []) {
@@ -128,4 +131,4 @@ const echap = v => String(v ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<'
 
 // Commande réglée : payée, ou offerte à 100 % (Stripe : « no_payment_required »)
 const payee = s => !!s && (s.payment_status === 'paid' || s.payment_status === 'no_payment_required');
-module.exports = { PRIX, PRODUITS, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE, base, signer, signatureOk, gabarit, emailValide, payee };
+module.exports = { PRIX, PRODUITS, prixCarreau, prixCoffret, stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, origineAutorisee, tropDeRequetes, echap, ORIGINE_SITE, base, signer, signatureOk, gabarit, emailValide, payee };

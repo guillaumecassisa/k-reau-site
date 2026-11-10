@@ -89,7 +89,7 @@ const serveur = http.createServer((req, res) => {
     <g:image_link>https://k-reau.fr/${p.image_principale.replace(/^\//,'')}</g:image_link>
 ${[p.image_en_main,p.image_etagere,p.image_coffret,p.image_detail,p.image_dimensions].filter(Boolean).map(u=>`    <g:additional_image_link>https://k-reau.fr/${u.replace(/^\//,'')}</g:additional_image_link>`).join('\n')}
     <g:availability>in_stock</g:availability>
-    <g:price>19.90 EUR</g:price>
+    <g:price>${(parseFloat(p.prix_eur) || 19.9).toFixed(2)} EUR</g:price>
     <g:condition>new</g:condition>
     <g:brand>K-Reau</g:brand>
     <g:identifier_exists>no</g:identifier_exists>

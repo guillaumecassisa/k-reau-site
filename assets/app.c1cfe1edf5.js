@@ -60,7 +60,7 @@ const COLLECTIONS = {
     court:'Saint-Tropez, Port Grimaud, Nice… La Côte d’Azur en un trait.',
     intro:'Le port et les terrasses de Saint-Tropez, les canaux de Port Grimaud, le front de mer de Sainte-Maxime et la Promenade des Anglais à Nice : la Côte d’Azur dessinée au trait, chaque lieu avec son nom en calligraphie.',
     seo:'Carreaux décoratifs Côte d’Azur | Saint-Tropez, Port Grimaud, Nice – K-Reau',
-    seoDesc:'Carreaux en céramique illustrés de la Côte d’Azur : Saint-Tropez, Port Grimaud, Sainte-Maxime, Nice et sa chaise bleue. Dessin au trait, nom calligraphié, 15 × 15 cm, idée cadeau à 19,90 €.',
+    seoDesc:'Carreaux en céramique illustrés de la Côte d’Azur : Saint-Tropez, Port Grimaud, Sainte-Maxime, Nice et sa chaise bleue. Dessin au trait, nom calligraphié, 15 × 15 cm, idée cadeau dès 19,90 €.',
     h1:'Carreaux décoratifs de la Côte d’Azur',
     offrir:'Un souvenir de la Côte d’Azur à offrir',
     texte:'Les terrasses rouges et les voiliers du port de Saint-Tropez, les canaux et les petits ponts de Port Grimaud, les pins parasols de Sainte-Maxime, la chaise bleue de la Promenade des Anglais et la place de village à l’ombre des platanes : la Côte d’Azur dessinée sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y passent leurs étés ou qui ont la chance d’y vivre.' },
@@ -106,6 +106,9 @@ const avecLangue = u => {
 for(const f of ['pushState','replaceState']){ const o = history[f].bind(history); history[f] = (st, t, u) => o(st, t, u == null ? u : avecLangue(String(u))); }
 const app = $('#app');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const prixDe = slug => { const n = parseFloat(String(parSlug(slug)?.prix_eur ?? '').replace(',','.')); return n > 0 ? n : CONFIG.prix.carreau; };
+// coffret : 54,90 € + le supplément des modèles en couleur (2 € chacun)
+const prixCoffret = slugs => Math.round((CONFIG.prix.coffret + slugs.reduce((t, s) => t + prixDe(s) - CONFIG.prix.carreau, 0)) * 100) / 100;
 const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) : ''; };
 const aCompleter = (v, txt='À compléter avant mise en ligne') => v ? esc(v) : `<span class="a-completer">${txt}</span>`;
 const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
@@ -362,7 +365,7 @@ function vueAccueil(){
       <h3>Une idée cadeau souvenir, élégante et originale</h3>
       <p>Chaque carreau associe un dessin au trait noir et le nom du lieu en calligraphie. C’est un cadeau original pour un Marseillais exilé, un amoureux de la Provence ou du patrimoine, une crémaillère, un départ ou un anniversaire : un souvenir élégant, loin des objets touristiques. À poser sur un meuble ou à accrocher au mur, il apporte une touche de décoration à la maison.</p>
       <p>Pour offrir, composez un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, faites dessiner <a class="lien" href="/sur-mesure">votre propre lieu sur mesure</a> ou choisissez une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p>
-      <p>Tous les carreaux sont à 19,90 €, expédiés en France sous 5 à 7 jours, avec la livraison offerte dès 50 € d’achat. Découvrez la <a class="lien" href="/collections/marseille">collection Marseille</a>, la <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>, <a class="lien" href="/collections/aix-en-provence">Aix-en-Provence</a>, <a class="lien" href="/collections/luberon">le Luberon</a>, <a class="lien" href="/collections/cote-d-azur">la Côte d’Azur</a>, <a class="lien" href="/collections/montagnes-du-sud">les Montagnes du Sud</a>, <a class="lien" href="/collections/les-embiez">les îles du Var</a> et <a class="lien" href="/collections/chateaux">les Châteaux</a>, ou cherchez votre lieu sur <a class="lien" href="/carte-des-lieux">la carte</a>.</p>
+      <p>Les carreaux sont à 19,90 € (21,90 € pour les modèles rehaussés de couleur), expédiés en France sous 5 à 7 jours, avec la livraison offerte dès 50 € d’achat. Découvrez la <a class="lien" href="/collections/marseille">collection Marseille</a>, la <a class="lien" href="/collections/cote-bleue">collection Côte Bleue</a>, <a class="lien" href="/collections/aix-en-provence">Aix-en-Provence</a>, <a class="lien" href="/collections/luberon">le Luberon</a>, <a class="lien" href="/collections/cote-d-azur">la Côte d’Azur</a>, <a class="lien" href="/collections/montagnes-du-sud">les Montagnes du Sud</a>, <a class="lien" href="/collections/les-embiez">les îles du Var</a> et <a class="lien" href="/collections/chateaux">les Châteaux</a>, ou cherchez votre lieu sur <a class="lien" href="/carte-des-lieux">la carte</a>.</p>
       <p>Besoin d’inspiration ? Lisez nos guides : <a class="lien" href="/guides/que-ramener-de-marseille">que ramener de Marseille</a>, <a class="lien" href="/guides/idees-cadeaux-provence">idées cadeaux Provence</a>, <a class="lien" href="/guides/cote-bleue-ports-et-calanques">les plus beaux ports de la Côte Bleue</a>.</p>
     </div>
   </section>
@@ -398,7 +401,7 @@ function faqHTML(){
     ['Puis-je l’offrir ?', `<p>Oui, c’est même l’idée. Ajoutez un message cadeau dans le panier : il sera imprimé sur la carte glissée dans le coffret. Pour un envoi direct, indiquez l’adresse de la personne comme adresse de livraison. Vous pouvez aussi offrir un <a class="lien" href="/coffrets">coffret de 3 carreaux</a> ou une <a class="lien" href="/carte-cadeau">carte cadeau</a>.</p>`],
     ['Puis-je faire dessiner mon propre lieu ?', `<p>Oui : avec le <a class="lien" href="/sur-mesure">carreau sur mesure</a>, nous dessinons votre maison, votre village ou votre plage, avec le nom de votre choix. Le dessin vous est soumis avant impression.</p>`],
     ['Quel cadeau offrir à un amoureux de Marseille ?', `<p>Un carreau de son lieu préféré : le <a class="lien" href="/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, une calanque ou son quartier. Pour un cadeau plus généreux, composez un trio de carreaux : la livraison est alors offerte.</p>`],
-    ['Combien coûte un carreau K-Reau ?', `<p>Chaque carreau coûte 19,90 €. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux.</p>`],
+    ['Combien coûte un carreau K-Reau ?', `<p>Un carreau coûte 19,90 €, et 21,90 € pour les modèles rehaussés de couleur. La livraison en France coûte 7,90 € et elle est offerte dès 50 € d’achat, soit à partir de 3 carreaux.</p>`],
     ['Comment contacter K-Reau ?', `<p>Par le ${contact}. Nous vous répondons par e-mail.</p>`]
   ];
   return `<div class="faq">${q.map(([t,r])=>`<details><summary>${t}</summary><div class="rep">${r}</div></details>`).join('')}</div>`;
@@ -421,7 +424,7 @@ function vueCollection(k){
       ${COLLS_PRINCIPALES.filter(x=>x!==k && collPubliee(x)).map(x=>`<a class="btn btn-s" href="/collections/${x}">Voir la collection ${esc(COLLECTIONS[x].nom.replace(/^La |^Les /,''))}</a>`).join('')}
       ${k!=='les-embiez' ? `<a class="btn btn-s" href="${embiezSeul() ? '/produits/les-embiez' : '/collections/les-embiez'}">${embiezSeul() ? 'Le modèle signature Les Embiez' : 'Voir la collection Les Embiez'}</a>` : ''}
     </div>
-    ${c.texte ? `<div class="prose" style="margin-top:56px;max-width:760px"><h2>${esc(c.offrir||'Un souvenir à offrir')}</h2><p>${esc(c.texte)}</p><p>Chaque carreau coûte 19,90 € ; la livraison est offerte dès 50 € d’achat.</p>${(g => g && LANG !== 'en' ? `<p>À lire : <a class="lien" href="/guides/${g.slug}">${esc(g.titre)}</a></p>` : '')(GUIDES.find(x => x.slug === GUIDE_COLL[k]))}</div>` : ''}
+    ${c.texte ? `<div class="prose" style="margin-top:56px;max-width:760px"><h2>${esc(c.offrir||'Un souvenir à offrir')}</h2><p>${esc(c.texte)}</p><p>Les carreaux sont à partir de 19,90 € ; la livraison est offerte dès 50 € d’achat.</p>${(g => g && LANG !== 'en' ? `<p>À lire : <a class="lien" href="/guides/${g.slug}">${esc(g.titre)}</a></p>` : '')(GUIDES.find(x => x.slug === GUIDE_COLL[k]))}</div>` : ''}
   </div></section>`;
 }
 
@@ -530,7 +533,7 @@ function trioHTML(p){
     <div class="trio-vignettes"><span class="moi"><img src="${esc(p.miniature)}" alt="${esc(p.nom)}" loading="lazy" width="600" height="600"></span><b aria-hidden="true">+</b>
       ${c.map(x => `<a href="/produits/${esc(x.slug)}" title="${esc(x.nom)}"><img src="${esc(x.miniature)}" alt="${esc(x.nom)}" loading="lazy" width="600" height="600"></a>`).join('<b aria-hidden="true">+</b>')}</div>
     <p class="trio-noms">${tous.map(x => esc(x.nom)).join(' · ')}</p>
-    <div class="trio-prix"><strong>${prixEur(CONFIG.prix.coffret)}</strong><s>${prixEur(3*CONFIG.prix.carreau)}</s><span>livraison offerte</span></div>
+    <div class="trio-prix"><strong>${prixEur(prixCoffret(tous.map(x => x.slug)))}</strong><s>${prixEur(tous.reduce((t, x) => t + prixDe(x.slug), 0))}</s><span>livraison offerte</span></div>
     <button class="btn btn-s" type="button" id="ajout-trio" data-slugs="${esc(tous.map(x => x.slug).join(','))}">Ajouter le trio au panier</button>
     <a class="lien small" href="/coffrets?avec=${esc(p.slug)}#composer">Choisir d’autres carreaux pour le coffret</a>
   </div>`;
@@ -546,12 +549,12 @@ function vueProduit(slug){
   const cadeauDe = k==='chateaux' ? 'patrimoine' : (k==='les-embiez'?'Var':region.replace('la ',''));
   const titreLong = `Carreau ${p.nom} | Déco céramique, cadeau ${cadeauDe} – K-Reau`;
   setMeta(titreLong.length <= 65 ? titreLong : `Carreau ${p.nom} | Cadeau ${cadeauDe} – K-Reau`.length <= 65 ? `Carreau ${p.nom} | Cadeau ${cadeauDe} – K-Reau` : `Carreau ${p.nom} – K-Reau`,
-    `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir ${deLieu(region)}. 19,90 €, livraison offerte dès 50 €.`,
+    `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir ${deLieu(region)}. ${prixEur(prixDe(p.slug))}, livraison offerte dès 50 €.`,
     { image: p.image_principale, ld: { '@context':'https://schema.org', '@type':'Product', name:`Carreau décoratif ${p.nom}`, sku:p.slug, url:urlP,
       image:[p.image_principale,p.image_en_main,p.image_etagere,p.image_detail,p.image_coffret,p.image_dimensions].filter(Boolean).map(u=>'https://k-reau.fr'+u), description:`${p.description} ${p.a_propos||''}`.trim(),
       brand:{ '@type':'Brand', name:'K-Reau' }, material:'Céramique', category:'Décoration > Carreaux décoratifs',
       width:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' }, height:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' },
-      offers:{ '@type':'Offer', url:urlP, price:'19.90', priceCurrency:'EUR', availability:'https://schema.org/InStock', itemCondition:'https://schema.org/NewCondition',
+      offers:{ '@type':'Offer', url:urlP, price:prixDe(p.slug).toFixed(2), priceCurrency:'EUR', availability:'https://schema.org/InStock', itemCondition:'https://schema.org/NewCondition',
         seller:{ '@type':'Organization', name:'K-Reau' },
         shippingDetails:{ '@type':'OfferShippingDetails', shippingRate:{ '@type':'MonetaryAmount', value:'7.90', currency:'EUR' }, shippingDestination:{ '@type':'DefinedRegion', addressCountry:'FR' },
           deliveryTime:{ '@type':'ShippingDeliveryTime', handlingTime:{ '@type':'QuantitativeValue', minValue:5, maxValue:7, unitCode:'DAY' } } },
@@ -2226,7 +2229,7 @@ function vueCarte(){
     const p = parSlug(slug); if(!p) return;
     zone.querySelectorAll('a.pt').forEach(a => a.classList.toggle('actif', a.dataset.s === slug));
     fiche.innerHTML = `<img src="${esc(p.miniature)}" alt="${esc(p.alt || p.nom)}" width="600" height="600"><p class="carte-fiche-titre">${esc(p.nom)}</p>
-      <p class="small muted" style="margin:0"><span>${esc(collNom(p))}</span> · <span>${prixEur(CONFIG.prix.carreau)}</span></p><a class="btn btn-s" href="/produits/${esc(p.slug)}">Voir le carreau</a>`;
+      <p class="small muted" style="margin:0"><span>${esc(collNom(p))}</span> · <span>${prixEur(prixDe(p.slug))}</span></p><a class="btn btn-s" href="/produits/${esc(p.slug)}">Voir le carreau</a>`;
   };
   const dessiner = () => {
     if(!FOND_CARTE || !PRODUITS) return;
@@ -2509,6 +2512,7 @@ function vueCoffrets(){
     $('#places').innerHTML = [0,1,2].map(i=>`<div class="place">${choix[i]?`<img src="${esc(parSlug(choix[i]).miniature)}" alt="${esc(parSlug(choix[i]).nom)}">`:''}</div>`).join('');
     $('#compte-choix').textContent = choix.length===3 ? 'Votre coffret est complet' : `${choix.length} / 3 carreaux choisis`;
     $('#ajout-coffret').disabled = choix.length !== 3;
+    $('#ajout-coffret').textContent = `Ajouter le coffret · ${prixEur(choix.length === 3 ? prixCoffret(choix) : CONFIG.prix.coffret)}`;
   };
   peindre();
   document.querySelector('[data-filtres="g-choix"]').addEventListener('click', e => { const b=e.target.closest('.filtre'); if(!b) return; filtre=b.dataset.f; document.querySelectorAll('[data-filtres="g-choix"] .filtre').forEach(x=>x.setAttribute('aria-pressed',x===b)); peindre(); });
@@ -2782,7 +2786,7 @@ const Panier = {
   destination: store.get('kreau-destination', LANG === 'en' ? 'EU' : 'FR'),
   sauver(){ store.set('kreau-panier', this.lignes); store.set('kreau-message', this.message); this.badge(); },
   cle(l){ return l.type==='chevalet' ? 'v:chevalet' : l.type==='carreau' ? 'c:'+l.slug : l.type==='coffret' ? 'k:'+l.slugs.join('+') : l.type==='carte' ? 'g:'+l.montant : 's:'+l.id; },
-  prix(l){ return l.type==='chevalet' ? CONFIG.prix.chevalet : l.type==='carreau' ? CONFIG.prix.carreau : l.type==='coffret' ? CONFIG.prix.coffret : l.type==='sur-mesure' ? CONFIG.prix.surMesure : l.montant/100; },
+  prix(l){ return l.type==='chevalet' ? CONFIG.prix.chevalet : l.type==='carreau' ? prixDe(l.slug) : l.type==='coffret' ? prixCoffret(l.slugs || []) : l.type==='sur-mesure' ? CONFIG.prix.surMesure : l.montant/100; },
   physique(){ return this.lignes.filter(l=>l.type!=='carte').reduce((t,l)=>t+this.prix(l)*l.q,0); },
   total(){ return this.lignes.reduce((t,l)=>t+this.prix(l)*l.q,0); },
   valide(l){ return l.type==='carreau' ? !!parSlug(l.slug) : l.type==='coffret' ? l.slugs.every(parSlug) : true; },

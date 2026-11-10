@@ -1,6 +1,6 @@
 // Création d'une session de paiement Stripe Checkout à partir du panier.
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
-const { PRIX, PRODUITS, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
+const { PRIX, PRODUITS, prixCarreau, prixCoffret, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
 // Pays européens livrés (hors France) au tarif Europe
 // Codes « commande offerte » : listés dans la variable Vercel KREAU_CODES_OFFERTS (séparés par des virgules).
 // Chacun devient à sa première utilisation un code Stripe à 100 %, utilisable une seule fois ; la livraison est alors offerte aussi.
@@ -39,13 +39,13 @@ module.exports = async function handler(req, res) {
   for (const l of lignes) {
     const type = l.type || 'carreau';
     if (type === 'carreau' && PRODUITS[l.slug]) {
-      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.carreau, product_data: { name: `Carreau K-Reau · ${PRODUITS[l.slug].nom}`, images: [image(l.slug)] } } });
-      physique += PRIX.carreau * q(l); resume.push(`${l.slug}x${q(l)}`);
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: prixCarreau(l.slug), product_data: { name: `Carreau K-Reau · ${PRODUITS[l.slug].nom}`, images: [image(l.slug)] } } });
+      physique += prixCarreau(l.slug) * q(l); resume.push(`${l.slug}x${q(l)}`);
     } else if (type === 'coffret' && Array.isArray(l.slugs) && l.slugs.length === 3 && l.slugs.every(s => PRODUITS[s])) {
       const noms = l.slugs.map(s => PRODUITS[s].nom);
-      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.coffret, product_data: {
+      items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: prixCoffret(l.slugs), product_data: {
         name: `Coffret 3 carreaux K-Reau${l.nom ? ' · ' + texte(l.nom, 40) : ''}`, description: noms.join(' · '), images: l.slugs.map(image) } } });
-      physique += PRIX.coffret * q(l); resume.push(`coffret(${l.slugs.join('+')})x${q(l)}`);
+      physique += prixCoffret(l.slugs) * q(l); resume.push(`coffret(${l.slugs.join('+')})x${q(l)}`);
     } else if (type === 'sur-mesure' && texte(l.texte, 40)) {
       surMesure++;
       const desc = `Texte : « ${texte(l.texte, 40)} »${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
