@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gestion des commandes | K-Reau</title>
+<link rel="icon" href="/favicon.ico">
+<style>
+@font-face{font-family:'Cormorant Garamond';font-weight:500;font-display:swap;src:url(/assets/fonts/cormorant-garamond-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:400;font-display:swap;src:url(/assets/fonts/manrope-latin-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Manrope';font-weight:600;font-display:swap;src:url(/assets/fonts/manrope-latin-600-normal.woff2) format('woff2')}
+:root{--ceramique:#F7F5F0;--sable:#D9BEA3;--olivier:#51573D;--olivier-fonce:#3F4430;--encre:#22211E;--blanc:#FFFEFB;--sable-clair:#EFE7DC;--joint:#E6DED3;--doux:#5E5A52;
+  --afaire:#B4532A;--prep:#B8860B;--envoye:#2F6690;--livre:#3E7A4A;--annule:#8A8478}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ceramique);color:var(--encre);font:15px/1.55 Manrope,'Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header{background:var(--encre);color:var(--blanc)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px}
+header a{color:var(--blanc);text-decoration:none;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.5rem}
+header button{background:none;border:1px solid #6B675F;color:#D8D3C9;padding:6px 12px;cursor:pointer;font-size:.85rem}
+.connexion{max-width:380px;margin:12vh auto 0;background:var(--blanc);border:1px solid var(--joint);padding:32px}
+.connexion h1{font-size:2rem;margin-bottom:6px}
+.connexion p{color:var(--doux);margin:0 0 20px}
+label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--olivier);margin-bottom:6px}
+input[type=password],input[type=text],input[type=search],select,textarea{width:100%;border:1px solid #CFC6B8;background:var(--blanc);padding:10px 12px;border-radius:2px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--olivier);outline-offset:1px}
+.btn{background:var(--olivier);color:var(--blanc);border:0;padding:11px 18px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--olivier-fonce)}
+.btn-s{background:none;color:var(--olivier);border:1px solid var(--olivier);padding:8px 14px;font-weight:600;cursor:pointer}
+.err{color:var(--afaire);font-size:.9rem;min-height:1.4em;margin:10px 0 0}
+.tete{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px;padding:32px 0 20px}
+.tete h1{font-size:2.3rem;line-height:1.1}
+.tete p{margin:4px 0 0;color:var(--doux)}
+.outils{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.outils input{width:240px}
+.outils select{width:auto}
+.onglets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.onglet{border:1px solid var(--joint);background:var(--blanc);padding:7px 12px;cursor:pointer;font-size:.9rem;display:flex;gap:8px;align-items:center}
+.onglet b{font-weight:600;background:var(--sable-clair);padding:0 7px;border-radius:9px;font-size:.8rem}
+.onglet[aria-pressed=true]{background:var(--encre);color:var(--blanc);border-color:var(--encre)}
+.onglet[aria-pressed=true] b{background:#3a3833;color:var(--blanc)}
+.cmd{background:var(--blanc);border:1px solid var(--joint);border-left:5px solid var(--c,var(--afaire));margin-bottom:14px}
+.cmd-tete{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;padding:14px 18px;border-bottom:1px solid var(--joint);align-items:center}
+.cmd-tete strong{font-size:1.05rem}
+.cmd-tete .meta{color:var(--doux);font-size:.88rem}
+.pastille{display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--c);padding:3px 9px;border-radius:2px}
+.cmd-corps{display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:18px 24px;padding:16px 18px}
+.bloc h3{margin:0 0 6px;font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
+.bloc p{margin:0}
+.bloc a{color:var(--olivier)}
+.articles{list-style:none;margin:0;padding:0}
+.articles li{padding:4px 0;border-bottom:1px dashed var(--joint)}
+.articles li:last-child{border:0}
+.articles .q{font-weight:600;display:inline-block;min-width:28px}
+.articles .d{display:block;color:var(--doux);font-size:.85rem;padding-left:28px}
+.acc{font-size:.72rem;font-weight:600;color:var(--olivier);border:1px solid var(--olivier);padding:0 5px;margin-left:6px;text-transform:uppercase}
+.encadre{background:var(--sable-clair);padding:8px 10px;margin-top:8px;font-size:.9rem}
+.suivi{display:grid;gap:10px}
+.suivi textarea{min-height:58px;resize:vertical}
+.enreg{font-size:.82rem;color:var(--livre);min-height:1.2em}
+.vide{background:var(--blanc);border:1px solid var(--joint);padding:40px;text-align:center;color:var(--doux)}
+.charge{padding:40px;text-align:center;color:var(--doux)}
+@media (max-width:860px){.cmd-corps{grid-template-columns:1fr}.outils input{width:100%}.outils{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><a href="/">K-Reau</a><button type="button" id="deco" hidden>Se déconnecter</button></div></header>
+<main id="app"></main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currency:'EUR' });
+const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
+const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
+const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
+let code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
+
+async function api(corps) {
+  const r = await fetch('/api/gestion', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ code, ...corps }) });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = new Error(j.erreur || 'Erreur ' + r.status); e.statut = r.status; throw e; }
+  return j;
+}
+
+function vueConnexion(msg) {
+  $('#deco').hidden = true;
+  $('#app').innerHTML = `<form class="connexion" id="f">
+    <h1>Gestion des commandes</h1><p>Espace réservé à K-Reau.</p>
+    <label for="c">Code d’accès</label><input type="password" id="c" autocomplete="current-password" required autofocus>
+    <p class="err" id="e" role="alert">${esc(msg || '')}</p>
+    <button class="btn" type="submit" style="width:100%">Entrer</button></form>`;
+  $('#f').addEventListener('submit', async e => {
+    e.preventDefault(); code = $('#c').value.trim(); $('#e').textContent = '';
+    const b = e.submitter || $('#f button'); b.disabled = true; b.textContent = 'Vérification…';
+    try { await charger(); try { sessionStorage.setItem('kreau-gestion', code); } catch {} }
+    catch (er) { b.disabled = false; b.textContent = 'Entrer'; $('#e').textContent = er.message; }
+  });
+}
+
+async function charger() {
+  const j = await api({ action:'liste', jours });
+  CMDS = j.commandes || [];
+  $('#deco').hidden = false;
+  vueListe();
+}
+
+const aTraiter = c => ['a-faire','en-preparation'].includes(c.suivi.statut);
+function compte(k) { return k === 'tout' ? CMDS.length : k === 'a-traiter' ? CMDS.filter(aTraiter).length : CMDS.filter(c => c.suivi.statut === k).length; }
+
+function vueListe() {
+  const onglets = [['a-traiter','À traiter'], ['tout','Toutes'], ...STATUTS.map(s => [s[0], s[1]])];
+  $('#app').innerHTML = `<div class="wrap">
+    <div class="tete"><div><h1>Commandes</h1><p>${CMDS.length} commande${CMDS.length > 1 ? 's' : ''} sur les ${jours} derniers jours · ${compte('a-traiter')} à traiter</p></div>
+      <div class="outils"><input type="search" id="q" placeholder="Rechercher un nom, une ville, un modèle…" value="${esc(recherche)}" aria-label="Rechercher">
+        <select id="j" aria-label="Période">${[30,90,180,365].map(n => `<option value="${n}" ${n === jours ? 'selected' : ''}>${n} jours</option>`).join('')}</select>
+        <button class="btn-s" type="button" id="maj">Actualiser</button></div></div>
+    <div class="onglets" role="group" aria-label="Filtrer par statut">${onglets.map(([k, l]) => `<button class="onglet" type="button" data-f="${k}" aria-pressed="${filtre === k}">${l} <b>${compte(k)}</b></button>`).join('')}</div>
+    <div id="liste"></div></div>`;
+  $('#q').addEventListener('input', e => { recherche = e.target.value; peindre(); });
+  $('#j').addEventListener('change', async e => { jours = +e.target.value; $('#liste').innerHTML = '<p class="charge">Chargement…</p>'; await charger().catch(er => alert(er.message)); });
+  $('#maj').addEventListener('click', async () => { $('#liste').innerHTML = '<p class="charge">Chargement…</p>'; await charger().catch(er => alert(er.message)); });
+  document.querySelectorAll('.onglet').forEach(b => b.addEventListener('click', () => { filtre = b.dataset.f; document.querySelectorAll('.onglet').forEach(x => x.setAttribute('aria-pressed', x === b)); peindre(); }));
+  peindre();
+}
+
+function carte(c) {
+  const d = new Date(c.heure);
+  const date = d.toLocaleDateString('fr-FR', { weekday:'short', day:'numeric', month:'short' }) + ' à ' + d.toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+  const art = c.articles.map(a => {
+    const titre = a.type === 'carreau' ? a.modele : a.nom;
+    return `<li><span class="q">${a.q} ×</span>${esc(titre)}${a.type === 'accessoire' ? '<span class="acc">Accessoire</span>' : ''}${a.detail ? `<span class="d">${esc(a.detail)}</span>` : ''}</li>`;
+  }).join('');
+  const s = c.suivi;
+  return `<article class="cmd" style="--c:${couleur(s.statut)}" data-id="${esc(c.id)}">
+    <div class="cmd-tete"><div><strong>${esc(c.nom || c.email)}</strong> <span class="meta">· ${date} · n° ${esc(c.id.slice(-8).toUpperCase())}</span></div>
+      <div class="meta"><span class="pastille" style="--c:${couleur(s.statut)}">${nomStatut(s.statut)}</span> &nbsp;${euros(c.total)}${c.code ? ' · code ' + esc(c.code) : ''}</div></div>
+    <div class="cmd-corps">
+      <div class="bloc"><h3>Client</h3><p>${esc(c.nom || '—')}</p><p><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>${c.tel ? `<p><a href="tel:${esc(c.tel)}">${esc(c.tel)}</a></p>` : ''}
+        <h3 style="margin-top:14px">Adresse d’envoi</h3>${c.adresse.length ? c.adresse.map(l => `<p>${esc(l)}</p>`).join('') : '<p class="meta">Pas d’envoi postal</p>'}</div>
+      <div class="bloc"><h3>Articles</h3><ul class="articles">${art}</ul>
+        ${c.message ? `<div class="encadre"><b>Message cadeau :</b> « ${esc(c.message)} »</div>` : ''}
+        ${c.surMesure && !c.articles.some(a => a.type === 'sur-mesure' && a.detail) ? `<div class="encadre"><b>Sur mesure :</b> ${esc(c.surMesure)}</div>` : ''}
+        <p class="meta" style="margin-top:8px;font-size:.85rem">Livraison : ${c.livraison ? euros(c.livraison) : 'offerte'}</p></div>
+      <div class="bloc suivi"><div><h3><label for="s-${esc(c.id)}" style="all:inherit">Statut</label></h3>
+          <select id="s-${esc(c.id)}" data-champ="statut">${STATUTS.map(([k, l]) => `<option value="${k}" ${k === s.statut ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
+        <div><h3>N° de suivi colis</h3><input type="text" data-champ="suivi" value="${esc(s.suivi)}" placeholder="Ex. : 6A12345678901" aria-label="Numéro de suivi"></div>
+        <div><h3>Note</h3><textarea data-champ="note" placeholder="Note interne" aria-label="Note interne">${esc(s.note)}</textarea></div>
+        <span class="enreg" aria-live="polite"></span></div>
+    </div></article>`;
+}
+
+function peindre() {
+  const q = recherche.trim().toLowerCase();
+  let l = CMDS.filter(c => filtre === 'tout' ? true : filtre === 'a-traiter' ? aTraiter(c) : c.suivi.statut === filtre);
+  if (q) l = l.filter(c => JSON.stringify([c.nom, c.email, c.adresse, c.articles.map(a => [a.nom, a.modele, a.detail]), c.code, c.id]).toLowerCase().includes(q));
+  $('#liste').innerHTML = l.length ? l.map(carte).join('') : `<p class="vide">${filtre === 'a-traiter' && !q ? 'Rien à traiter : toutes les commandes sont envoyées. 🎉' : 'Aucune commande.'}</p>`;
+  $('#liste').querySelectorAll('.cmd').forEach(el => {
+    let minuteur;
+    const enregistrer = async () => {
+      const c = CMDS.find(x => x.id === el.dataset.id); const info = el.querySelector('.enreg');
+      const v = k => el.querySelector(`[data-champ="${k}"]`).value;
+      const nouveau = { statut: v('statut'), suivi: v('suivi').trim(), note: v('note').trim() };
+      info.textContent = 'Enregistrement…'; info.style.color = '';
+      try {
+        await api({ action:'maj', session_id: c.id, ...nouveau });
+        c.suivi = { ...c.suivi, ...nouveau };
+        el.style.setProperty('--c', couleur(nouveau.statut));
+        const p = el.querySelector('.pastille'); p.textContent = nomStatut(nouveau.statut); p.style.setProperty('--c', couleur(nouveau.statut));
+        info.textContent = 'Enregistré ✓';
+        document.querySelectorAll('.onglet').forEach(b => b.querySelector('b').textContent = compte(b.dataset.f));
+      } catch (er) { info.textContent = er.message; info.style.color = 'var(--afaire)'; if (er.statut === 401) vueConnexion('Session expirée, entrez le code à nouveau.'); }
+    };
+    el.querySelector('[data-champ="statut"]').addEventListener('change', enregistrer);
+    el.querySelectorAll('[data-champ="suivi"],[data-champ="note"]').forEach(x => x.addEventListener('input', () => { clearTimeout(minuteur); minuteur = setTimeout(enregistrer, 900); }));
+  });
+}
+
+$('#deco').addEventListener('click', () => { code = ''; try { sessionStorage.removeItem('kreau-gestion'); } catch {} CMDS = []; vueConnexion(); });
+if (code) { $('#app').innerHTML = '<p class="charge">Chargement des commandes…</p>'; charger().catch(e => vueConnexion(e.statut === 401 ? '' : e.message)); }
+else vueConnexion();
+</script>
+</body>
+</html>

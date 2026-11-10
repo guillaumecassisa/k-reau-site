@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/gestion",
+      "destination": "/gestion.html"
+    },
+    {
       "source": "/en",
       "destination": "/pages/en.html"
     },
@@ -154,6 +158,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
+      ]
+    },
+    {
+      "source": "/gestion(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
         }
       ]
     }
