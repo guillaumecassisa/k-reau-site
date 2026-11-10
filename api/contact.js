@@ -24,9 +24,16 @@ module.exports = async function handler(req, res) {
   const nom = champ('nom', 200), sujet = champ('sujet', 200), message = champ('message', 5000), contexte = champ('contexte', 200);
   const projet = champ('projet', 120), quantite = champ('quantite', 80), modeles = champ('modeles', 80);
   const date = new Date().toLocaleString('fr-FR', { timeZone: 'Europe/Paris' });
+  // Message suspect (lien dans le texte, adresse jetable ou exotique) : transmis quand même, mais signalé dans l'objet
+  const tout = [nom, sujet, message, champ('organisation', 150), modeles].join(' ');
+  const raisons = [];
+  if (/https?:\/\/|www\.|\b[a-z0-9-]+\.(?:online|site|xyz|top|click|shop|store|live|link|icu|buzz|ru|cn|info|biz)\b/i.test(tout)) raisons.push('lien dans le message');
+  const dom = email.split('@')[1].toLowerCase();
+  if (/\.(?:my\.id|id|xyz|top|click|online|site|icu|buzz|ru|cn|tk|ml|ga|cf|gq|pw|cyou|sbs|cfd)$/.test(dom) || /(?:temp|trash|jetable|yopmail|guerrilla|mailinator|10minute|probox|throwaway)/.test(dom)) raisons.push('adresse e-mail jetable ou inhabituelle');
   const objet = projet === 'Proposition de lieu' ? `K-Reau · Lieu proposé : ${modeles || 'sans nom'}${champ('ville', 80) ? ' (' + champ('ville', 80) + ')' : ''}`
     : type === 'projets' ? `K-Reau · ${/^Revendeur/.test(projet) ? '' : 'Projet spécifique : '}${projet || 'demande'}${quantite ? ' · ' + quantite : ''}`
     : type === 'contacts' ? `K-Reau · Contact : ${sujet || 'message'}` : `K-Reau · Inscription (${contexte || 'site'})`;
+  const objetFinal = (raisons.length ? '[Suspect] ' : '') + objet;
 
   const lignes = [
     ['Type', projet === 'Proposition de lieu' ? 'Proposition de lieu (carte des lieux)' : type === 'projets' ? 'Demande de projet spécifique' : type === 'contacts' ? 'Message de contact' : 'Inscription'],
@@ -34,7 +41,8 @@ module.exports = async function handler(req, res) {
     ['Projet', projet], ['Quantité', quantite], [projet === 'Proposition de lieu' ? 'Lieu proposé' : 'Modèles', modeles], ['Échéance', champ('echeance', 80)],
     ['Sujet', sujet], ['Modèle / page', contexte], ['Date', date]
   ].filter(([, v]) => v);
-  const html = `<table style="font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse">${lignes.map(([k, v]) =>
+  const alerte = raisons.length ? `<p style="font-family:Arial,sans-serif;font-size:14px;background:#FBEAEA;color:#8A1C1C;padding:10px 12px;margin:0 0 12px"><b>Message probablement indésirable</b> (${raisons.join(', ')}). Vérifiez l’expéditeur avant de cliquer sur un lien ou de répondre.</p>` : '';
+  const html = alerte + `<table style="font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse">${lignes.map(([k, v]) =>
     `<tr><td style="padding:6px 12px 6px 0;color:#51573D;font-weight:bold">${k}</td><td style="padding:6px 0">${echap(v)}</td></tr>`).join('')}</table>`
     + (message ? `<p style="font-family:Arial,sans-serif;font-size:14px;white-space:pre-wrap;border-top:1px solid #E6DED3;padding-top:12px">${echap(message)}</p>` : '');
 
@@ -44,7 +52,7 @@ module.exports = async function handler(req, res) {
       headers: { Authorization: `Bearer ${cle}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from: process.env.CONTACT_EXPEDITEUR || 'Site K-Reau <onboarding@resend.dev>',
-        to: [dest], reply_to: email, subject: objet, html
+        to: [dest], reply_to: email, subject: objetFinal, html
       })
     });
     if (!r.ok) {
