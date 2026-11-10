@@ -63,6 +63,27 @@ input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid v
 .enreg{font-size:.82rem;color:var(--livre);min-height:1.2em}
 .vide{background:var(--blanc);border:1px solid var(--joint);padding:40px;text-align:center;color:var(--doux)}
 .charge{padding:40px;text-align:center;color:var(--doux)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.stat{background:var(--blanc);border:1px solid var(--joint);padding:12px 14px}
+.stat span{display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
+.stat strong{display:block;font-size:1.45rem;font-weight:600;line-height:1.3;margin-top:2px}
+.stat small{color:var(--doux);font-size:.8rem}
+.stat.cle{background:var(--olivier);border-color:var(--olivier);color:var(--blanc)}.stat.cle span,.stat.cle small{color:#E3E6D6}
+.stat.neg strong{color:#B4532A}.stat.cle.neg{background:#8A3A1C;border-color:#8A3A1C}.stat.cle.neg strong{color:#fff}
+details.panneau{background:var(--blanc);border:1px solid var(--joint);margin-bottom:12px}
+details.panneau summary{cursor:pointer;padding:12px 16px;font-weight:600;color:var(--olivier);list-style-position:inside}
+.panneau-corps{padding:4px 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+table.t{width:100%;border-collapse:collapse;font-size:.9rem}
+table.t th,table.t td{padding:6px 8px;border-bottom:1px solid var(--joint);text-align:right;white-space:nowrap}
+table.t th:first-child,table.t td:first-child{text-align:left}
+table.t th{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--olivier);font-weight:600}
+table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bottom:0}
+.couts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;padding:4px 16px 16px}
+.couts label{text-transform:none;letter-spacing:0;font-weight:600;font-size:.82rem;color:var(--encre)}
+.couts small{display:block;color:var(--doux);font-weight:400;font-size:.75rem}
+.alerte{background:#FBF1E6;border:1px solid #E9C9A6;padding:10px 14px;margin-bottom:12px;font-size:.9rem}
+.alerte a{color:var(--olivier);font-weight:600;cursor:pointer;text-decoration:underline}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.panneau-corps{grid-template-columns:1fr}.couts{grid-template-columns:1fr 1fr}.panneau-corps{overflow-x:auto}}
 @media (max-width:860px){.cmd-corps{grid-template-columns:1fr}.outils input{width:100%}.outils{width:100%}}
 </style>
 </head>
@@ -76,7 +97,7 @@ const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currenc
 const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
 const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
 const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
-let code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+let COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
 try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
 
 async function api(corps) {
@@ -103,7 +124,7 @@ function vueConnexion(msg) {
 
 async function charger() {
   const j = await api({ action:'liste', jours });
-  CMDS = j.commandes || [];
+  CMDS = j.commandes || []; COUTS = j.couts || {};
   $('#deco').hidden = false;
   vueListe();
 }
@@ -118,12 +139,14 @@ function vueListe() {
       <div class="outils"><input type="search" id="q" placeholder="Rechercher un nom, une ville, un modèle…" value="${esc(recherche)}" aria-label="Rechercher">
         <select id="j" aria-label="Période">${[30,90,180,365].map(n => `<option value="${n}" ${n === jours ? 'selected' : ''}>${n} jours</option>`).join('')}</select>
         <button class="btn-s" type="button" id="maj">Actualiser</button></div></div>
+    <div id="stats"></div>
     <div class="onglets" role="group" aria-label="Filtrer par statut">${onglets.map(([k, l]) => `<button class="onglet" type="button" data-f="${k}" aria-pressed="${filtre === k}">${l} <b>${compte(k)}</b></button>`).join('')}</div>
     <div id="liste"></div></div>`;
   $('#q').addEventListener('input', e => { recherche = e.target.value; peindre(); });
   $('#j').addEventListener('change', async e => { jours = +e.target.value; $('#liste').innerHTML = '<p class="charge">Chargement…</p>'; await charger().catch(er => alert(er.message)); });
   $('#maj').addEventListener('click', async () => { $('#liste').innerHTML = '<p class="charge">Chargement…</p>'; await charger().catch(er => alert(er.message)); });
   document.querySelectorAll('.onglet').forEach(b => b.addEventListener('click', () => { filtre = b.dataset.f; document.querySelectorAll('.onglet').forEach(x => x.setAttribute('aria-pressed', x === b)); peindre(); }));
+  peindreStats();
   peindre();
 }
 
@@ -153,6 +176,75 @@ function carte(c) {
     </div></article>`;
 }
 
+const CHAMPS_COUTS = [['carreau','Carreau','céramique + impression, par carreau'],['coffret','Coffret','boîte kraft du coffret de 3'],['chevalet','Chevalet','prix d’achat'],['surMesure','Dessin sur mesure','temps / sous-traitance, par carreau'],
+  ['emballage','Emballage','carton, calage, étiquette, par colis'],['envoiFrance','Envoi France','affranchissement moyen par colis'],['envoiEtranger','Envoi étranger','affranchissement moyen par colis'],['urssaf','URSSAF (%)','12,4 % = vente de marchandises + formation']];
+const cout = k => { const v = parseFloat(COUTS[k]); return isFinite(v) ? v * 100 : (k === 'urssaf' ? 1240 : 0); };   // en centimes (URSSAF : pourcentage × 100)
+function chiffres(liste) {
+  const r = { n: liste.length, ca: 0, port: 0, frais: 0, carreaux: 0, coffrets: 0, chevalets: 0, surMesure: 0, colis: 0, payantes: 0, offertes: 0, produits: 0, envoi: 0, urssaf: 0 };
+  for (const c of liste) {
+    r.ca += c.total; r.port += c.livraison; r.frais += c.frais || 0;
+    if (c.total > 0) r.payantes++; else r.offertes++;
+    const n = c.nb || {}; r.carreaux += n.carreaux || 0; r.coffrets += n.coffrets || 0; r.chevalets += n.chevalets || 0; r.surMesure += n.surMesure || 0;
+    if (c.colis) { r.colis++; r.envoi += (['FR','MC',''].includes(c.pays) ? cout('envoiFrance') : cout('envoiEtranger')) + cout('emballage'); }
+  }
+  r.produits = r.carreaux * cout('carreau') + r.coffrets * cout('coffret') + r.chevalets * cout('chevalet') + r.surMesure * cout('surMesure');
+  r.urssaf = Math.round(r.ca * cout('urssaf') / 10000);
+  r.net = r.ca - r.frais - r.produits - r.envoi - r.urssaf;
+  return r;
+}
+function peindreStats() {
+  const valides = CMDS.filter(c => c.suivi.statut !== 'annule');
+  const r = chiffres(valides);
+  const nbS = k => CMDS.filter(c => c.suivi.statut === k).length;
+  const sansCouts = !['carreau','envoiFrance'].some(k => parseFloat(COUTS[k]) > 0);
+  const pct = (a, b) => b ? Math.round(a / b * 100) + ' %' : '—';
+  // par mois
+  const mois = new Map();
+  for (const c of valides) { const d = new Date(c.heure); const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); if (!mois.has(k)) mois.set(k, []); mois.get(k).push(c); }
+  const lignesMois = [...mois].sort((a, b) => b[0].localeCompare(a[0])).map(([k, l]) => { const m = chiffres(l); const [a, mm] = k.split('-');
+    return `<tr><td>${new Date(+a, +mm - 1, 1).toLocaleDateString('fr-FR', { month:'long', year:'numeric' })}</td><td>${m.n}</td><td>${m.carreaux}</td><td>${euros(m.ca)}</td><td>${euros(m.net)}</td></tr>`; }).join('');
+  // modèles les plus vendus
+  const top = new Map();
+  for (const c of valides) for (const a of c.articles) {
+    if (a.type === 'carreau') top.set(a.modele, (top.get(a.modele) || 0) + a.q);
+    if (a.type === 'coffret') for (const m of a.modeles || []) top.set(m, (top.get(m) || 0) + a.q);
+  }
+  const lignesTop = [...top].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([m, q]) => `<tr><td>${esc(m)}</td><td>${q}</td></tr>`).join('');
+  $('#stats').innerHTML = `
+    ${sansCouts ? `<p class="alerte">Pour un résultat net juste, renseignez vos coûts (carreau, emballage, envoi…) dans <a id="ouvrir-couts">Mes coûts</a> ci-dessous.</p>` : ''}
+    <div class="stats">
+      <div class="stat"><span>Commandes</span><strong>${r.n}</strong><small>${r.payantes} payée${r.payantes > 1 ? 's' : ''} · ${r.offertes} offerte${r.offertes > 1 ? 's' : ''}</small></div>
+      <div class="stat"><span>Livrées</span><strong>${nbS('livre')}</strong><small>${nbS('envoye')} en route · ${compte('a-traiter')} à traiter</small></div>
+      <div class="stat"><span>Carreaux vendus</span><strong>${r.carreaux}</strong><small>${r.coffrets} coffret${r.coffrets > 1 ? 's' : ''} · ${r.chevalets} chevalet${r.chevalets > 1 ? 's' : ''}</small></div>
+      <div class="stat"><span>Panier moyen</span><strong>${r.payantes ? euros(Math.round(r.ca / r.payantes)) : '—'}</strong><small>commandes payées</small></div>
+      <div class="stat"><span>Chiffre d’affaires</span><strong>${euros(r.ca)}</strong><small>dont ${euros(r.port)} de port payé par les clients</small></div>
+      <div class="stat"><span>Frais Stripe</span><strong>${euros(r.frais)}</strong><small>${pct(r.frais, r.ca)} du CA</small></div>
+      <div class="stat"><span>Coûts (produits, envoi, URSSAF)</span><strong>${euros(r.produits + r.envoi + r.urssaf)}</strong><small>${r.colis} colis</small></div>
+      <div class="stat cle ${r.net < 0 ? 'neg' : ''}"><span>Résultat net</span><strong>${euros(r.net)}</strong><small>marge ${pct(r.net, r.ca)}${sansCouts ? ' · coûts à renseigner' : ''}</small></div>
+    </div>
+    <details class="panneau"><summary>Détail du résultat, par mois et meilleures ventes</summary><div class="panneau-corps">
+      <div><table class="t"><tr><th>Sur ${jours} jours, hors annulées</th><th>Montant</th></tr>
+        <tr><td>Chiffre d’affaires encaissé</td><td>${euros(r.ca)}</td></tr>
+        <tr><td>− Frais Stripe</td><td>${euros(-r.frais)}</td></tr>
+        <tr><td>− Carreaux, coffrets, chevalets, sur mesure</td><td>${euros(-r.produits)}</td></tr>
+        <tr><td>− Emballage et envoi (${r.colis} colis)</td><td>${euros(-r.envoi)}</td></tr>
+        <tr><td>− URSSAF (${(cout('urssaf') / 100).toLocaleString('fr-FR')} % du CA)</td><td>${euros(-r.urssaf)}</td></tr>
+        <tr class="total"><td>Résultat net</td><td>${euros(r.net)}</td></tr></table>
+        <p class="meta" style="font-size:.8rem;margin-top:8px">Les commandes offertes (code 100 %) n’apportent pas de CA mais leurs coûts sont comptés.</p></div>
+      <div><table class="t"><tr><th>Mois</th><th>Cmd</th><th>Carreaux</th><th>CA</th><th>Résultat</th></tr>${lignesMois || '<tr><td colspan="5">—</td></tr>'}</table>
+        <table class="t" style="margin-top:16px"><tr><th>Meilleures ventes</th><th>Carreaux</th></tr>${lignesTop || '<tr><td colspan="2">—</td></tr>'}</table></div>
+    </div></details>
+    <details class="panneau" id="panneau-couts"><summary>Mes coûts (servent au calcul du résultat net)</summary>
+      <form class="couts" id="f-couts">${CHAMPS_COUTS.map(([k, l, aide]) => `<div><label for="cout-${k}">${l} <small>${aide}</small></label><input type="text" inputmode="decimal" id="cout-${k}" name="${k}" value="${COUTS[k] != null ? String(COUTS[k]).replace('.', ',') : (k === 'urssaf' ? '12,4' : '')}" placeholder="${k === 'urssaf' ? '12,4' : '0,00 €'}"></div>`).join('')}
+        <div style="grid-column:1/-1;display:flex;gap:12px;align-items:center"><button class="btn" type="submit">Enregistrer mes coûts</button><span class="enreg" id="couts-ok" aria-live="polite"></span></div></form></details>`;
+  const ouvrir = $('#ouvrir-couts'); if (ouvrir) ouvrir.addEventListener('click', () => { $('#panneau-couts').open = true; $('#panneau-couts').scrollIntoView({ behavior:'smooth', block:'start' }); });
+  $('#f-couts').addEventListener('submit', async e => {
+    e.preventDefault(); const valeur = Object.fromEntries(new FormData(e.target)); $('#couts-ok').textContent = 'Enregistrement…';
+    try { const j = await api({ action:'couts', valeur }); COUTS = j.couts || {}; peindreStats(); $('#panneau-couts').open = true; $('#couts-ok').textContent = 'Coûts enregistrés ✓'; }
+    catch (er) { $('#couts-ok').textContent = er.message; }
+  });
+}
+
 function peindre() {
   const q = recherche.trim().toLowerCase();
   let l = CMDS.filter(c => filtre === 'tout' ? true : filtre === 'a-traiter' ? aTraiter(c) : c.suivi.statut === filtre);
@@ -172,6 +264,7 @@ function peindre() {
         const p = el.querySelector('.pastille'); p.textContent = nomStatut(nouveau.statut); p.style.setProperty('--c', couleur(nouveau.statut));
         info.textContent = 'Enregistré ✓';
         document.querySelectorAll('.onglet').forEach(b => b.querySelector('b').textContent = compte(b.dataset.f));
+        const ouvert = [...document.querySelectorAll('#stats details')].map(x => x.open); peindreStats(); document.querySelectorAll('#stats details').forEach((x, i) => x.open = ouvert[i]);
       } catch (er) { info.textContent = er.message; info.style.color = 'var(--afaire)'; if (er.statut === 401) vueConnexion('Session expirée, entrez le code à nouveau.'); }
     };
     el.querySelector('[data-champ="statut"]').addEventListener('change', enregistrer);

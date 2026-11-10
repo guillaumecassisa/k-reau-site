@@ -21,7 +21,8 @@ async function commandes(jours) {
   const depuis = Math.floor(Date.now() / 1000) - jours * 86400;
   const liste = []; let apres;
   for (let i = 0; i < 10; i++) {
-    const p = { limit: 100, status: 'complete', created: { gte: depuis }, 'expand[]': 'data.line_items' };
+    // frais Stripe réels : paiement → transaction de solde (4 niveaux d'extension au maximum)
+    const p = { limit: 100, status: 'complete', created: { gte: depuis }, expand: ['data.line_items', 'data.payment_intent.latest_charge.balance_transaction'] };
     if (apres) p.starting_after = apres;
     const r = await stripe('GET', 'checkout/sessions', p);
     liste.push(...r.data.filter(payee));
@@ -38,7 +39,13 @@ async function commandes(jours) {
       if (a.type === 'sur-mesure' && !a.detail) a.detail = c.surMesure;
     }
     const liv = s.shipping_details || {};
-    return { ...c, pays: (liv.address || {}).country || '', livraison: (s.shipping_cost && s.shipping_cost.amount_total) || 0 };
+    const pi = s.payment_intent && typeof s.payment_intent === 'object' ? s.payment_intent : null;
+    const bt = pi && pi.latest_charge && typeof pi.latest_charge === 'object' ? pi.latest_charge.balance_transaction : null;
+    const n = t => c.articles.filter(a => a.type === t).reduce((x, a) => x + a.q, 0);
+    return { ...c, pays: (liv.address || {}).country || '', livraison: (s.shipping_cost && s.shipping_cost.amount_total) || 0,
+      frais: bt && typeof bt === 'object' ? bt.fee || 0 : 0,
+      nb: { carreaux: n('carreau') + 3 * n('coffret') + n('sur-mesure'), coffrets: n('coffret'), surMesure: n('sur-mesure'), chevalets: n('accessoire'), cartes: n('carte') },
+      colis: c.adresse.length > 0 && c.articles.some(a => a.type !== 'carte') };
   });
 }
 
@@ -62,11 +69,21 @@ module.exports = async function handler(req, res) {
       await base('commande_maj', { session_id: id, statut, suivi: String(d.suivi || '').slice(0, 120), note: String(d.note || '').slice(0, 1000) });
       return res.status(200).json({ ok: true });
     }
+    if (d.action === 'couts') {
+      if (d.valeur && typeof d.valeur === 'object') {
+        const v = {}; for (const k of ['carreau', 'chevalet', 'coffret', 'emballage', 'envoiFrance', 'envoiEtranger', 'urssaf', 'surMesure']) { const x = parseFloat(String(d.valeur[k] ?? '').replace(',', '.')); if (isFinite(x) && x >= 0 && x < 1000) v[k] = Math.round(x * 100) / 100; }
+        await base('reglages_maj', { cle: 'couts', valeur: v });
+        return res.status(200).json({ couts: v });
+      }
+      return res.status(200).json({ couts: await base('reglages_lire', { cle: 'couts' }) });
+    }
     const jours = Math.max(7, Math.min(400, parseInt(d.jours, 10) || 90));
     const cmds = await commandes(jours);
     let suivis = {};
     try { suivis = cmds.length ? await base('commandes_statuts', { ids: cmds.map(c => c.id) }) : {}; } catch (e) { console.error('gestion base', e.message); }
-    return res.status(200).json({ commandes: cmds.map(c => ({ ...c, suivi: suivis[c.id] || { statut: 'a-faire', suivi: '', note: '' } })) });
+    let couts = {};
+    try { couts = await base('reglages_lire', { cle: 'couts' }); } catch (e) { console.error('gestion couts', e.message); }
+    return res.status(200).json({ couts, commandes: cmds.map(c => ({ ...c, suivi: suivis[c.id] || { statut: 'a-faire', suivi: '', note: '' } })) });
   } catch (e) {
     console.error('gestion', e.message);
     return res.status(502).json({ erreur: 'Service indisponible pour le moment' });
