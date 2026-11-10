@@ -57,7 +57,7 @@ const COLLECTIONS = {
     h1:'Carreaux décoratifs du Luberon',
     offrir:'Un souvenir du Luberon à offrir',
     texte:'Les villages perchés de Gordes, Lourmarin, Lacoste et Ansouis, le bassin de Cucuron, les ocres de Rustrel, les roues à aubes de L’Isle-sur-la-Sorgue, la source de Fontaine-de-Vaucluse et le pont suspendu de Mallemort : le Luberon dessiné sur des carreaux en céramique de 15 × 15 cm. Le cadeau idéal pour ceux qui y passent leurs vacances ou qui ont la chance d’y vivre.' },
-  'cote-d-azur': { nom:'La Côte d’Azur', titre:'Collection Côte d’Azur', cle:'Côte d’Azur', filtre:'Côte d’Azur', region:'Côte d’Azur', img:'/img/14_Produits_Cote_Azur/cote-d-azur-saint-tropez-port.webp', w:1254, h:1254,
+  'cote-d-azur': { nom:'La Côte d’Azur', titre:'Collection Côte d’Azur', cle:'Côte d’Azur', filtre:'Côte d’Azur', region:'Côte d’Azur', img:'/img/14_Produits_Cote_Azur/cote-d-azur-saint-tropez-terrasses.webp', w:1254, h:1254,
     court:'Saint-Tropez, Port Grimaud, Nice… La Côte d’Azur en un trait.',
     intro:'Le port et les terrasses de Saint-Tropez, les canaux de Port Grimaud, le front de mer de Sainte-Maxime et la Promenade des Anglais à Nice : la Côte d’Azur dessinée au trait, chaque lieu avec son nom en calligraphie.',
     seo:'Carreaux décoratifs Côte d’Azur | Saint-Tropez, Port Grimaud, Nice – K-Reau',
@@ -779,14 +779,20 @@ function brancherNewsletter(racine){
     });
   });
 }
-// Accueil : petite invitation à proposer un lieu (une fois par mois au plus), avant celle de la newsletter
+// Accueil : petite invitation à proposer un lieu (une fois par mois au plus), après celle de la newsletter
 let invitationMontree = false;
+let newsFermeeA = -1;   // -1 : carte newsletter pas montrée pendant cette visite ; 0 : affichée ; sinon heure de fermeture
 function inviterLieu(){
   const deja = store.get('kreau-lieu', null);
   if(deja && Date.now() - (deja.vu || 0) < 30 * 864e5) return;
-  setTimeout(() => {
-    const couche = $('#couche');
-    if(cleDepuisChemin(cheminFR()) !== 'accueil' || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim())) return;
+  const debut = Date.now();
+  const minuteur = setInterval(() => {
+    if(Date.now() - debut > 15 * 60000) return clearInterval(minuteur);
+    const couche = $('#couche'), news = store.get('kreau-news', null);
+    // la newsletter passe d'abord : on attend qu'elle ait été proposée et fermée depuis une minute (ou qu'elle ne soit plus à proposer)
+    const newsTraitee = newsFermeeA > 0 ? Date.now() - newsFermeeA >= 60000 : newsFermeeA === -1 && news && (news.inscrit || news.ferme) && Date.now() - debut >= 15000;
+    if(!newsTraitee || cleDepuisChemin(cheminFR()) !== 'accueil' || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim())) return;
+    clearInterval(minuteur);
     invitationMontree = true; store.set('kreau-lieu', { vu: Date.now() });
     const d = document.createElement('aside'); d.className = 'news-carte lieu-carte'; d.setAttribute('aria-label', 'Proposer un lieu');
     d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button>
@@ -799,21 +805,18 @@ function inviterLieu(){
     d.querySelector('.fermer').addEventListener('click', fermer);
     d.querySelector('a.btn').addEventListener('click', () => setTimeout(fermer, 0));
     document.addEventListener('keydown', function esc_(e){ if(e.key === 'Escape' && document.body.contains(d)){ fermer(); document.removeEventListener('keydown', esc_); } });
-  }, 15000);
+  }, 2000);
 }
 function inviterNewsletter(){
   const deja = store.get('kreau-news', null);
   if(deja && (deja.inscrit || Date.now() - (deja.ferme || 0) < 30 * 864e5)) return;
   // Déclencheurs : 12 s sur le site, la moitié de la page parcourue, ou la souris qui part vers le haut (ordinateur)
-  const debut = Date.now(); let fait = false, lieuVu = 0;
+  const debut = Date.now(); let fait = false;
   const montrer = () => {
     if(fait) return;
     const ch = cleDepuisChemin(cheminFR());
     const couche = $('#couche');
-    if(invitationMontree && !lieuVu) lieuVu = Date.now();
-    if(ch === 'accueil' && !invitationMontree && Date.now() - debut < 20000) return;   // l'accueil montre d'abord « Proposer un lieu »
-    if(lieuVu && Date.now() - lieuVu < 60000) return;
-    if(['merci','avis','panier','sur-mesure','contact'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
+    if(invitationMontree || ['merci','avis','panier','sur-mesure','contact'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
     fait = true; clearInterval(minuteur); removeEventListener('scroll', auDefilement); document.removeEventListener('mouseout', aLaSortie);
     const d = document.createElement('aside'); d.className = 'news-carte'; d.setAttribute('aria-label', 'Inscription aux nouvelles de K-Reau');
     d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button><h2>-10 % sur votre première commande</h2>
@@ -822,8 +825,8 @@ function inviterNewsletter(){
       <input type="email" id="news-email-2" placeholder="Votre adresse e-mail" autocomplete="email" required><input type="text" class="piege" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn btn-p" type="submit">Recevoir mon code</button><p class="news-retour" aria-live="polite"></p>
       <p class="news-mention">Désinscription en un clic. <a href="/confidentialite">Confidentialité</a></p></form>`;
-    document.body.appendChild(d); brancherNewsletter(d);
-    const fermer = () => { d.remove(); const v = store.get('kreau-news', null); if(!v || !v.inscrit) store.set('kreau-news', { ferme: Date.now() }); };
+    document.body.appendChild(d); brancherNewsletter(d); newsFermeeA = 0;
+    const fermer = () => { d.remove(); newsFermeeA = Date.now(); const v = store.get('kreau-news', null); if(!v || !v.inscrit) store.set('kreau-news', { ferme: Date.now() }); };
     d.querySelector('.fermer').addEventListener('click', fermer);
     document.addEventListener('keydown', function esc_(e){ if(e.key === 'Escape' && document.body.contains(d)){ fermer(); document.removeEventListener('keydown', esc_); } });
   };
