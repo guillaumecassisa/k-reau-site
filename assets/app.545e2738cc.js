@@ -899,7 +899,7 @@ function vueContact(){
 }
 
 /*GUIDES-DEBUT*/
-const GUIDE_COLL = { marseille:'que-ramener-de-marseille', 'cote-bleue':'cote-bleue-ports-et-calanques', 'aix-en-provence':'que-voir-a-aix-en-provence', luberon:'plus-beaux-villages-du-luberon', 'montagnes-du-sud':'montagnes-de-provence-randonnees', 'les-embiez':'iles-du-var-embiez-porquerolles', chateaux:'chateaux-de-la-loire-incontournables' };
+const GUIDE_COLL = { marseille:'que-ramener-de-marseille', 'cote-bleue':'cote-bleue-ports-et-calanques', 'aix-en-provence':'que-voir-a-aix-en-provence', 'cote-d-azur':'que-voir-a-saint-tropez', luberon:'plus-beaux-villages-du-luberon', 'montagnes-du-sud':'montagnes-de-provence-randonnees', 'les-embiez':'iles-du-var-embiez-porquerolles', chateaux:'chateaux-de-la-loire-incontournables' };
 const PL = (s, t) => `<a class="lien" href="/produits/${s}">${t}</a>`;
 const CL = (c, t) => `<a class="lien" href="/collections/${c}">${t}</a>`;
 const GUIDES = [
@@ -2047,6 +2047,160 @@ const GUIDES = [
    ['Quel cadeau offrir pour un Secret Santa au bureau ?', 'Un cadeau neutre et soigné : une spécialité gourmande, un livre, une plante ou un carreau illustré de la ville où vous travaillez, à 19,90 €.'],
    ['Comment organiser un Secret Santa ?', 'Fixez un budget et une date, faites le tirage au sort, idéalement en ligne pour garder le secret, et invitez chacun à noter deux ou trois envies sur une liste anonyme.'],
    ['Quel cadeau offrir à moins de 20 € à quelqu’un qu’on connaît peu ?', 'Un objet utile ou gourmand, de qualité, plutôt qu’un gadget. Un souvenir de sa ville ou de son lieu de vacances montre que vous avez pensé à la personne.']]
+},
+{
+  slug: 'que-voir-a-saint-tropez',
+  titre: 'Que voir à Saint-Tropez : le port, la place des Lices et la citadelle',
+  metaT: 'Que voir à Saint-Tropez : port, place des Lices, citadelle | K-Reau',
+  metaD: 'Le port et ses terrasses, la place des Lices et son marché, la citadelle, le musée de l’Annonciade et la tarte tropézienne : les incontournables de Saint-Tropez.',
+  date: '2026-11-10',
+  image: '/img/14_Produits_Cote_Azur/cote-d-azur-saint-tropez-port.webp',
+  intro: 'Ancien village de pêcheurs devenu l’un des ports les plus célèbres de Méditerranée, Saint-Tropez se découvre à pied, du quai aux ruelles de la Ponche. Voici ce qu’il ne faut pas manquer, de préférence tôt le matin ou hors saison, quand le village retrouve son calme.',
+  corps: () => `
+<h2>Le port, le cœur du village</h2>
+<p>Tout commence sur le quai. ${PL('cote-d-azur-saint-tropez-port','Le port de Saint-Tropez')} aligne ses façades ocre, roses et jaunes au bord de l’eau, devant les voiliers, les yachts et les pointus, ces barques traditionnelles de pêcheurs. Au-dessus des toits, le clocher de l’église Notre-Dame-de-l’Assomption sert de repère à tout le village.</p>
+<h2>Les terrasses du quai</h2>
+<p>S’asseoir en terrasse face aux bateaux fait partie du rituel. ${PL('cote-d-azur-saint-tropez-terrasses','Les terrasses de Saint-Tropez')}, avec leurs auvents rouges, sont devenues une image du village : on y prend un café le matin, quand les ponts des bateaux sont encore lavés à grande eau, ou un verre en fin de journée, quand le port s’anime.</p>
+<h2>La place des Lices et son marché</h2>
+<p>À quelques rues du port, la place des Lices est bordée de platanes. On y joue à la pétanque à l’ombre, et le marché provençal s’y installe le mardi et le samedi matin : fruits et légumes, fromages, fleurs, tissus et vaisselle. C’est la place la plus vivante du village, hors des foules du quai.</p>
+<h2>La Ponche et la citadelle</h2>
+<p>Derrière le port, le vieux quartier de la Ponche descend vers une petite plage de pêcheurs, entre maisons serrées et ruelles étroites. Au-dessus du village, la citadelle du XVIIe siècle domine le golfe : sa vue embrasse les toits de Saint-Tropez, la mer et, au loin, les Maures. Elle abrite aujourd’hui un musée consacré à l’histoire maritime de la ville.</p>
+<h2>Le musée de l’Annonciade</h2>
+<p>Installé dans une ancienne chapelle sur le port, le musée de l’Annonciade rappelle que Saint-Tropez fut d’abord un village de peintres. Paul Signac s’y installa à la fin du XIXe siècle et y attira de nombreux artistes : le musée réunit des toiles pointillistes, fauves et nabis inspirées par la lumière du golfe.</p>
+<h2>La tarte tropézienne</h2>
+<p>Impossible de quitter Saint-Tropez sans goûter la tarte tropézienne : une brioche moelleuse garnie de crème et parsemée de sucre perlé, créée dans le village en 1955. Elle se partage très bien et se transporte facilement pour un pique-nique sur la plage.</p>
+<h2>Un souvenir de Saint-Tropez</h2>
+<p>Notre ${CL('cote-d-azur','collection Côte d’Azur')} dessine ${PL('cote-d-azur-saint-tropez-port','le port')} et ${PL('cote-d-azur-saint-tropez-terrasses','les terrasses de Saint-Tropez')} au trait sur des carreaux en céramique de 15 × 15 cm, avec leur nom en calligraphie, et la touche rouge des auvents pour le second. Un autre lieu du golfe vous tient à cœur ? <a class="lien" href="/carte-des-lieux#proposer">Proposez-le-nous</a>.</p>`,
+  produits: ['cote-d-azur-saint-tropez-port','cote-d-azur-saint-tropez-terrasses','cote-d-azur-port-grimaud','cote-d-azur-sainte-maxime','cote-d-azur-nice','porquerolles','les-embiez','marseille-vieux-port'],
+  motCle: 'que voir à Saint-Tropez',
+  faq: [
+   ['Que voir à Saint-Tropez en une journée ?', 'Le port et ses terrasses, la place des Lices, le quartier de la Ponche, la citadelle et sa vue sur le golfe, puis le musée de l’Annonciade.'],
+   ['Quel jour a lieu le marché de Saint-Tropez ?', 'Le marché provençal se tient sur la place des Lices le mardi et le samedi matin.'],
+   ['Quand visiter Saint-Tropez ?', 'Au printemps et en automne, le village est plus calme qu’en plein été. Tôt le matin, même en saison, on profite du port presque seul.'],
+   ['Quel souvenir rapporter de Saint-Tropez ?', 'Une tarte tropézienne à partager, des sandales tropéziennes, ou un objet qui dure comme un carreau en céramique du port de Saint-Tropez.']]
+},
+{
+  slug: 'port-grimaud-venise-provencale',
+  titre: 'Port Grimaud, la Venise provençale : visiter la cité lacustre',
+  metaT: 'Port Grimaud, la Venise provençale : que voir, que faire | K-Reau',
+  metaD: 'Canaux, petits ponts, maisons colorées et coches d’eau : comment visiter Port Grimaud, la cité lacustre du golfe de Saint-Tropez imaginée par François Spoerry.',
+  date: '2026-11-10',
+  image: '/img/14_Produits_Cote_Azur/cote-d-azur-port-grimaud.webp',
+  intro: 'Au fond du golfe de Saint-Tropez, Port Grimaud ne ressemble à aucun autre port : ici, chaque maison a son bateau amarré devant la porte, et l’on passe d’un quartier à l’autre par les canaux. Voici comment découvrir la Venise provençale, à pied ou au fil de l’eau.',
+  corps: () => `
+<h2>Une cité née dans les années 1960</h2>
+<p>À la place d’anciens marécages, l’architecte François Spoerry imagine à partir de 1966 une cité lacustre où la voiture laisse la place au bateau. Le résultat, ${PL('cote-d-azur-port-grimaud','Port Grimaud')}, mêle maisons de pêcheurs aux façades colorées, toits de tuiles, arcades et petits ponts, comme un village provençal posé sur l’eau. La cité est aujourd’hui reconnue pour son architecture remarquable du XXe siècle.</p>
+<h2>Se promener le long des canaux</h2>
+<p>La visite se fait d’abord à pied : on suit les quais, on traverse les ponts en dos d’âne, on s’arrête sur la place du Marché et ses terrasses. Les couleurs des façades changent à chaque maison, et les reflets dans l’eau font le reste. Le matin, les canaux sont particulièrement calmes.</p>
+<h2>Les coches d’eau</h2>
+<p>Pour voir la cité sous son meilleur angle, rien ne vaut les coches d’eau, ces petits bateaux qui parcourent les canaux pendant une trentaine de minutes. On peut aussi louer un bateau électrique sans permis pour explorer les canaux à son rythme.</p>
+<h2>L’église Saint-François-d’Assise</h2>
+<p>Sur la place de l’église, l’église Saint-François-d’Assise est un monument de la cité. Ses vitraux sont l’œuvre de Victor Vasarely, et du haut de son clocher, quand il est ouvert à la visite, la vue s’étend sur les canaux, les toits et tout le golfe.</p>
+<h2>Grimaud, le village perché</h2>
+<p>Port Grimaud dépend de la commune de Grimaud, dont le vieux village perché se trouve à quelques kilomètres dans les terres. Ruelles fleuries, moulin restauré et ruines du château au sommet : une belle balade à combiner avec la cité lacustre, avec une vue sur le golfe depuis les remparts.</p>
+<h2>Un souvenir de Port Grimaud</h2>
+<p>Notre ${CL('cote-d-azur','collection Côte d’Azur')} dessine ${PL('cote-d-azur-port-grimaud','Port Grimaud')} au trait sur un carreau en céramique de 15 × 15 cm : les canaux, le petit pont, les voiliers devant les maisons et le grand pin parasol, avec le nom en calligraphie. Un cadeau pour ceux qui y ont un pied-à-terre ou un bateau, et pour tous les amoureux du golfe.</p>`,
+  produits: ['cote-d-azur-port-grimaud','cote-d-azur-sainte-maxime','cote-d-azur-saint-tropez-port','cote-d-azur-saint-tropez-terrasses','cote-d-azur-nice','luberon-l-isle-sur-la-sorgue','les-embiez','porquerolles'],
+  motCle: 'Port Grimaud',
+  faq: [
+   ['Pourquoi appelle-t-on Port Grimaud la Venise provençale ?', 'Parce que la cité est construite sur l’eau : les maisons sont desservies par des canaux et reliées par de petits ponts, comme à Venise.'],
+   ['Qui a construit Port Grimaud ?', 'L’architecte François Spoerry, qui a imaginé la cité lacustre à partir de 1966 au fond du golfe de Saint-Tropez.'],
+   ['Comment visiter Port Grimaud ?', 'À pied le long des quais, en coche d’eau pour une promenade commentée sur les canaux, ou en louant un petit bateau électrique.'],
+   ['Port Grimaud et Grimaud, est-ce la même chose ?', 'Port Grimaud est la cité lacustre en bord de mer ; Grimaud est le vieux village perché de la même commune, à quelques kilomètres dans les terres.']]
+},
+{
+  slug: 'golfe-de-saint-tropez-villages',
+  titre: 'Le golfe de Saint-Tropez : Sainte-Maxime, Port Grimaud, Gassin et Ramatuelle',
+  metaT: 'Golfe de Saint-Tropez : les villages à voir autour | K-Reau',
+  metaD: 'Sainte-Maxime, Port Grimaud, Grimaud, Gassin et Ramatuelle : les villages du golfe de Saint-Tropez, entre ports, plages et villages perchés.',
+  date: '2026-11-10',
+  image: '/img/14_Produits_Cote_Azur/cote-d-azur-sainte-maxime.webp',
+  intro: 'Saint-Tropez n’est qu’un des villages du golfe. Tout autour, entre mer et massif des Maures, les ports, les plages et les villages perchés se succèdent sur quelques kilomètres. Voici un petit tour du golfe, rive nord et rive sud.',
+  corps: () => `
+<h2>Sainte-Maxime, face à Saint-Tropez</h2>
+<p>Sur la rive nord du golfe, ${PL('cote-d-azur-sainte-maxime','Sainte-Maxime')} regarde Saint-Tropez de l’autre côté de l’eau. Sa promenade bordée de pins parasols et de palmiers, son petit port et ses plages de sable en font une station familiale. Sur le front de mer, la Tour Carrée, ancienne tour de défense, abrite un petit musée des traditions locales. Des navettes maritimes relient Sainte-Maxime à Saint-Tropez : la traversée évite les embouteillages de l’été et offre une belle vue sur le golfe.</p>
+<h2>Port Grimaud, la cité lacustre</h2>
+<p>Au fond du golfe, ${PL('cote-d-azur-port-grimaud','Port Grimaud')} est une cité construite sur l’eau dans les années 1960 : canaux, petits ponts et maisons colorées avec chacune son bateau amarré. On la parcourt à pied ou en coche d’eau. Nous lui consacrons un <a class="lien" href="/guides/port-grimaud-venise-provencale">guide complet</a>.</p>
+<h2>Grimaud, le village perché</h2>
+<p>À quelques kilomètres dans les terres, le vieux village de Grimaud s’enroule autour des ruines de son château. Ruelles pavées, maisons fleuries et moulin restauré : la vue depuis le sommet embrasse tout le golfe.</p>
+<h2>Gassin, le balcon du golfe</h2>
+<p>Perché sur sa colline entre Saint-Tropez et Cogolin, Gassin est l’un des Plus Beaux Villages de France. Sa terrasse, en bout de village, offre l’un des plus beaux panoramas sur le golfe et le massif des Maures, idéal au coucher du soleil.</p>
+<h2>Ramatuelle et la plage de Pampelonne</h2>
+<p>Sur la presqu’île, Ramatuelle déroule ses ruelles en colimaçon autour de la colline, entre vignes et oliviers. En contrebas, la grande plage de Pampelonne s’étire sur plusieurs kilomètres de sable : c’est l’une des plages les plus connues de la Côte d’Azur.</p>
+<h2>Saint-Tropez, bien sûr</h2>
+<p>Le tour du golfe se termine à Saint-Tropez, entre ${PL('cote-d-azur-saint-tropez-port','le port')}, ${PL('cote-d-azur-saint-tropez-terrasses','ses terrasses')} et la place des Lices. Pour tout voir, lisez notre guide <a class="lien" href="/guides/que-voir-a-saint-tropez">que voir à Saint-Tropez</a>.</p>
+<h2>Un souvenir du golfe</h2>
+<p>Notre ${CL('cote-d-azur','collection Côte d’Azur')} réunit Saint-Tropez, Port Grimaud et Sainte-Maxime au trait sur des carreaux en céramique de 15 × 15 cm. Trois lieux du golfe qui tiennent parfaitement dans un <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, à offrir à ceux qui y passent leurs étés.</p>`,
+  produits: ['cote-d-azur-sainte-maxime','cote-d-azur-port-grimaud','cote-d-azur-saint-tropez-port','cote-d-azur-saint-tropez-terrasses','cote-d-azur-nice','porquerolles','les-embiez','montagnes-rocher-de-roquebrune'],
+  motCle: 'golfe de Saint-Tropez',
+  faq: [
+   ['Quels sont les villages du golfe de Saint-Tropez ?', 'Saint-Tropez, Sainte-Maxime, Grimaud et Port Grimaud, Cogolin, Gassin, Ramatuelle, La Croix-Valmer, Le Plan-de-la-Tour, La Garde-Freinet, Cavalaire et Rayol-Canadel font partie du golfe.'],
+   ['Comment aller de Sainte-Maxime à Saint-Tropez sans voiture ?', 'Des navettes maritimes traversent le golfe entre les deux ports : c’est souvent plus rapide que la route en été.'],
+   ['Où voir le plus beau panorama sur le golfe ?', 'Depuis les villages perchés de Gassin et de Grimaud, ou depuis la citadelle de Saint-Tropez.'],
+   ['Quelle est la plage la plus connue du golfe ?', 'La plage de Pampelonne, à Ramatuelle, qui s’étend sur plusieurs kilomètres.']]
+},
+{
+  slug: 'nice-promenade-des-anglais',
+  titre: 'Nice : la Promenade des Anglais, la chaise bleue et le Vieux-Nice',
+  metaT: 'Nice : Promenade des Anglais, chaise bleue et Vieux-Nice | K-Reau',
+  metaD: 'La Promenade des Anglais et ses chaises bleues, le Negresco, le Vieux-Nice, le cours Saleya et la colline du Château : les incontournables de Nice.',
+  date: '2026-11-10',
+  image: '/img/14_Produits_Cote_Azur/cote-d-azur-nice.webp',
+  intro: 'Capitale de la Côte d’Azur, Nice se découvre entre mer et vieille ville. Des chaises bleues de la Promenade des Anglais aux ruelles du Vieux-Nice, voici ce qu’il ne faut pas manquer, et ce qu’il faut goûter.',
+  corps: () => `
+<h2>La Promenade des Anglais</h2>
+<p>La Promenade des Anglais longe la baie des Anges sur plusieurs kilomètres, entre palmiers et galets. Elle doit son nom aux hivernants britanniques qui venaient à Nice au XIXe siècle, quand la ville était la grande station d’hiver de la Riviera. Depuis 2021, ce patrimoine de la villégiature d’hiver est inscrit au patrimoine mondial de l’UNESCO.</p>
+<h2>La chaise bleue, symbole de Nice</h2>
+<p>Alignées face à la mer, les chaises bleues de la Promenade sont devenues le symbole de la ville : on s’y assoit pour regarder la baie, lire ou attendre le coucher du soleil. Elles ont même inspiré une grande sculpture installée sur la Promenade. Notre carreau ${PL('cote-d-azur-nice','Nice')} la dessine en bleu vif, seule touche de couleur sur le dessin au trait.</p>
+<h2>Le Negresco et son dôme</h2>
+<p>Ouvert en 1913, l’hôtel Negresco est la silhouette la plus reconnaissable de la Promenade, avec sa façade blanche et son dôme rose. Il fait partie des grands hôtels qui racontent l’âge d’or de la Riviera.</p>
+<h2>Le Vieux-Nice et le cours Saleya</h2>
+<p>Entre la mer et la colline, le Vieux-Nice est un dédale de ruelles aux façades ocre et rouges, de chapelles baroques et de petites places. Le cours Saleya accueille chaque matin, sauf le lundi, un marché aux fleurs et aux produits frais ; le lundi, il laisse place à la brocante.</p>
+<h2>La colline du Château</h2>
+<p>Au bout de la baie, la colline du Château domine la ville. On y monte à pied ou par l’ascenseur pour profiter de la cascade, des jardins et surtout de la vue sur la baie des Anges, le port et les toits du Vieux-Nice.</p>
+<h2>Les saveurs niçoises</h2>
+<p>La socca, galette de farine de pois chiches cuite au four à bois, se mange brûlante, poivrée, en se promenant. Ajoutez le pan bagnat, la pissaladière aux oignons et aux anchois, la salade niçoise et les petits farcis : la cuisine niçoise est une raison de visite à elle seule.</p>
+<h2>Un souvenir de Nice</h2>
+<p>Notre carreau ${PL('cote-d-azur-nice','Nice')}, dans la ${CL('cote-d-azur','collection Côte d’Azur')}, réunit la chaise bleue, les palmiers, le dôme du Negresco et la courbe de la baie des Anges, avec le nom de la ville en calligraphie. Un cadeau pour les Niçois exilés et tous ceux qui ont regardé la mer depuis une chaise bleue.</p>`,
+  produits: ['cote-d-azur-nice','cote-d-azur-saint-tropez-terrasses','cote-d-azur-saint-tropez-port','cote-d-azur-port-grimaud','cote-d-azur-sainte-maxime','marseille-vieux-port','marseille-notre-dame-de-la-garde','les-embiez'],
+  motCle: 'Promenade des Anglais Nice',
+  faq: [
+   ['Pourquoi les chaises de Nice sont-elles bleues ?', 'Les chaises bleues de la Promenade des Anglais rappellent la couleur de la mer et du ciel : elles sont devenues le symbole de la ville.'],
+   ['Pourquoi s’appelle-t-elle la Promenade des Anglais ?', 'Parce qu’elle a été aménagée au XIXe siècle à l’initiative des hivernants britanniques, nombreux à passer l’hiver à Nice.'],
+   ['Que voir à Nice en une journée ?', 'La Promenade des Anglais, le Negresco, le Vieux-Nice et le marché du cours Saleya, puis la colline du Château pour la vue sur la baie des Anges.'],
+   ['Quelle spécialité goûter à Nice ?', 'La socca, galette de pois chiches, mais aussi le pan bagnat, la pissaladière et la salade niçoise.']]
+},
+{
+  slug: 'que-ramener-de-la-cote-d-azur',
+  titre: 'Que ramener de la Côte d’Azur ? 10 idées de souvenirs',
+  metaT: 'Que ramener de la Côte d’Azur ? 10 idées de souvenirs | K-Reau',
+  metaD: 'Tarte tropézienne, sandales, parfum de Grasse, socca, savon, céramique illustrée : 10 idées de souvenirs à rapporter de la Côte d’Azur, de Saint-Tropez à Nice.',
+  date: '2026-11-10',
+  image: '/img/14_Produits_Cote_Azur/cote-d-azur-saint-tropez-terrasses.webp',
+  intro: 'Au moment de rentrer, on voudrait emporter un peu de lumière, de mer et de pins parasols. Voici dix idées de souvenirs à rapporter de la Côte d’Azur, des spécialités à déguster tout de suite aux objets qui restent des années.',
+  corps: () => `
+<h2>Les souvenirs gourmands</h2>
+<p><strong>1. Une tarte tropézienne.</strong> La brioche à la crème née à Saint-Tropez en 1955 se rapporte dans sa boîte et se partage le soir même.</p>
+<p><strong>2. De l’huile d’olive.</strong> L’arrière-pays niçois et le Var produisent des huiles d’olive réputées, à acheter directement au moulin ou sur les marchés.</p>
+<p><strong>3. Des fruits confits et des calissons.</strong> Les confiseurs de la côte travaillent les fruits confits depuis longtemps : une belle boîte à offrir.</p>
+<p><strong>4. Du vin rosé.</strong> Les côtes-de-provence, notamment autour du golfe de Saint-Tropez, sont l’accompagnement naturel d’un dîner d’été, à boire bien frais.</p>
+<h2>Les souvenirs à porter</h2>
+<p><strong>5. Des sandales tropéziennes.</strong> Les sandales en cuir fabriquées à Saint-Tropez se reconnaissent à leur simplicité et se portent tout l’été.</p>
+<p><strong>6. Un parfum de Grasse.</strong> À une demi-heure de la côte, Grasse, capitale mondiale du parfum, permet de visiter des parfumeries et parfois de composer son propre parfum.</p>
+<h2>Les souvenirs pour la maison</h2>
+<p><strong>7. Un savon artisanal.</strong> Savon à l’huile d’olive ou parfumé à la fleur d’oranger, il se glisse facilement dans la valise.</p>
+<p><strong>8. Du linge de table provençal.</strong> Nappes et serviettes aux motifs d’olives, de citrons ou de cigales apportent un air de vacances à la table.</p>
+<p><strong>9. Des citrons de Menton ou de la confiture d’agrumes.</strong> Menton, tout près de la frontière italienne, est connue pour ses citrons, que l’on retrouve en confitures, en liqueurs et en gourmandises.</p>
+<p><strong>10. Un carreau illustré de son lieu préféré.</strong> Pour un souvenir qui dure, choisissez un lieu précis dessiné au trait : ${PL('cote-d-azur-saint-tropez-terrasses','les terrasses de Saint-Tropez')}, ${PL('cote-d-azur-saint-tropez-port','le port de Saint-Tropez')}, ${PL('cote-d-azur-port-grimaud','Port Grimaud')}, ${PL('cote-d-azur-sainte-maxime','Sainte-Maxime')} ou ${PL('cote-d-azur-nice','Nice et sa chaise bleue')}. À poser sur une étagère ou à accrocher au mur, il rappelle chaque jour le lieu où l’on a passé ses vacances.</p>
+<h2>Comment choisir ?</h2>
+<p>Pour vous-même, un objet que vous verrez souvent garde le souvenir vivant. Pour offrir, pensez au lieu qui compte pour la personne : la plage de son enfance, le port où elle a son bateau, la ville où elle a grandi. Toute notre ${CL('cote-d-azur','collection Côte d’Azur')} se compose aussi en <a class="lien" href="/coffrets">coffret de 3 carreaux</a>, livraison offerte.</p>`,
+  produits: ['cote-d-azur-saint-tropez-terrasses','cote-d-azur-nice','cote-d-azur-port-grimaud','cote-d-azur-sainte-maxime','cote-d-azur-saint-tropez-port','porquerolles','les-embiez','marseille-vieux-port'],
+  motCle: 'que ramener de la Côte d’Azur',
+  faq: [
+   ['Quel souvenir typique rapporter de la Côte d’Azur ?', 'La tarte tropézienne, les sandales tropéziennes, un parfum de Grasse, de l’huile d’olive, des citrons de Menton ou un objet décoratif illustré d’un lieu de la côte.'],
+   ['Quel souvenir original offrir de Saint-Tropez ?', 'Un objet qui représente un lieu précis, comme un carreau en céramique du port ou des terrasses de Saint-Tropez, plutôt qu’un objet touristique générique.'],
+   ['Quel souvenir rapporter de Nice ?', 'Un objet à l’effigie de la chaise bleue de la Promenade des Anglais, de l’huile d’olive de l’arrière-pays ou des spécialités niçoises comme la socca à goûter sur place.'],
+   ['Quel souvenir de vacances dure le plus longtemps ?', 'Un objet de décoration que l’on voit tous les jours, comme un carreau illustré du lieu des vacances, posé sur une étagère ou accroché au mur.']]
 }
 ];
 /*GUIDES-FIN*/
