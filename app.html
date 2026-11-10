@@ -724,6 +724,7 @@ const CONFIG = {
     { id:'trio-montagnes', nom:'Trio Montagnes du Sud', slugs:['montagnes-sainte-victoire','montagnes-garlaban','montagnes-mont-ventoux'] },
     { id:'trio-calanques', nom:'Trio Calanques', slugs:['marseille-calanque-sormiou','marseille-calanque-morgiou','marseille-cap-canaille'] },
     { id:'trio-luberon', nom:'Trio Luberon', slugs:['luberon-gordes','luberon-lourmarin','luberon-l-isle-sur-la-sorgue'] },
+    { id:'trio-saint-tropez', nom:'Trio Saint-Tropez', slugs:['cote-d-azur-saint-tropez-port','cote-d-azur-place-des-lys','cote-d-azur-saint-tropez-terrasses'] },
     { id:'trio-loire', nom:'Trio Châteaux de la Loire', slugs:['chateaux-chambord','chateaux-chenonceau','chateaux-amboise'] }
   ],
   livraisonGratuiteDes: 50,
@@ -815,8 +816,8 @@ for(const f of ['pushState','replaceState']){ const o = history[f].bind(history)
 const app = $('#app');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const prixDe = slug => { const n = parseFloat(String(parSlug(slug)?.prix_eur ?? '').replace(',','.')); return n > 0 ? n : CONFIG.prix.carreau; };
-// coffret : 54,90 € + le supplément des modèles en couleur (2 € chacun)
-const prixCoffret = slugs => Math.round((CONFIG.prix.coffret + slugs.reduce((t, s) => t + prixDe(s) - CONFIG.prix.carreau, 0)) * 100) / 100;
+// coffret de 3 carreaux : toujours 54,90 €, même avec des modèles en couleur
+const prixCoffret = slugs => CONFIG.prix.coffret;
 const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) : ''; };
 const aCompleter = (v, txt='À compléter avant mise en ligne') => v ? esc(v) : `<span class="a-completer">${txt}</span>`;
 const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
@@ -3345,7 +3346,7 @@ function vueCoffrets(){
   let choix = avec && parSlug(avec) ? [avec] : [];
   const trioCarte = t => `<article class="offre"><div class="offre-visuel"><div class="mosaique-trio">${t.slugs.map(x=>`<img src="${esc(parSlug(x)?.miniature||'')}" alt="${esc(parSlug(x)?.nom||'')}" loading="lazy">`).join('')}</div></div>
     <div class="offre-corps"><h3>${esc(t.nom)}</h3><p class="muted small">${t.slugs.map(x=>esc(parSlug(x)?.nom||'')).join(' · ')}</p>
-    <p class="offre-prix">${prixEur(CONFIG.prix.coffret)}<s>${prixEur(3*CONFIG.prix.carreau)}</s></p>
+    <p class="offre-prix">${prixEur(prixCoffret(t.slugs))}<s>${prixEur(t.slugs.reduce((n, x) => n + prixDe(x), 0))}</s></p>
     <button class="btn btn-p" type="button" data-trio="${t.id}">Ajouter au panier</button></div></article>`;
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Coffrets','']])}
