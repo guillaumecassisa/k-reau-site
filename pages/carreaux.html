@@ -560,6 +560,15 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .ab-txt{display:grid;gap:6px;min-width:0}
 .ab-cit{font-size:.92rem;line-height:1.45}
 .ab-auteur{font-size:.8rem;color:var(--encre-doux)}
+.ab-rail.ab-fixe{width:auto}
+/* mobile : carrousel au doigt, une carte à la fois, avance automatique */
+.ab-mobile{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 16px 4px;scroll-padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.ab-mobile::-webkit-scrollbar{display:none}
+.ab-mobile .ab-carte{flex:none;width:calc(100vw - 56px);scroll-snap-align:center}
+.ab-points{display:flex;justify-content:center;gap:4px;margin-top:10px}
+.ab-points button{width:28px;height:28px;border:0;background:none;padding:0;display:grid;place-items:center;cursor:pointer}
+.ab-points button::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--joint);transition:background .2s,transform .2s}
+.ab-points button[aria-current=true]::after{background:var(--olivier);transform:scale(1.2)}
 .etoiles{--note:0;position:relative;display:inline-block;font-size:1rem;letter-spacing:2px;line-height:1;color:#D9D2C5;white-space:nowrap}
 .etoiles::before{content:"★★★★★";position:absolute;inset:0;width:calc(var(--note) / 5 * 100%);overflow:hidden;color:#B08A3E}
 .note-resume{display:inline-flex;align-items:center;gap:10px;font-size:.88rem;color:var(--encre-doux);text-decoration:none;margin:-4px 0 4px}
@@ -1296,7 +1305,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.1613680f5c.js" defer=""></script>
+<script src="/assets/app.02c7587562.js" defer=""></script>
 
 
 

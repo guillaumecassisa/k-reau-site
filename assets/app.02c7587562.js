@@ -703,10 +703,28 @@ async function bandeauAvis(){
     <span class="ab-auteur"><span translate="no">${esc(joliNom(a.prenom))}${a.ville ? ' · ' + esc(joliNom(a.ville)) : ''}</span> · <span>${esc(a.nom)}</span></span></span></a>`;
   const defile = l.length >= 3;
   const moy = Math.round(l.reduce((x, a) => x + a.note, 0) / l.length * 10) / 10;
+  const mobile = matchMedia('(max-width: 700px)').matches;
   sec.innerHTML = `<div class="wrap ab-tete"><h2 id="t-avis-bandeau">Ils ont adopté leur carreau</h2><span class="ab-moy">${etoiles(moy)}<span class="small muted">Avis vérifiés de clients</span></span></div>
-    ${defile ? `<div class="ab-piste defile" style="--duree:${Math.max(30, l.length * 9)}s"><div class="ab-rail">${l.map(a => carte(a)).join('')}${l.map(a => carte(a, true)).join('')}</div></div>`
+    ${mobile ? `<div class="ab-mobile" tabindex="0" aria-label="Avis clients, faites glisser pour voir les suivants">${l.map(a => carte(a)).join('')}</div>${l.length > 1 ? `<div class="ab-points" role="group" aria-label="Choisir un avis">${l.map((a, i) => `<button type="button" aria-label="Avis ${i + 1} sur ${l.length}" aria-current="${i === 0}"></button>`).join('')}</div>` : ''}`
+    : defile ? `<div class="ab-piste defile" style="--duree:${Math.max(30, l.length * 9)}s"><div class="ab-rail">${l.map(a => carte(a)).join('')}${l.map(a => carte(a, true)).join('')}</div></div>`
       : `<div class="wrap"><div class="ab-rail ab-fixe">${l.map(a => carte(a)).join('')}</div></div>`}`;
   sec.hidden = false;
+  if(mobile && l.length > 1) carrouselAvis(sec);
+}
+function carrouselAvis(sec){
+  const piste = sec.querySelector('.ab-mobile'), points = [...sec.querySelectorAll('.ab-points button')], cartes = [...piste.children];
+  const actuel = () => { const c = piste.scrollLeft + piste.clientWidth / 2; let i = 0, d = Infinity; cartes.forEach((x, k) => { const e = Math.abs(x.offsetLeft + x.offsetWidth / 2 - c); if(e < d){ d = e; i = k; } }); return i; };
+  const aller = i => piste.scrollTo({ left: cartes[i].offsetLeft - (piste.clientWidth - cartes[i].offsetWidth) / 2, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  let raf; piste.addEventListener('scroll', () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { const i = actuel(); points.forEach((p, k) => p.setAttribute('aria-current', k === i)); }); }, { passive:true });
+  points.forEach((p, k) => p.addEventListener('click', () => { arreter(); aller(k); }));
+  // avance toute seule toutes les 5 s, s'arrête dès que la personne touche le carrousel
+  let minuteur = null;
+  const arreter = () => { clearInterval(minuteur); minuteur = null; };
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const io = new IntersectionObserver(e => { if(e[0].isIntersecting && minuteur === null && !sec.dataset.touche) minuteur = setInterval(() => aller((actuel() + 1) % cartes.length), 5000); else if(!e[0].isIntersecting) arreter(); }, { threshold: .5 });
+    io.observe(piste);
+    ['touchstart','pointerdown','wheel','focusin'].forEach(ev => piste.addEventListener(ev, () => { sec.dataset.touche = '1'; arreter(); io.disconnect(); }, { passive:true }));
+  }
 }
 
 async function chargerAvis(p){
