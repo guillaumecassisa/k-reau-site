@@ -1353,5 +1353,24 @@
     <g:product_type>Décoration &gt; Carreaux décoratifs &gt; Les Alpes</g:product_type>
     <g:material>Céramique</g:material>
   </item>
+  <item>
+    <g:id>alpes-ceuse</g:id>
+    <g:title>Carreau décoratif Céüse – céramique 15 x 15 cm</g:title>
+    <g:description>La longue barre de falaises calcaires posée sur la montagne, les pentes et la forêt de sapins à ses pieds. Céüse, la montagne de Gap, connue des grimpeurs du monde entier. Au-dessus de Gap et de Sigoyer, dans les Hautes-Alpes, la montagne de Céüse se reconnaît de loin à sa barre de falaises calcaires, longue d’environ deux kilomètres et haute d’une centaine de mètres. C’est l’un des sites d’escalade les plus réputés au monde, avec plus de 800 voies : Chris Sharma y a gravi Biographie, la première voie cotée 9a+. Les randonneurs y montent aussi pour la vue sur le Gapençais et le Dévoluy. Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir d’Alpes.</g:description>
+    <g:link>https://k-reau.fr/produits/alpes-ceuse</g:link>
+    <g:image_link>https://k-reau.fr/img/15_Produits_Alpes/alpes-ceuse.webp</g:image_link>
+    <g:additional_image_link>https://k-reau.fr/img/etagere/alpes-ceuse-etagere.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/coffret/alpes-ceuse-coffret.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/details/alpes-ceuse-detail.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/dimensions/alpes-ceuse-dimensions.webp</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>19.90 EUR</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>K-Reau</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:google_product_category>696</g:google_product_category>
+    <g:product_type>Décoration &gt; Carreaux décoratifs &gt; Les Alpes</g:product_type>
+    <g:material>Céramique</g:material>
+  </item>
 </channel>
 </rss>
