@@ -1334,5 +1334,24 @@
     <g:product_type>Décoration &gt; Carreaux décoratifs &gt; La Côte d’Azur</g:product_type>
     <g:material>Céramique</g:material>
   </item>
+  <item>
+    <g:id>alpes-superdevoluy</g:id>
+    <g:title>Carreau décoratif Superdévoluy – céramique 15 x 15 cm</g:title>
+    <g:description>La grande résidence courbe au pied des pistes, le télésiège, les skieurs et les sommets du Dévoluy. Superdévoluy, la station des Hautes-Alpes et son immeuble emblématique, le Bois d’Aurouze. Ouverte à Noël 1966 dans le massif du Dévoluy, au sud des Alpes, Superdévoluy est une station pensée comme un ensemble : l’architecte Henry Bernard en a dessiné le plan. Sa résidence du Bois d’Aurouze, construite de 1967 à 1972, déroule sur près de 200 mètres sa façade courbe au pied des pistes, si bien qu’on chausse les skis en sortant de chez soi. L’ensemble a reçu en 2015 le label Architecture contemporaine remarquable. Carreau en céramique blanche brillante de 15 x 15 cm, illustration noire imprimée en UV. Idée cadeau souvenir d’Alpes.</g:description>
+    <g:link>https://k-reau.fr/produits/alpes-superdevoluy</g:link>
+    <g:image_link>https://k-reau.fr/img/15_Produits_Alpes/alpes-superdevoluy.webp</g:image_link>
+    <g:additional_image_link>https://k-reau.fr/img/etagere/alpes-superdevoluy-etagere.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/coffret/alpes-superdevoluy-coffret.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/details/alpes-superdevoluy-detail.webp</g:additional_image_link>
+    <g:additional_image_link>https://k-reau.fr/img/dimensions/alpes-superdevoluy-dimensions.webp</g:additional_image_link>
+    <g:availability>in_stock</g:availability>
+    <g:price>19.90 EUR</g:price>
+    <g:condition>new</g:condition>
+    <g:brand>K-Reau</g:brand>
+    <g:identifier_exists>no</g:identifier_exists>
+    <g:google_product_category>696</g:google_product_category>
+    <g:product_type>Décoration &gt; Carreaux décoratifs &gt; Les Alpes</g:product_type>
+    <g:material>Céramique</g:material>
+  </item>
 </channel>
 </rss>

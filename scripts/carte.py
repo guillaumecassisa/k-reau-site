@@ -10,9 +10,9 @@ OUT = '/home/claude/k-reau-site/data/carte.json'
 deps = [(f['properties']['code'], f['properties']['nom'], shape(f['geometry'])) for f in json.load(open(SRC))['features']]
 
 VUES = {
-  'provence': dict(bbox=(4.45, 42.95, 7.40, 44.33), w=1000, tol=0.0035,
+  'provence': dict(bbox=(4.45, 42.95, 7.40, 44.82), w=1000, tol=0.0035,
                    villes=[('Marseille', 5.3698, 43.2965), ('Aix-en-Provence', 5.4474, 43.5297), ('Toulon', 5.9280, 43.1242),
-                           ('Avignon', 4.8057, 43.9493), ('Apt', 5.3964, 43.8763), ('Martigues', 5.0548, 43.4053), ('Salon-de-Provence', 5.0970, 43.6403), ('Nice', 7.2620, 43.7102)]),
+                           ('Avignon', 4.8057, 43.9493), ('Apt', 5.3964, 43.8763), ('Martigues', 5.0548, 43.4053), ('Salon-de-Provence', 5.0970, 43.6403), ('Nice', 7.2620, 43.7102), ('Gap', 6.0794, 44.5594)]),
   'marseille': dict(bbox=(5.00, 43.14, 5.66, 43.40), w=1000, tol=0.0006,
                     villes=[('Marseille', 5.4000, 43.3150), ('Cassis', 5.5380, 43.2250), ('Aubagne', 5.5700, 43.2928), ('Carry-le-Rouet', 5.1530, 43.3420)]),
 }
