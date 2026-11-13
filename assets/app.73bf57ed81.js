@@ -2730,6 +2730,13 @@ const SM_EXEMPLES = [
   { f:'photo-plage-vers-carreau', w:1536, h:1024, g:'Votre photo', legende:'Exemple : votre photo de vacances illustrée en couleurs sur un carreau.',
     alt:'À gauche, la photo d’une famille assise sur une plage méditerranéenne ; à droite, la même scène illustrée en couleurs sur un carreau K-Reau' }
 ];
+const SM_PROJETS = [
+  { f:'laponie-2023', t:'Laponie 2023', alt:'Carreau K-Reau dessiné sur mesure : chalet sous les aurores boréales en Laponie, posé dans une crédence de cuisine' },
+  { f:'tanzanie-2023', t:'Tanzanie 2023', alt:'Carreau K-Reau dessiné sur mesure : éléphants et acacias au pied du Kilimandjaro, posé dans une crédence de cuisine' },
+  { f:'mexique-2024', t:'Mexique 2024', alt:'Carreau K-Reau dessiné sur mesure : pyramide maya entourée de palmiers, posé dans une crédence de cuisine' },
+  { f:'argentine-2025', t:'Argentine 2025', alt:'Carreau K-Reau dessiné sur mesure : montagnes de Patagonie au bord d’un lac, posé dans une crédence de cuisine' },
+  { f:'maldives-2026', t:'Maldives 2026', alt:'Carreau K-Reau dessiné sur mesure : bungalows sur pilotis et palmier aux Maldives, posé dans une crédence de cuisine' }
+];
 function vueSurMesure(){
   setMeta('Carreau personnalisé sur mesure : votre lieu dessiné | K-Reau', `Votre maison, votre village ou votre plage dessiné au trait sur un carreau en céramique 15 × 15 cm, avec le nom de votre choix en calligraphie. ${prixEur(CONFIG.prix.surMesure)}.`);
   app.innerHTML = `
@@ -2757,6 +2764,11 @@ function vueSurMesure(){
       <li><strong>Vous validez</strong><span>Nous vous envoyons le dessin par e-mail ; vous pouvez demander une retouche.</span></li>
       <li><strong>Nous l’imprimons</strong><span>Puis l’expédions dans son coffret.</span></li>
     </ol>
+    <section class="sm-realisations" aria-labelledby="sm-real-titre">
+      <div class="bloc-titre"><span class="eyebrow">Nos projets</span><h2 id="sm-real-titre">Une cuisine qui raconte ses voyages</h2>
+        <p>Un client nous a confié un projet un peu particulier : faire de sa crédence de cuisine le carnet de ses voyages. Laponie, Tanzanie, Mexique, Argentine, Maldives : à partir de ses photos, nous avons dessiné chaque destination à la main, avec son nom et son année en calligraphie. Il a ensuite posé lui-même ses carreaux au milieu de son carrelage. Aujourd’hui, chaque café du matin a un petit air de voyage.</p></div>
+      <div class="sm-grille">${SM_PROJETS.map(p => `<figure><img src="/img/sur-mesure/projets/${p.f}.webp" srcset="/img/sur-mesure/projets/${p.f}-mini.webp 600w, /img/sur-mesure/projets/${p.f}.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="${esc(p.alt)}"><figcaption>${esc(p.t)}</figcaption></figure>`).join('')}</div>
+    </section>
     <form class="formulaire" id="form-sm" novalidate style="max-width:680px">
       <h2>Votre carreau</h2>
       <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>

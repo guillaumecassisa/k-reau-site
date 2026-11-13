@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.4601f0c9d4.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.0394ed1418.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -478,6 +478,13 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-boutons{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .sm-projet{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between;background:var(--sable-clair);padding:clamp(24px,4vw,40px);max-width:980px}
 .sm-projet h2{margin:0 0 8px}.sm-projet p{margin:0;color:var(--encre-doux);max-width:36em}
+.sm-realisations{display:grid;gap:24px;padding-top:clamp(8px,2vw,16px)}
+.sm-realisations .bloc-titre{margin:0;max-width:44em}.sm-realisations .bloc-titre p{color:var(--encre-doux)}
+.sm-grille{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:0}
+.sm-grille figure{margin:0;grid-column:span 2}.sm-grille figure:nth-child(-n+2){grid-column:span 3}
+.sm-grille img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:var(--r)}
+.sm-grille figcaption{font-size:.85rem;color:var(--encre-doux);margin-top:6px}
+@media(max-width:700px){.sm-grille{grid-template-columns:1fr 1fr;gap:10px}.sm-grille figure,.sm-grille figure:nth-child(-n+2){grid-column:span 1}.sm-grille figure:first-child{grid-column:span 2}}
 .guides-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
 .guide-carte{display:grid;gap:14px;align-content:start}
 .guide-visuel{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sable-clair)}.guide-visuel img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.guide-carte:hover .guide-visuel img{transform:scale(1.03)}
@@ -670,6 +677,11 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <li><strong>Vous validez</strong><span>Nous vous envoyons le dessin par e-mail ; vous pouvez demander une retouche.</span></li>
       <li><strong>Nous l’imprimons</strong><span>Puis l’expédions dans son coffret.</span></li>
     </ol>
+    <section class="sm-realisations" aria-labelledby="sm-real-titre">
+      <div class="bloc-titre"><span class="eyebrow">Nos projets</span><h2 id="sm-real-titre">Une cuisine qui raconte ses voyages</h2>
+        <p>Un client nous a confié un projet un peu particulier : faire de sa crédence de cuisine le carnet de ses voyages. Laponie, Tanzanie, Mexique, Argentine, Maldives : à partir de ses photos, nous avons dessiné chaque destination à la main, avec son nom et son année en calligraphie. Il a ensuite posé lui-même ses carreaux au milieu de son carrelage. Aujourd’hui, chaque café du matin a un petit air de voyage.</p></div>
+      <div class="sm-grille"><figure><img src="/img/sur-mesure/projets/laponie-2023.webp" srcset="/img/sur-mesure/projets/laponie-2023-mini.webp 600w, /img/sur-mesure/projets/laponie-2023.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Carreau K-Reau dessiné sur mesure : chalet sous les aurores boréales en Laponie, posé dans une crédence de cuisine"><figcaption>Laponie 2023</figcaption></figure><figure><img src="/img/sur-mesure/projets/tanzanie-2023.webp" srcset="/img/sur-mesure/projets/tanzanie-2023-mini.webp 600w, /img/sur-mesure/projets/tanzanie-2023.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Carreau K-Reau dessiné sur mesure : éléphants et acacias au pied du Kilimandjaro, posé dans une crédence de cuisine"><figcaption>Tanzanie 2023</figcaption></figure><figure><img src="/img/sur-mesure/projets/mexique-2024.webp" srcset="/img/sur-mesure/projets/mexique-2024-mini.webp 600w, /img/sur-mesure/projets/mexique-2024.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Carreau K-Reau dessiné sur mesure : pyramide maya entourée de palmiers, posé dans une crédence de cuisine"><figcaption>Mexique 2024</figcaption></figure><figure><img src="/img/sur-mesure/projets/argentine-2025.webp" srcset="/img/sur-mesure/projets/argentine-2025-mini.webp 600w, /img/sur-mesure/projets/argentine-2025.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Carreau K-Reau dessiné sur mesure : montagnes de Patagonie au bord d’un lac, posé dans une crédence de cuisine"><figcaption>Argentine 2025</figcaption></figure><figure><img src="/img/sur-mesure/projets/maldives-2026.webp" srcset="/img/sur-mesure/projets/maldives-2026-mini.webp 600w, /img/sur-mesure/projets/maldives-2026.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Carreau K-Reau dessiné sur mesure : bungalows sur pilotis et palmier aux Maldives, posé dans une crédence de cuisine"><figcaption>Maldives 2026</figcaption></figure></div>
+    </section>
     <form class="formulaire" id="form-sm" novalidate="" style="max-width:680px">
       <h2>Votre carreau</h2>
       <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required="" placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
@@ -760,7 +772,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.02c7587562.js" defer=""></script>
+<script src="/assets/app.73bf57ed81.js" defer=""></script>
 
 
 

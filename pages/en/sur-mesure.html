@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.4601f0c9d4.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.0394ed1418.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -478,6 +478,13 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-boutons{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .sm-projet{display:flex;flex-wrap:wrap;gap:20px 40px;align-items:center;justify-content:space-between;background:var(--sable-clair);padding:clamp(24px,4vw,40px);max-width:980px}
 .sm-projet h2{margin:0 0 8px}.sm-projet p{margin:0;color:var(--encre-doux);max-width:36em}
+.sm-realisations{display:grid;gap:24px;padding-top:clamp(8px,2vw,16px)}
+.sm-realisations .bloc-titre{margin:0;max-width:44em}.sm-realisations .bloc-titre p{color:var(--encre-doux)}
+.sm-grille{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:0}
+.sm-grille figure{margin:0;grid-column:span 2}.sm-grille figure:nth-child(-n+2){grid-column:span 3}
+.sm-grille img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block;border-radius:var(--r)}
+.sm-grille figcaption{font-size:.85rem;color:var(--encre-doux);margin-top:6px}
+@media(max-width:700px){.sm-grille{grid-template-columns:1fr 1fr;gap:10px}.sm-grille figure,.sm-grille figure:nth-child(-n+2){grid-column:span 1}.sm-grille figure:first-child{grid-column:span 2}}
 .guides-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
 .guide-carte{display:grid;gap:14px;align-content:start}
 .guide-visuel{display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sable-clair)}.guide-visuel img{width:100%;height:100%;object-fit:cover;transition:transform .4s}.guide-carte:hover .guide-visuel img{transform:scale(1.03)}
@@ -670,6 +677,11 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
       <li><strong>You approve it</strong><span>We email you the drawing; you can ask for changes.</span></li>
       <li><strong>We print it</strong><span>Then send it in its gift box.</span></li>
     </ol>
+    <section class="sm-realisations" aria-labelledby="sm-real-titre">
+      <div class="bloc-titre"><span class="eyebrow">Our projects</span><h2 id="sm-real-titre">A kitchen that tells the story of its travels</h2>
+        <p>One customer came to us with an unusual project: turning his kitchen splashback into a travel journal. Lapland, Tanzania, Mexico, Argentina, the Maldives: working from his photos, we drew each destination by hand, with its name and year in calligraphy. He then set the tiles himself among his existing ones. Now every morning coffee comes with a hint of travel.</p></div>
+      <div class="sm-grille"><figure><img src="/img/sur-mesure/projets/laponie-2023.webp" srcset="/img/sur-mesure/projets/laponie-2023-mini.webp 600w, /img/sur-mesure/projets/laponie-2023.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Custom K-Reau tile: a cabin under the northern lights in Lapland, set in a kitchen splashback"><figcaption>Lapland 2023</figcaption></figure><figure><img src="/img/sur-mesure/projets/tanzanie-2023.webp" srcset="/img/sur-mesure/projets/tanzanie-2023-mini.webp 600w, /img/sur-mesure/projets/tanzanie-2023.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Custom K-Reau tile: elephants and acacias at the foot of Kilimanjaro, set in a kitchen splashback"><figcaption>Tanzania 2023</figcaption></figure><figure><img src="/img/sur-mesure/projets/mexique-2024.webp" srcset="/img/sur-mesure/projets/mexique-2024-mini.webp 600w, /img/sur-mesure/projets/mexique-2024.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Custom K-Reau tile: a Mayan pyramid surrounded by palm trees, set in a kitchen splashback"><figcaption>Mexico 2024</figcaption></figure><figure><img src="/img/sur-mesure/projets/argentine-2025.webp" srcset="/img/sur-mesure/projets/argentine-2025-mini.webp 600w, /img/sur-mesure/projets/argentine-2025.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Custom K-Reau tile: Patagonian mountains above a lake, set in a kitchen splashback"><figcaption>Argentina 2025</figcaption></figure><figure><img src="/img/sur-mesure/projets/maldives-2026.webp" srcset="/img/sur-mesure/projets/maldives-2026-mini.webp 600w, /img/sur-mesure/projets/maldives-2026.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="Custom K-Reau tile: overwater bungalows and a palm tree in the Maldives, set in a kitchen splashback"><figcaption>Maldives 2026</figcaption></figure></div>
+    </section>
     <form class="formulaire" id="form-sm" novalidate="" style="max-width:680px">
       <h2>Your tile</h2>
       <div class="champ"><label for="sm-texte">Name written in calligraphy on the tile</label><input type="text" id="sm-texte" maxlength="32" required="" placeholder="E.g. La Bastide des Pins"><span class="small muted">32 characters maximum.</span><span class="err" aria-live="polite"></span></div>
@@ -760,7 +772,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.02c7587562.js" defer=""></script>
+<script src="/assets/app.73bf57ed81.js" defer=""></script>
 
 
 
