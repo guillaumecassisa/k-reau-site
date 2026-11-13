@@ -161,7 +161,7 @@ async function charger(){
     if(!r.ok) throw new Error(r.status);
     const abs = u => u ? '/'+u.replace(/^\//,'') : u;
     if(LANG === 'en' && !window.__kreauI18n) await new Promise(ok => { addEventListener('kreau-i18n', ok, { once:true }); setTimeout(ok, 4000); }); // traduction chargée avant d'afficher
-    PRODUITS = (await r.json()).filter(p => p.publie !== false).map(p => ({...p, image_principale: abs(p.image_principale), miniature: abs(p.miniature), image_detail: abs(p.image_detail), image_coffret: abs(p.image_coffret), image_dimensions: abs(p.image_dimensions), image_etagere: abs(p.image_etagere), image_en_main: abs(p.image_en_main)})); ERREUR = null;
+    PRODUITS = (await r.json()).filter(p => p.publie !== false).map(p => ({...p, image_principale: abs(p.image_principale), miniature: abs(p.miniature), image_detail: abs(p.image_detail), image_coffret: abs(p.image_coffret), image_dimensions: abs(p.image_dimensions), image_etagere: abs(p.image_etagere), image_en_main: abs(p.image_en_main), image_salon: abs(p.image_salon)})); ERREUR = null;
   }catch(e){ ERREUR = e; }
   document.querySelectorAll('[data-coll]').forEach(el => el.hidden = !collPubliee(el.dataset.coll));
   route();
@@ -564,7 +564,7 @@ function vueProduit(slug){
   setMeta(titreLong.length <= 65 ? titreLong : `Carreau ${p.nom} | Cadeau ${cadeauDe} – K-Reau`.length <= 65 ? `Carreau ${p.nom} | Cadeau ${cadeauDe} – K-Reau` : `Carreau ${p.nom} – K-Reau`,
     `Carreau décoratif ${p.nom} en céramique 15 × 15 cm, dessin au trait et nom calligraphié. Idée cadeau souvenir ${deLieu(region)}. ${prixEur(prixDe(p.slug))}, livraison offerte dès 50 €.`,
     { image: p.image_principale, ld: { '@context':'https://schema.org', '@type':'Product', name:`Carreau décoratif ${p.nom}`, sku:p.slug, url:urlP,
-      image:[p.image_principale,p.image_en_main,p.image_etagere,p.image_detail,p.image_coffret,p.image_dimensions].filter(Boolean).map(u=>'https://k-reau.fr'+u), description:`${p.description} ${p.a_propos||''}`.trim(),
+      image:[p.image_principale,p.image_en_main,p.image_salon,p.image_etagere,p.image_detail,p.image_coffret,p.image_dimensions].filter(Boolean).map(u=>'https://k-reau.fr'+u), description:`${p.description} ${p.a_propos||''}`.trim(),
       brand:{ '@type':'Brand', name:'K-Reau' }, material:'Céramique', category:'Décoration > Carreaux décoratifs',
       width:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' }, height:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' },
       offers:{ '@type':'Offer', url:urlP, price:prixDe(p.slug).toFixed(2), priceCurrency:'EUR', availability:'https://schema.org/InStock', itemCondition:'https://schema.org/NewCondition',
@@ -578,6 +578,7 @@ function vueProduit(slug){
   const vues = [
     { src:p.image_principale, alt:p.alt, label:'Le carreau', pos:'50% 50%' },
     p.image_en_main && { src:p.image_en_main, alt:`Main tenant le carreau ${p.nom} devant le lieu qu’il représente`, label:'Le carreau sur place', pos:'50% 55%' },
+    p.image_salon && { src:p.image_salon, alt:`Carreau ${p.nom} accroché au mur d’un salon chaleureux, à côté d’une bougie et d’un olivier`, label:'Le carreau au mur', pos:'48% 45%' },
     p.image_etagere && { src:p.image_etagere, alt:`Carreau ${p.nom} posé sur un chevalet dans une bibliothèque en bois, lumière du soir`, label:'Le carreau chez vous', pos:'52% 45%' },
     p.image_detail && { src:p.image_detail, alt:`Gros plan sur le dessin au trait du carreau ${p.nom}`, label:'Détail du dessin', pos:'50% 50%' },
     p.image_coffret && { src:p.image_coffret, alt:`Carreau ${p.nom} dans son coffret K-Reau en carton kraft, prêt à être expédié`, label:'Dans son coffret d’expédition', pos:'60% 72%' },

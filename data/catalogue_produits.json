@@ -30,7 +30,8 @@
   "geo": [
    43.2951,
    5.374
-  ]
+  ],
+  "image_salon": "img/salon/marseille-vieux-port-salon.webp"
  },
  {
   "id": "marseille-notre-dame-de-la-garde",
@@ -62,7 +63,8 @@
   "geo": [
    43.284,
    5.3712
-  ]
+  ],
+  "image_salon": "img/salon/marseille-notre-dame-de-la-garde-salon.webp"
  },
  {
   "collection": "Marseille",
@@ -90,7 +92,8 @@
   "image_detail": "img/details/marseille-bonne-mere-doree-detail.webp",
   "image_coffret": "img/coffret/marseille-bonne-mere-doree-coffret.webp",
   "image_etagere": "img/etagere/marseille-bonne-mere-doree-etagere.webp",
-  "image_dimensions": "img/dimensions/marseille-bonne-mere-doree-dimensions.webp"
+  "image_dimensions": "img/dimensions/marseille-bonne-mere-doree-dimensions.webp",
+  "image_salon": "img/salon/marseille-bonne-mere-doree-salon.webp"
  },
  {
   "id": "marseille-mucem",
@@ -122,7 +125,8 @@
   "geo": [
    43.2967,
    5.3611
-  ]
+  ],
+  "image_salon": "img/salon/marseille-mucem-salon.webp"
  },
  {
   "id": "marseille-la-major",
@@ -154,7 +158,8 @@
   "geo": [
    43.2994,
    5.3654
-  ]
+  ],
+  "image_salon": "img/salon/marseille-la-major-salon.webp"
  },
  {
   "id": "marseille-vallon-des-auffes",
@@ -186,7 +191,8 @@
   "geo": [
    43.2853,
    5.3502
-  ]
+  ],
+  "image_salon": "img/salon/marseille-vallon-des-auffes-salon.webp"
  },
  {
   "id": "marseille-chateau-d-if",
@@ -218,7 +224,8 @@
   "geo": [
    43.2799,
    5.3251
-  ]
+  ],
+  "image_salon": "img/salon/marseille-chateau-d-if-salon.webp"
  },
  {
   "id": "marseille-iles-du-frioul",
@@ -250,7 +257,8 @@
   "geo": [
    43.2797,
    5.308
-  ]
+  ],
+  "image_salon": "img/salon/marseille-iles-du-frioul-salon.webp"
  },
  {
   "id": "marseille-calanque-sormiou",
@@ -282,7 +290,8 @@
   "geo": [
    43.2097,
    5.4181
-  ]
+  ],
+  "image_salon": "img/salon/marseille-calanque-sormiou-salon.webp"
  },
  {
   "id": "marseille-calanque-morgiou",
@@ -314,7 +323,8 @@
   "geo": [
    43.212,
    5.4458
-  ]
+  ],
+  "image_salon": "img/salon/marseille-calanque-morgiou-salon.webp"
  },
  {
   "id": "marseille-palais-longchamp",
@@ -346,7 +356,8 @@
   "geo": [
    43.3046,
    5.3946
-  ]
+  ],
+  "image_salon": "img/salon/marseille-palais-longchamp-salon.webp"
  },
  {
   "id": "marseille-tour-cma-cgm",
@@ -378,7 +389,8 @@
   "geo": [
    43.3118,
    5.3657
-  ]
+  ],
+  "image_salon": "img/salon/marseille-tour-cma-cgm-salon.webp"
  },
  {
   "id": "marseille-velodrome",
@@ -410,7 +422,8 @@
   "geo": [
    43.2698,
    5.3959
-  ]
+  ],
+  "image_salon": "img/salon/marseille-velodrome-salon.webp"
  },
  {
   "id": "marseille-panisse",
@@ -442,7 +455,8 @@
   "geo": [
    43.2958,
    5.37
-  ]
+  ],
+  "image_salon": "img/salon/marseille-panisse-salon.webp"
  },
  {
   "id": "marseille-david",
@@ -474,7 +488,8 @@
   "geo": [
    43.2593,
    5.3747
-  ]
+  ],
+  "image_salon": "img/salon/marseille-david-salon.webp"
  },
  {
   "id": "marseille-corniche-kennedy",
@@ -506,7 +521,8 @@
   "geo": [
    43.277,
    5.353
-  ]
+  ],
+  "image_salon": "img/salon/marseille-corniche-kennedy-salon.webp"
  },
  {
   "id": "marseille-le-panier",
@@ -538,7 +554,8 @@
   "geo": [
    43.2989,
    5.369
-  ]
+  ],
+  "image_salon": "img/salon/marseille-le-panier-salon.webp"
  },
  {
   "id": "marseille-canebiere",
@@ -570,7 +587,8 @@
   "geo": [
    43.2976,
    5.379
-  ]
+  ],
+  "image_salon": "img/salon/marseille-canebiere-salon.webp"
  },
  {
   "id": "marseille-cite-radieuse",
@@ -602,7 +620,8 @@
   "geo": [
    43.2617,
    5.3963
-  ]
+  ],
+  "image_salon": "img/salon/marseille-cite-radieuse-salon.webp"
  },
  {
   "id": "marseille-fort-saint-jean",
@@ -634,7 +653,8 @@
   "geo": [
    43.2955,
    5.362
-  ]
+  ],
+  "image_salon": "img/salon/marseille-fort-saint-jean-salon.webp"
  },
  {
   "id": "marseille-le-prado",
@@ -666,7 +686,8 @@
   "geo": [
    43.258,
    5.376
-  ]
+  ],
+  "image_salon": "img/salon/marseille-le-prado-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -698,7 +719,8 @@
   "geo": [
    43.205,
    5.55
-  ]
+  ],
+  "image_salon": "img/salon/marseille-cap-canaille-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -730,7 +752,8 @@
   "geo": [
    43.1749,
    5.6046
-  ]
+  ],
+  "image_salon": "img/salon/marseille-la-ciotat-salon.webp"
  },
  {
   "id": "cote-bleue-port-niolon",
@@ -762,7 +785,8 @@
   "geo": [
    43.338,
    5.256
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-port-niolon-salon.webp"
  },
  {
   "id": "cote-bleue-calanque-mejean",
@@ -794,7 +818,8 @@
   "geo": [
    43.331,
    5.221
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-calanque-mejean-salon.webp"
  },
  {
   "id": "cote-bleue-port-la-redonne",
@@ -826,7 +851,8 @@
   "geo": [
    43.337,
    5.193
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-port-la-redonne-salon.webp"
  },
  {
   "id": "cote-bleue-carry-le-rouet",
@@ -858,7 +884,8 @@
   "geo": [
    43.331,
    5.153
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-carry-le-rouet-salon.webp"
  },
  {
   "id": "cote-bleue-sausset-les-pins",
@@ -890,7 +917,8 @@
   "geo": [
    43.329,
    5.115
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-sausset-les-pins-salon.webp"
  },
  {
   "id": "cote-bleue-port-carro",
@@ -922,7 +950,8 @@
   "geo": [
    43.329,
    5.04
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-port-carro-salon.webp"
  },
  {
   "id": "cote-bleue-cap-couronne",
@@ -954,7 +983,8 @@
   "geo": [
    43.327,
    5.055
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-cap-couronne-salon.webp"
  },
  {
   "id": "cote-bleue-plage-sainte-croix",
@@ -986,7 +1016,8 @@
   "geo": [
    43.333,
    5.071
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-plage-sainte-croix-salon.webp"
  },
  {
   "id": "cote-bleue-ensues-la-redonne",
@@ -1018,7 +1049,8 @@
   "geo": [
    43.355,
    5.205
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-ensues-la-redonne-salon.webp"
  },
  {
   "id": "cote-bleue-estaque",
@@ -1050,7 +1082,8 @@
   "geo": [
    43.362,
    5.317
-  ]
+  ],
+  "image_salon": "img/salon/cote-bleue-estaque-salon.webp"
  },
  {
   "id": "les-embiez",
@@ -1082,7 +1115,8 @@
   "geo": [
    43.079,
    5.786
-  ]
+  ],
+  "image_salon": "img/salon/les-embiez-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1115,7 +1149,8 @@
   "geo": [
    43.0,
    6.203
-  ]
+  ],
+  "image_salon": "img/salon/porquerolles-salon.webp"
  },
  {
   "id": "montagnes-sainte-victoire",
@@ -1150,7 +1185,8 @@
   "geo": [
    43.532,
    5.597
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-sainte-victoire-salon.webp"
  },
  {
   "id": "montagnes-sainte-baume",
@@ -1182,7 +1218,8 @@
   "geo": [
    43.329,
    5.76
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-sainte-baume-salon.webp"
  },
  {
   "id": "montagnes-mont-salva",
@@ -1214,7 +1251,8 @@
   "geo": [
    43.105,
    5.855
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-mont-salva-salon.webp"
  },
  {
   "id": "montagnes-gros-cerveau",
@@ -1246,7 +1284,8 @@
   "geo": [
    43.155,
    5.815
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-gros-cerveau-salon.webp"
  },
  {
   "id": "montagnes-mont-faron",
@@ -1278,7 +1317,8 @@
   "geo": [
    43.14,
    5.935
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-mont-faron-salon.webp"
  },
  {
   "id": "montagnes-mont-caume",
@@ -1310,7 +1350,8 @@
   "geo": [
    43.186,
    5.92
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-mont-caume-salon.webp"
  },
  {
   "id": "montagnes-garlaban",
@@ -1342,7 +1383,8 @@
   "geo": [
    43.327,
    5.557
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-garlaban-salon.webp"
  },
  {
   "id": "montagnes-mont-ventoux",
@@ -1374,7 +1416,8 @@
   "geo": [
    44.174,
    5.279
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-mont-ventoux-salon.webp"
  },
  {
   "id": "montagnes-mont-puget",
@@ -1406,7 +1449,8 @@
   "geo": [
    43.224,
    5.433
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-mont-puget-salon.webp"
  },
  {
   "id": "montagnes-rocher-de-roquebrune",
@@ -1438,7 +1482,8 @@
   "geo": [
    43.43,
    6.65
-  ]
+  ],
+  "image_salon": "img/salon/montagnes-rocher-de-roquebrune-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1471,7 +1516,8 @@
   "geo": [
    43.923,
    5.483
-  ]
+  ],
+  "image_salon": "img/salon/luberon-rustrel-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1504,7 +1550,8 @@
   "geo": [
    43.774,
    5.439
-  ]
+  ],
+  "image_salon": "img/salon/luberon-cucuron-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1537,7 +1584,8 @@
   "geo": [
    43.919,
    5.051
-  ]
+  ],
+  "image_salon": "img/salon/luberon-l-isle-sur-la-sorgue-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1570,7 +1618,8 @@
   "geo": [
    43.922,
    5.128
-  ]
+  ],
+  "image_salon": "img/salon/luberon-fontaine-de-vaucluse-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1603,7 +1652,8 @@
   "geo": [
    43.738,
    5.464
-  ]
+  ],
+  "image_salon": "img/salon/luberon-ansouis-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1636,7 +1686,8 @@
   "geo": [
    43.731,
    5.18
-  ]
+  ],
+  "image_salon": "img/salon/luberon-mallemort-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1669,7 +1720,8 @@
   "geo": [
    43.764,
    5.362
-  ]
+  ],
+  "image_salon": "img/salon/luberon-lourmarin-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1702,7 +1754,8 @@
   "geo": [
    43.911,
    5.2
-  ]
+  ],
+  "image_salon": "img/salon/luberon-gordes-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1735,7 +1788,8 @@
   "geo": [
    43.832,
    5.273
-  ]
+  ],
+  "image_salon": "img/salon/luberon-lacoste-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -1767,7 +1821,8 @@
   "geo": [
    43.5262,
    5.4454
-  ]
+  ],
+  "image_salon": "img/salon/aix-la-rotonde-salon.webp"
  },
  {
   "id": "chateaux-versailles",
@@ -1800,7 +1855,8 @@
   "geo": [
    48.8049,
    2.1204
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-versailles-salon.webp"
  },
  {
   "id": "chateaux-chambord",
@@ -1833,7 +1889,8 @@
   "geo": [
    47.6161,
    1.517
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-chambord-salon.webp"
  },
  {
   "id": "chateaux-chenonceau",
@@ -1866,7 +1923,8 @@
   "geo": [
    47.3249,
    1.0703
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-chenonceau-salon.webp"
  },
  {
   "id": "chateaux-amboise",
@@ -1899,7 +1957,8 @@
   "geo": [
    47.4133,
    0.9861
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-amboise-salon.webp"
  },
  {
   "id": "chateaux-blois",
@@ -1932,7 +1991,8 @@
   "geo": [
    47.5856,
    1.331
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-blois-salon.webp"
  },
  {
   "id": "chateaux-azay-le-rideau",
@@ -1965,7 +2025,8 @@
   "geo": [
    47.259,
    0.466
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-azay-le-rideau-salon.webp"
  },
  {
   "id": "chateaux-usse",
@@ -1998,7 +2059,8 @@
   "geo": [
    47.25,
    0.291
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-usse-salon.webp"
  },
  {
   "id": "chateaux-villandry",
@@ -2031,7 +2093,8 @@
   "geo": [
    47.3402,
    0.5143
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-villandry-salon.webp"
  },
  {
   "id": "chateaux-fontainebleau",
@@ -2064,7 +2127,8 @@
   "geo": [
    48.4022,
    2.6994
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-fontainebleau-salon.webp"
  },
  {
   "id": "chateaux-saumur",
@@ -2097,7 +2161,8 @@
   "geo": [
    47.2567,
    -0.073
-  ]
+  ],
+  "image_salon": "img/salon/chateaux-saumur-salon.webp"
  },
  {
   "prix_eur": "21.90",
@@ -2130,7 +2195,8 @@
   "image_detail": "img/details/cote-d-azur-saint-tropez-terrasses-detail.webp",
   "image_coffret": "img/coffret/cote-d-azur-saint-tropez-terrasses-coffret.webp",
   "image_etagere": "img/etagere/cote-d-azur-saint-tropez-terrasses-etagere.webp",
-  "image_dimensions": "img/dimensions/cote-d-azur-saint-tropez-terrasses-dimensions.webp"
+  "image_dimensions": "img/dimensions/cote-d-azur-saint-tropez-terrasses-dimensions.webp",
+  "image_salon": "img/salon/cote-d-azur-saint-tropez-terrasses-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -2163,7 +2229,8 @@
   "image_detail": "img/details/cote-d-azur-saint-tropez-port-detail.webp",
   "image_coffret": "img/coffret/cote-d-azur-saint-tropez-port-coffret.webp",
   "image_etagere": "img/etagere/cote-d-azur-saint-tropez-port-etagere.webp",
-  "image_dimensions": "img/dimensions/cote-d-azur-saint-tropez-port-dimensions.webp"
+  "image_dimensions": "img/dimensions/cote-d-azur-saint-tropez-port-dimensions.webp",
+  "image_salon": "img/salon/cote-d-azur-saint-tropez-port-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -2196,7 +2263,8 @@
   "image_detail": "img/details/cote-d-azur-port-grimaud-detail.webp",
   "image_coffret": "img/coffret/cote-d-azur-port-grimaud-coffret.webp",
   "image_etagere": "img/etagere/cote-d-azur-port-grimaud-etagere.webp",
-  "image_dimensions": "img/dimensions/cote-d-azur-port-grimaud-dimensions.webp"
+  "image_dimensions": "img/dimensions/cote-d-azur-port-grimaud-dimensions.webp",
+  "image_salon": "img/salon/cote-d-azur-port-grimaud-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -2229,7 +2297,8 @@
   "image_detail": "img/details/cote-d-azur-sainte-maxime-detail.webp",
   "image_coffret": "img/coffret/cote-d-azur-sainte-maxime-coffret.webp",
   "image_etagere": "img/etagere/cote-d-azur-sainte-maxime-etagere.webp",
-  "image_dimensions": "img/dimensions/cote-d-azur-sainte-maxime-dimensions.webp"
+  "image_dimensions": "img/dimensions/cote-d-azur-sainte-maxime-dimensions.webp",
+  "image_salon": "img/salon/cote-d-azur-sainte-maxime-salon.webp"
  },
  {
   "prix_eur": "21.90",
@@ -2262,7 +2331,8 @@
   "image_detail": "img/details/cote-d-azur-nice-detail.webp",
   "image_coffret": "img/coffret/cote-d-azur-nice-coffret.webp",
   "image_etagere": "img/etagere/cote-d-azur-nice-etagere.webp",
-  "image_dimensions": "img/dimensions/cote-d-azur-nice-dimensions.webp"
+  "image_dimensions": "img/dimensions/cote-d-azur-nice-dimensions.webp",
+  "image_salon": "img/salon/cote-d-azur-nice-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -2291,7 +2361,8 @@
   "image_detail": "img/details/cote-d-azur-place-des-lys-detail.webp",
   "image_coffret": "img/coffret/cote-d-azur-place-des-lys-coffret.webp",
   "image_etagere": "img/etagere/cote-d-azur-place-des-lys-etagere.webp",
-  "image_dimensions": "img/dimensions/cote-d-azur-place-des-lys-dimensions.webp"
+  "image_dimensions": "img/dimensions/cote-d-azur-place-des-lys-dimensions.webp",
+  "image_salon": "img/salon/cote-d-azur-place-des-lys-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -2324,7 +2395,8 @@
   "image_detail": "img/details/alpes-superdevoluy-detail.webp",
   "image_coffret": "img/coffret/alpes-superdevoluy-coffret.webp",
   "image_etagere": "img/etagere/alpes-superdevoluy-etagere.webp",
-  "image_dimensions": "img/dimensions/alpes-superdevoluy-dimensions.webp"
+  "image_dimensions": "img/dimensions/alpes-superdevoluy-dimensions.webp",
+  "image_salon": "img/salon/alpes-superdevoluy-salon.webp"
  },
  {
   "prix_eur": "19.90",
@@ -2357,6 +2429,7 @@
   "image_detail": "img/details/alpes-ceuse-detail.webp",
   "image_coffret": "img/coffret/alpes-ceuse-coffret.webp",
   "image_etagere": "img/etagere/alpes-ceuse-etagere.webp",
-  "image_dimensions": "img/dimensions/alpes-ceuse-dimensions.webp"
+  "image_dimensions": "img/dimensions/alpes-ceuse-dimensions.webp",
+  "image_salon": "img/salon/alpes-ceuse-salon.webp"
  }
 ]

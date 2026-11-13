@@ -6,7 +6,7 @@ R = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 cat = json.load(open(f'{R}/data/catalogue_produits.json', encoding='utf-8'))
 n = 0
 for p in cat:
-    for k in ('image_principale', 'image_en_main', 'image_etagere', 'image_detail', 'image_coffret', 'image_dimensions'):
+    for k in ('image_principale', 'image_en_main', 'image_salon', 'image_etagere', 'image_detail', 'image_coffret', 'image_dimensions'):
         src = p.get(k)
         if not src: continue
         src = src.lstrip('/'); dst = 'img/vignettes/' + src[4:]
