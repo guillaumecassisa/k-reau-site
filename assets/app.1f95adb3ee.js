@@ -2247,6 +2247,45 @@ const GUIDES = [
    ['Quel souvenir original offrir de Saint-Tropez ?', 'Un objet qui représente un lieu précis, comme un carreau en céramique du port ou des terrasses de Saint-Tropez, plutôt qu’un objet touristique générique.'],
    ['Quel souvenir rapporter de Nice ?', 'Un objet à l’effigie de la chaise bleue de la Promenade des Anglais, de l’huile d’olive de l’arrière-pays ou des spécialités niçoises comme la socca à goûter sur place.'],
    ['Quel souvenir de vacances dure le plus longtemps ?', 'Un objet de décoration que l’on voit tous les jours, comme un carreau illustré du lieu des vacances, posé sur une étagère ou accroché au mur.']]
+},
+{
+  slug: 'credence-cuisine-personnalisee-carreaux-voyage',
+  titre: 'Une crédence de cuisine personnalisée avec les carreaux de ses voyages',
+  metaT: "Crédence de cuisine personnalisée : vos voyages sur carreaux | K-Reau",
+  metaD: 'Laponie, Tanzanie, Mexique, Argentine, Maldives : l’histoire d’un client qui a fait de sa crédence de cuisine le carnet de ses voyages, avec des carreaux dessinés sur mesure. Idées et conseils.',
+  date: '2026-11-13',
+  image: '/img/sur-mesure/projets/tanzanie-2023.webp',
+  intro: 'Certains rapportent des magnets, d’autres des photos qui dorment dans un téléphone. Un de nos clients a eu une autre idée : faire de sa crédence de cuisine le carnet de ses voyages. Voici l’histoire de ce projet sur mesure, et comment en faire autant chez vous.',
+  corps: () => `
+<h2>L’idée : une crédence qui raconte des voyages</h2>
+<p>Tout est parti d’une demande simple. Notre client voulait garder une trace de ses plus beaux voyages, autrement que dans un album que l’on n’ouvre jamais. Sa cuisine avait une crédence en carreaux blancs, et il s’est demandé : et si quelques-uns de ces carreaux racontaient ses voyages ? L’endroit est idéal : c’est la pièce où l’on passe chaque matin, où l’on reçoit, où l’on discute. Chaque café du matin devient une petite invitation au voyage.</p>
+<h2>Cinq voyages, cinq carreaux dessinés à la main</h2>
+<p>Il nous a envoyé ses photos et nous a raconté chaque voyage. À partir de là, nous avons dessiné chaque destination au trait, dans le style K-Reau, avec son nom et son année en calligraphie :</p>
+<p><strong>Laponie 2023.</strong> Un chalet en rondins sous la neige, des sapins et les aurores boréales qui dansent dans le ciel.</p>
+<p><strong>Tanzanie 2023.</strong> Une éléphante et son petit au milieu de la savane, des acacias et la silhouette du Kilimandjaro.</p>
+<p><strong>Mexique 2024.</strong> Une pyramide maya entourée de palmiers et de végétation, avec un cactus pour la touche mexicaine.</p>
+<p><strong>Argentine 2025.</strong> Les sommets déchiquetés de la Patagonie, au-dessus d’un grand lac bordé de buissons.</p>
+<p><strong>Maldives 2026.</strong> Des bungalows sur pilotis, un ponton au-dessus de l’eau et un palmier penché.</p>
+<div class="sm-grille" style="margin:28px 0">${[['laponie-2023','Laponie 2023','chalet sous les aurores boréales'],['tanzanie-2023','Tanzanie 2023','éléphants au pied du Kilimandjaro'],['mexique-2024','Mexique 2024','pyramide maya et palmiers'],['argentine-2025','Argentine 2025','montagnes de Patagonie'],['maldives-2026','Maldives 2026','bungalows sur pilotis']].map(([f,t,a]) => `<figure><img src="/img/sur-mesure/projets/${f}-mini.webp" width="600" height="450" loading="lazy" alt="Carreau K-Reau sur mesure ${t} : ${a}, posé dans une crédence de cuisine"><figcaption>${t}</figcaption></figure>`).join('')}</div>
+<p>Chaque dessin lui a été soumis par e-mail avant impression. Une fois validés, les carreaux ont été imprimés sur céramique à Mallemort, en Provence, puis expédiés chez lui.</p>
+<h2>Le montage : ses carreaux au milieu de son carrelage</h2>
+<p>Nos carreaux font 15 × 15 cm, un format courant pour les crédences. Notre client les a posés lui-même, en les répartissant au milieu de ses carreaux blancs, sans les aligner. Résultat : on ne voit pas un « mur de souvenirs » chargé, mais des petites surprises que l’œil découvre au fil de la cuisine. Ce choix de dispersion fonctionne très bien : le blanc autour met chaque dessin en valeur.</p>
+<p>Avant de vous lancer, vérifiez la taille de vos carreaux existants et demandez conseil à un carreleur pour la pose. Si vous ne voulez rien coller, un carreau se pose aussi simplement sur une étagère avec un chevalet en bois, ou s’accroche au mur.</p>
+<h2>Faire la même chose chez vous</h2>
+<p><strong>1. Choisissez vos lieux.</strong> Les voyages qui ont compté, le village de vos vacances, la ville où vous vous êtes rencontrés. Mieux vaut quelques lieux forts que beaucoup de lieux.</p>
+<p><strong>2. Rassemblez vos photos.</strong> Une photo nette du paysage ou du monument suffit. Si vous en avez plusieurs, envoyez-les toutes : nous pouvons combiner les détails.</p>
+<p><strong>3. Choisissez le texte.</strong> Le nom du lieu et l’année, comme ici, ou une phrase courte : trente-deux caractères au maximum.</p>
+<p><strong>4. Commandez sur notre page ${`<a class="lien" href="/sur-mesure">carreau sur mesure</a>`}.</strong> Vous recevez chaque dessin à valider avant l’impression.</p>
+<p>Et pour les lieux déjà dessinés dans nos collections, comme ${CL('marseille','Marseille')}, ${CL('luberon','le Luberon')} ou ${CL('cote-d-azur','la Côte d’Azur')}, inutile de passer par le sur-mesure : vous pouvez les mélanger à vos carreaux personnalisés.</p>
+<h2>Une idée cadeau pour les grands voyageurs</h2>
+<p>Ce projet fait aussi un très beau cadeau : le voyage de noces d’un couple, le tour du monde d’un ami, le premier grand voyage d’un enfant devenu adulte. Un carreau par destination, et la collection s’agrandit à chaque nouveau départ. Pour plusieurs dessins à la fois, présentez-nous votre projet sur la page ${`<a class="lien" href="/projet-specifique">projet spécifique</a>`}.</p>`,
+  produits: ['marseille-vallon-des-auffes','cote-d-azur-nice','luberon-gordes','montagnes-sainte-victoire','marseille-calanque-sormiou','les-embiez','alpes-superdevoluy','marseille-vieux-port'],
+  motCle: 'crédence cuisine personnalisée',
+  faq: [
+   ['Peut-on personnaliser une crédence de cuisine avec des carreaux ?', 'Oui : quelques carreaux dessinés sur mesure, posés au milieu d’un carrelage uni, suffisent à personnaliser une crédence sans tout refaire.'],
+   ['Quelle est la taille des carreaux K-Reau ?', 'Les carreaux K-Reau mesurent 15 × 15 cm, un format courant pour les crédences de cuisine.'],
+   ['Comment garder un souvenir de ses voyages en déco ?', 'Faites dessiner chaque destination sur un carreau en céramique avec son nom et son année, puis posez-les dans la cuisine, sur une étagère ou au mur.'],
+   ['Combien coûte un carreau dessiné sur mesure ?', 'Le carreau sur mesure K-Reau est à partir de 34,90 €. Le dessin vous est soumis avant impression.']]
 }
 ];
 /*GUIDES-FIN*/
@@ -2766,7 +2805,7 @@ function vueSurMesure(){
     </ol>
     <section class="sm-realisations" aria-labelledby="sm-real-titre">
       <div class="bloc-titre"><span class="eyebrow">Nos projets</span><h2 id="sm-real-titre">Une cuisine qui raconte ses voyages</h2>
-        <p>Un client nous a confié un projet un peu particulier : faire de sa crédence de cuisine le carnet de ses voyages. Laponie, Tanzanie, Mexique, Argentine, Maldives : à partir de ses photos, nous avons dessiné chaque destination à la main, avec son nom et son année en calligraphie. Il a ensuite posé lui-même ses carreaux au milieu de son carrelage. Aujourd’hui, chaque café du matin a un petit air de voyage.</p></div>
+        <p>Un client nous a confié un projet un peu particulier : faire de sa crédence de cuisine le carnet de ses voyages. Laponie, Tanzanie, Mexique, Argentine, Maldives : à partir de ses photos, nous avons dessiné chaque destination à la main, avec son nom et son année en calligraphie. Il a ensuite posé lui-même ses carreaux au milieu de son carrelage. Aujourd’hui, chaque café du matin a un petit air de voyage.</p>${LANG !== 'en' ? `<p style="margin:0"><a class="lien" href="/guides/credence-cuisine-personnalisee-carreaux-voyage">Lire l’histoire complète du projet</a></p>` : ''}</div>
       <div class="sm-grille">${SM_PROJETS.map(p => `<figure><img src="/img/sur-mesure/projets/${p.f}.webp" srcset="/img/sur-mesure/projets/${p.f}-mini.webp 600w, /img/sur-mesure/projets/${p.f}.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="${esc(p.alt)}"><figcaption>${esc(p.t)}</figcaption></figure>`).join('')}</div>
     </section>
     <form class="formulaire" id="form-sm" novalidate style="max-width:680px">
