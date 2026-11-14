@@ -93,8 +93,12 @@ module.exports = async function handler(req, res) {
     const email = String(d.email || '').trim().toLowerCase(), en = d.lang === 'en';
     if (!emailValide(email)) return res.status(400).json({ erreur: 'Saisissez une adresse e-mail valide.' });
 
-    const ab = await inscrire(email, { en, source: 'site', renvoyer: !!d.renvoyer });
-    return res.status(200).json({ ok: true, deja: !ab.nouveau });
+    const ab = await inscrire(email, { en, source: d.derniere ? 'page-newsletter' : 'site', renvoyer: !!d.renvoyer });
+    let derniere = false;
+    if (d.derniere && (ab.nouveau || ab.desinscrit)) {
+      try { derniere = await require('./campagne').envoyerDerniere(email, en); } catch (e) { console.error('dernière newsletter', e.message); }
+    }
+    return res.status(200).json({ ok: true, deja: !ab.nouveau && !ab.desinscrit, derniere });
   } catch (e) {
     console.error('newsletter', e.message);
     return res.status(500).json({ erreur: 'Inscription impossible pour le moment, réessayez plus tard.' });

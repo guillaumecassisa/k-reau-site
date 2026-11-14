@@ -37,8 +37,22 @@ module.exports = async function handler(req, res) {
     if (ok) envoyes++; else { echecs++; try { await base('envoi_annuler', { type: 'newsletter', ref: `${n.id}:${email}` }); } catch {} }
     await new Promise(r => setTimeout(r, 600));   // Resend : 2 envois par seconde au maximum
   }
-  try { await envoyerMail(`K-Reau · Newsletter envoyée : ${n.sujet.fr}`, `<p>La newsletter « ${echap(n.sujet.fr)} » a été envoyée à ${envoyes} abonné${envoyes > 1 ? 's' : ''}${echecs ? ` (${echecs} échec${echecs > 1 ? 's' : ''}, nouvel essai au prochain passage)` : ''}.</p>`); } catch {}
+  try { await envoyerMail(`K-Reau · Newsletter envoyée : ${n.sujet.fr}`, `<p>La newsletter « ${echap(n.sujet.fr)} » a été envoyée à ${envoyes} abonné${envoyes > 1 ? 's' : ''}${echecs ? ` (${echecs} échec${echecs > 1 ? 's' : ''} d’envoi)` : ''}.</p>`); } catch {}
   return res.status(200).json({ envoye: envoyes, echecs, newsletter: n.id });
 };
 
+// Dernière newsletter validée dont la date est passée (ou aujourd'hui) : envoyée aux nouveaux inscrits de la page /newsletter
+async function envoyerDerniere(email, en) {
+  const jour = aujourdhuiParis();
+  const n = NEWSLETTERS.filter(x => x.valide && x.date <= jour).sort((a, b) => b.date.localeCompare(a.date))[0];
+  if (!n) return false;
+  const r = await base('envoi_reserver', { type: 'newsletter', ref: `${n.id}:${email}`, email });
+  if (!r.reserve) return false;
+  const { html, entetes } = construire(n, email, en);
+  const ok = await envoyerClient(email, n.sujet[en ? 'en' : 'fr'], html, entetes);
+  if (!ok) { try { await base('envoi_annuler', { type: 'newsletter', ref: `${n.id}:${email}` }); } catch {} }
+  return ok;
+}
+
 module.exports.construire = construire;
+module.exports.envoyerDerniere = envoyerDerniere;

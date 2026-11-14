@@ -29,7 +29,7 @@ const NEWSLETTERS = [
   {
     id: '2026-11-15-la-marque',
     date: '2026-11-15',
-    valide: false,
+    valide: true,   // validée par Guillaume le 14/11/2026
     sujet: { fr: 'Bienvenue chez K-Reau : les lieux qu’on aime, à garder chez soi', en: 'Welcome to K-Reau: the places we love, to keep at home' },
     preheader: { fr: 'Des carreaux en céramique dessinés à la main, imprimés en Provence. Et -25 % pour le Black Friday.', en: 'Hand-drawn ceramic tiles, printed in Provence. Plus 25% off for Black Friday.' },
     titre: { fr: 'Les lieux qu’on aime, à garder chez soi', en: 'The places we love, to keep at home' },

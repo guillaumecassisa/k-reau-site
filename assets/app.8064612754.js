@@ -802,10 +802,10 @@ function brancherNewsletter(racine){
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ ret.textContent = 'Saisissez une adresse e-mail valide, par exemple nom@exemple.fr.'; champ.focus(); return; }
       btn.disabled = true; const lib = btn.textContent; btn.textContent = 'Envoi…'; ret.textContent = '';
       try{
-        const r = await fetch('/api/newsletter', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, lang: LANG, site: f.querySelector('.piege')?.value || '' }) });
+        const r = await fetch('/api/newsletter', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, lang: LANG, derniere: f.dataset.derniere === '1', site: f.querySelector('.piege')?.value || '' }) });
         const j = await r.json().catch(() => ({})); if(!r.ok) throw new Error(j.erreur || 'Erreur');
         store.set('kreau-news', { inscrit: Date.now() });
-        f.innerHTML = `<p class="news-retour">${j.deja ? 'Vous êtes déjà inscrit : votre code vous a été envoyé par e-mail lors de votre inscription.' : 'Merci ! Votre code de bienvenue vient de partir par e-mail. Pensez à regarder dans les courriers indésirables.'}</p>`;
+        f.innerHTML = `<p class="news-retour">${j.deja ? 'Vous êtes déjà inscrit : votre code vous a été envoyé par e-mail lors de votre inscription.' : j.derniere ? 'Merci ! Votre code de bienvenue et notre dernière newsletter viennent de partir par e-mail. Pensez à regarder dans les courriers indésirables.' : 'Merci ! Votre code de bienvenue vient de partir par e-mail. Pensez à regarder dans les courriers indésirables.'}</p>`;
       }catch(err){ ret.textContent = err.message; btn.disabled = false; btn.textContent = lib; }
     });
   });
@@ -847,7 +847,7 @@ function inviterNewsletter(){
     if(fait) return;
     const ch = cleDepuisChemin(cheminFR());
     const couche = $('#couche');
-    if(invitationMontree || ['merci','avis','panier','sur-mesure','contact'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
+    if(invitationMontree || ['merci','avis','panier','sur-mesure','contact','newsletter'].includes(ch) || document.querySelector('.news-carte') || (couche && !couche.hidden && couche.innerHTML.trim()) || store.get('kreau-news', null)) return;
     fait = true; clearInterval(minuteur); removeEventListener('scroll', auDefilement); document.removeEventListener('mouseout', aLaSortie);
     const d = document.createElement('aside'); d.className = 'news-carte'; d.setAttribute('aria-label', 'Inscription aux nouvelles de K-Reau');
     d.innerHTML = `<button class="fermer" type="button" aria-label="Fermer">×</button><h2>-10 % sur votre première commande</h2>
@@ -2484,6 +2484,26 @@ function vueCarte(){
   else fetch('/data/carte.json').then(r => r.json()).then(d => { FOND_CARTE = d; if(document.body.contains(zone)) dessiner(); }).catch(() => { zone.innerHTML = '<p class="etat">La carte n’a pas pu être chargée. Retrouvez tous les lieux dans la liste ci-dessous.</p>'; });
 }
 
+function vueNewsletter(){
+  setMeta('La newsletter K-Reau : nouveaux lieux, idées cadeaux et -10 % | K-Reau',
+    'Inscrivez-vous à la newsletter K-Reau : -10 % sur votre première commande, nos nouveaux lieux dessinés et des idées cadeaux, avec notre dernière newsletter envoyée tout de suite.');
+  app.innerHTML = `
+  <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Newsletter','']])}
+    <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Newsletter</span><h1>Les nouvelles de K-Reau</h1>
+      <p class="lead">Les nouveaux lieux que nous dessinons, des idées cadeaux avant les fêtes et quelques nouvelles de l’atelier, en Provence. Jamais plus de deux e-mails par mois.</p>
+      <ul class="liste-avantages" style="margin:0 0 18px;padding-left:1.1em;display:grid;gap:6px">
+        <li><strong>-10 % sur votre première commande</strong>, avec un code envoyé tout de suite</li>
+        <li><strong>Notre dernière newsletter</strong>, reçue dès votre inscription</li>
+        <li>Les nouveautés et les offres en avant-première</li></ul>
+      <form class="news-form news-page" data-derniere="1" novalidate style="max-width:460px"><label for="news-email-page" class="visuellement-cache">Votre adresse e-mail</label>
+        <input type="email" id="news-email-page" placeholder="Votre adresse e-mail" autocomplete="email" required><input type="text" class="piege" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn btn-p" type="submit">Je m’inscris</button><p class="news-retour" aria-live="polite"></p>
+        <p class="news-mention">Désinscription en un clic. <a href="/confidentialite">Confidentialité</a></p></form></div>
+      <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" srcset="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux-mini.webp 760w, /img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp 1122w" sizes="(max-width:860px) 92vw, 460px" width="1122" height="1402" alt="Trois carreaux K-Reau posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan" fetchpriority="high"></figure></div>
+  </div></div>`;
+  brancherNewsletter(app);
+}
+
 function vueRevendeurs(){
   setMeta('Revendeurs et offices de tourisme : carreaux K-Reau en boutique | K-Reau',
     'Vendez les carreaux décoratifs K-Reau dans votre boutique ou office de tourisme : tarifs revendeurs dès 12 carreaux, dépôt-vente possible, catalogues PDF à télécharger.');
@@ -3262,6 +3282,7 @@ function route(){
   else if(h==='carte-cadeau') vueCarteCadeau();
   else if(h==='projet-specifique') vueProjet();
   else if(h==='revendeurs') vueRevendeurs();
+  else if(h==='newsletter') vueNewsletter();
   else if(h==='carte-des-lieux') vueCarte();
   else if(h==='guides') vueGuides();
   else if(h.startsWith('guide-')) vueGuide(h.slice(6));
