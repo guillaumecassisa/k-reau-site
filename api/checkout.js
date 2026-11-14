@@ -17,6 +17,21 @@ async function codePromo(code) {
   return p || null;
 }
 
+// Black Friday : -25 % sur tous les produits (hors cartes cadeaux) du 15 au 27 novembre 2026 inclus, heure de Paris.
+// Sans autre code ni carte cadeau dans le panier, le code Stripe BLACKFRIDAY25 est appliqué automatiquement ;
+// sinon (une seule remise possible par paiement Stripe), les 25 % sont déduits directement du prix des produits.
+const BF = { code: 'BLACKFRIDAY25', coupon: 'BLACK-FRIDAY-2026', pct: 25,
+  debut: Date.parse('2026-11-15T00:00:00+01:00'), fin: Date.parse('2026-11-28T00:00:00+01:00') };
+const bfActif = () => Date.now() >= BF.debut && Date.now() < BF.fin;
+async function codeBlackFriday() {
+  let p = await codePromo(BF.code);
+  if (p) return p;
+  try { await stripe('GET', `coupons/${BF.coupon}`); }
+  catch (e) { if (e.statut !== 404) throw e;
+    await stripe('POST', 'coupons', { id: BF.coupon, percent_off: BF.pct, duration: 'once', name: 'Black Friday -25 %', redeem_by: Math.floor(BF.fin / 1000) }); }
+  return stripe('POST', 'promotion_codes', { coupon: BF.coupon, code: BF.code, expires_at: Math.floor(BF.fin / 1000), metadata: { black_friday: '1' } });
+}
+
 const PAYS_EUROPE = ['DE','AT','BE','BG','CY','HR','DK','ES','EE','FI','GR','HU','IE','IT','LV','LT','LU','MT','NL','PL','PT','CZ','RO','SK','SI','SE',
   'MC','AD','CH','GB','NO','IS','LI','SM','VA'];
 
@@ -65,8 +80,25 @@ module.exports = async function handler(req, res) {
   if (!items.length) return res.status(400).json({ erreur: 'Panier vide' });
 
   // Code saisi sur le site (facultatif) : vérifié ici ; sinon, les codes restent saisissables sur la page Stripe
-  const code = String(corps.code || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 40);
-  let promo = null, offert = false;
+  let code = String(corps.code || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 40);
+  const bf = bfActif();
+  if (bf && code === BF.code) code = '';   // le code Black Friday est de toute façon appliqué automatiquement
+  let promo = null, offert = false, bfAuto = false;
+  if (bf) {
+    if (!code && !cartes.length) {
+      try { promo = await codeBlackFriday(); bfAuto = !!(promo && promo.active); if (!bfAuto) promo = null; }
+      catch (e) { console.error('Code Black Friday', e.message); promo = null; }
+    }
+    if (!bfAuto) {
+      // remise directement sur le prix des produits : laisse la place à une carte cadeau ou un autre code, et épargne les cartes cadeaux
+      for (const it of items) {
+        const nom = it.price_data.product_data.name;
+        if (/^Carte cadeau/.test(nom)) continue;
+        const ua = it.price_data.unit_amount; it.price_data.unit_amount = ua - Math.round(ua * BF.pct / 100);
+        if (/^Carreau K-Reau · |^Chevalet/.test(nom)) it.price_data.product_data.description = 'Prix Black Friday -25 %';
+      }
+    }
+  }
   if (code) {
     try { promo = await codePromo(code); } catch (e) { console.error('Code promo', e.message); return res.status(502).json({ erreur: 'Le code n’a pas pu être vérifié' }); }
     if (!promo) return res.status(400).json({ erreur: corps.lang === 'en' ? 'Unknown code' : 'Code inconnu' });
@@ -91,7 +123,8 @@ module.exports = async function handler(req, res) {
       sur_mesure_details: smDetails.join(' ‖ ').slice(0, 490),
       message_cadeau: message,
       lang: en ? 'en' : 'fr',
-      newsletter: corps.newsletter === true ? '1' : ''
+      newsletter: corps.newsletter === true ? '1' : '',
+      black_friday: bf ? (bfAuto ? 'code' : 'prix') : ''
     },
     // relance si le paiement est abandonné (uniquement avec l'accord du client, case proposée par Stripe)
     consent_collection: { promotions: 'auto' },
@@ -124,7 +157,7 @@ module.exports = async function handler(req, res) {
     params.discounts = [{ promotion_code: promo.id }];
     delete params.allow_promotion_codes;
     params.after_expiration = { recovery: { enabled: 'true' } };
-    params.metadata.code = code + (offert ? ' (offert)' : '');
+    params.metadata.code = bfAuto ? `${BF.code} (automatique)` : code + (offert ? ' (offert)' : '');
     if (offert && params.shipping_options) params.shipping_options.forEach(o => {
       o.shipping_rate_data.fixed_amount.amount = 0;
       o.shipping_rate_data.display_name = en ? 'Free shipping (gift order)' : 'Livraison offerte';

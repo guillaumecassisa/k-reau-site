@@ -70,6 +70,7 @@ p{margin:0}
 .lien:hover{color:var(--encre)}
 
 /* Annonce + en-tête */
+.annonce-bf{background:#111;color:#fff;font-size:.82rem;letter-spacing:.05em;text-align:center;padding:9px 16px;line-height:1.5}.annonce-bf strong{letter-spacing:.14em}.annonce-bf a{color:#fff}@media(max-width:600px){.annonce-bf{font-size:.76rem;padding:7px 12px}.bf-plus{display:none}}
 .annonce{background:var(--olivier);color:var(--ceramique);font-size:.8rem;letter-spacing:.04em;text-align:center;padding:8px 16px;line-height:1.5}
 .annonce a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.annonce strong{font-weight:700}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(247,245,240,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--joint)}
@@ -609,6 +610,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <a class="skip" href="#app">Aller au contenu</a>
 <div class="annonce" id="annonce" hidden></div>
+<div class="annonce-bf" id="annonce-bf" hidden></div>
 <header class="site">
   <div class="wrap hd">
     <a class="logo-lien" href="/" aria-label="K-Reau, retour à l'accueil"><img src="/img/01_Identite/logo-kreau-header-petit.webp" srcset="/img/01_Identite/logo-kreau-header-petit.webp 240w, /img/01_Identite/logo-kreau-header.webp 560w" sizes="74px" alt="K-Reau" width="560" height="461"></a>
@@ -3427,6 +3429,9 @@ function vueChecklist(){
 }
 
 const deLieu = r => r === 'Alpes' ? 'des Alpes' : /^(Val |Var$|Luberon$)/.test(r) ? 'du '+r : /^[AEIOUÎÉaeiou]/.test(r) ? 'd’'+r : 'de '+r;
+// Black Friday : -25 % sur tous les produits (hors cartes cadeaux), mêmes dates que api/checkout.js
+const BF = { pct: 25, debut: Date.parse('2026-11-15T00:00:00+01:00'), fin: Date.parse('2026-11-28T00:00:00+01:00') };
+const bfActif = () => Date.now() >= BF.debut && Date.now() < BF.fin;
 const prixEur = v => Number(v).toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
 function offresHTML(){
   const emb = parSlug('les-embiez');
@@ -3800,6 +3805,7 @@ const Panier = {
     const c = $('#couche'), seuil = CONFIG.livraisonGratuiteDes, phys = this.physique(), tot = this.total();
     const eu = this.destination === 'EU' || this.destination === 'CA', ca = this.destination === 'CA';
     const reste = eu ? 0 : Math.max(0, seuil - phys);
+    const bf = bfActif() ? this.lignes.filter(l=>l.type!=='carte').reduce((t,l)=>t+Math.round(Math.round(this.prix(l)*100) * BF.pct / 100)*l.q,0) / 100 : 0; // même arrondi que le serveur
     const port = phys === 0 ? 0 : ca ? CONFIG.livraisonCanada : eu ? CONFIG.livraisonEurope : (phys < seuil ? 7.90 : 0); // mêmes règles que api/checkout.js
     c.innerHTML = `<div class="tiroir"><div class="panier-panneau" role="dialog" aria-modal="true" aria-label="Panier">
       <div style="display:flex;justify-content:space-between;align-items:center"><h2>Panier</h2><button class="icone-btn" type="button" data-fermer aria-label="Fermer le panier">${ICONES.croix}</button></div>
@@ -3820,8 +3826,9 @@ const Panier = {
       </div>
       ${this.lignes.length ? `<div class="panier-recap">
         ${phys > 0 ? `<p class="panier-sous"><span>Sous-total</span><span>${prixEur(tot)}</span></p>
+        ${bf > 0 ? `<p class="panier-sous" style="color:#111"><span><strong>Black Friday -25 %</strong></span><span>-${prixEur(bf)}</span></p>` : ''}
         <p class="panier-sous"><span>${ca ? 'Livraison Canada' : eu ? 'Livraison Europe' : 'Livraison France'}</span><span>${port > 0 ? prixEur(port) : 'Offerte'}</span></p>` : ''}
-        <p class="panier-total"><span>Total</span><strong>${prixEur(tot + port)}</strong></p></div>
+        <p class="panier-total"><span>Total</span><strong>${prixEur(tot - bf + port)}</strong></p></div>
       ${phys === 0 || ca || eu ? `<p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code.' : ca ? 'D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis.' : 'Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire.'}</p>` : ''}
       <div class="code-promo">
         <label for="code-promo"><strong>Code promo ou carte cadeau</strong></label>
@@ -4056,6 +4063,12 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
     break;
   }
   a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
+  const bfb = $('#annonce-bf');
+  if(bfb){ const on = bfActif();
+    bfb.innerHTML = on ? (LANG === 'en'
+      ? '<strong>BLACK FRIDAY</strong> · 25% off all our tiles and gift boxes, 15 to 27 November<span class="bf-plus"> · automatically applied in your basket</span>'
+      : '<strong>BLACK FRIDAY</strong> · -25 % sur tous nos carreaux et coffrets, du 15 au 27 novembre<span class="bf-plus"> · remise appliquée automatiquement au panier</span>') : '';
+    bfb.hidden = !on; }
 }
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);
