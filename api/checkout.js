@@ -2,13 +2,13 @@
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
 const { PRIX, PRODUITS, prixCarreau, prixCoffret, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
 // Pays européens livrés (hors France) au tarif Europe
-// Codes « commande offerte » : listés dans la variable Vercel KREAU_CODES_OFFERTS (séparés par des virgules).
+// Codes « commande offerte » : listés dans les variables Vercel KREAU_CODES_OFFERTS et KREAU_CODES_OFFERTS_2 (séparés par des virgules).
 // Chacun devient à sa première utilisation un code Stripe à 100 %, utilisable une seule fois ; la livraison est alors offerte aussi.
 const COUPON_OFFERT = 'COMMANDE-OFFERTE-100';
 async function codePromo(code) {
   const liste = await stripe('GET', 'promotion_codes', { code, limit: 1 });
   let p = liste.data && liste.data[0];
-  const offerts = (process.env.KREAU_CODES_OFFERTS || '').toUpperCase().split(',').map(x => x.trim()).filter(Boolean);
+  const offerts = [process.env.KREAU_CODES_OFFERTS, process.env.KREAU_CODES_OFFERTS_2].filter(Boolean).join(',').toUpperCase().split(',').map(x => x.trim()).filter(Boolean);
   if (!p && offerts.includes(code)) {
     try { await stripe('GET', `coupons/${COUPON_OFFERT}`); }
     catch (e) { if (e.statut !== 404) throw e; await stripe('POST', 'coupons', { id: COUPON_OFFERT, percent_off: 100, duration: 'once', name: 'Commande offerte' }); }
