@@ -6,6 +6,7 @@ const CONFIG = {
   contactEmail: '',                 // non affiché : le contact se fait uniquement par le formulaire
   formEndpoint: '/api/contact',     // relais serveur ; destinataire dans la variable Vercel CONTACT_DESTINATION
   annonce: 'Boutique en préparation : les commandes ouvriront prochainement.',
+  coupsSlugs: ['cote-d-azur-nice','marseille-bonne-mere-doree','marseille-vieux-port','cote-d-azur-saint-tropez-terrasses','marseille-calanque-sormiou','luberon-gordes','montagnes-sainte-victoire','marseille-vallon-des-auffes'],
   homeSlugs: ['marseille-vieux-port','marseille-notre-dame-de-la-garde','marseille-vallon-des-auffes','marseille-chateau-d-if','cote-bleue-sausset-les-pins','cote-bleue-carry-le-rouet','cote-bleue-port-niolon','cote-bleue-calanque-mejean'],
   // Informations légales et commerciales obligatoires avant de vendre : toutes vides tant que non confirmées
   legal: { raisonSociale:'Guillaume Cassisa, entrepreneur individuel (GC3D), marque K-Reau', formeJuridique:'Entreprise individuelle (micro-entreprise)', siret:'SIREN 887 612 430', adresse:'29 rue Clos du Golf, 13370 Mallemort, France', telephone:'', directeurPublication:'Guillaume Cassisa', hebergeur:'Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com', mediateur:'', tva:'TVA non applicable, art. 293 B du CGI' },
@@ -118,7 +119,10 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const prixDe = slug => { const n = parseFloat(String(parSlug(slug)?.prix_eur ?? '').replace(',','.')); return n > 0 ? n : CONFIG.prix.carreau; };
 // coffret de 3 carreaux : toujours 54,90 €, même avec des modèles en couleur
 const prixCoffret = slugs => CONFIG.prix.coffret;
-const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'}) : ''; };
+const prixTxt = p => { const n = parseFloat(String(p.prix_eur).replace(',','.')); return isFinite(n) && n>0 ? prixBarre(n) : ''; };
+// Black Friday : prix remisé suivi de l'ancien prix barré (même arrondi que le panier et le paiement)
+const prixBF = n => { const c = Math.round(n * 100); return (c - Math.round(c * BF.pct / 100)) / 100; };
+const prixBarre = n => bfActif() ? `${prixEur(prixBF(n))} <s class="prix-barre">${prixEur(n)}</s>` : prixEur(n);
 const aCompleter = (v, txt='À compléter avant mise en ligne') => v ? esc(v) : `<span class="a-completer">${txt}</span>`;
 const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
 function setMeta(title, desc, opts = {}){
@@ -181,7 +185,7 @@ const embiezSeul = () => deCollection('les-embiez').length <= 1; // tant qu'il n
 function carte(p, eager=false){
   const prix = prixTxt(p);
   return `<article class="carte">
-    <a class="carte-img" href="/produits/${esc(p.slug)}" tabindex="-1" aria-hidden="true">
+    <a class="carte-img" href="/produits/${esc(p.slug)}" tabindex="-1" aria-hidden="true">${bfActif() ? '<span class="badge-bf">-25 %</span>' : ''}
       <img src="${esc(p.miniature)}" srcset="${esc(p.miniature)} 600w, ${esc(p.image_principale)} 1254w" sizes="(max-width:720px) 50vw, (max-width:1000px) 33vw, 290px" width="600" height="600" alt="${esc(p.alt)}" ${eager?'':'loading="lazy"'} decoding="async">
     </a>
     <span class="carte-coll">${esc(collNom(p))}</span>
@@ -254,7 +258,7 @@ function vueAccueil(){
   const homeList = () => CONFIG.homeSlugs.map(parSlug).filter(Boolean);
   const minis = ['marseille-vieux-port','cote-bleue-port-niolon','marseille-calanque-sormiou','cote-bleue-estaque'];
   app.innerHTML = `
-  <section class="hero" aria-labelledby="h1">
+  <section class="hero hero-direct" aria-labelledby="h1">
     <div class="wrap hero-grille">
       <div class="hero-texte">
         <span class="eyebrow">K-REAU · CARREAUX D’ICI</span>
@@ -269,6 +273,14 @@ function vueAccueil(){
       <figure class="hero-img" style="margin:0">
         <img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" srcset="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux-mini.webp 760w, /img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp 1122w" sizes="(max-width:860px) 92vw, 520px" width="1122" height="1402" fetchpriority="high" alt="Trois carreaux K-Reau illustrés (Marseille, Les Embiez, Niolon) posés sur un rocher, avec la mer et Notre-Dame de la Garde en arrière-plan">
       </figure>
+    </div>
+  </section>
+
+  <section class="bloc coups-bloc" aria-labelledby="t-coups">
+    <div class="wrap">
+      <div class="bloc-titre"><span class="eyebrow">${bfActif() ? 'Black Friday · -25 % jusqu’au 27 novembre' : 'Nos coups de cœur'}</span><h2 id="t-coups">Nos coups de cœur</h2></div>
+      <div class="grille coups">${grilleHTML(CONFIG.coupsSlugs.map(parSlug).filter(Boolean))}</div>
+      <div class="grille-pied"><a class="btn btn-s" href="/carreaux">Voir tous les carreaux</a></div>
     </div>
   </section>
 
@@ -546,7 +558,7 @@ function trioHTML(p){
     <div class="trio-vignettes"><span class="moi"><img src="${esc(p.miniature)}" alt="${esc(p.nom)}" loading="lazy" width="600" height="600"></span><b aria-hidden="true">+</b>
       ${c.map(x => `<a href="/produits/${esc(x.slug)}" title="${esc(x.nom)}"><img src="${esc(x.miniature)}" alt="${esc(x.nom)}" loading="lazy" width="600" height="600"></a>`).join('<b aria-hidden="true">+</b>')}</div>
     <p class="trio-noms">${tous.map(x => esc(x.nom)).join(' · ')}</p>
-    <div class="trio-prix"><strong>${prixEur(prixCoffret(tous.map(x => x.slug)))}</strong><s>${prixEur(tous.reduce((t, x) => t + prixDe(x.slug), 0))}</s><span>livraison offerte</span></div>
+    <div class="trio-prix">${bfActif() ? `<strong>${prixEur(prixBF(prixCoffret(tous.map(x => x.slug))))}</strong><s>${prixEur(prixCoffret(tous.map(x => x.slug)))}</s>` : `<strong>${prixEur(prixCoffret(tous.map(x => x.slug)))}</strong><s>${prixEur(tous.reduce((t, x) => t + prixDe(x.slug), 0))}</s>`}<span>livraison offerte</span></div>
     <button class="btn btn-s" type="button" id="ajout-trio" data-slugs="${esc(tous.map(x => x.slug).join(','))}">Ajouter le trio au panier</button>
     <a class="lien small" href="/coffrets?avec=${esc(p.slug)}#composer">Choisir d’autres carreaux pour le coffret</a>
   </div>`;
@@ -567,7 +579,7 @@ function vueProduit(slug){
       image:[p.image_principale,p.image_en_main,p.image_salon,p.image_etagere,p.image_detail,p.image_coffret,p.image_dimensions].filter(Boolean).map(u=>'https://k-reau.fr'+u), description:`${p.description} ${p.a_propos||''}`.trim(),
       brand:{ '@type':'Brand', name:'K-Reau' }, material:'Céramique', category:'Décoration > Carreaux décoratifs',
       width:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' }, height:{ '@type':'QuantitativeValue', value:15, unitCode:'CMT' },
-      offers:{ '@type':'Offer', url:urlP, price:prixDe(p.slug).toFixed(2), priceCurrency:'EUR', availability:'https://schema.org/InStock', itemCondition:'https://schema.org/NewCondition',
+      offers:{ '@type':'Offer', url:urlP, price:(bfActif() ? prixBF(prixDe(p.slug)) : prixDe(p.slug)).toFixed(2), priceCurrency:'EUR', ...(bfActif() ? { priceValidUntil:'2026-11-27' } : {}), availability:'https://schema.org/InStock', itemCondition:'https://schema.org/NewCondition',
         seller:{ '@type':'Organization', name:'K-Reau' },
         shippingDetails:{ '@type':'OfferShippingDetails', shippingRate:{ '@type':'MonetaryAmount', value:'7.90', currency:'EUR' }, shippingDestination:{ '@type':'DefinedRegion', addressCountry:'FR' },
           deliveryTime:{ '@type':'ShippingDeliveryTime', handlingTime:{ '@type':'QuantitativeValue', minValue:5, maxValue:7, unitCode:'DAY' } } },
@@ -2730,10 +2742,10 @@ function offresHTML(){
   return `<div class="offres">
     <article class="offre"><div class="offre-visuel"><img src="/img/coffret/les-embiez-coffret.webp" alt="Carreau K-Reau dans son coffret kraft" loading="lazy" style="object-position:60% 70%"></div>
       <div class="offre-corps"><span class="eyebrow">Coffrets</span><h3>Le trio de carreaux</h3><p class="muted">Trois lieux réunis : un trio tout prêt ou votre propre sélection.</p>
-      <p class="offre-prix">${prixEur(CONFIG.prix.coffret)}<s>${prixEur(3*CONFIG.prix.carreau)}</s></p><p class="small muted" style="margin:0">Livraison offerte</p><a class="btn btn-s" href="/coffrets">Composer un coffret</a></div></article>
+      <p class="offre-prix">${bfActif() ? `${prixEur(prixBF(CONFIG.prix.coffret))}<s>${prixEur(CONFIG.prix.coffret)}</s>` : `${prixEur(CONFIG.prix.coffret)}<s>${prixEur(3*CONFIG.prix.carreau)}</s>`}</p><p class="small muted" style="margin:0">Livraison offerte</p><a class="btn btn-s" href="/coffrets">Composer un coffret</a></div></article>
     <article class="offre"><div class="offre-visuel"><img src="/img/02_Accueil_et_Lifestyle/sur-mesure-dessin-en-cours.webp" srcset="/img/02_Accueil_et_Lifestyle/sur-mesure-dessin-en-cours-mini.webp 600w, /img/02_Accueil_et_Lifestyle/sur-mesure-dessin-en-cours.webp 1200w" sizes="(max-width: 700px) 100vw, 33vw" width="1200" height="900" alt="Dessin au trait des Embiez en cours, au crayon, avant impression sur carreau" loading="lazy"></div>
       <div class="offre-corps"><span class="eyebrow">Sur mesure</span><h3>Votre lieu, dessiné pour vous</h3><p class="muted">Votre maison, votre village, votre plage : nous le dessinons et l’imprimons sur un carreau unique.</p>
-      <p class="offre-prix">${prixEur(CONFIG.prix.surMesure)}</p><a class="btn btn-s" href="/sur-mesure">Créer mon carreau</a></div></article>
+      <p class="offre-prix">${prixBarre(CONFIG.prix.surMesure)}</p><a class="btn btn-s" href="/sur-mesure">Créer mon carreau</a></div></article>
     <article class="offre"><div class="offre-visuel"><div class="carte-visuel"><div><span>Carte cadeau</span><strong>K-Reau</strong><span>De 25 € à 100 €</span></div></div></div>
       <div class="offre-corps"><span class="eyebrow">Carte cadeau</span><h3>Laissez-les choisir</h3><p class="muted">Un code à offrir, valable 12 mois sur tous les carreaux et coffrets.</p>
       <p class="offre-prix">25 € · 50 € · 75 € · 100 €</p><a class="btn btn-s" href="/carte-cadeau">Offrir une carte</a></div></article>
@@ -2746,7 +2758,7 @@ function vueCoffrets(){
   let choix = avec && parSlug(avec) ? [avec] : [];
   const trioCarte = t => `<article class="offre"><div class="offre-visuel"><div class="mosaique-trio">${t.slugs.map(x=>`<img src="${esc(parSlug(x)?.miniature||'')}" alt="${esc(parSlug(x)?.nom||'')}" loading="lazy">`).join('')}</div></div>
     <div class="offre-corps"><h3>${esc(t.nom)}</h3><p class="muted small">${t.slugs.map(x=>esc(parSlug(x)?.nom||'')).join(' · ')}</p>
-    <p class="offre-prix">${prixEur(prixCoffret(t.slugs))}<s>${prixEur(t.slugs.reduce((n, x) => n + prixDe(x), 0))}</s></p>
+    <p class="offre-prix">${bfActif() ? `${prixEur(prixBF(prixCoffret(t.slugs)))}<s>${prixEur(prixCoffret(t.slugs))}</s>` : `${prixEur(prixCoffret(t.slugs))}<s>${prixEur(t.slugs.reduce((n, x) => n + prixDe(x), 0))}</s>`}</p>
     <button class="btn btn-p" type="button" data-trio="${t.id}">Ajouter au panier</button></div></article>`;
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Coffrets','']])}
@@ -2763,7 +2775,7 @@ function vueCoffrets(){
     <div class="choix-grille" id="g-choix"></div>
     <div class="barre-coffret" role="region" aria-label="Votre coffret">
       <div class="places" id="places"></div><span id="compte-choix" aria-live="polite"></span>
-      <button class="btn" type="button" id="ajout-coffret" disabled>Ajouter le coffret · ${prixEur(CONFIG.prix.coffret)}</button>
+      <button class="btn" type="button" id="ajout-coffret" disabled>Ajouter le coffret · ${prixEur(bfActif() ? prixBF(CONFIG.prix.coffret) : CONFIG.prix.coffret)}</button>
     </div>
   </div></section>
   <section class="bloc"><div class="wrap">${offresHTML()}</div></section>`;
@@ -2775,7 +2787,7 @@ function vueCoffrets(){
     $('#places').innerHTML = [0,1,2].map(i=>`<div class="place">${choix[i]?`<img src="${esc(parSlug(choix[i]).miniature)}" alt="${esc(parSlug(choix[i]).nom)}">`:''}</div>`).join('');
     $('#compte-choix').textContent = choix.length===3 ? 'Votre coffret est complet' : `${choix.length} / 3 carreaux choisis`;
     $('#ajout-coffret').disabled = choix.length !== 3;
-    $('#ajout-coffret').textContent = `Ajouter le coffret · ${prixEur(choix.length === 3 ? prixCoffret(choix) : CONFIG.prix.coffret)}`;
+    $('#ajout-coffret').textContent = `Ajouter le coffret · ${prixEur((v => bfActif() ? prixBF(v) : v)(choix.length === 3 ? prixCoffret(choix) : CONFIG.prix.coffret))}`;
   };
   peindre();
   document.querySelector('[data-filtres="g-choix"]').addEventListener('click', e => { const b=e.target.closest('.filtre'); if(!b) return; filtre=b.dataset.f; document.querySelectorAll('[data-filtres="g-choix"] .filtre').forEach(x=>x.setAttribute('aria-pressed',x===b)); peindre(); });
@@ -2807,7 +2819,7 @@ function vueSurMesure(){
     <div class="sm-tete">
       <div class="bloc-titre" style="margin:0"><span class="eyebrow">Carreau sur mesure</span><h1>Votre lieu, votre souvenir dessiné pour vous</h1>
       <p class="lead">La maison de famille, le village de vacances, la plage de votre enfance : nous dessinons le lieu de votre choix au trait et l’imprimons sur un carreau en céramique de 15 × 15 cm, avec le nom de votre choix en calligraphie.</p>
-      <p class="offre-prix" style="font-size:1.5rem">${prixEur(CONFIG.prix.surMesure)}</p>
+      <p class="offre-prix" style="font-size:1.5rem">${prixBarre(CONFIG.prix.surMesure)}</p>
       <div class="sm-boutons"><a class="btn btn-p" href="#form-sm">Créer mon carreau</a><a class="btn btn-s" href="/projet-specifique">Projet en quantité ? Demande spécifique</a></div></div>
       <figure class="sm-exemple" id="sm-galerie" tabindex="-1">
         <div class="galerie-cadre">
@@ -2844,7 +2856,7 @@ function vueSurMesure(){
         <span class="small muted">Vos photos nous sont transmises en toute confidentialité et servent uniquement à réaliser votre dessin. Vous pourrez aussi en envoyer d’autres à contact@k-reau.fr après la commande.</span>
         <span class="err" id="sm-photos-err" aria-live="polite"></span></div>
       <label class="consent"><input type="checkbox" id="sm-ok" required> <span>J’ai compris qu’un carreau personnalisé ne peut pas faire l’objet d’une rétractation, et que le dessin me sera soumis avant impression.</span></label>
-      <button class="btn btn-p" type="submit" style="justify-self:start">Ajouter au panier · ${prixEur(CONFIG.prix.surMesure)}</button>
+      <button class="btn btn-p" type="submit" style="justify-self:start">Ajouter au panier · ${prixEur(bfActif() ? prixBF(CONFIG.prix.surMesure) : CONFIG.prix.surMesure)}</button>
       <div class="retour" aria-live="polite"></div>
       <p class="small muted">Délai : dessin envoyé sous 5 jours ouvrés après la commande, puis expédition sous 5 à 7 jours après votre validation.</p>
     </form>
@@ -3160,7 +3172,7 @@ const Panier = {
           <strong>Chevalet trépied en bois brut</strong>
           <p class="small muted">Pour poser votre carreau sur une étagère, un buffet ou un bureau, sans fixation.</p>
           <p class="small">Dimensions : L 8 × H 15 cm</p>
-          <p class="offre-prix" style="margin:0">${prixEur(CONFIG.prix.chevalet)} <span class="small muted" style="font-weight:400">l’unité</span></p>
+          <p class="offre-prix" style="margin:0">${prixBarre(CONFIG.prix.chevalet)} <span class="small muted" style="font-weight:400">l’unité</span></p>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:14px"><span class="small"><strong>Quantité</strong></span><div class="ligne-qte"><button type="button" id="ch-moins" aria-label="Un chevalet de moins">−</button><output id="ch-q">1</output><button type="button" id="ch-plus" aria-label="Un chevalet de plus">+</button></div></div>
