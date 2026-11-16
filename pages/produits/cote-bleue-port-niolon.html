@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.a728e0182a.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.4859a9dafc.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -311,6 +311,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .reassurance{min-width:0;list-style:none;margin:2px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;font-size:.8rem;color:var(--encre-doux)}
 .reassurance li{display:flex;align-items:center;gap:7px;line-height:1.3}
 .reassurance svg{flex:none;color:var(--olivier)}
+.avis-confiance{min-width:0;padding:11px 14px;background:var(--ceramique);font-size:.85rem;line-height:1.45;color:var(--encre-doux)}
+.avis-confiance p{margin:0}.ac-note{display:flex;align-items:center;gap:10px;color:var(--encre)}.ac-cit{margin-top:6px!important;font-style:italic}.ac-auteur{font-style:normal;white-space:nowrap}
 .trio-fiche{min-width:0;border-top:1px solid var(--joint);padding-top:16px;display:grid;gap:12px}
 .trio-fiche .trio-titre{font-family:var(--f-titre);font-weight:400;font-size:1.3rem;margin:0}
 .trio-vignettes{display:flex;align-items:center;gap:6px}
@@ -691,12 +693,15 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
           <label for="qte-out">Quantité</label>
           <div class="qte"><button type="button" data-q="-1" aria-label="Diminuer">−</button><output id="qte-out" aria-live="polite">1</output><button type="button" data-q="1" aria-label="Augmenter">+</button></div>
           <button class="btn btn-p" type="button" id="ajout">Ajouter au panier</button>
-          <ul class="reassurance">
-            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-6h4v6"></path></svg>Fabriqué à Mallemort</li>
+          <ul class="reassurance" aria-label="Nos engagements">
             <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>Paiement sécurisé</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"></path><circle cx="6" cy="18" r="1.8"></circle><circle cx="17" cy="18" r="1.8"></circle></svg>Expédié sous 5 à 7 jours</li>
+            <li id="rea-noel"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M4 7.5l16 9M20 7.5l-16 9"></path></svg><span class="rea-txt">Livré pour Noël : commandez avant le <span>13 déc.</span></span></li>
             <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2"></path><path d="M4 4v5h5"></path></svg>Retours sous 14 jours</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-6h4v6"></path></svg>Fabriqué à Mallemort</li>
             <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="9" width="16" height="12"></rect><path d="M3 9h18M12 9v12"></path><path d="M12 9c-2-4-6-4-5-1s5 1 5 1zm0 0c2-4 6-4 5-1s-5 1-5 1z"></path></svg>Coffret cadeau inclus</li>
           </ul>
+          <div class="avis-confiance" id="avis-confiance" hidden=""></div>
           <div class="trio-fiche"><p class="trio-titre">Complétez votre trio</p>
     <div class="trio-vignettes"><span class="moi"><img src="/img/04_Produits_Cote_Bleue/cote-bleue-port-niolon-mini.webp" alt="Le Port de Niolon" loading="lazy" width="600" height="600"></span><b aria-hidden="true">+</b>
       <a href="/produits/cote-bleue-carry-le-rouet" title="Carry-le-Rouet"><img src="/img/04_Produits_Cote_Bleue/cote-bleue-carry-le-rouet-mini.webp" alt="Carry-le-Rouet" loading="lazy" width="600" height="600"></a><b aria-hidden="true">+</b><a href="/produits/cote-bleue-sausset-les-pins" title="Sausset-les-Pins"><img src="/img/04_Produits_Cote_Bleue/cote-bleue-sausset-les-pins-mini.webp" alt="Sausset-les-Pins" loading="lazy" width="600" height="600"></a></div>
@@ -825,7 +830,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.60d149fa52.js" defer=""></script>
+<script src="/assets/app.6299f47b12.js" defer=""></script>
 
 
 

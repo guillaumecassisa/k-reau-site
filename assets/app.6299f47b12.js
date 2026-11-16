@@ -649,12 +649,15 @@ function vueProduit(slug){
           <label for="qte-out">Quantité</label>
           <div class="qte"><button type="button" data-q="-1" aria-label="Diminuer">−</button><output id="qte-out" aria-live="polite">1</output><button type="button" data-q="1" aria-label="Augmenter">+</button></div>
           <button class="btn btn-p" type="button" id="ajout">Ajouter au panier</button>
-          <ul class="reassurance">
-            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-6h4v6"/></svg>Fabriqué à Mallemort</li>
+          <ul class="reassurance" aria-label="Nos engagements">
             <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="1.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Paiement sécurisé</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></svg>Expédié sous 5 à 7 jours</li>
+            <li id="rea-noel"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M4 7.5l16 9M20 7.5l-16 9"/></svg><span class="rea-txt">Livraison offerte dès 50 €</span></li>
             <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 12a8 8 0 1 0 3-6.2"/><path d="M4 4v5h5"/></svg>Retours sous 14 jours</li>
+            <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-6h4v6"/></svg>Fabriqué à Mallemort</li>
             <li><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="9" width="16" height="12"/><path d="M3 9h18M12 9v12"/><path d="M12 9c-2-4-6-4-5-1s5 1 5 1zm0 0c2-4 6-4 5-1s-5 1-5 1z"/></svg>Coffret cadeau inclus</li>
           </ul>
+          <div class="avis-confiance" id="avis-confiance" hidden></div>
           ${trioHTML(p)}
         </div>` : `
         <div class="encart">
@@ -717,7 +720,7 @@ function vueProduit(slug){
     const bt = $('#ajout-trio');
     if(bt) bt.addEventListener('click', () => { const sl = bt.dataset.slugs.split(','); const tp = CONFIG.trios.find(t => t.slugs.length === sl.length && t.slugs.every(x => sl.includes(x))); Panier.ajouter({ type:'coffret', slugs: sl, nom: tp ? tp.nom : 'Coffret 3 carreaux · votre sélection' }); toast('Coffret ajouté au panier'); Panier.ouvrir(); });
   }
-  chargerAvis(p);
+  chargerAvis(p); avisConfiance(p);
 }
 
 /* ===== Avis clients (vérifiés : déposés uniquement via le lien envoyé après une commande) ===== */
@@ -759,6 +762,18 @@ function carrouselAvis(sec){
     io.observe(piste);
     ['touchstart','pointerdown','wheel','focusin'].forEach(ev => piste.addEventListener(ev, () => { sec.dataset.touche = '1'; arreter(); io.disconnect(); }, { passive:true }));
   }
+}
+
+// Fiche produit : avis vérifiés de la marque juste sous le bouton d'achat (même si ce carreau n'a pas encore d'avis)
+async function avisConfiance(p){
+  let l; try{ const r = await fetch('/api/avis?derniers=1'); if(!r.ok) return; l = await r.json(); }catch(e){ return; }
+  const el = $('#avis-confiance'); if(!el || !Array.isArray(l) || !l.length || cleDepuisChemin(cheminFR()) !== 'produit-' + p.slug) return;
+  const moy = Math.round(l.reduce((x, a) => x + a.note, 0) / l.length * 10) / 10;
+  const a = l.find(x => x.slug === p.slug && x.texte) || l.find(x => x.texte);
+  const court = t => { t = String(t || ''); return t.length > 110 ? t.slice(0, 107).replace(/\s+\S*$/, '') + '…' : t; };
+  el.innerHTML = `<p class="ac-note">${etoiles(moy)}<strong>${noteTxt(moy)}/5</strong><span>${l.length < 12 ? `${l.length} avis vérifiés` : 'avis vérifiés'}</span></p>`
+    + (a ? `<p class="ac-cit"><span lang="${a.langue === 'en' ? 'en' : 'fr'}" translate="no">« ${esc(court(a.texte))} »</span> <span class="ac-auteur" translate="no">${esc(joliNom(a.prenom))}${a.ville ? ', ' + esc(joliNom(a.ville)) : ''}</span></p>` : '');
+  el.hidden = false;
 }
 
 async function chargerAvis(p){
@@ -3005,6 +3020,8 @@ function noelFiche(){
   const limite = dateLimiteCommande(fete, LANG === 'en' ? [3, 6] : [2, 3]);
   const fin = new Date(limite); fin.setHours(23, 59, 59, 0);
   const date = limite.toLocaleDateString(LOC, { weekday:'long', day:'numeric', month:'long' });
+  const rea = document.querySelector('#rea-noel .rea-txt');
+  if(rea && fin > maint) rea.innerHTML = `Livré pour Noël : commandez avant le <span>${limite.toLocaleDateString(LOC, { day:'numeric', month:'short' })}</span>`;
   const peindre = () => {
     const reste = fin - new Date();
     if(reste <= 0){ el.innerHTML = '<strong>Trop tard pour une livraison avant Noël ?</strong> <a class="lien" href="/carte-cadeau">La carte cadeau</a> est envoyée immédiatement par e-mail.'; el.classList.add('tard'); clearInterval(minuterieNoel); return; }

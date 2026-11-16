@@ -687,5 +687,8 @@
  "Merci ! Votre code de bienvenue et notre dernière newsletter viennent de partir par e-mail. Pensez à regarder dans les courriers indésirables.": "Thank you! Your welcome code and our latest newsletter are on their way by email. Remember to check your spam folder.",
  "Nos coups de cœur": "Our favourites",
  "Black Friday · -25 % jusqu’au 27 novembre": "Black Friday · 25% off until 27 November",
- "-25 %": "-25%"
+ "-25 %": "-25%",
+ "{0}Expédié sous 5 à 7 jours": "{0}Dispatched within 5 to 7 days",
+ "Livraison offerte dès 50 €": "Free delivery in France from €50",
+ "Livré pour Noël : commandez avant le {0}": "Delivered for Christmas: order by {0}"
 }
