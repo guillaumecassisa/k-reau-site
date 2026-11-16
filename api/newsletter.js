@@ -63,6 +63,10 @@ async function inscrire(email, { en = false, source = 'site', renvoyer = false, 
     await envoyerClient(email, en ? 'Your K-Reau welcome code: 10% off' : 'Votre code de bienvenue K-Reau : -10 %', mailBienvenue(email, code, en, apresAchat),
       { 'List-Unsubscribe': `<${lien}>`, 'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click' });
   }
+  // tout nouvel abonné (fenêtre, formulaires, panier, achat, page /newsletter) reçoit aussi la dernière newsletter envoyée
+  if (ab.nouveau || ab.desinscrit) {
+    try { ab.derniere = await require('./campagne').envoyerDerniere(email, en); } catch (e) { console.error('dernière newsletter', e.message); }
+  }
   return ab;
 }
 
@@ -94,10 +98,7 @@ module.exports = async function handler(req, res) {
     if (!emailValide(email)) return res.status(400).json({ erreur: 'Saisissez une adresse e-mail valide.' });
 
     const ab = await inscrire(email, { en, source: d.derniere ? 'page-newsletter' : 'site', renvoyer: !!d.renvoyer });
-    let derniere = false;
-    if (d.derniere && (ab.nouveau || ab.desinscrit)) {
-      try { derniere = await require('./campagne').envoyerDerniere(email, en); } catch (e) { console.error('dernière newsletter', e.message); }
-    }
+    const derniere = !!ab.derniere;
     return res.status(200).json({ ok: true, deja: !ab.nouveau && !ab.desinscrit, derniere });
   } catch (e) {
     console.error('newsletter', e.message);

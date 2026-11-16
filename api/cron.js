@@ -118,6 +118,14 @@ module.exports = async function handler(req, res) {
     } catch (e) { console.error('cron', s.id, e.message); bilan.erreurs.push(s.id + ' : ' + e.message.slice(0, 80)); }
   }
   if (bilan.erreurs.length) await envoyerMail('K-Reau · Tâche quotidienne : erreurs', `<pre>${echap(JSON.stringify(bilan, null, 1))}</pre>`).catch(() => {});
+  // 5. rattrapage newsletter : chaque abonné qui n'a pas reçu la dernière newsletter envoyée (inscrit après l'envoi) la reçoit
+  bilan.newsletters = 0;
+  try {
+    const { envoyerDerniere } = require('./campagne');
+    for (const a of (await base('abonnes_liste', {})) || []) {
+      if (await envoyerDerniere(String(a.email || '').toLowerCase(), a.langue === 'en', { veille: true })) { bilan.newsletters++; await new Promise(r => setTimeout(r, 600)); }
+    }
+  } catch (e) { bilan.erreurs.push('newsletter : ' + e.message); }
   console.log('cron', JSON.stringify(bilan));
   return res.status(200).json(bilan);
 };
