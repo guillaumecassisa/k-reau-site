@@ -125,6 +125,26 @@ const prixBF = n => { const c = Math.round(n * 100); return (c - Math.round(c * 
 const prixBarre = n => bfActif() ? `${prixEur(prixBF(n))} <s class="prix-barre">${prixEur(n)}</s>` : prixEur(n);
 const aCompleter = (v, txt='À compléter avant mise en ligne') => v ? esc(v) : `<span class="a-completer">${txt}</span>`;
 const store = { get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } }, set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} } };
+/* ===== Suivi anonyme du parcours d'achat (compteurs par jour, sans donnée personnelle) ===== */
+function sourceVisite(){
+  try{ const deja = sessionStorage.getItem('kr-source'); if(deja) return deja; }catch(e){}
+  const u = new URLSearchParams(location.search).get('utm_source') || '';
+  const r = (()=>{ try{ return new URL(document.referrer).hostname; }catch(e){ return ''; } })();
+  const t = (u + ' ' + r).toLowerCase();
+  const s = /pinterest|pin\.it/.test(t) ? 'pinterest' : /instagram/.test(t) ? 'instagram' : /facebook|fb\./.test(t) ? 'facebook'
+          : /google|bing|qwant|duckduckgo|ecosia/.test(t) ? 'google' : /newsletter|mail/.test(t) ? 'newsletter' : (!r || r.endsWith('k-reau.fr')) ? 'direct' : 'autre';
+  try{ sessionStorage.setItem('kr-source', s); }catch(e){}
+  return s;
+}
+function suivre(etape){
+  if(!/(^|\.)k-reau\.fr$|\.vercel\.app$/.test(location.hostname)) return;   // pas pendant le pré-rendu ni en local
+  try{ if(sessionStorage.getItem('kr-suivi-' + etape)) return; sessionStorage.setItem('kr-suivi-' + etape, '1'); }catch(e){}
+  const corps = JSON.stringify({ etape, source: sourceVisite() });
+  try{ if(navigator.sendBeacon && navigator.sendBeacon('/api/suivi', new Blob([corps], { type:'application/json' }))) return; }catch(e){}
+  fetch('/api/suivi', { method:'POST', headers:{'Content-Type':'application/json'}, body: corps, keepalive:true }).catch(()=>{});
+}
+setTimeout(() => suivre('visite'), 0);
+
 function setMeta(title, desc, opts = {}){
   document.title = title;
   document.getElementById('ld-page')?.remove();
@@ -565,6 +585,7 @@ function trioHTML(p){
 }
 
 function vueProduit(slug){
+  if(PRODUITS && parSlug(slug)) suivre('fiche');
   if(!PRODUITS){ app.innerHTML = `<div class="wrap" style="padding-block:80px"><div class="grille">${grilleHTML([])}</div></div>`; return; }
   const p = parSlug(slug);
   if(!p) return vue404();
@@ -3078,6 +3099,7 @@ const Panier = {
   total(){ return this.lignes.reduce((t,l)=>t+this.prix(l)*l.q,0); },
   valide(l){ return l.type==='carreau' ? !!parSlug(l.slug) : l.type==='coffret' ? l.slugs.every(parSlug) : true; },
   ajouter(l){
+    suivre('panier');
     if(l.type==='sur-mesure') l.id = Date.now().toString(36);
     const k = this.cle(l), ex = this.lignes.find(x=>this.cle(x)===k);
     if(ex) ex.q = Math.min(20, ex.q + (l.q||1)); else this.lignes.push({ ...l, q: l.q||1 });
@@ -3191,6 +3213,7 @@ const Panier = {
     return true;
   },
   async payer(){
+    suivre('paiement');
     const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
     try{
       const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code: this.code || '', newsletter: !!this.newsletter, lignes: this.lignes, message: this.physique() > 0 ? this.message : '', destination: ['EU','CA'].includes(this.destination) ? this.destination : 'FR', lang: LANG }) });

@@ -86,6 +86,13 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 .urssaf div span{display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
 .urssaf div strong{font-size:1.3rem}
 .urssaf p{margin:0;color:var(--doux);font-size:.85rem;width:100%}
+.parcours{background:var(--blanc);border:1px solid var(--joint);padding:14px 16px;margin-bottom:12px}
+.parcours .pt{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}.parcours .pt b{font-size:1rem}
+.parcours .pt button{border:1px solid var(--joint);background:none;padding:3px 10px;border-radius:14px;font:inherit;font-size:.82rem;cursor:pointer}.parcours .pt button[aria-pressed=true]{background:var(--encre);color:#fff;border-color:var(--encre)}
+.etape{display:grid;grid-template-columns:150px 1fr 110px;gap:10px;align-items:center;margin:5px 0;font-size:.9rem}.etape .barre{height:22px;background:#eee8dd;border-radius:3px;overflow:hidden}.etape .barre i{display:block;height:100%;background:var(--olive,#51573D)}
+.etape .v{text-align:right;font-variant-numeric:tabular-nums}.etape .v small{color:#8a8478;display:block;font-size:.75rem}
+.sources{margin-top:10px;font-size:.82rem;color:#5e5a52;display:flex;flex-wrap:wrap;gap:4px 16px}
+@media(max-width:600px){.etape{grid-template-columns:100px 1fr 80px}}
 .news{background:var(--blanc);border:1px solid var(--joint);padding:10px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;font-size:.92rem}
 .news b{font-size:1.15rem}
 .news span.t{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
@@ -105,7 +112,7 @@ const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currenc
 const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
 const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
 const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
-let ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+let PARCOURS = [], parcoursJours = 7, ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
 try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
 
 async function api(corps) {
@@ -132,7 +139,7 @@ function vueConnexion(msg) {
 
 async function charger() {
   const j = await api({ action:'liste', jours });
-  CMDS = j.commandes || []; COUTS = j.couts || {}; ABONNES = j.abonnes || null;
+  CMDS = j.commandes || []; COUTS = j.couts || {}; ABONNES = j.abonnes || null; PARCOURS = j.parcours || [];
   $('#deco').hidden = false;
   vueListe();
 }
@@ -200,6 +207,25 @@ function chiffres(liste) {
   r.net = r.ca - r.frais - r.produits - r.envoi - r.urssaf;
   return r;
 }
+// Parcours d'achat : visites → fiches → panier → paiement → commandes payées
+function blocParcours() {
+  const debut = new Date(); debut.setHours(0, 0, 0, 0); debut.setDate(debut.getDate() - (parcoursJours - 1));
+  const lim = debut.toISOString().slice(0, 10);
+  const lignes = PARCOURS.filter(x => x.jour >= lim);
+  if (!lignes.length && !CMDS.length) return '';
+  const tot = e => lignes.filter(x => x.etape === e).reduce((a, x) => a + x.n, 0);
+  const cmd = CMDS.filter(c => new Date(c.heure) >= debut && c.suivi.statut !== 'annule').length;
+  const et = [['Visites', tot('visite')], ['Fiche produit vue', tot('fiche')], ['Ajout au panier', tot('panier')], ['Début de paiement', tot('paiement')], ['Commande payée', cmd]];
+  const max = Math.max(1, et[0][1]);
+  const src = {}; lignes.filter(x => x.etape === 'visite').forEach(x => src[x.source] = (src[x.source] || 0) + x.n);
+  const srcC = {}; lignes.filter(x => x.etape === 'panier').forEach(x => srcC[x.source] = (srcC[x.source] || 0) + x.n);
+  const noms = { pinterest:'Pinterest', instagram:'Instagram', facebook:'Facebook', google:'Google', newsletter:'Newsletter', direct:'Direct', autre:'Autres' };
+  return `<div class="parcours"><div class="pt"><b>Parcours d’achat</b><span>${[1, 7, 30].map(n => `<button type="button" data-pj="${n}" aria-pressed="${n === parcoursJours}">${n === 1 ? 'Aujourd’hui' : n + ' jours'}</button>`).join(' ')}</span></div>
+    ${et.map(([l, v], i) => `<div class="etape"><span>${l}</span><span class="barre"><i style="width:${Math.max(v ? 1.5 : 0, 100 * v / max)}%"></i></span><span class="v">${v}${i ? `<small>${et[i - 1][1] ? Math.round(100 * v / et[i - 1][1]) + ' %' : '—'}</small>` : ''}</span></div>`).join('')}
+    ${Object.keys(src).length ? `<div class="sources">${Object.entries(src).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<span>${noms[k] || k} : <b>${v}</b> visite${v > 1 ? 's' : ''} → ${srcC[k] || 0} panier${(srcC[k] || 0) > 1 ? 's' : ''}</span>`).join('')}</div>` : '<div class="sources">Le suivi a démarré le 16 novembre : les chiffres se remplissent au fil des visites.</div>'}</div>`;
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-pj]'); if (!b) return; parcoursJours = +b.dataset.pj; const ouvert = [...document.querySelectorAll('#stats details')].map(x => x.open); peindreStats(); document.querySelectorAll('#stats details').forEach((x, i) => x.open = ouvert[i]); });
+
 function peindreStats() {
   const valides = CMDS.filter(c => c.suivi.statut !== 'annule');
   const r = chiffres(valides);
@@ -244,6 +270,7 @@ function peindreStats() {
       <div class="stat cle ${r.net < 0 ? 'neg' : ''}"><span>Résultat net</span><strong>${euros(r.net)}</strong><small>marge ${pct(r.net, r.ca)}${sansCouts ? ' · coûts à renseigner' : ''}</small></div>
     </div>
     ${ABONNES ? `<div class="news"><span class="t">Newsletter</span><span><b>${ABONNES.actifs}</b> abonné${ABONNES.actifs > 1 ? 's' : ''}</span><span>+${ABONNES.semaine} sur 7 jours</span><span>+${ABONNES.mois} sur 30 jours</span><span>${ABONNES.desinscrits} désinscrit${ABONNES.desinscrits > 1 ? 's' : ''}</span>${ABONNES.dernier ? `<span class="meta">dernière inscription le ${new Date(ABONNES.dernier).toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</span>` : ''}</div>` : ''}
+    ${blocParcours()}
     <details class="panneau"><summary>Détail du résultat, par mois et meilleures ventes</summary><div class="panneau-corps">
       <div><table class="t"><tr><th>Sur ${jours} jours, hors annulées</th><th>Montant</th></tr>
         <tr><td>Chiffre d’affaires encaissé</td><td>${euros(r.ca)}</td></tr>
