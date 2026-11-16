@@ -3356,24 +3356,39 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
     { nom:'la fête des grands-pères', date: an => dimanche(an, 9, 1), jours:28, lien:'<a href="/carreaux">Choisir un lieu</a>',
       avant: l => `<strong>Fête des grands-pères :</strong> offrez-lui le lieu de ses souvenirs · commandez avant le ${l} pour être livré à temps · ` },
     { nom:'Noël', date: an => new Date(an, 11, 24), jours:53, lien:'<a href="/coffrets">Voir les coffrets</a>',
-      avant: l => `<strong>Noël :</strong> commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · ` }
+      avant: (l, n) => `<strong>Noël :</strong> ${n ? (n > 1 ? `plus que ${n} jours · ` : 'dernier jour · ') : ''}commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · ` }
   ];
   let msg='';
   for(const f of fetes){
     const fete = f.date(j.getFullYear()), debut = new Date(fete); debut.setDate(debut.getDate() - f.jours);
     if(j < debut || j >= fete) continue;
     const limite = dateLimiteCommande(fete);
-    msg = j <= limite ? f.avant(jour(limite)) + f.lien
+    // compte à rebours (Noël, une fois le Black Friday terminé) : jours restants, jour limite compris
+    const nj = Math.round((new Date(limite).setHours(0,0,0,0) - new Date(j).setHours(0,0,0,0)) / 86400000) + 1;
+    msg = j <= limite ? f.avant(jour(limite), f.nom === 'Noël' && !bfActif() && nj <= 16 ? nj : 0) + f.lien
       : `<strong>Trop tard pour une livraison avant ${f.nom} ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ` + carte;
     break;
   }
   a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
-  const bfb = $('#annonce-bf');
-  if(bfb){ const on = bfActif();
-    bfb.innerHTML = on ? (LANG === 'en'
-      ? '<strong>BLACK FRIDAY</strong> · 25% off all our tiles and gift boxes, 15 to 27 November<span class="bf-plus"> · automatically applied in your basket</span>'
-      : '<strong>BLACK FRIDAY</strong> · -25 % sur tous nos carreaux et coffrets, du 15 au 27 novembre<span class="bf-plus"> · remise appliquée automatiquement au panier</span>') : '';
-    bfb.hidden = !on; }
+  majBandeauBF();
+  if(!window.__bfMinuteur) window.__bfMinuteur = setInterval(majBandeauBF, 1000);
+}
+// Bandeau Black Friday avec compte à rebours : « plus que N jours », puis heures/minutes/secondes le dernier jour
+function majBandeauBF(){
+  const bfb = $('#annonce-bf'); if(!bfb) return;
+  const on = bfActif();
+  if(!on){ if(!bfb.hidden){ bfb.hidden = true; bfb.innerHTML = ''; } return; }
+  const reste = BF.fin - Date.now(), en = LANG === 'en';
+  const jours = Math.ceil(reste / 86400000);
+  const h = Math.floor(reste / 3600000), m = Math.floor(reste / 60000) % 60, sec = Math.floor(reste / 1000) % 60, d2 = n => String(n).padStart(2, '0');
+  const compte = reste <= 86400000
+    ? (en ? `last day · ends in ${d2(h)}:${d2(m)}:${d2(sec)}` : `dernier jour · fin dans ${h} h ${d2(m)} min ${d2(sec)} s`)
+    : (en ? `${jours} days left` : `plus que ${jours} jours`);
+  const html = en
+    ? `<strong>BLACK FRIDAY</strong> · 25% off all our tiles and gift boxes · <strong class="bf-compte">${compte}</strong><span class="bf-plus"> · automatically applied in your basket</span>`
+    : `<strong>BLACK FRIDAY</strong> · -25 % sur tous nos carreaux et coffrets · <strong class="bf-compte">${compte}</strong><span class="bf-plus"> · remise appliquée automatiquement au panier</span>`;
+  if(bfb.innerHTML !== html) bfb.innerHTML = html;
+  bfb.hidden = false;
 }
 if(LIVE){ $('#btn-panier').hidden = false; $('#btn-panier').addEventListener('click', () => Panier.ouvrir()); Panier.badge(); }
 window.addEventListener('hashchange', route);

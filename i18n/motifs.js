@@ -33,6 +33,8 @@
   [/^Carreau décoratif K-Reau « (.+) » en céramique blanche, dessin au trait noir et nom calligraphié$/, m => 'K-Reau decorative tile “' + m[1] + '” in white ceramic, black line drawing and calligraphed name'],
   [/^Carreau K-Reau de la collection (.+)$/, (m, T) => 'K-Reau tile from the ' + T(m[1]).replace(/^(The|La|Les) /, '') + ' collection'],
   [/^Reçu entre le (.+) et le (.+)$/, m => 'Delivered between ' + m[1] + ' and ' + m[2]],
+  [/^\{0\} plus que (\d+) jours · commandez avant le (.+?) pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · \{1\}$/, m => '{0} only ' + m[1] + ' days left · order by ' + m[2] + ' for your gifts to arrive in time · free delivery in France from €50 · {1}'],
+  [/^\{0\} dernier jour · commandez avant le (.+?) pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · \{1\}$/, m => '{0} last day · order by ' + m[1] + ' for your gifts to arrive in time · free delivery in France from €50 · {1}'],
   [/^\{0\} commandez avant le (.+?) pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · \{1\}$/, m => '{0} order by ' + m[1] + ' for your gifts to arrive in time · free delivery in France from €50 · {1}'],
   [/^\{0\} (.+?) · commandez avant le (.+?) pour être livré à temps · \{1\}$/, (m, T) => '{0} ' + T(m[1]) + ' · order by ' + m[2] + ' for delivery in time · {1}'],
   [/^(\d+) \/ (\d+)$/, m => m[0]],
