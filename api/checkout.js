@@ -64,7 +64,8 @@ module.exports = async function handler(req, res) {
     } else if (type === 'sur-mesure') {   // le nom en calligraphie est facultatif
       surMesure++;
       const style = { trait: 'Dessin au trait', photo: 'Photo originale', aquarelle: 'Aquarelle' }[l.style] || 'Dessin au trait';
-      const desc = `Style : ${style} · ${texte(l.texte, 40) ? `Texte : « ${texte(l.texte, 40)} »` : 'Sans nom'}${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
+      const police = { calligraphie: 'Calligraphie', elegante: 'Élégante', capitales: 'Capitales', moderne: 'Moderne' }[l.police] || 'Calligraphie';
+      const desc = `Style : ${style} · ${texte(l.texte, 40) ? `Texte : « ${texte(l.texte, 40)} » (police ${police})` : 'Sans nom'}${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.surMesure, product_data: { name: 'Carreau K-Reau sur mesure', description: desc.slice(0, 480) } } });
       physique += PRIX.surMesure * q(l); resume.push(`sur-mesure(${texte(l.texte, 40) || 'sans nom'})x${q(l)}`);
       smDetails.push(desc);

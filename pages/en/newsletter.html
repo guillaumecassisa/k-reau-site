@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.641e09c485.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.76fba57f42.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -488,6 +488,14 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-apercu canvas{display:block;width:100%;height:100%}
 @media(min-width:861px){.formulaire.sm-avec-apercu{grid-template-columns:minmax(0,1fr) minmax(0,420px);column-gap:56px}
   .formulaire.sm-avec-apercu>*{grid-column:1}.formulaire.sm-avec-apercu>.sm-apercu{grid-column:2;grid-row:1 / span 12;position:sticky;top:96px}}
+.sm-polices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
+.sm-police{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:74px;padding:10px 6px;border:1.5px solid var(--joint);background:var(--blanc);border-radius:var(--r);cursor:pointer;text-align:center}
+.sm-police input{position:absolute;opacity:0;pointer-events:none}
+.sm-police:has(input:checked){border-color:var(--olivier);box-shadow:inset 0 0 0 1px var(--olivier)}
+.sm-police:has(input:focus-visible){outline:2px solid var(--olivier);outline-offset:2px}
+.sm-police-ex{color:var(--encre);line-height:1.2;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sm-police-nom{font-size:.75rem;color:var(--doux,#5E5A52);letter-spacing:.02em}
+@media(max-width:520px){.sm-polices{grid-template-columns:1fr 1fr}}
 .sm-styles{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .sm-styles legend{padding:0;margin-bottom:8px}
 .sm-style{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border:1.5px solid var(--joint);background:var(--blanc);padding:12px 8px;border-radius:var(--r);cursor:pointer;font-size:.9rem;position:relative}
@@ -763,7 +771,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.d185c10421.js" defer=""></script>
+<script src="/assets/app.5b619aeb68.js" defer=""></script>
 
 
 

@@ -2989,7 +2989,8 @@ function vueSurMesure(){
     </ol>
     <form class="formulaire sm-avec-apercu" id="form-sm" novalidate>
       <h2>Votre carreau</h2>
-      <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="text" id="sm-texte" maxlength="32" placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum. Laissez vide pour un carreau sans nom.</span><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="sm-texte">Nom écrit sur le carreau <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="text" id="sm-texte" maxlength="32" placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum. Laissez vide pour un carreau sans nom.</span><span class="err" aria-live="polite"></span>
+        <div class="sm-polices" role="radiogroup" aria-label="Police du nom">${Object.entries(POLICES_SM).map(([k, p], i) => `<label class="sm-police"><input type="radio" name="sm-police" value="${k}" ${i ? '' : 'checked'}><span class="sm-police-ex" style="${p.css}" translate="no">La Bastide</span><span class="sm-police-nom">${p.nom}</span></label>`).join('')}</div></div>
       
       <div class="champ"><label for="sm-details">Le lieu et ce que vous aimeriez voir sur le dessin</label><textarea id="sm-details" maxlength="300" required minlength="10" placeholder="Ex. : notre maison à Mallemort, la façade avec les volets bleus et le grand pin devant"></textarea><span class="err" aria-live="polite"></span></div>
       <fieldset class="sm-styles"><legend><strong>Style du carreau</strong></legend>
@@ -3038,7 +3039,7 @@ function vueSurMesure(){
     if(!valider(form)) return;
     if(!$('#sm-ok').checked){ form.querySelector('.retour').innerHTML = '<p class="msg ko">Cochez la case pour confirmer que vous avez pris connaissance des conditions du sur-mesure.</p>'; return; }
     const btn = form.querySelector('button[type=submit]'), lib = btn.textContent, ret = form.querySelector('.retour');
-    const infos = { texte:$('#sm-texte').value.trim(), details:$('#sm-details').value.trim(), style: styleSM };
+    const infos = { texte:$('#sm-texte').value.trim(), details:$('#sm-details').value.trim(), style: styleSM, police: policeSM };
     let photo = '';
     if(photosSM.length){
       const ref = 'SM-' + Array.from(crypto.getRandomValues(new Uint8Array(6)), x => 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[x % 32]).join('');
@@ -3059,7 +3060,7 @@ function vueSurMesure(){
       btn.disabled = false; btn.textContent = lib;
     }
     Panier.ajouter({ type:'sur-mesure', ...infos, photo });
-    form.reset(); photosSM = []; styleSM = 'trait'; afficherPhotosSM();
+    form.reset(); photosSM = []; styleSM = 'trait'; policeSM = 'calligraphie'; afficherPhotosSM(); majPolicesSM();
     ret.innerHTML = `<p class="msg ok">Votre carreau sur mesure est dans le panier${photo ? ', avec vos photos' : ''}.</p>`;
     Panier.ouvrir();
   });
@@ -3076,13 +3077,22 @@ function vueSurMesure(){
   $('#sm-vignettes').addEventListener('click', e => {
     const a = e.target.closest('[data-apercu]'); if(a){ apercuSM = +a.dataset.apercu; afficherPhotosSM(); return; }
     const b = e.target.closest('[data-retirer]'); if(!b) return; photosSM.splice(+b.dataset.retirer, 1); afficherPhotosSM(); });
-  $('#sm-texte').addEventListener('input', () => ApercuSM.planifier());
+  $('#sm-texte').addEventListener('input', () => { ApercuSM.planifier(); majPolicesSM(); });
+  policeSM = 'calligraphie'; document.querySelectorAll('input[name="sm-police"]').forEach(r => r.addEventListener('change', () => { policeSM = r.value; ApercuSM.planifier(); }));
   styleSM = 'trait'; document.querySelectorAll('input[name="sm-style"]').forEach(r => r.addEventListener('change', () => { styleSM = r.value; ApercuSM.planifier(); const n = $('#sm-apercu-note'); if(n) n.textContent = NOTES_SM[styleSM]; }));
   ApercuSM.init();
 }
 
+// Les exemples de police reprennent le nom tapé
+function majPolicesSM(){ const v = ($('#sm-texte') || {}).value?.trim() || 'La Bastide'; document.querySelectorAll('.sm-police-ex').forEach(e => e.textContent = v); }
 // Photos du sur-mesure : réduites dans le navigateur (2000 px max, JPEG) avant l'envoi
-let photosSM = []; let apercuSM = 0, styleSM = 'trait';
+let photosSM = []; let apercuSM = 0, styleSM = 'trait', policeSM = 'calligraphie';
+// Polices du nom sur le carreau : la calligraphie K-Reau et trois polices classiques (déjà chargées par le site)
+const POLICES_SM = {
+  calligraphie: { nom: 'Calligraphie', css: "font-family:'Great Vibes',cursive;font-size:1.45rem", canvas: t => `${t}px "Great Vibes", cursive`, taille: 0.08 },
+  elegante:     { nom: 'Élégante',     css: "font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:500", canvas: t => `500 ${t}px "Cormorant Garamond", serif`, taille: 0.07 },
+  capitales:    { nom: 'Capitales',    css: "font-family:'Cormorant Garamond',serif;font-size:.95rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em", canvas: t => `600 ${t}px "Cormorant Garamond", serif`, taille: 0.05, majuscules: true, espace: 0.16 },
+  moderne:      { nom: 'Moderne',      css: "font-family:Manrope,sans-serif;font-size:1rem;font-weight:500", canvas: t => `500 ${t}px Manrope, sans-serif`, taille: 0.05 } };
 const NOTES_SM = {
   trait: 'Aperçu automatique pour vous projeter. Le dessin final est réalisé à la main par nos soins, dans le style K-Reau, et vous est soumis avant impression.',
   photo: 'Aperçu automatique pour vous projeter. Votre photo est imprimée telle quelle, avec le nom en calligraphie ; le visuel final vous est soumis avant impression.',
@@ -3098,7 +3108,7 @@ const ApercuSM = {
     this.fond = null; const img = new Image();
     img.onload = () => { this.fond = img; this.dessiner(); };
     img.src = '/img/sur-mesure/apercu-salon.webp';
-    if(document.fonts && document.fonts.load) document.fonts.load('80px "Great Vibes"').then(() => this.planifier()).catch(() => {});
+    if(document.fonts && document.fonts.load) Promise.all(['80px "Great Vibes"', '500 80px "Cormorant Garamond"', '600 80px "Cormorant Garamond"', '500 80px Manrope'].map(f => document.fonts.load(f))).then(() => this.planifier()).catch(() => {});
   },
   planifier(){ clearTimeout(this.minuteur); this.minuteur = setTimeout(() => this.dessiner(), 60); },
   // photo → dessin au trait : niveaux de gris, « densité couleur » sur le négatif flouté (effet crayon), puis contraste
@@ -3176,9 +3186,14 @@ const ApercuSM = {
     // nom facultatif : sans nom, rien n'est écrit (un exemple grisé seulement tant qu'il n'y a pas de photo)
     const saisi = ($('#sm-texte') || {}).value?.trim(), nom = saisi || (ph ? '' : (LANG === 'en' ? 'Your place' : 'Votre lieu'));
     x.fillStyle = saisi ? '#1A1A1A' : '#A9A196'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
-    let t = Math.round(T * 0.08); x.font = `${t}px "Great Vibes", cursive`;
-    while(x.measureText(nom).width > T * 0.8 && t > 20){ t -= 2; x.font = `${t}px "Great Vibes", cursive`; }
-    x.fillText(nom, T / 2, T * 0.87);
+    const P = POLICES_SM[policeSM] || POLICES_SM.calligraphie, txt = P.majuscules ? nom.toLocaleUpperCase('fr-FR') : nom;
+    let t = Math.round(T * P.taille); const larg = () => { x.font = P.canvas(t); return x.measureText(txt).width + (P.espace ? P.espace * t * Math.max(0, txt.length - 1) : 0); };
+    while(larg() > T * 0.8 && t > 16) t -= 2;
+    const yb = T * (P.majuscules || policeSM === 'moderne' ? 0.865 : 0.87);
+    if(P.espace){   // capitales espacées, lettre par lettre
+      let xx = T / 2 - larg() / 2; x.textAlign = 'left';
+      for(const ch of txt){ x.fillText(ch, xx, yb); xx += x.measureText(ch).width + P.espace * t; }
+    } else x.fillText(txt, T / 2, yb);
     return c;
   },
   homographie(src, dst){   // matrice 3 × 3 qui envoie les 4 points src sur dst
@@ -3387,7 +3402,7 @@ const Panier = {
     if(l.type==='carreau') return `<strong>${esc(parSlug(l.slug).nom)}</strong><span class="sous">Carreau 15 × 15 cm</span>`;
     if(l.type==='coffret') return `<strong>${esc(l.nom||'Coffret 3 carreaux')}</strong><span class="sous">${l.slugs.map(x=>esc(parSlug(x).nom)).join(' · ')}</span>`;
     if(l.type==='chevalet') return `<strong>Chevalet trépied en bois brut</strong><span class="sous">L 8 × H 15 cm · pour poser votre carreau</span>`;
-    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">${l.style && l.style !== 'trait' ? esc(STYLES_SM[l.style] || '') + ' · ' : ''}${l.texte ? `« ${esc(l.texte)} »` : 'Sans nom'}${l.lieu ? ' · ' + esc(l.lieu) : ''}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
+    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">${l.style && l.style !== 'trait' ? esc(STYLES_SM[l.style] || '') + ' · ' : ''}${l.texte && l.police && l.police !== 'calligraphie' ? 'Police ' + esc((POLICES_SM[l.police] || {}).nom || '') + ' · ' : ''}${l.texte ? `« ${esc(l.texte)} »` : 'Sans nom'}${l.lieu ? ' · ' + esc(l.lieu) : ''}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
     return `<strong>Carte cadeau ${prixEur(l.montant/100)}</strong><span class="sous">Code envoyé après le paiement</span>`;
   },
   suggestions(){
