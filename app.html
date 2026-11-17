@@ -872,10 +872,14 @@ function sourceVisite(){
   try{ sessionStorage.setItem('kr-source', s); }catch(e){}
   return s;
 }
-function suivre(etape){
+function suivre(etape, produits){
   if(!/(^|\.)k-reau\.fr$|\.vercel\.app$/.test(location.hostname)) return;   // pas pendant le pré-rendu ni en local
-  try{ if(sessionStorage.getItem('kr-suivi-' + etape)) return; sessionStorage.setItem('kr-suivi-' + etape, '1'); }catch(e){}
-  const corps = JSON.stringify({ etape, source: sourceVisite() });
+  // l'étape n'est comptée qu'une fois par visite ; chaque produit vu ou ajouté aussi, une fois par visite
+  const vu = k => { try{ if(sessionStorage.getItem(k)) return true; sessionStorage.setItem(k, '1'); }catch(e){} return false; };
+  const compte = !vu('kr-suivi-' + etape);
+  const nouveaux = (produits || []).filter(x => x && !vu('kr-suivi-' + etape + ':' + x));
+  if(!compte && !nouveaux.length) return;
+  const corps = JSON.stringify({ etape, source: sourceVisite(), compte, produits: nouveaux });
   try{ if(navigator.sendBeacon && navigator.sendBeacon('/api/suivi', new Blob([corps], { type:'application/json' }))) return; }catch(e){}
   fetch('/api/suivi', { method:'POST', headers:{'Content-Type':'application/json'}, body: corps, keepalive:true }).catch(()=>{});
 }
@@ -1321,7 +1325,7 @@ function trioHTML(p){
 }
 
 function vueProduit(slug){
-  if(PRODUITS && parSlug(slug)) suivre('fiche');
+  if(PRODUITS && parSlug(slug)) suivre('fiche', [slug]);
   if(!PRODUITS){ app.innerHTML = `<div class="wrap" style="padding-block:80px"><div class="grille">${grilleHTML([])}</div></div>`; return; }
   const p = parSlug(slug);
   if(!p) return vue404();
@@ -3948,7 +3952,7 @@ const Panier = {
   total(){ return this.lignes.reduce((t,l)=>t+this.prix(l)*l.q,0); },
   valide(l){ return l.type==='carreau' ? !!parSlug(l.slug) : l.type==='coffret' ? l.slugs.every(parSlug) : true; },
   ajouter(l){
-    suivre('panier');
+    suivre('panier', l.type==='carreau' ? [l.slug] : l.type==='coffret' ? ['coffret', ...(l.slugs || [])] : l.type==='carte' ? ['carte-cadeau'] : [l.type]);
     if(l.type==='sur-mesure') l.id = Date.now().toString(36);
     const k = this.cle(l), ex = this.lignes.find(x=>this.cle(x)===k);
     if(ex) ex.q = Math.min(20, ex.q + (l.q||1)); else this.lignes.push({ ...l, q: l.q||1 });
