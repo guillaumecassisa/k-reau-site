@@ -692,5 +692,11 @@
  "Livraison offerte dès 50 €": "Free delivery in France from €50",
  "Livré pour Noël : commandez avant le {0}": "Delivered for Christmas: order by {0}",
  "Aperçu en direct": "Live preview",
- "Aperçu automatique pour vous projeter. Le dessin final est réalisé à la main par nos soins, dans le style K-Reau, et vous est soumis avant impression.": "An automatic preview to help you picture it. The final drawing is made by hand by us, in the K-Reau style, and sent to you for approval before printing."
+ "Aperçu automatique pour vous projeter. Le dessin final est réalisé à la main par nos soins, dans le style K-Reau, et vous est soumis avant impression.": "An automatic preview to help you picture it. The final drawing is made by hand by us, in the K-Reau style, and sent to you for approval before printing.",
+ "Style du carreau": "Tile style",
+ "Dessin au trait": "Line drawing",
+ "Photo originale": "Original photo",
+ "Aquarelle": "Watercolour",
+ "Aperçu automatique pour vous projeter. Votre photo est imprimée telle quelle, avec le nom en calligraphie ; le visuel final vous est soumis avant impression.": "An automatic preview to help you picture it. Your photo is printed as it is, with the name in calligraphy; the final design is sent to you for approval before printing.",
+ "Aperçu automatique pour vous projeter. L’aquarelle finale est réalisée par nos soins à partir de votre photo et vous est soumise avant impression.": "An automatic preview to help you picture it. The final watercolour is made by us from your photo and sent to you for approval before printing."
 }

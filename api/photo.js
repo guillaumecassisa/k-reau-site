@@ -35,12 +35,14 @@ module.exports = async function handler(req, res) {
 
   const n = Math.max(1, Math.min(5, parseInt(d.index, 10) || 1));
   const total = Math.max(n, Math.min(5, parseInt(d.total, 10) || 1));
+  const style = { trait: 'Dessin au trait', photo: 'Photo originale', aquarelle: 'Aquarelle' }[d.style] || 'Dessin au trait';
   const nomCalli = texte(d.texte, 40), lieu = texte(d.lieu, 120), details = texte(d.details, 300);
   const html = `<div style="font-family:Arial,sans-serif;font-size:14px">
     <h2 style="color:#51573D">Photo carreau sur mesure · ${ref} (${n}/${total})</h2>
     <p>Photo envoyée depuis la page Sur mesure, avant le paiement. La référence <b>${ref}</b> apparaîtra dans la commande si le client la valide.</p>
     ${nomCalli ? `<p><b>Nom en calligraphie :</b> ${echap(nomCalli)}</p>` : ''}
     ${lieu ? `<p><b>Lieu :</b> ${echap(lieu)}</p>` : ''}
+    <p><b>Style :</b> ${echap(style)}</p>
     ${details ? `<p><b>Souhaits :</b> ${echap(details)}</p>` : ''}
   </div>`;
   try {

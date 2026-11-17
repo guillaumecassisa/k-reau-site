@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.9a4c996c67.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.41d9d09ee9.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -488,6 +488,13 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-apercu canvas{display:block;width:100%;height:100%}
 @media(min-width:861px){.formulaire.sm-avec-apercu{grid-template-columns:minmax(0,1fr) minmax(0,420px);column-gap:56px}
   .formulaire.sm-avec-apercu>*{grid-column:1}.formulaire.sm-avec-apercu>.sm-apercu{grid-column:2;grid-row:1 / span 12;position:sticky;top:96px}}
+.sm-styles{border:0;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sm-styles legend{padding:0;margin-bottom:8px}
+.sm-style{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border:1.5px solid var(--joint);background:var(--blanc);padding:12px 8px;border-radius:var(--r);cursor:pointer;font-size:.9rem;position:relative}
+.sm-style input{position:absolute;top:8px;left:8px;accent-color:var(--olivier);margin:0}
+.sm-style:has(input:checked){border-color:var(--olivier);box-shadow:inset 0 0 0 1px var(--olivier)}
+.sm-style-ico{width:52px;height:52px;border-radius:4px;background:#fff center/cover no-repeat;border:1px solid var(--joint)}
+.sm-style-trait{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52' fill='none' stroke='%231A1A1A' stroke-width='1.4'%3E%3Cpath d='M8 40h36M12 40V24l10-8 10 8v16M18 40v-9h8v9M32 28h8v12M36 22v6'/%3E%3C/svg%3E")}.sm-style-photo{background-image:linear-gradient(135deg,#8fb3c9,#e8d3a8 55%,#9a8b6a)}.sm-style-aquarelle{background-image:radial-gradient(circle at 30% 35%,rgba(120,170,200,.75),transparent 45%),radial-gradient(circle at 70% 60%,rgba(220,170,110,.7),transparent 45%),radial-gradient(circle at 45% 80%,rgba(140,175,120,.6),transparent 40%)}
 .sm-vignettes img{cursor:pointer}.sm-vignettes figure.choisi{outline:2px solid var(--olivier);outline-offset:2px}
 .sm-vignettes{display:flex;gap:10px;flex-wrap:wrap}
 .sm-vignettes figure{position:relative;margin:0;width:84px;height:84px;border:1px solid var(--joint)}
@@ -776,7 +783,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.5c5171cec9.js" defer=""></script>
+<script src="/assets/app.6f3d1d2eef.js" defer=""></script>
 
 
 
