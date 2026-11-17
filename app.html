@@ -3858,7 +3858,8 @@ const ApercuSM = {
     const cle = [src.length, src.slice(-40), l, h, style].join('|'); if(this.cache[cle]) return Promise.resolve(this.cache[cle]);
     return new Promise(ok => { const im = new Image(); im.onload = () => {
       const c = document.createElement('canvas'); c.width = l; c.height = h; const x = c.getContext('2d');
-      const k = Math.max(l / im.naturalWidth, h / im.naturalHeight), w = im.naturalWidth * k, hh = im.naturalHeight * k;
+      // moins zoomé : on montre davantage de la photo (au plus 15 % de recadrage en moins que « remplir », jamais plus petit que « tout voir »)
+      const kc = Math.max(l / im.naturalWidth, h / im.naturalHeight), kt = Math.min(l / im.naturalWidth, h / im.naturalHeight), k = Math.max(kt, kc * 0.85), w = im.naturalWidth * k, hh = im.naturalHeight * k;
       x.fillStyle = '#fff'; x.fillRect(0, 0, l, h); x.drawImage(im, (l - w) / 2, (hh > h ? (h - hh) * 0.45 : (h - hh) / 2), w, hh);
       if(style === 'photo'){ this.cache = { [cle]: c }; return ok(c); }
       const d = x.getImageData(0, 0, l, h), p = d.data, n = l * h, g = new Float32Array(n);
