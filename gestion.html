@@ -210,7 +210,7 @@ function chiffres(liste) {
 // Parcours d'achat : visites → fiches → panier → paiement → commandes payées
 function blocParcours() {
   const debut = new Date(); debut.setHours(0, 0, 0, 0); debut.setDate(debut.getDate() - (parcoursJours - 1));
-  const lim = debut.toISOString().slice(0, 10);
+  const lim = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris' }).format(debut);   // date du jour à Paris (AAAA-MM-JJ), comme en base
   const lignes = PARCOURS.filter(x => x.jour >= lim);
   if (!lignes.length && !CMDS.length) return '';
   const tot = e => lignes.filter(x => x.etape === e).reduce((a, x) => a + x.n, 0);
