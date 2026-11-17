@@ -970,6 +970,18 @@ function carte(p, eager=false){
     <a class="btn btn-s" href="/produits/${esc(p.slug)}">Voir le carreau</a>
   </article>`;
 }
+// Dernière carte de chaque collection : le carreau sur mesure, qui renvoie vers le module de création
+function carteSurMesure(){
+  return `<article class="carte carte-sm">
+    <a class="carte-img" href="/sur-mesure#form-sm" tabindex="-1" aria-hidden="true">${bfActif() ? '<span class="badge-bf">-25 %</span>' : ''}
+      <img src="/img/sur-mesure/photo-vers-carreau-mini.webp" width="600" height="600" alt="Une photo de maison transformée en carreau dessiné au trait" loading="lazy" decoding="async">
+    </a>
+    <span class="carte-coll">Sur mesure</span>
+    <h3><a href="/sur-mesure#form-sm">Votre lieu, dessiné pour vous</a></h3>
+    <span class="carte-prix">${prixBarre(CONFIG.prix.surMesure)}</span>
+    <a class="btn btn-s" href="/sur-mesure#form-sm">Créer mon carreau</a>
+  </article>`;
+}
 function grilleHTML(list){
   if(ERREUR) return `<div class="etat" role="alert">Les carreaux n’ont pas pu être chargés. Vérifiez votre connexion puis <button class="lien" style="background:none;border:0;cursor:pointer;font:inherit" onclick="charger()">réessayez</button>.</div>`;
   if(!PRODUITS) return Array.from({length:8},()=>'<div class="squelette" aria-hidden="true"></div>').join('') + '<span class="small muted" role="status" style="grid-column:1/-1">Chargement des carreaux…</span>';
@@ -1220,7 +1232,7 @@ function vueCollection(k){
   </div></div>
   <section class="bloc" style="padding-top:40px"><div class="wrap">
     <h2 class="visuellement-cache">Les carreaux de la collection</h2>
-    <div class="grille" id="g-coll">${grilleHTML(list)}</div>
+    <div class="grille" id="g-coll">${grilleHTML(list)}${PRODUITS && list.length ? carteSurMesure() : ''}</div>
     <div class="grille-pied" style="gap:12px;flex-wrap:wrap">
       ${COLLS_PRINCIPALES.filter(x=>x!==k && collPubliee(x)).map(x=>`<a class="btn btn-s" href="/collections/${x}">Voir la collection ${esc(COLLECTIONS[x].nom.replace(/^La |^Les /,''))}</a>`).join('')}
       ${k!=='les-embiez' ? `<a class="btn btn-s" href="${embiezSeul() ? '/produits/les-embiez' : '/collections/les-embiez'}">${embiezSeul() ? 'Le modèle signature Les Embiez' : 'Voir la collection Les Embiez'}</a>` : ''}
