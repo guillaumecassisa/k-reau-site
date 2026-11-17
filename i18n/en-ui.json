@@ -690,5 +690,7 @@
  "-25 %": "-25%",
  "{0}Expédié sous 5 à 7 jours": "{0}Dispatched within 5 to 7 days",
  "Livraison offerte dès 50 €": "Free delivery in France from €50",
- "Livré pour Noël : commandez avant le {0}": "Delivered for Christmas: order by {0}"
+ "Livré pour Noël : commandez avant le {0}": "Delivered for Christmas: order by {0}",
+ "Aperçu en direct": "Live preview",
+ "Aperçu automatique pour vous projeter. Le dessin final est réalisé à la main par nos soins, dans le style K-Reau, et vous est soumis avant impression.": "An automatic preview to help you picture it. The final drawing is made by hand by us, in the K-Reau style, and sent to you for approval before printing."
 }

@@ -482,6 +482,14 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-depot input{position:absolute;width:1px;height:1px;opacity:0}
 .sm-depot::before{content:'+';display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sable-clair);font-size:1.5rem;color:var(--olivier);flex:none}
 .sm-depot-txt{display:grid;gap:2px}
+@font-face{font-family:'Great Vibes';font-display:swap;src:url(/assets/fonts/great-vibes-latin-400-normal.woff2) format('woff2')}
+.formulaire.sm-avec-apercu{max-width:1080px}
+.sm-apercu{display:grid;gap:10px;align-content:start;align-self:start}
+.sm-apercu-cadre{border-radius:var(--r);overflow:hidden;background:var(--sable-clair,#EFE7DC);aspect-ratio:4/5}
+.sm-apercu canvas{display:block;width:100%;height:100%}
+@media(min-width:861px){.formulaire.sm-avec-apercu{grid-template-columns:minmax(0,1fr) minmax(0,420px);column-gap:56px}
+  .formulaire.sm-avec-apercu>*{grid-column:1}.formulaire.sm-avec-apercu>.sm-apercu{grid-column:2;grid-row:1 / span 12;position:sticky;top:96px}}
+.sm-vignettes img{cursor:pointer}.sm-vignettes figure.choisi{outline:2px solid var(--olivier);outline-offset:2px}
 .sm-vignettes{display:flex;gap:10px;flex-wrap:wrap}
 .sm-vignettes figure{position:relative;margin:0;width:84px;height:84px;border:1px solid var(--joint)}
 .sm-vignettes img{width:100%;height:100%;object-fit:cover}
@@ -3717,7 +3725,7 @@ function vueSurMesure(){
         <p>Un client nous a confié un projet un peu particulier : faire de sa crédence de cuisine le carnet de ses voyages. Laponie, Tanzanie, Mexique, Argentine, Maldives : à partir de ses photos, nous avons dessiné chaque destination à la main, avec son nom et son année en calligraphie. Il a ensuite posé lui-même ses carreaux au milieu de son carrelage. Aujourd’hui, chaque café du matin a un petit air de voyage.</p>${LANG !== 'en' ? `<p style="margin:0"><a class="lien" href="/guides/credence-cuisine-personnalisee-carreaux-voyage">Lire l’histoire complète du projet</a></p>` : ''}</div>
       <div class="sm-grille">${SM_PROJETS.map(p => `<figure><img src="/img/sur-mesure/projets/${p.f}.webp" srcset="/img/sur-mesure/projets/${p.f}-mini.webp 600w, /img/sur-mesure/projets/${p.f}.webp 1200w" sizes="(max-width:700px) 50vw, 400px" width="1200" height="900" loading="lazy" alt="${esc(p.alt)}"><figcaption>${esc(p.t)}</figcaption></figure>`).join('')}</div>
     </section>
-    <form class="formulaire" id="form-sm" novalidate style="max-width:680px">
+    <form class="formulaire sm-avec-apercu" id="form-sm" novalidate>
       <h2>Votre carreau</h2>
       <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
       
@@ -3728,6 +3736,11 @@ function vueSurMesure(){
         <div class="sm-vignettes" id="sm-vignettes"></div>
         <span class="small muted">Vos photos nous sont transmises en toute confidentialité et servent uniquement à réaliser votre dessin. Vous pourrez aussi en envoyer d’autres à contact@k-reau.fr après la commande.</span>
         <span class="err" id="sm-photos-err" aria-live="polite"></span></div>
+      <aside class="sm-apercu" aria-label="Aperçu en direct de votre carreau">
+        <span class="eyebrow">Aperçu en direct</span>
+        <div class="sm-apercu-cadre"><canvas id="sm-canvas" width="800" height="1000" role="img" aria-label="Votre carreau au mur, avec votre photo et votre texte"></canvas></div>
+        <p class="small muted">Aperçu automatique pour vous projeter. Le dessin final est réalisé à la main par nos soins, dans le style K-Reau, et vous est soumis avant impression.</p>
+      </aside>
       <label class="consent"><input type="checkbox" id="sm-ok" required> <span>J’ai compris qu’un carreau personnalisé ne peut pas faire l’objet d’une rétractation, et que le dessin me sera soumis avant impression.</span></label>
       <button class="btn btn-p" type="submit" style="justify-self:start">Ajouter au panier · ${prixEur(bfActif() ? prixBF(CONFIG.prix.surMesure) : CONFIG.prix.surMesure)}</button>
       <div class="retour" aria-live="polite"></div>
@@ -3788,13 +3801,113 @@ function vueSurMesure(){
       try{ photosSM.push(await reduirePhoto(f)); }
       catch{ err.textContent = `« ${f.name} » n’a pas pu être lue. Essayez une photo au format JPG ou PNG.`; }
     }
-    e.target.value = ''; afficherPhotosSM();
+    e.target.value = ''; apercuSM = Math.max(0, photosSM.length - 1); afficherPhotosSM();
   });
-  $('#sm-vignettes').addEventListener('click', e => { const b = e.target.closest('[data-retirer]'); if(!b) return; photosSM.splice(+b.dataset.retirer, 1); afficherPhotosSM(); });
+  $('#sm-vignettes').addEventListener('click', e => {
+    const a = e.target.closest('[data-apercu]'); if(a){ apercuSM = +a.dataset.apercu; afficherPhotosSM(); return; }
+    const b = e.target.closest('[data-retirer]'); if(!b) return; photosSM.splice(+b.dataset.retirer, 1); afficherPhotosSM(); });
+  $('#sm-texte').addEventListener('input', () => ApercuSM.planifier());
+  ApercuSM.init();
 }
 
 // Photos du sur-mesure : réduites dans le navigateur (2000 px max, JPEG) avant l'envoi
-let photosSM = [];
+let photosSM = []; let apercuSM = 0;
+
+// Aperçu en direct du carreau sur mesure : la photo choisie, transformée en dessin au trait dans le navigateur
+// (rien n'est envoyé), et le nom en calligraphie, posés sur le carreau vierge de la photo du salon.
+const ApercuSM = {
+  QUAD: [[160.4,189.0],[614.7,204.0],[613.9,657.6],[160.4,666.9]],   // coins du carreau sur apercu-salon.webp (800 × 1000)
+  T: 900, fond: null, cache: {}, minuteur: 0,
+  init(){
+    this.fond = null; const img = new Image();
+    img.onload = () => { this.fond = img; this.dessiner(); };
+    img.src = '/img/sur-mesure/apercu-salon.webp';
+    if(document.fonts && document.fonts.load) document.fonts.load('80px "Great Vibes"').then(() => this.planifier()).catch(() => {});
+  },
+  planifier(){ clearTimeout(this.minuteur); this.minuteur = setTimeout(() => this.dessiner(), 60); },
+  // photo → dessin au trait : niveaux de gris, « densité couleur » sur le négatif flouté (effet crayon), puis contraste
+  croquis(src, l, h){
+    const cle = src + l + 'x' + h; if(this.cache[cle]) return Promise.resolve(this.cache[cle]);
+    return new Promise(ok => { const im = new Image(); im.onload = () => {
+      const c = document.createElement('canvas'); c.width = l; c.height = h; const x = c.getContext('2d');
+      const k = Math.max(l / im.naturalWidth, h / im.naturalHeight), w = im.naturalWidth * k, hh = im.naturalHeight * k;
+      x.fillStyle = '#fff'; x.fillRect(0, 0, l, h); x.drawImage(im, (l - w) / 2, (hh > h ? (h - hh) * 0.45 : (h - hh) / 2), w, hh);
+      const d = x.getImageData(0, 0, l, h), p = d.data, n = l * h, g = new Float32Array(n);
+      for(let i = 0; i < n; i++) g[i] = 0.299 * p[4*i] + 0.587 * p[4*i+1] + 0.114 * p[4*i+2];
+      const flou = this.flou(g.map(v => 255 - v), l, h, Math.max(2, Math.round(Math.min(l, h) / 140)));
+      for(let i = 0; i < n; i++){
+        let v = Math.min(255, g[i] * 255 / Math.max(1, 255 - flou[i]));   // densité couleur
+        v = Math.max(0, Math.min(255, (v - 175) * 255 / 70));               // seuls les contours restent, fond blanc
+        v = 255 * Math.pow(v / 255, 0.75);
+        p[4*i] = p[4*i+1] = p[4*i+2] = v; p[4*i+3] = 255;
+      }
+      x.putImageData(d, 0, 0); this.cache = { [cle]: c }; ok(c);
+    }; im.onerror = () => ok(null); im.src = src; });
+  },
+  flou(a, l, h, r){   // flou par boîtes (3 passes ≈ gaussien)
+    let s = a, t = new Float32Array(a.length);
+    for(let passe = 0; passe < 3; passe++){
+      for(let y = 0; y < h; y++){ let acc = 0, o = y * l; for(let x = -r; x <= r; x++) acc += s[o + Math.min(l - 1, Math.max(0, x))];
+        for(let x = 0; x < l; x++){ t[o + x] = acc / (2 * r + 1); acc += s[o + Math.min(l - 1, x + r + 1)] - s[o + Math.max(0, x - r)]; } }
+      const u = new Float32Array(a.length);
+      for(let x = 0; x < l; x++){ let acc = 0; for(let y = -r; y <= r; y++) acc += t[Math.min(h - 1, Math.max(0, y)) * l + x];
+        for(let y = 0; y < h; y++){ u[y * l + x] = acc / (2 * r + 1); acc += t[Math.min(h - 1, y + r + 1) * l + x] - t[Math.max(0, y - r) * l + x]; } }
+      s = u;
+    }
+    return s;
+  },
+  // face du carreau (carré T × T) : dessin en haut, nom en calligraphie en bas, comme nos carreaux
+  async face(){
+    const T = this.T, c = document.createElement('canvas'); c.width = c.height = T; const x = c.getContext('2d');
+    x.fillStyle = '#fff'; x.fillRect(0, 0, T, T);
+    const ph = photosSM[apercuSM], zl = Math.round(T * 0.74), zh = Math.round(T * 0.52), zx = (T - zl) / 2, zy = Math.round(T * 0.13);
+    if(ph){ const cr = await this.croquis(ph.apercu, zl, zh); if(cr){
+      // bords fondus pour un dessin qui « respire » comme nos carreaux
+      const m = document.createElement('canvas'); m.width = zl; m.height = zh; const mx = m.getContext('2d'); mx.drawImage(cr, 0, 0);
+      mx.globalCompositeOperation = 'lighter';
+      const fondu = (x0, y0, x1, y1) => { const gr = mx.createLinearGradient(x0, y0, x1, y1); gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); mx.fillStyle = gr; mx.fillRect(0, 0, zl, zh); };
+      const b = Math.round(zh * 0.12); fondu(0, 0, b, 0); fondu(zl, 0, zl - b, 0); fondu(0, 0, 0, b); fondu(0, zh, 0, zh - b);
+      x.drawImage(m, zx, zy); } }
+    else {
+      x.strokeStyle = '#B9B2A6'; x.setLineDash([10, 10]); x.lineWidth = 2; x.strokeRect(zx, zy, zl, zh); x.setLineDash([]);
+      x.fillStyle = '#8A8478'; x.font = `500 ${Math.round(T * 0.036)}px Manrope, system-ui, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
+      const en = LANG === 'en'; x.fillText(en ? 'Add a photo of your place' : 'Ajoutez une photo de votre lieu', T / 2, zy + zh / 2 - T * 0.025); x.fillText(en ? 'to see it drawn here' : 'pour la voir dessinée ici', T / 2, zy + zh / 2 + T * 0.025);
+    }
+    const nom = ($('#sm-texte') || {}).value?.trim() || (LANG === 'en' ? 'Your place' : 'Votre lieu');
+    x.fillStyle = '#1A1A1A'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    let t = Math.round(T * 0.085); x.font = `${t}px "Great Vibes", cursive`;
+    while(x.measureText(nom).width > T * 0.8 && t > 20){ t -= 2; x.font = `${t}px "Great Vibes", cursive`; }
+    x.fillText(nom, T / 2, T * 0.82);
+    return c;
+  },
+  homographie(src, dst){   // matrice 3 × 3 qui envoie les 4 points src sur dst
+    const A = [], B = [];
+    for(let i = 0; i < 4; i++){ const [x, y] = src[i], [u, v] = dst[i];
+      A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); B.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); B.push(v); }
+    for(let c = 0; c < 8; c++){ let m = c; for(let r = c + 1; r < 8; r++) if(Math.abs(A[r][c]) > Math.abs(A[m][c])) m = r;
+      [A[c], A[m]] = [A[m], A[c]]; [B[c], B[m]] = [B[m], B[c]];
+      for(let r = 0; r < 8; r++) if(r !== c){ const f = A[r][c] / A[c][c]; for(let k = c; k < 8; k++) A[r][k] -= f * A[c][k]; B[r] -= f * B[c]; } }
+    const h = B.map((b, i) => b / A[i][i]); return [...h, 1];
+  },
+  async dessiner(){
+    const cv = $('#sm-canvas'); if(!cv || !this.fond) return;
+    const face = await this.face(); if(!$('#sm-canvas')) return;
+    const x = cv.getContext('2d'), W = cv.width, H = cv.height; x.drawImage(this.fond, 0, 0, W, H);
+    const fd = x.getImageData(0, 0, W, H), p = fd.data, T = this.T, fp = face.getContext('2d').getImageData(0, 0, T, T).data;
+    // de l'écran vers la face du carreau ; on garde 4 % de marge blanche comme sur l'émail
+    const m = T * 0.0, Hm = this.homographie(this.QUAD, [[m, m], [T - m, m], [T - m, T - m], [m, T - m]]);
+    const xs = this.QUAD.map(q => q[0]), ys = this.QUAD.map(q => q[1]);
+    for(let y = Math.floor(Math.min(...ys)); y <= Math.ceil(Math.max(...ys)); y++) for(let X = Math.floor(Math.min(...xs)); X <= Math.ceil(Math.max(...xs)); X++){
+      const w = Hm[6] * X + Hm[7] * y + 1, u = (Hm[0] * X + Hm[1] * y + Hm[2]) / w, v = (Hm[3] * X + Hm[4] * y + Hm[5]) / w;
+      if(u < 0 || v < 0 || u >= T - 1 || v >= T - 1) continue;
+      const u0 = u | 0, v0 = v | 0, a = u - u0, b = v - v0, i = 4 * (v0 * T + u0), j = 4 * (y * W + X);
+      const val = (fp[i] * (1 - a) + fp[i + 4] * a) * (1 - b) + (fp[i + 4 * T] * (1 - a) + fp[i + 4 * T + 4] * a) * b;   // face en niveaux de gris
+      const k = val / 255;   // « produit » : l'encre fonce l'émail et garde sa lumière
+      p[j] *= k; p[j + 1] *= k; p[j + 2] *= k;
+    }
+    x.putImageData(fd, 0, 0);
+  }
+};
 function reduirePhoto(fichier){
   return new Promise((ok, ko) => {
     const url = URL.createObjectURL(fichier), img = new Image();
@@ -3813,7 +3926,9 @@ function reduirePhoto(fichier){
 }
 function afficherPhotosSM(){
   const v = $('#sm-vignettes'); if(!v) return;
-  v.innerHTML = photosSM.map((p, i) => `<figure><img src="${p.apercu}" alt="Photo ${i+1} : ${esc(p.nom)}"><button type="button" data-retirer="${i}" aria-label="Retirer la photo ${i+1}">×</button></figure>`).join('');
+  ApercuSM.planifier();
+  if(apercuSM >= photosSM.length) apercuSM = Math.max(0, photosSM.length - 1);
+  v.innerHTML = photosSM.map((p, i) => `<figure class="${i === apercuSM && photosSM.length > 1 ? 'choisi' : ''}"><img src="${p.apercu}" data-apercu="${i}" title="Voir cette photo sur le carreau" alt="Photo ${i+1} : ${esc(p.nom)}"><button type="button" data-retirer="${i}" aria-label="Retirer la photo ${i+1}">×</button></figure>`).join('');
 }
 
 // Date de livraison estimée : expédition sous 5 à 7 jours + 2 à 3 jours ouvrés d'acheminement

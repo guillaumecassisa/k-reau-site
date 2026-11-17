@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.4859a9dafc.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.9a4c996c67.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -481,6 +481,14 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .sm-depot input{position:absolute;width:1px;height:1px;opacity:0}
 .sm-depot::before{content:'+';display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--sable-clair);font-size:1.5rem;color:var(--olivier);flex:none}
 .sm-depot-txt{display:grid;gap:2px}
+@font-face{font-family:'Great Vibes';font-display:swap;src:url(/assets/fonts/great-vibes-latin-400-normal.woff2) format('woff2')}
+.formulaire.sm-avec-apercu{max-width:1080px}
+.sm-apercu{display:grid;gap:10px;align-content:start;align-self:start}
+.sm-apercu-cadre{border-radius:var(--r);overflow:hidden;background:var(--sable-clair,#EFE7DC);aspect-ratio:4/5}
+.sm-apercu canvas{display:block;width:100%;height:100%}
+@media(min-width:861px){.formulaire.sm-avec-apercu{grid-template-columns:minmax(0,1fr) minmax(0,420px);column-gap:56px}
+  .formulaire.sm-avec-apercu>*{grid-column:1}.formulaire.sm-avec-apercu>.sm-apercu{grid-column:2;grid-row:1 / span 12;position:sticky;top:96px}}
+.sm-vignettes img{cursor:pointer}.sm-vignettes figure.choisi{outline:2px solid var(--olivier);outline-offset:2px}
 .sm-vignettes{display:flex;gap:10px;flex-wrap:wrap}
 .sm-vignettes figure{position:relative;margin:0;width:84px;height:84px;border:1px solid var(--joint)}
 .sm-vignettes img{width:100%;height:100%;object-fit:cover}
@@ -801,7 +809,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.0e1c8858ef.js" defer=""></script>
+<script src="/assets/app.5c5171cec9.js" defer=""></script>
 
 
 
