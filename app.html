@@ -73,6 +73,7 @@ p{margin:0}
 .news-form.news-page input[type=email]{background:var(--blanc);color:var(--encre);border:1px solid var(--joint)}.news-form.news-page input[type=email]::placeholder{color:var(--encre-doux)}
 .annonce-bf{background:#111;color:#fff;font-size:.82rem;letter-spacing:.05em;text-align:center;padding:9px 16px;line-height:1.5}.annonce-bf strong{letter-spacing:.14em}.annonce-bf .bf-compte{letter-spacing:.02em;font-variant-numeric:tabular-nums;white-space:nowrap}.annonce-bf a{color:#fff}@media(max-width:600px){.annonce-bf{font-size:.76rem;padding:7px 12px}.bf-plus{display:none}}
 .annonce{background:var(--olivier);color:var(--ceramique);font-size:.8rem;letter-spacing:.04em;text-align:center;padding:8px 16px;line-height:1.5}
+.annonce.annonce-noel{background:#8A3B2E}   /* rouge brique, dans les tons terre cuite du site */
 .annonce a{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.annonce strong{font-weight:700}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(247,245,240,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--joint)}
 .hd{display:flex;align-items:center;gap:16px;min-height:76px}
@@ -4234,7 +4235,7 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
     { nom:'Noël', date: an => new Date(an, 11, 24), jours:53, lien:'<a href="/coffrets">Voir les coffrets</a>',
       avant: (l, n) => `<strong>Noël :</strong> ${n ? (n > 1 ? `plus que ${n} jours · ` : 'dernier jour · ') : ''}commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · ` }
   ];
-  let msg='';
+  let msg='', noel=false;
   for(const f of fetes){
     const fete = f.date(j.getFullYear()), debut = new Date(fete); debut.setDate(debut.getDate() - f.jours);
     if(j < debut || j >= fete) continue;
@@ -4243,9 +4244,10 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
     const nj = Math.round((new Date(limite).setHours(0,0,0,0) - new Date(j).setHours(0,0,0,0)) / 86400000) + 1;
     msg = j <= limite ? f.avant(jour(limite), f.nom === 'Noël' && !bfActif() && nj <= 16 ? nj : 0) + f.lien
       : `<strong>Trop tard pour une livraison avant ${f.nom} ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ` + carte;
+    noel = f.nom === 'Noël';
     break;
   }
-  a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
+  a.innerHTML=msg; a.hidden=!msg; a.classList.toggle('annonce-noel', noel);   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
   majBandeauBF();
   if(!window.__bfMinuteur) window.__bfMinuteur = setInterval(majBandeauBF, 1000);
 }

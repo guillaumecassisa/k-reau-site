@@ -3498,7 +3498,7 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
     { nom:'Noël', date: an => new Date(an, 11, 24), jours:53, lien:'<a href="/coffrets">Voir les coffrets</a>',
       avant: (l, n) => `<strong>Noël :</strong> ${n ? (n > 1 ? `plus que ${n} jours · ` : 'dernier jour · ') : ''}commandez avant le ${l} pour recevoir vos cadeaux à temps · livraison offerte dès 50 € · ` }
   ];
-  let msg='';
+  let msg='', noel=false;
   for(const f of fetes){
     const fete = f.date(j.getFullYear()), debut = new Date(fete); debut.setDate(debut.getDate() - f.jours);
     if(j < debut || j >= fete) continue;
@@ -3507,9 +3507,10 @@ else if(LIVE){ // Bandeaux saisonniers : dates limites calculées à partir des 
     const nj = Math.round((new Date(limite).setHours(0,0,0,0) - new Date(j).setHours(0,0,0,0)) / 86400000) + 1;
     msg = j <= limite ? f.avant(jour(limite), f.nom === 'Noël' && !bfActif() && nj <= 16 ? nj : 0) + f.lien
       : `<strong>Trop tard pour une livraison avant ${f.nom} ?</strong> Offrez une carte cadeau, envoyée immédiatement par e-mail · ` + carte;
+    noel = f.nom === 'Noël';
     break;
   }
-  a.innerHTML=msg; a.hidden=!msg;   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
+  a.innerHTML=msg; a.hidden=!msg; a.classList.toggle('annonce-noel', noel);   // toujours recalculé au chargement (la page pré-générée peut être ancienne)
   majBandeauBF();
   if(!window.__bfMinuteur) window.__bfMinuteur = setInterval(majBandeauBF, 1000);
 }
