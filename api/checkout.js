@@ -85,10 +85,7 @@ module.exports = async function handler(req, res) {
   if (bf && code === BF.code) code = '';   // le code Black Friday est de toute façon appliqué automatiquement
   let promo = null, offert = false, bfAuto = false;
   if (bf) {
-    if (!code && !cartes.length) {
-      try { promo = await codeBlackFriday(); bfAuto = !!(promo && promo.active); if (!bfAuto) promo = null; }
-      catch (e) { console.error('Code Black Friday', e.message); promo = null; }
-    }
+    // -25 % appliqué directement sur le prix des produits : les frais de port ne sont jamais remisés
     if (!bfAuto) {
       // remise directement sur le prix des produits : laisse la place à une carte cadeau ou un autre code, et épargne les cartes cadeaux
       for (const it of items) {
