@@ -134,15 +134,15 @@ nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color
 .tiroir-fermer{align-self:flex-end}
 
 /* Sections */
-section.bloc{padding-block:clamp(64px,9vw,120px)}
-.bloc-titre{display:grid;gap:14px;margin-bottom:clamp(32px,5vw,56px);max-width:40em}
+section.bloc{padding-block:clamp(36px,5vw,64px)}
+.bloc-titre{display:grid;gap:12px;margin-bottom:clamp(20px,3vw,36px);max-width:40em}
 .bloc-titre.centre{text-align:center;margin-inline:auto;justify-items:center}
 .fond-sable{background:var(--sable-clair)}
 .fond-blanc{background:var(--blanc)}
 .joint-haut{border-top:1px solid var(--joint)}
 
 /* Hero */
-.hero{padding-block:clamp(32px,6vw,80px) clamp(56px,8vw,100px);background-image:linear-gradient(var(--joint) 1px,transparent 1px),linear-gradient(90deg,var(--joint) 1px,transparent 1px);background-size:88px 88px;background-position:-1px -1px}
+.hero{padding-block:clamp(24px,4vw,56px) clamp(32px,5vw,64px);background-image:linear-gradient(var(--joint) 1px,transparent 1px),linear-gradient(90deg,var(--joint) 1px,transparent 1px);background-size:88px 88px;background-position:-1px -1px}
 .hero-grille{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,88px);align-items:center}
 .hero-texte{display:grid;gap:22px;background:var(--ceramique);padding:clamp(0px,2vw,28px) clamp(0px,2vw,28px) clamp(0px,2vw,28px) 0}
 .hero-texte h1{font-weight:400}
@@ -197,12 +197,12 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 .carte h3 a{text-decoration:none}
 .carte-prix{font-weight:600;font-variant-numeric:tabular-nums}
 .carte-img{position:relative}.badge-bf{position:absolute;top:8px;left:8px;z-index:1;background:#111;color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:3px 7px;border-radius:3px}
-.coups-bloc{padding-block:clamp(28px,4vw,56px)}
+.coups-bloc{padding-block:clamp(24px,3vw,40px)}
 @media(max-width:720px){.hero-direct .lead,.hero-direct .hero-img,.hero-direct .hero-btns .btn-s{display:none}.hero.hero-direct{padding-bottom:8px}.coups-bloc{padding-top:8px}}
 @media(max-width:720px){.grille.coups{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:44%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch}.grille.coups .carte{scroll-snap-align:start}}
 .prix-barre{font-weight:400;color:var(--encre-doux);font-size:.85em;margin-left:4px}.offre-prix .prix-barre{margin-left:6px}
 .carte .btn{min-height:44px;padding:0 1em;font-size:.84rem;align-self:start}
-.grille-pied{display:flex;justify-content:center;margin-top:40px}
+.grille-pied{display:flex;justify-content:center;margin-top:28px}
 .etat{padding:40px;text-align:center;border:1px dashed var(--sable);color:var(--encre-doux);grid-column:1/-1}
 .squelette{aspect-ratio:1/1;background:linear-gradient(90deg,var(--sable-clair),var(--blanc),var(--sable-clair));background-size:200% 100%;animation:sq 1.4s infinite}
 @keyframes sq{to{background-position:-200% 0}}
@@ -263,7 +263,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .formulaire{display:grid;gap:18px;max-width:620px}
 
 /* Page intérieure */
-.page-tete{padding-block:clamp(40px,6vw,72px) clamp(28px,4vw,48px);border-bottom:1px solid var(--joint)}
+.page-tete{padding-block:clamp(28px,4vw,52px) clamp(20px,3vw,36px);border-bottom:1px solid var(--joint)}
 .page-tete .bloc-titre{margin-bottom:0}
 .tete-visuel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,420px);gap:clamp(28px,5vw,72px);align-items:center}
 .tete-img{margin:0}.tete-img img{width:100%;height:auto;display:block;border-radius:6px;box-shadow:0 18px 40px -24px rgba(40,32,20,.45)}
@@ -280,7 +280,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .a-completer{display:inline-block;background:#FFF3C4;color:#5B4300;border:1px dashed #C9A227;padding:1px 8px;font-size:.84rem;font-weight:600}
 
 /* Fiche produit */
-.fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(24px,4vw,48px) clamp(56px,8vw,100px)}
+.fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(20px,3vw,40px) clamp(32px,5vw,64px)}
 @media(max-width:860px){.fiche{grid-template-columns:minmax(0,1fr)}}
 .fiche>*,.galerie>*{min-width:0}
 .galerie{display:grid;gap:12px;position:sticky;top:100px}
@@ -575,7 +575,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .news-carte .news-form .news-mention{color:var(--encre-doux)}
 .news-carte .news-form .news-mention a{color:var(--encre-doux)}
 .news-carte .fermer{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;cursor:pointer;color:var(--encre-doux);font-size:1.3rem}
-.avis-bandeau{padding:34px 0 30px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
+.avis-bandeau{padding:26px 0 24px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
 .ab-tete{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:18px}
 .ab-tete h2{font-family:var(--f-titre);font-weight:400;font-size:clamp(1.5rem,3vw,2rem);margin:0}
 .ab-moy{display:inline-flex;align-items:center;gap:10px}
@@ -1230,7 +1230,7 @@ function vueCollection(k){
     ${ariane([['Accueil','/'],['Collections','/#collections'],[c.nom,'']])}
     <div class="bloc-titre"><span class="eyebrow">Collection · ${PRODUITS?list.length+(list.length>1?' lieux':' lieu'):''}</span><h1>${esc(c.h1||c.nom)}</h1><p class="lead">${esc(c.intro)}</p></div>
   </div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">
+  <section class="bloc" style="padding-top:24px"><div class="wrap">
     <h2 class="visuellement-cache">Les carreaux de la collection</h2>
     <div class="grille" id="g-coll">${grilleHTML(list)}${PRODUITS && list.length ? carteSurMesure() : ''}</div>
     <div class="grille-pied" style="gap:12px;flex-wrap:wrap">
@@ -1253,7 +1253,7 @@ function vueTous(){
         : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, la Côte d’Azur, les Montagnes du Sud, les îles du Var et les Châteaux : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
           <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux K-Reau en céramique posés sur la pierre : Sausset-les-Pins, Château de Versailles, Sainte-Victoire et le Vieux-Port de Marseille" fetchpriority="high"></figure></div>`}
   </div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">
+  <section class="bloc" style="padding-top:24px"><div class="wrap">
     ${offresQ.length ? `<div class="offres-q">${offresQ.map(o=>`<a class="offre-q" href="${o.url}">${o.img ? `<img src="${esc(o.img)}" alt="" loading="lazy">` : `<span class="sug-ico">${ICO_CARTE}</span>`}<span><strong>${esc(o.nom)}</strong><span class="small muted">${esc(o.sous)}</span></span></a>`).join('')}</div>` : ''}
     ${q && res && !res.length && offresQ.length ? '' : q ? `<div class="grille" id="g-tous">${res ? (res.length ? res.map(p=>carte(p)).join('') : grilleHTML(PRODUITS).replace(/^/, '<p class="small muted" style="grid-column:1/-1">Tous nos carreaux :</p>')) : grilleHTML([])}</div>`
         : `${filtresHTML('tout','g-tous')}
@@ -1739,7 +1739,7 @@ function vueFAQ(){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Questions fréquentes','']])}
     <div class="bloc-titre"><span class="eyebrow">FAQ</span><h1>Questions fréquentes</h1></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">${faqHTML()}</div></section>`;
+  <section class="bloc" style="padding-top:24px"><div class="wrap">${faqHTML()}</div></section>`;
 }
 
 function vueContact(){
@@ -1747,7 +1747,7 @@ function vueContact(){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Contact','']])}
     <div class="bloc-titre"><span class="eyebrow">Contact</span><h1>Écrivez-nous</h1><p class="lead">Une question sur un modèle, un lieu à nous suggérer, une demande particulière : nous vous répondons par e-mail. Pour une commande en quantité, utilisez la <a class="lien" href="/projet-specifique">demande de projet spécifique</a>.</p></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">
+  <section class="bloc" style="padding-top:24px"><div class="wrap">
     <form class="formulaire" data-form="contact" novalidate>
       <div class="champ"><label for="c-nom">Nom</label><input type="text" id="c-nom" name="nom" autocomplete="name" required><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="c-email">Adresse e-mail</label><input type="email" id="c-email" name="email" autocomplete="email" required><span class="err" aria-live="polite"></span></div>${optinNews("c")}
@@ -3210,7 +3210,7 @@ function vueGuides(){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','']])}
     <div class="bloc-titre"><span class="eyebrow">Guides</span><h1>Idées, conseils et beaux lieux</h1>
     <p class="lead">Que ramener de Marseille, quel cadeau offrir à un client ou à ses salariés, où se baigner sur la Côte Bleue : nos guides pour trouver l’inspiration, et le bon souvenir.</p></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap guides-liste">
+  <section class="bloc" style="padding-top:24px"><div class="wrap guides-liste">
     ${[...GUIDES].sort((a,b)=>b.date.localeCompare(a.date)).map(g=>`<article class="guide-carte"><a href="/guides/${g.slug}" class="guide-visuel"><img src="${esc(guideImg(g))}" alt="" loading="lazy" width="600" height="600"></a>
       <div class="guide-txt"><h2><a href="/guides/${g.slug}">${esc(g.titre)}</a></h2><p>${esc(g.intro)}</p><a class="lien" href="/guides/${g.slug}">Lire le guide</a></div></article>`).join('')}
   </div></section>`;
@@ -3232,7 +3232,7 @@ function vueGuide(slug){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','/guides'],[g.titre,'']])}
     <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · ${d}</span><h1>${esc(g.titre)}</h1><p class="lead">${esc(g.intro)}</p></div>
     <figure class="tete-img"><img src="${esc(g.image)}" width="1254" height="1254" alt="${esc((g.motCle ? g.motCle.charAt(0).toUpperCase()+g.motCle.slice(1)+' : ' : '') + 'carreau décoratif K-Reau en céramique illustré')}" fetchpriority="high"></figure></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">
+  <section class="bloc" style="padding-top:24px"><div class="wrap"><article class="prose guide-corps">
     <nav class="sommaire" aria-label="Sommaire"><strong>Sommaire</strong><ol>${titres.map((t,i)=>`<li><a href="#partie-${i+1}">${t.replace(/^\d+\.\s+/, '')}</a></li>`).join('')}${g.faq ? '<li><a href="#faq-guide">Questions fréquentes</a></li>' : ''}</ol></nav>
     ${corps}
     ${g.faq ? `<section class="guide-faq" id="faq-guide"><h2>Questions fréquentes : ${esc(g.motCle)}</h2>${g.faq.map(([q,r])=>`<h3>${esc(q)}</h3><p>${esc(r)}</p>`).join('')}</section>` : ''}
@@ -3257,7 +3257,7 @@ function vueProjet(){
       <a class="btn btn-p" href="#form-projet" style="justify-self:start">Parlez-nous de votre projet</a></div>
       <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux décoratifs K-Reau en céramique posés sur la pierre"></figure></div>
   </div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:48px">
+  <section class="bloc" style="padding-top:28px"><div class="wrap" style="display:grid;gap:48px">
     <div class="projet-pour">
       <h2>Pour qui ?</h2>
       <ul class="projet-liste">
@@ -3434,7 +3434,7 @@ function vueRevendeurs(){
       <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-p" href="#form-revendeur">Demander un échantillon</a><a class="btn btn-s" href="#catalogues">Télécharger les catalogues</a></div></div>
       <figure class="tete-img"><img src="/img/mises-en-scene/coffret-maquette.webp" width="540" height="508" alt="Carreau K-Reau dans son coffret kraft, prêt à être vendu en boutique" fetchpriority="high"></figure></div>
   </div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:56px">
+  <section class="bloc" style="padding-top:28px"><div class="wrap" style="display:grid;gap:56px">
     <div style="display:grid;gap:20px"><div class="bloc-titre"><span class="eyebrow">Pourquoi K-Reau</span><h2>Un souvenir qui se vend tout seul</h2></div>
       <div class="rev-atouts">
         <div><h3>Un lieu, un coup de cœur</h3><p>Des lieux précis et reconnaissables : vos visiteurs repartent avec l’endroit qu’ils viennent de découvrir.</p></div>
@@ -3479,7 +3479,7 @@ function pageLegale(titre, metaT, corps){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],[titre,'']])}
     <div class="bloc-titre"><span class="eyebrow">Informations</span><h1>${titre}</h1></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap prose">${corps}</div></section>`;
+  <section class="bloc" style="padding-top:24px"><div class="wrap prose">${corps}</div></section>`;
 }
 const L = CONFIG.legal, V = CONFIG.vente;
 const PAGES = {
@@ -3665,7 +3665,7 @@ function vueCoffrets(){
     <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Coffrets</span><h1>Le coffret de 3 carreaux</h1>
     <p class="lead">Trois lieux réunis dans un même envoi : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, et la livraison est offerte. Choisissez un trio tout prêt ou composez le vôtre.</p></div>
     <figure class="tete-img"><img src="/img/coffret/coffret-trio.webp" srcset="/img/coffret/coffret-trio-mini.webp 640w, /img/coffret/coffret-trio-moyen.webp 900w, /img/coffret/coffret-trio.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Coffret cadeau K-Reau en carton kraft avec trois carreaux en céramique : Le Vélodrome, Sainte-Victoire et Le Mucem" fetchpriority="high"></figure></div></div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap">
+  <section class="bloc" style="padding-top:28px"><div class="wrap">
     <div class="bloc-titre"><h2>Nos trios</h2></div>
     ${PRODUITS ? `<div class="offres">${CONFIG.trios.filter(t=>t.slugs.every(parSlug)).map(trioCarte).join('')}</div>` : `<div class="grille">${grilleHTML([])}</div>`}
   </div></section>
@@ -3732,7 +3732,7 @@ function vueSurMesure(){
         <figcaption class="small muted" id="sm-legende">${esc(SM_EXEMPLES[0].legende)}</figcaption>
       </figure>
     </div></div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:48px">
+  <section class="bloc" style="padding-top:28px"><div class="wrap" style="display:grid;gap:48px">
     <ol class="etapes">
       <li><strong>Vous décrivez votre lieu</strong><span>Son nom, où il se trouve, ce qui compte pour vous.</span></li>
       <li><strong>Nous le dessinons</strong><span>Un dessin au trait dans le style K-Reau.</span></li>
@@ -4049,7 +4049,7 @@ function vueCarteCadeau(){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Carte cadeau','']])}
     <div class="bloc-titre"><span class="eyebrow">Carte cadeau</span><h1>La carte cadeau K-Reau</h1>
     <p class="lead">Pour laisser choisir le lieu qui compte : un code à offrir, valable 12 mois sur tous les carreaux, coffrets et créations sur mesure.</p></div></div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap fiche" style="padding-block:0">
+  <section class="bloc" style="padding-top:28px"><div class="wrap fiche" style="padding-block:0">
     <div class="offre-visuel" style="aspect-ratio:1.4;border:1px solid var(--joint)"><div class="carte-visuel"><div><span>Carte cadeau</span><strong>K-Reau</strong><span id="cc-montant">${prixEur(montant)}</span></div></div></div>
     <div class="fiche-infos">
       <h2>Choisissez le montant</h2>

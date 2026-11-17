@@ -133,15 +133,15 @@ nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color
 .tiroir-fermer{align-self:flex-end}
 
 /* Sections */
-section.bloc{padding-block:clamp(64px,9vw,120px)}
-.bloc-titre{display:grid;gap:14px;margin-bottom:clamp(32px,5vw,56px);max-width:40em}
+section.bloc{padding-block:clamp(36px,5vw,64px)}
+.bloc-titre{display:grid;gap:12px;margin-bottom:clamp(20px,3vw,36px);max-width:40em}
 .bloc-titre.centre{text-align:center;margin-inline:auto;justify-items:center}
 .fond-sable{background:var(--sable-clair)}
 .fond-blanc{background:var(--blanc)}
 .joint-haut{border-top:1px solid var(--joint)}
 
 /* Hero */
-.hero{padding-block:clamp(32px,6vw,80px) clamp(56px,8vw,100px);background-image:linear-gradient(var(--joint) 1px,transparent 1px),linear-gradient(90deg,var(--joint) 1px,transparent 1px);background-size:88px 88px;background-position:-1px -1px}
+.hero{padding-block:clamp(24px,4vw,56px) clamp(32px,5vw,64px);background-image:linear-gradient(var(--joint) 1px,transparent 1px),linear-gradient(90deg,var(--joint) 1px,transparent 1px);background-size:88px 88px;background-position:-1px -1px}
 .hero-grille{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,88px);align-items:center}
 .hero-texte{display:grid;gap:22px;background:var(--ceramique);padding:clamp(0px,2vw,28px) clamp(0px,2vw,28px) clamp(0px,2vw,28px) 0}
 .hero-texte h1{font-weight:400}
@@ -196,12 +196,12 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 .carte h3 a{text-decoration:none}
 .carte-prix{font-weight:600;font-variant-numeric:tabular-nums}
 .carte-img{position:relative}.badge-bf{position:absolute;top:8px;left:8px;z-index:1;background:#111;color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:3px 7px;border-radius:3px}
-.coups-bloc{padding-block:clamp(28px,4vw,56px)}
+.coups-bloc{padding-block:clamp(24px,3vw,40px)}
 @media(max-width:720px){.hero-direct .lead,.hero-direct .hero-img,.hero-direct .hero-btns .btn-s{display:none}.hero.hero-direct{padding-bottom:8px}.coups-bloc{padding-top:8px}}
 @media(max-width:720px){.grille.coups{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:44%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch}.grille.coups .carte{scroll-snap-align:start}}
 .prix-barre{font-weight:400;color:var(--encre-doux);font-size:.85em;margin-left:4px}.offre-prix .prix-barre{margin-left:6px}
 .carte .btn{min-height:44px;padding:0 1em;font-size:.84rem;align-self:start}
-.grille-pied{display:flex;justify-content:center;margin-top:40px}
+.grille-pied{display:flex;justify-content:center;margin-top:28px}
 .etat{padding:40px;text-align:center;border:1px dashed var(--sable);color:var(--encre-doux);grid-column:1/-1}
 .squelette{aspect-ratio:1/1;background:linear-gradient(90deg,var(--sable-clair),var(--blanc),var(--sable-clair));background-size:200% 100%;animation:sq 1.4s infinite}
 @keyframes sq{to{background-position:-200% 0}}
@@ -262,7 +262,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .formulaire{display:grid;gap:18px;max-width:620px}
 
 /* Page intérieure */
-.page-tete{padding-block:clamp(40px,6vw,72px) clamp(28px,4vw,48px);border-bottom:1px solid var(--joint)}
+.page-tete{padding-block:clamp(28px,4vw,52px) clamp(20px,3vw,36px);border-bottom:1px solid var(--joint)}
 .page-tete .bloc-titre{margin-bottom:0}
 .tete-visuel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,420px);gap:clamp(28px,5vw,72px);align-items:center}
 .tete-img{margin:0}.tete-img img{width:100%;height:auto;display:block;border-radius:6px;box-shadow:0 18px 40px -24px rgba(40,32,20,.45)}
@@ -279,7 +279,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .a-completer{display:inline-block;background:#FFF3C4;color:#5B4300;border:1px dashed #C9A227;padding:1px 8px;font-size:.84rem;font-weight:600}
 
 /* Fiche produit */
-.fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(24px,4vw,48px) clamp(56px,8vw,100px)}
+.fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(20px,3vw,40px) clamp(32px,5vw,64px)}
 @media(max-width:860px){.fiche{grid-template-columns:minmax(0,1fr)}}
 .fiche>*,.galerie>*{min-width:0}
 .galerie{display:grid;gap:12px;position:sticky;top:100px}
@@ -574,7 +574,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .news-carte .news-form .news-mention{color:var(--encre-doux)}
 .news-carte .news-form .news-mention a{color:var(--encre-doux)}
 .news-carte .fermer{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;cursor:pointer;color:var(--encre-doux);font-size:1.3rem}
-.avis-bandeau{padding:34px 0 30px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
+.avis-bandeau{padding:26px 0 24px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
 .ab-tete{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:18px}
 .ab-tete h2{font-family:var(--f-titre);font-weight:400;font-size:clamp(1.5rem,3vw,2rem);margin:0}
 .ab-moy{display:inline-flex;align-items:center;gap:10px}
@@ -681,7 +681,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
   <div class="page-tete"><div class="wrap"><nav class="ariane" aria-label="Breadcrumb"><ol><li><a href="/en">Home</a></li><li aria-current="page">Frequently asked questions</li></ol></nav>
   <script type="application/ld+json" data-en="1">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home"},{"@type":"ListItem","position":2,"name":"Frequently asked questions"}]}</script>
     <div class="bloc-titre"><span class="eyebrow">FAQ</span><h1>Frequently asked questions</h1></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap"><div class="faq"><details><summary>How do I choose my tile?</summary><div class="rep"><p>Start with the place that matters to you, or to the person you are giving it to: a holiday harbour, a calanque, a neighbourhood. Browse the <a class="lien" href="/en/collections/marseille">Marseille</a>, <a class="lien" href="/en/collections/cote-bleue">Côte Bleue</a> and <a class="lien" href="/en/collections/luberon">Luberon</a> collections, or find your place on <a class="lien" href="/en/carte-des-lieux">the map of places</a>. Not sure? Write to us using the <a class="lien" href="/en/contact">contact form</a>.</p></div></details><details><summary>What size is it?</summary><div class="rep"><p>Every K-Reau tile is ceramic and measures 15 × 15 cm (about 6 × 6 in).</p></div></details><details><summary>How do I display it at home?</summary><div class="rep"><p>Each tile can stand on a shelf or piece of furniture, or hang on the wall with a suitable fixing. To clean it, a soft, slightly damp cloth is all you need; avoid abrasive products.</p></div></details><details><summary>How long does delivery take and how much does it cost?</summary><div class="rep"><p>Orders are dispatched within 5 to 7 days. In France, delivery costs €7.90 and is free from €50. We also deliver to the rest of Europe for €16.50 and to Canada for €36.99, but not to the United States. More details on the <a class="lien" href="/en/livraison-retours">Shipping and returns</a> page.</p></div></details><details><summary>Can I give it as a gift?</summary><div class="rep"><p>Yes, that is the whole idea. Add a gift message in your basket and we will print it on the card slipped into the box. To send it straight to them, enter their address as the delivery address. You can also give a <a class="lien" href="/en/coffrets">box of 3 tiles</a> or a <a class="lien" href="/en/carte-cadeau">gift card</a>.</p></div></details><details><summary>Can you draw a place of my own?</summary><div class="rep"><p>Yes: with the <a class="lien" href="/en/sur-mesure">custom tile</a>, we draw your house, your village or your beach, with the name of your choice. We send you the drawing for approval before printing.</p></div></details><details><summary>What gift should I give someone who loves Marseille?</summary><div class="rep"><p>A tile of their favourite spot: the <a class="lien" href="/en/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/en/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, a calanque or their neighbourhood. For a more generous gift, put together a trio of tiles, and delivery is free.</p></div></details><details><summary>How much does a K-Reau tile cost?</summary><div class="rep"><p>All models start at €19.90. Delivery in France costs €7.90 and is free from €50, which means from 3 tiles.</p></div></details><details><summary>How can I contact K-Reau?</summary><div class="rep"><p>Through the <a class="lien" href="/en/contact">contact form</a>. We reply by email.</p></div></details></div></div></section></main>
+  <section class="bloc" style="padding-top:24px"><div class="wrap"><div class="faq"><details><summary>How do I choose my tile?</summary><div class="rep"><p>Start with the place that matters to you, or to the person you are giving it to: a holiday harbour, a calanque, a neighbourhood. Browse the <a class="lien" href="/en/collections/marseille">Marseille</a>, <a class="lien" href="/en/collections/cote-bleue">Côte Bleue</a> and <a class="lien" href="/en/collections/luberon">Luberon</a> collections, or find your place on <a class="lien" href="/en/carte-des-lieux">the map of places</a>. Not sure? Write to us using the <a class="lien" href="/en/contact">contact form</a>.</p></div></details><details><summary>What size is it?</summary><div class="rep"><p>Every K-Reau tile is ceramic and measures 15 × 15 cm (about 6 × 6 in).</p></div></details><details><summary>How do I display it at home?</summary><div class="rep"><p>Each tile can stand on a shelf or piece of furniture, or hang on the wall with a suitable fixing. To clean it, a soft, slightly damp cloth is all you need; avoid abrasive products.</p></div></details><details><summary>How long does delivery take and how much does it cost?</summary><div class="rep"><p>Orders are dispatched within 5 to 7 days. In France, delivery costs €7.90 and is free from €50. We also deliver to the rest of Europe for €16.50 and to Canada for €36.99, but not to the United States. More details on the <a class="lien" href="/en/livraison-retours">Shipping and returns</a> page.</p></div></details><details><summary>Can I give it as a gift?</summary><div class="rep"><p>Yes, that is the whole idea. Add a gift message in your basket and we will print it on the card slipped into the box. To send it straight to them, enter their address as the delivery address. You can also give a <a class="lien" href="/en/coffrets">box of 3 tiles</a> or a <a class="lien" href="/en/carte-cadeau">gift card</a>.</p></div></details><details><summary>Can you draw a place of my own?</summary><div class="rep"><p>Yes: with the <a class="lien" href="/en/sur-mesure">custom tile</a>, we draw your house, your village or your beach, with the name of your choice. We send you the drawing for approval before printing.</p></div></details><details><summary>What gift should I give someone who loves Marseille?</summary><div class="rep"><p>A tile of their favourite spot: the <a class="lien" href="/en/produits/marseille-vieux-port">Vieux-Port</a>, <a class="lien" href="/en/produits/marseille-notre-dame-de-la-garde">Notre-Dame de la Garde</a>, a calanque or their neighbourhood. For a more generous gift, put together a trio of tiles, and delivery is free.</p></div></details><details><summary>How much does a K-Reau tile cost?</summary><div class="rep"><p>All models start at €19.90. Delivery in France costs €7.90 and is free from €50, which means from 3 tiles.</p></div></details><details><summary>How can I contact K-Reau?</summary><div class="rep"><p>Through the <a class="lien" href="/en/contact">contact form</a>. We reply by email.</p></div></details></div></div></section></main>
 
 <footer class="site">
   <div class="wrap">
@@ -753,7 +753,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.d3bbc1c432.js" defer=""></script>
+<script src="/assets/app.d185c10421.js" defer=""></script>
 
 
 

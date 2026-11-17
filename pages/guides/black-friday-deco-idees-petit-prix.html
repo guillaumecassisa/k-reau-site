@@ -133,15 +133,15 @@ nav.principale a:hover,nav.principale a[aria-current="page"]{border-bottom-color
 .tiroir-fermer{align-self:flex-end}
 
 /* Sections */
-section.bloc{padding-block:clamp(64px,9vw,120px)}
-.bloc-titre{display:grid;gap:14px;margin-bottom:clamp(32px,5vw,56px);max-width:40em}
+section.bloc{padding-block:clamp(36px,5vw,64px)}
+.bloc-titre{display:grid;gap:12px;margin-bottom:clamp(20px,3vw,36px);max-width:40em}
 .bloc-titre.centre{text-align:center;margin-inline:auto;justify-items:center}
 .fond-sable{background:var(--sable-clair)}
 .fond-blanc{background:var(--blanc)}
 .joint-haut{border-top:1px solid var(--joint)}
 
 /* Hero */
-.hero{padding-block:clamp(32px,6vw,80px) clamp(56px,8vw,100px);background-image:linear-gradient(var(--joint) 1px,transparent 1px),linear-gradient(90deg,var(--joint) 1px,transparent 1px);background-size:88px 88px;background-position:-1px -1px}
+.hero{padding-block:clamp(24px,4vw,56px) clamp(32px,5vw,64px);background-image:linear-gradient(var(--joint) 1px,transparent 1px),linear-gradient(90deg,var(--joint) 1px,transparent 1px);background-size:88px 88px;background-position:-1px -1px}
 .hero-grille{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,6vw,88px);align-items:center}
 .hero-texte{display:grid;gap:22px;background:var(--ceramique);padding:clamp(0px,2vw,28px) clamp(0px,2vw,28px) clamp(0px,2vw,28px) 0}
 .hero-texte h1{font-weight:400}
@@ -196,12 +196,12 @@ section.bloc{padding-block:clamp(64px,9vw,120px)}
 .carte h3 a{text-decoration:none}
 .carte-prix{font-weight:600;font-variant-numeric:tabular-nums}
 .carte-img{position:relative}.badge-bf{position:absolute;top:8px;left:8px;z-index:1;background:#111;color:#fff;font-size:.72rem;font-weight:600;letter-spacing:.04em;padding:3px 7px;border-radius:3px}
-.coups-bloc{padding-block:clamp(28px,4vw,56px)}
+.coups-bloc{padding-block:clamp(24px,3vw,40px)}
 @media(max-width:720px){.hero-direct .lead,.hero-direct .hero-img,.hero-direct .hero-btns .btn-s{display:none}.hero.hero-direct{padding-bottom:8px}.coups-bloc{padding-top:8px}}
 @media(max-width:720px){.grille.coups{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:44%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;-webkit-overflow-scrolling:touch}.grille.coups .carte{scroll-snap-align:start}}
 .prix-barre{font-weight:400;color:var(--encre-doux);font-size:.85em;margin-left:4px}.offre-prix .prix-barre{margin-left:6px}
 .carte .btn{min-height:44px;padding:0 1em;font-size:.84rem;align-self:start}
-.grille-pied{display:flex;justify-content:center;margin-top:40px}
+.grille-pied{display:flex;justify-content:center;margin-top:28px}
 .etat{padding:40px;text-align:center;border:1px dashed var(--sable);color:var(--encre-doux);grid-column:1/-1}
 .squelette{aspect-ratio:1/1;background:linear-gradient(90deg,var(--sable-clair),var(--blanc),var(--sable-clair));background-size:200% 100%;animation:sq 1.4s infinite}
 @keyframes sq{to{background-position:-200% 0}}
@@ -262,7 +262,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .formulaire{display:grid;gap:18px;max-width:620px}
 
 /* Page intérieure */
-.page-tete{padding-block:clamp(40px,6vw,72px) clamp(28px,4vw,48px);border-bottom:1px solid var(--joint)}
+.page-tete{padding-block:clamp(28px,4vw,52px) clamp(20px,3vw,36px);border-bottom:1px solid var(--joint)}
 .page-tete .bloc-titre{margin-bottom:0}
 .tete-visuel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,420px);gap:clamp(28px,5vw,72px);align-items:center}
 .tete-img{margin:0}.tete-img img{width:100%;height:auto;display:block;border-radius:6px;box-shadow:0 18px 40px -24px rgba(40,32,20,.45)}
@@ -279,7 +279,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .a-completer{display:inline-block;background:#FFF3C4;color:#5B4300;border:1px dashed #C9A227;padding:1px 8px;font-size:.84rem;font-weight:600}
 
 /* Fiche produit */
-.fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(24px,4vw,48px) clamp(56px,8vw,100px)}
+.fiche{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(28px,5vw,72px);align-items:start;padding-block:clamp(20px,3vw,40px) clamp(32px,5vw,64px)}
 @media(max-width:860px){.fiche{grid-template-columns:minmax(0,1fr)}}
 .fiche>*,.galerie>*{min-width:0}
 .galerie{display:grid;gap:12px;position:sticky;top:100px}
@@ -574,7 +574,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 .news-carte .news-form .news-mention{color:var(--encre-doux)}
 .news-carte .news-form .news-mention a{color:var(--encre-doux)}
 .news-carte .fermer{position:absolute;top:6px;right:6px;width:40px;height:40px;border:0;background:none;cursor:pointer;color:var(--encre-doux);font-size:1.3rem}
-.avis-bandeau{padding:34px 0 30px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
+.avis-bandeau{padding:26px 0 24px;border-top:1px solid var(--joint);border-bottom:1px solid var(--joint);background:var(--blanc)}
 .ab-tete{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:18px}
 .ab-tete h2{font-family:var(--f-titre);font-weight:400;font-size:clamp(1.5rem,3vw,2rem);margin:0}
 .ab-moy{display:inline-flex;align-items:center;gap:10px}
@@ -682,7 +682,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil"},{"@type":"ListItem","position":2,"name":"Guides"},{"@type":"ListItem","position":3,"name":"Black Friday déco : 7 idées pour décorer sa maison à petit prix"}]}</script>
     <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · 17 novembre 2026</span><h1>Black Friday déco : 7 idées pour décorer sa maison à petit prix</h1><p class="lead">Le Black Friday n’est pas seulement le moment des cadeaux. C’est aussi l’occasion de se faire plaisir et de redonner un coup de frais à sa maison avant les fêtes. Pas besoin de tout changer : quelques objets bien choisis suffisent à transformer une pièce. Voici sept idées déco à petit prix.</p></div>
     <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/hero-mediterranee-carreaux.webp" width="1254" height="1254" alt="Black Friday déco : carreau décoratif K-Reau en céramique illustré" fetchpriority="high"></figure></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">
+  <section class="bloc" style="padding-top:24px"><div class="wrap"><article class="prose guide-corps">
     <nav class="sommaire" aria-label="Sommaire"><strong>Sommaire</strong><ol><li><a href="#partie-1">Composer une étagère qui raconte vos voyages</a></li><li><a href="#partie-2">Créer un mur de cadres original</a></li><li><a href="#partie-3">Personnaliser l’entrée</a></li><li><a href="#partie-4">Habiller une cuisine</a></li><li><a href="#partie-5">Décorer une chambre d’enfant</a></li><li><a href="#partie-6">Ajouter une touche d’histoire au salon</a></li><li><a href="#partie-7">Préparer la déco des fêtes</a></li><li><a href="#partie-8">Profiter du Black Friday</a></li><li><a href="#faq-guide">Questions fréquentes</a></li></ol></nav>
     
 <h2 id="partie-1">1. Composer une étagère qui raconte vos voyages</h2>
@@ -845,7 +845,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.d3bbc1c432.js" defer=""></script>
+<script src="/assets/app.d185c10421.js" defer=""></script>
 
 
 

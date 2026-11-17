@@ -478,7 +478,7 @@ function vueCollection(k){
     ${ariane([['Accueil','/'],['Collections','/#collections'],[c.nom,'']])}
     <div class="bloc-titre"><span class="eyebrow">Collection · ${PRODUITS?list.length+(list.length>1?' lieux':' lieu'):''}</span><h1>${esc(c.h1||c.nom)}</h1><p class="lead">${esc(c.intro)}</p></div>
   </div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">
+  <section class="bloc" style="padding-top:24px"><div class="wrap">
     <h2 class="visuellement-cache">Les carreaux de la collection</h2>
     <div class="grille" id="g-coll">${grilleHTML(list)}${PRODUITS && list.length ? carteSurMesure() : ''}</div>
     <div class="grille-pied" style="gap:12px;flex-wrap:wrap">
@@ -501,7 +501,7 @@ function vueTous(){
         : `<div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Nos carreaux</span><h1>Tous nos carreaux décoratifs</h1><p class="lead">Marseille, la Côte Bleue, Aix-en-Provence, le Luberon, la Côte d’Azur, les Montagnes du Sud, les îles du Var et les Châteaux : choisissez une collection ou parcourez tous les modèles.</p><a class="lien" href="/carte-des-lieux">Ou cherchez votre lieu sur la carte</a></div>
           <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux K-Reau en céramique posés sur la pierre : Sausset-les-Pins, Château de Versailles, Sainte-Victoire et le Vieux-Port de Marseille" fetchpriority="high"></figure></div>`}
   </div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">
+  <section class="bloc" style="padding-top:24px"><div class="wrap">
     ${offresQ.length ? `<div class="offres-q">${offresQ.map(o=>`<a class="offre-q" href="${o.url}">${o.img ? `<img src="${esc(o.img)}" alt="" loading="lazy">` : `<span class="sug-ico">${ICO_CARTE}</span>`}<span><strong>${esc(o.nom)}</strong><span class="small muted">${esc(o.sous)}</span></span></a>`).join('')}</div>` : ''}
     ${q && res && !res.length && offresQ.length ? '' : q ? `<div class="grille" id="g-tous">${res ? (res.length ? res.map(p=>carte(p)).join('') : grilleHTML(PRODUITS).replace(/^/, '<p class="small muted" style="grid-column:1/-1">Tous nos carreaux :</p>')) : grilleHTML([])}</div>`
         : `${filtresHTML('tout','g-tous')}
@@ -987,7 +987,7 @@ function vueFAQ(){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Questions fréquentes','']])}
     <div class="bloc-titre"><span class="eyebrow">FAQ</span><h1>Questions fréquentes</h1></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">${faqHTML()}</div></section>`;
+  <section class="bloc" style="padding-top:24px"><div class="wrap">${faqHTML()}</div></section>`;
 }
 
 function vueContact(){
@@ -995,7 +995,7 @@ function vueContact(){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Contact','']])}
     <div class="bloc-titre"><span class="eyebrow">Contact</span><h1>Écrivez-nous</h1><p class="lead">Une question sur un modèle, un lieu à nous suggérer, une demande particulière : nous vous répondons par e-mail. Pour une commande en quantité, utilisez la <a class="lien" href="/projet-specifique">demande de projet spécifique</a>.</p></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap">
+  <section class="bloc" style="padding-top:24px"><div class="wrap">
     <form class="formulaire" data-form="contact" novalidate>
       <div class="champ"><label for="c-nom">Nom</label><input type="text" id="c-nom" name="nom" autocomplete="name" required><span class="err" aria-live="polite"></span></div>
       <div class="champ"><label for="c-email">Adresse e-mail</label><input type="email" id="c-email" name="email" autocomplete="email" required><span class="err" aria-live="polite"></span></div>${optinNews("c")}
@@ -2458,7 +2458,7 @@ function vueGuides(){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','']])}
     <div class="bloc-titre"><span class="eyebrow">Guides</span><h1>Idées, conseils et beaux lieux</h1>
     <p class="lead">Que ramener de Marseille, quel cadeau offrir à un client ou à ses salariés, où se baigner sur la Côte Bleue : nos guides pour trouver l’inspiration, et le bon souvenir.</p></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap guides-liste">
+  <section class="bloc" style="padding-top:24px"><div class="wrap guides-liste">
     ${[...GUIDES].sort((a,b)=>b.date.localeCompare(a.date)).map(g=>`<article class="guide-carte"><a href="/guides/${g.slug}" class="guide-visuel"><img src="${esc(guideImg(g))}" alt="" loading="lazy" width="600" height="600"></a>
       <div class="guide-txt"><h2><a href="/guides/${g.slug}">${esc(g.titre)}</a></h2><p>${esc(g.intro)}</p><a class="lien" href="/guides/${g.slug}">Lire le guide</a></div></article>`).join('')}
   </div></section>`;
@@ -2480,7 +2480,7 @@ function vueGuide(slug){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Guides','/guides'],[g.titre,'']])}
     <div class="tete-visuel tete-guide"><div class="bloc-titre"><span class="eyebrow">Guide · ${d}</span><h1>${esc(g.titre)}</h1><p class="lead">${esc(g.intro)}</p></div>
     <figure class="tete-img"><img src="${esc(g.image)}" width="1254" height="1254" alt="${esc((g.motCle ? g.motCle.charAt(0).toUpperCase()+g.motCle.slice(1)+' : ' : '') + 'carreau décoratif K-Reau en céramique illustré')}" fetchpriority="high"></figure></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap"><article class="prose guide-corps">
+  <section class="bloc" style="padding-top:24px"><div class="wrap"><article class="prose guide-corps">
     <nav class="sommaire" aria-label="Sommaire"><strong>Sommaire</strong><ol>${titres.map((t,i)=>`<li><a href="#partie-${i+1}">${t.replace(/^\d+\.\s+/, '')}</a></li>`).join('')}${g.faq ? '<li><a href="#faq-guide">Questions fréquentes</a></li>' : ''}</ol></nav>
     ${corps}
     ${g.faq ? `<section class="guide-faq" id="faq-guide"><h2>Questions fréquentes : ${esc(g.motCle)}</h2>${g.faq.map(([q,r])=>`<h3>${esc(q)}</h3><p>${esc(r)}</p>`).join('')}</section>` : ''}
@@ -2505,7 +2505,7 @@ function vueProjet(){
       <a class="btn btn-p" href="#form-projet" style="justify-self:start">Parlez-nous de votre projet</a></div>
       <figure class="tete-img"><img src="/img/02_Accueil_et_Lifestyle/quatre-collections.webp" srcset="/img/02_Accueil_et_Lifestyle/quatre-collections-mini.webp 640w, /img/02_Accueil_et_Lifestyle/quatre-collections.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Quatre carreaux décoratifs K-Reau en céramique posés sur la pierre"></figure></div>
   </div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:48px">
+  <section class="bloc" style="padding-top:28px"><div class="wrap" style="display:grid;gap:48px">
     <div class="projet-pour">
       <h2>Pour qui ?</h2>
       <ul class="projet-liste">
@@ -2682,7 +2682,7 @@ function vueRevendeurs(){
       <div style="display:flex;flex-wrap:wrap;gap:12px"><a class="btn btn-p" href="#form-revendeur">Demander un échantillon</a><a class="btn btn-s" href="#catalogues">Télécharger les catalogues</a></div></div>
       <figure class="tete-img"><img src="/img/mises-en-scene/coffret-maquette.webp" width="540" height="508" alt="Carreau K-Reau dans son coffret kraft, prêt à être vendu en boutique" fetchpriority="high"></figure></div>
   </div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:56px">
+  <section class="bloc" style="padding-top:28px"><div class="wrap" style="display:grid;gap:56px">
     <div style="display:grid;gap:20px"><div class="bloc-titre"><span class="eyebrow">Pourquoi K-Reau</span><h2>Un souvenir qui se vend tout seul</h2></div>
       <div class="rev-atouts">
         <div><h3>Un lieu, un coup de cœur</h3><p>Des lieux précis et reconnaissables : vos visiteurs repartent avec l’endroit qu’ils viennent de découvrir.</p></div>
@@ -2727,7 +2727,7 @@ function pageLegale(titre, metaT, corps){
   app.innerHTML = `
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],[titre,'']])}
     <div class="bloc-titre"><span class="eyebrow">Informations</span><h1>${titre}</h1></div></div></div>
-  <section class="bloc" style="padding-top:40px"><div class="wrap prose">${corps}</div></section>`;
+  <section class="bloc" style="padding-top:24px"><div class="wrap prose">${corps}</div></section>`;
 }
 const L = CONFIG.legal, V = CONFIG.vente;
 const PAGES = {
@@ -2913,7 +2913,7 @@ function vueCoffrets(){
     <div class="tete-visuel"><div class="bloc-titre"><span class="eyebrow">Coffrets</span><h1>Le coffret de 3 carreaux</h1>
     <p class="lead">Trois lieux réunis dans un même envoi : ${prixEur(CONFIG.prix.coffret)} au lieu de ${prixEur(3*CONFIG.prix.carreau)}, et la livraison est offerte. Choisissez un trio tout prêt ou composez le vôtre.</p></div>
     <figure class="tete-img"><img src="/img/coffret/coffret-trio.webp" srcset="/img/coffret/coffret-trio-mini.webp 640w, /img/coffret/coffret-trio-moyen.webp 900w, /img/coffret/coffret-trio.webp 1254w" sizes="(max-width:860px) 90vw, 420px" width="1254" height="1254" alt="Coffret cadeau K-Reau en carton kraft avec trois carreaux en céramique : Le Vélodrome, Sainte-Victoire et Le Mucem" fetchpriority="high"></figure></div></div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap">
+  <section class="bloc" style="padding-top:28px"><div class="wrap">
     <div class="bloc-titre"><h2>Nos trios</h2></div>
     ${PRODUITS ? `<div class="offres">${CONFIG.trios.filter(t=>t.slugs.every(parSlug)).map(trioCarte).join('')}</div>` : `<div class="grille">${grilleHTML([])}</div>`}
   </div></section>
@@ -2980,7 +2980,7 @@ function vueSurMesure(){
         <figcaption class="small muted" id="sm-legende">${esc(SM_EXEMPLES[0].legende)}</figcaption>
       </figure>
     </div></div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap" style="display:grid;gap:48px">
+  <section class="bloc" style="padding-top:28px"><div class="wrap" style="display:grid;gap:48px">
     <ol class="etapes">
       <li><strong>Vous décrivez votre lieu</strong><span>Son nom, où il se trouve, ce qui compte pour vous.</span></li>
       <li><strong>Nous le dessinons</strong><span>Un dessin au trait dans le style K-Reau.</span></li>
@@ -3297,7 +3297,7 @@ function vueCarteCadeau(){
   <div class="page-tete"><div class="wrap">${ariane([['Accueil','/'],['Carte cadeau','']])}
     <div class="bloc-titre"><span class="eyebrow">Carte cadeau</span><h1>La carte cadeau K-Reau</h1>
     <p class="lead">Pour laisser choisir le lieu qui compte : un code à offrir, valable 12 mois sur tous les carreaux, coffrets et créations sur mesure.</p></div></div></div>
-  <section class="bloc" style="padding-top:48px"><div class="wrap fiche" style="padding-block:0">
+  <section class="bloc" style="padding-top:28px"><div class="wrap fiche" style="padding-block:0">
     <div class="offre-visuel" style="aspect-ratio:1.4;border:1px solid var(--joint)"><div class="carte-visuel"><div><span>Carte cadeau</span><strong>K-Reau</strong><span id="cc-montant">${prixEur(montant)}</span></div></div></div>
     <div class="fiche-infos">
       <h2>Choisissez le montant</h2>
