@@ -2989,7 +2989,7 @@ function vueSurMesure(){
     </ol>
     <form class="formulaire sm-avec-apercu" id="form-sm" novalidate>
       <h2>Votre carreau</h2>
-      <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau</label><input type="text" id="sm-texte" maxlength="32" required placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum.</span><span class="err" aria-live="polite"></span></div>
+      <div class="champ"><label for="sm-texte">Nom écrit en calligraphie sur le carreau <span class="muted" style="font-weight:400">(facultatif)</span></label><input type="text" id="sm-texte" maxlength="32" placeholder="Ex. : La Bastide des Pins"><span class="small muted">32 caractères maximum. Laissez vide pour un carreau sans nom.</span><span class="err" aria-live="polite"></span></div>
       
       <div class="champ"><label for="sm-details">Le lieu et ce que vous aimeriez voir sur le dessin</label><textarea id="sm-details" maxlength="300" required minlength="10" placeholder="Ex. : notre maison à Mallemort, la façade avec les volets bleus et le grand pin devant"></textarea><span class="err" aria-live="polite"></span></div>
       <fieldset class="sm-styles"><legend><strong>Style du carreau</strong></legend>
@@ -3173,8 +3173,9 @@ const ApercuSM = {
       x.fillStyle = '#8A8478'; x.font = `500 ${Math.round(T * 0.036)}px Manrope, system-ui, sans-serif`; x.textAlign = 'center'; x.textBaseline = 'middle';
       const en = LANG === 'en'; x.fillText(en ? 'Add a photo of your place' : 'Ajoutez une photo de votre lieu', T / 2, zy + zh / 2 - T * 0.025); x.fillText(en ? 'to see it drawn here' : 'pour la voir dessinée ici', T / 2, zy + zh / 2 + T * 0.025);
     }
-    const nom = ($('#sm-texte') || {}).value?.trim() || (LANG === 'en' ? 'Your place' : 'Votre lieu');
-    x.fillStyle = '#1A1A1A'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    // nom facultatif : sans nom, rien n'est écrit (un exemple grisé seulement tant qu'il n'y a pas de photo)
+    const saisi = ($('#sm-texte') || {}).value?.trim(), nom = saisi || (ph ? '' : (LANG === 'en' ? 'Your place' : 'Votre lieu'));
+    x.fillStyle = saisi ? '#1A1A1A' : '#A9A196'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
     let t = Math.round(T * 0.08); x.font = `${t}px "Great Vibes", cursive`;
     while(x.measureText(nom).width > T * 0.8 && t > 20){ t -= 2; x.font = `${t}px "Great Vibes", cursive`; }
     x.fillText(nom, T / 2, T * 0.87);
@@ -3386,7 +3387,7 @@ const Panier = {
     if(l.type==='carreau') return `<strong>${esc(parSlug(l.slug).nom)}</strong><span class="sous">Carreau 15 × 15 cm</span>`;
     if(l.type==='coffret') return `<strong>${esc(l.nom||'Coffret 3 carreaux')}</strong><span class="sous">${l.slugs.map(x=>esc(parSlug(x).nom)).join(' · ')}</span>`;
     if(l.type==='chevalet') return `<strong>Chevalet trépied en bois brut</strong><span class="sous">L 8 × H 15 cm · pour poser votre carreau</span>`;
-    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">${l.style && l.style !== 'trait' ? esc(STYLES_SM[l.style] || '') + ' · ' : ''}« ${esc(l.texte)} »${l.lieu ? ' · ' + esc(l.lieu) : ''}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
+    if(l.type==='sur-mesure') return `<strong>Carreau sur mesure</strong><span class="sous">${l.style && l.style !== 'trait' ? esc(STYLES_SM[l.style] || '') + ' · ' : ''}${l.texte ? `« ${esc(l.texte)} »` : 'Sans nom'}${l.lieu ? ' · ' + esc(l.lieu) : ''}${l.photo ? ' · ' + esc(l.photo) : ''}</span>`;
     return `<strong>Carte cadeau ${prixEur(l.montant/100)}</strong><span class="sous">Code envoyé après le paiement</span>`;
   },
   suggestions(){

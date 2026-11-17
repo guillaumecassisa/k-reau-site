@@ -698,5 +698,8 @@
  "Photo originale": "Original photo",
  "Aquarelle": "Watercolour",
  "Aperçu automatique pour vous projeter. Votre photo est imprimée telle quelle, avec le nom en calligraphie ; le visuel final vous est soumis avant impression.": "An automatic preview to help you picture it. Your photo is printed as it is, with the name in calligraphy; the final design is sent to you for approval before printing.",
- "Aperçu automatique pour vous projeter. L’aquarelle finale est réalisée par nos soins à partir de votre photo et vous est soumise avant impression.": "An automatic preview to help you picture it. The final watercolour is made by us from your photo and sent to you for approval before printing."
+ "Aperçu automatique pour vous projeter. L’aquarelle finale est réalisée par nos soins à partir de votre photo et vous est soumise avant impression.": "An automatic preview to help you picture it. The final watercolour is made by us from your photo and sent to you for approval before printing.",
+ "Nom écrit en calligraphie sur le carreau {0}": "Name written in calligraphy on the tile {0}",
+ "32 caractères maximum. Laissez vide pour un carreau sans nom.": "32 characters maximum. Leave empty for a tile without a name.",
+ "Sans nom": "No name"
 }

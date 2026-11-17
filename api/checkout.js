@@ -61,12 +61,12 @@ module.exports = async function handler(req, res) {
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: prixCoffret(l.slugs), product_data: {
         name: `Coffret 3 carreaux K-Reau${l.nom ? ' · ' + texte(l.nom, 40) : ''}`, description: noms.join(' · '), images: l.slugs.map(image) } } });
       physique += prixCoffret(l.slugs) * q(l); resume.push(`coffret(${l.slugs.join('+')})x${q(l)}`);
-    } else if (type === 'sur-mesure' && texte(l.texte, 40)) {
+    } else if (type === 'sur-mesure') {   // le nom en calligraphie est facultatif
       surMesure++;
       const style = { trait: 'Dessin au trait', photo: 'Photo originale', aquarelle: 'Aquarelle' }[l.style] || 'Dessin au trait';
-      const desc = `Style : ${style} · Texte : « ${texte(l.texte, 40)} »${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
+      const desc = `Style : ${style} · ${texte(l.texte, 40) ? `Texte : « ${texte(l.texte, 40)} »` : 'Sans nom'}${l.lieu ? ' · Lieu : ' + texte(l.lieu, 120) : ''}${l.details ? ' · ' + texte(l.details, 300) : ''}${l.photo ? ' · Photo : ' + texte(l.photo, 200) : ''}`;
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.surMesure, product_data: { name: 'Carreau K-Reau sur mesure', description: desc.slice(0, 480) } } });
-      physique += PRIX.surMesure * q(l); resume.push(`sur-mesure(${texte(l.texte, 40)})x${q(l)}`);
+      physique += PRIX.surMesure * q(l); resume.push(`sur-mesure(${texte(l.texte, 40) || 'sans nom'})x${q(l)}`);
       smDetails.push(desc);
     } else if (type === 'chevalet') {
       items.push({ quantity: q(l), price_data: { currency: 'eur', unit_amount: PRIX.chevalet, product_data: { name: 'Chevalet trépied en bois brut', description: 'Support pour carreau · L 8 × H 15 cm' } } });

@@ -40,7 +40,7 @@ module.exports = async function handler(req, res) {
   const html = `<div style="font-family:Arial,sans-serif;font-size:14px">
     <h2 style="color:#51573D">Photo carreau sur mesure · ${ref} (${n}/${total})</h2>
     <p>Photo envoyée depuis la page Sur mesure, avant le paiement. La référence <b>${ref}</b> apparaîtra dans la commande si le client la valide.</p>
-    ${nomCalli ? `<p><b>Nom en calligraphie :</b> ${echap(nomCalli)}</p>` : ''}
+    <p><b>Nom en calligraphie :</b> ${nomCalli ? echap(nomCalli) : '<i>aucun (carreau sans nom)</i>'}</p>
     ${lieu ? `<p><b>Lieu :</b> ${echap(lieu)}</p>` : ''}
     <p><b>Style :</b> ${echap(style)}</p>
     ${details ? `<p><b>Souhaits :</b> ${echap(details)}</p>` : ''}
