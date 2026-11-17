@@ -95,6 +95,8 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 @media(max-width:600px){.etape{grid-template-columns:100px 1fr 80px}}
 .news{background:var(--blanc);border:1px solid var(--joint);padding:10px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;font-size:.92rem}
 .news b{font-size:1.15rem}
+.abonnes{background:var(--blanc);border:1px solid var(--joint);border-top:0;padding:12px 16px;margin:-12px 0 12px}
+.abo-tete{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:10px}
 .news span.t{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
 .alerte{background:#FBF1E6;border:1px solid #E9C9A6;padding:10px 14px;margin-bottom:12px;font-size:.9rem}
 .alerte a{color:var(--olivier);font-weight:600;cursor:pointer;text-decoration:underline}
@@ -237,6 +239,32 @@ function blocParcours() {
 }
 document.addEventListener('click', e => { const b = e.target.closest('[data-pj]'); if (!b) return; parcoursJours = +b.dataset.pj; const ouvert = [...document.querySelectorAll('#stats details')].map(x => x.open); peindreStats(); document.querySelectorAll('#stats details').forEach((x, i) => x.open = ouvert[i]); });
 
+// Liste des abonnés à la newsletter (chargée à la demande)
+let ABOS = null, abosTous = false;
+const SOURCES_ABO = { site: 'Site (formulaire)', 'page-newsletter': 'Page /newsletter (story)', commande: 'Après un achat', formulaire: 'Formulaire de contact' };
+function peindreAbonnes() {
+  const z = $('#abonnes'); if (!z || !ABOS) return;
+  const actifs = ABOS.filter(a => !a.desinscrit), l = abosTous ? ABOS : actifs;
+  const date = v => v ? new Date(v).toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'numeric' }) : '';
+  z.innerHTML = `<div class="abo-tete"><b>${actifs.length} abonné${actifs.length > 1 ? 's' : ''} actif${actifs.length > 1 ? 's' : ''}</b>
+      <label style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--encre);display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="abo-tous" ${abosTous ? 'checked' : ''}> Afficher aussi les désinscrits</label>
+      <button type="button" class="btn-s" id="abo-copier" style="padding:5px 12px;font-size:.85rem">Copier les e-mails</button><span class="enreg" id="abo-ok"></span></div>
+    ${l.length ? `<div style="overflow-x:auto"><table class="t"><tr><th>E-mail</th><th>Inscrit le</th><th>Origine</th><th>Langue</th><th>Statut</th></tr>
+      ${l.map(a => `<tr><td><a href="mailto:${esc(a.email)}">${esc(a.email)}</a></td><td>${date(a.inscrit)}</td><td>${esc(SOURCES_ABO[a.source] || a.source || '—')}</td><td>${a.langue === 'en' ? 'Anglais' : 'Français'}</td><td>${a.desinscrit ? `Désinscrit le ${date(a.desinscrit)}` : 'Actif'}</td></tr>`).join('')}</table></div>` : '<p class="meta">Aucun abonné pour le moment.</p>'}`;
+  $('#abo-tous').addEventListener('change', e => { abosTous = e.target.checked; peindreAbonnes(); });
+  $('#abo-copier').addEventListener('click', async () => {
+    const t = actifs.map(a => a.email).join(', ');
+    try { await navigator.clipboard.writeText(t); $('#abo-ok').textContent = 'E-mails copiés ✓'; } catch { prompt('E-mails des abonnés actifs :', t); }
+  });
+}
+document.addEventListener('click', async e => {
+  if (!e.target.closest('#voir-abonnes')) return;
+  const z = $('#abonnes'), b = $('#voir-abonnes'); if (!z.hidden) { z.hidden = true; b.textContent = 'Voir la liste'; return; }
+  z.hidden = false; b.textContent = 'Masquer la liste';
+  if (!ABOS) { z.innerHTML = '<p class="meta">Chargement…</p>'; try { ABOS = (await api({ action:'abonnes' })).abonnes; } catch (er) { z.innerHTML = `<p class="meta">${esc(er.message)}</p>`; return; } }
+  peindreAbonnes();
+});
+
 function peindreStats() {
   const valides = CMDS.filter(c => c.suivi.statut !== 'annule');
   const r = chiffres(valides);
@@ -280,7 +308,8 @@ function peindreStats() {
       <div class="stat"><span>Coûts (produits, envoi, URSSAF)</span><strong>${euros(r.produits + r.envoi + r.urssaf)}</strong><small>${r.colis} colis</small></div>
       <div class="stat cle ${r.net < 0 ? 'neg' : ''}"><span>Résultat net</span><strong>${euros(r.net)}</strong><small>marge ${pct(r.net, r.ca)}${sansCouts ? ' · coûts à renseigner' : ''}</small></div>
     </div>
-    ${ABONNES ? `<div class="news"><span class="t">Newsletter</span><span><b>${ABONNES.actifs}</b> abonné${ABONNES.actifs > 1 ? 's' : ''}</span><span>+${ABONNES.semaine} sur 7 jours</span><span>+${ABONNES.mois} sur 30 jours</span><span>${ABONNES.desinscrits} désinscrit${ABONNES.desinscrits > 1 ? 's' : ''}</span>${ABONNES.dernier ? `<span class="meta">dernière inscription le ${new Date(ABONNES.dernier).toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</span>` : ''}</div>` : ''}
+    ${ABONNES ? `<div class="news"><span class="t">Newsletter</span><span><b>${ABONNES.actifs}</b> abonné${ABONNES.actifs > 1 ? 's' : ''}</span><span>+${ABONNES.semaine} sur 7 jours</span><span>+${ABONNES.mois} sur 30 jours</span><span>${ABONNES.desinscrits} désinscrit${ABONNES.desinscrits > 1 ? 's' : ''}</span>${ABONNES.dernier ? `<span class="meta">dernière inscription le ${new Date(ABONNES.dernier).toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</span>` : ''}<button type="button" class="btn-s" id="voir-abonnes" style="margin-left:auto;padding:5px 12px;font-size:.85rem">Voir la liste</button></div>
+    <div class="abonnes" id="abonnes" hidden></div>` : ''}
     ${blocParcours()}
     <details class="panneau"><summary>Détail du résultat, par mois et meilleures ventes</summary><div class="panneau-corps">
       <div><table class="t"><tr><th>Sur ${jours} jours, hors annulées</th><th>Montant</th></tr>

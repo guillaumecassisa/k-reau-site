@@ -69,6 +69,10 @@ module.exports = async function handler(req, res) {
       await base('commande_maj', { session_id: id, statut, suivi: String(d.suivi || '').slice(0, 120), note: String(d.note || '').slice(0, 1000) });
       return res.status(200).json({ ok: true });
     }
+    if (d.action === 'abonnes') {   // liste des inscrits à la newsletter (page Gestion uniquement, derrière le code)
+      const liste = await base('abonnes_detail', {});
+      return res.status(200).json({ abonnes: liste || [] });
+    }
     if (d.action === 'couts') {
       if (d.valeur && typeof d.valeur === 'object') {
         const v = {}; for (const k of ['carreau', 'chevalet', 'coffret', 'emballage', 'envoiFrance', 'envoiEtranger', 'urssaf', 'surMesure']) { const x = parseFloat(String(d.valeur[k] ?? '').replace(',', '.')); if (isFinite(x) && x >= 0 && x < 1000) v[k] = Math.round(x * 100) / 100; }
