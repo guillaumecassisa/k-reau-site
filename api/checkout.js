@@ -2,7 +2,7 @@
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
 const { PRIX, PRODUITS, prixCarreau, prixCoffret, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE, base } = require('./_commun');
 // Codes « carreaux offerts » : listés dans la variable Vercel KREAU_CODES_CARREAUX (séparés par des virgules).
-// Ils offrent les carreaux à l'unité du panier (pas les coffrets, le sur mesure, les chevalets ni les cartes cadeaux) et la livraison.
+// Ils offrent un carreau à l'unité et un accessoire (chevalet) du panier, ainsi que la livraison ; pas les coffrets, le sur mesure ni les cartes cadeaux.
 // Utilisables une seule fois : le code est marqué comme utilisé en base au paiement de la commande (api/commande.js).
 const codesCarreaux = () => String(process.env.KREAU_CODES_CARREAUX || '').toUpperCase().split(',').map(x => x.trim()).filter(Boolean);
 // Pays européens livrés (hors France) au tarif Europe
@@ -107,8 +107,10 @@ module.exports = async function handler(req, res) {
     let deja = false;
     try { deja = (await base('envoi_existe', { type: 'code_carreaux', ref: code })).existe; } catch (e) { console.error('Code carreaux', e.message); return res.status(502).json({ erreur: 'Le code n’a pas pu être vérifié' }); }
     if (deja) return res.status(400).json({ erreur: corps.lang === 'en' ? 'This code has already been used or has expired' : 'Ce code a déjà été utilisé ou a expiré' });
-    carreauxOfferts = items.filter(it => /^Carreau K-Reau · /.test(it.price_data.product_data.name)).reduce((t, it) => t + it.price_data.unit_amount * it.quantity, 0);
-    if (!carreauxOfferts) return res.status(400).json({ erreur: corps.lang === 'en' ? 'This code only applies to single tiles: add a tile to your basket' : 'Ce code s’applique uniquement aux carreaux à l’unité (pas aux coffrets) : ajoutez un carreau à votre panier' });
+    // un seul carreau à l'unité (le plus cher du panier) et un seul accessoire (chevalet)
+    const plusCher = re => Math.max(0, ...items.filter(it => re.test(it.price_data.product_data.name)).map(it => it.price_data.unit_amount));
+    carreauxOfferts = plusCher(/^Carreau K-Reau · /) + plusCher(/^Chevalet/);
+    if (!carreauxOfferts) return res.status(400).json({ erreur: corps.lang === 'en' ? 'This code applies to one single tile and one accessory: add a tile to your basket' : 'Ce code s’applique à un carreau à l’unité et un accessoire (pas aux coffrets) : ajoutez un carreau à votre panier' });
     codeCarreaux = code; code = '';
   }
   if (code) {
@@ -167,11 +169,11 @@ module.exports = async function handler(req, res) {
   }
   if (carreauxOfferts) {   // remise du montant exact des carreaux, via un bon Stripe créé pour ce seul paiement
     const bon = await stripe('POST', 'coupons', { amount_off: carreauxOfferts, currency: 'eur', duration: 'once', max_redemptions: 1,
-      redeem_by: Math.floor(Date.now() / 1000) + 2 * 86400, name: en ? 'Tiles offered' : 'Carreaux offerts' });
+      redeem_by: Math.floor(Date.now() / 1000) + 2 * 86400, name: en ? 'One tile and one accessory offered' : 'Un carreau et un accessoire offerts' });
     params.discounts = [{ coupon: bon.id }];
     delete params.allow_promotion_codes;
     params.after_expiration = { recovery: { enabled: 'true' } };
-    params.metadata.code = `${codeCarreaux} (carreaux offerts)`;
+    params.metadata.code = `${codeCarreaux} (1 carreau + 1 accessoire offerts)`;
     params.metadata.code_carreaux = codeCarreaux;
     if (params.shipping_options) params.shipping_options.forEach(o => {
       o.shipping_rate_data.fixed_amount.amount = 0;
