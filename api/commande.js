@@ -47,6 +47,24 @@ module.exports = async function handler(req, res) {
 // Cartes cadeaux + e-mail à K-Reau + confirmation au client, chacun une seule fois par commande.
 // Appelée par la page « Merci » et, en secours, par la tâche quotidienne (client qui a fermé la page après avoir payé).
 // « Envoyé une seule fois » : marqueur sur le paiement Stripe ; pour une commande offerte (0 €, pas de paiement), réservation en base.
+// E-mail « Nouvelle commande » envoyé à K-Reau (aussi renvoyé à la demande depuis /gestion, avec recap = true)
+function htmlCommande(s, { cartes = [], montants = null, erreurCartes = false, recap = false } = {}) {
+  const md = s.metadata || {};
+  if (!montants) montants = (md.cartes || '').split(',').map(n => parseInt(n, 10)).filter(Boolean);
+  const lignes = detailLignes(s).map(l => `<li>${l.quantity} × ${t(l.description, 200)}${l.compo ? `<br><b>Carreaux :</b> ${l.compo.map(x => t(x, 80)).join(' · ')}` : ''}</li>`).join('');
+  const adr = s.shipping_details && s.shipping_details.address;
+  return `<div style="font-family:Arial,sans-serif;font-size:14px">
+        <h2 style="color:#51573D">Nouvelle commande K-Reau · ${euros(s.amount_total)}</h2>
+        <p><b>Client :</b> ${t(s.customer_details && s.customer_details.name, 120)} — ${t(s.customer_details && s.customer_details.email, 160)}</p>
+        <ul>${lignes}</ul>
+        ${md.code ? `<p><b>Code utilisé :</b> ${t(md.code, 60)}</p>` : ''}
+        ${md.message_cadeau ? `<p><b>Message cadeau à imprimer :</b><br>« ${t(md.message_cadeau, 300)} »</p>` : ''}
+        ${md.sur_mesure && md.sur_mesure !== '0' ? `<p><b>Carreau sur mesure :</b><br>${md.sur_mesure_details ? t(md.sur_mesure_details, 500) : 'détails dans Stripe (ligne de commande)'}<br>Photos éventuelles : e-mail « Photo sur mesure » avec la même référence SM-. Envoyer le dessin au client pour validation.</p>` : ''}
+        ${montants.length ? `<p><b>Cartes cadeaux :</b> ${recap ? 'voir l’e-mail d’origine de la commande' : cartes.map(c => `${c.code} (${euros(c.montant)})`).join(', ') || (recap ? '' : 'création à faire à la main dans Stripe')}${erreurCartes ? ' — ⚠ création automatique impossible, à créer dans Stripe' : ''}</p>` : ''}
+        ${adr ? `<p><b>Livraison :</b> ${t(s.shipping_details.name, 120)}, ${t(adr.line1, 160)} ${t(adr.line2, 120)}, ${t(adr.postal_code, 12)} ${t(adr.city, 80)} ${adr.country && adr.country !== 'FR' ? '(' + t(adr.country, 4) + ')' : ''}</p>` : ''}
+      </div>`;
+}
+
 async function dejaFait(s, nom) {
   if (s.payment_intent) { const pi = await stripe('GET', `payment_intents/${s.payment_intent}`); return { fait: !!(pi.metadata || {})[nom], marquer: () => stripe('POST', `payment_intents/${s.payment_intent}`, { metadata: { [nom]: '1' } }).catch(() => {}), annuler: async () => {} }; }
   const r = await base('envoi_reserver', { type: nom, ref: s.id, email: (s.customer_details && s.customer_details.email) || '' });
@@ -72,18 +90,7 @@ async function traiterCommande(s) {
   try {
     const d = await dejaFait(s, 'k_notifie');
     if (!d.fait) {
-      const lignes = detailLignes(s).map(l => `<li>${l.quantity} × ${t(l.description, 200)}${l.compo ? `<br><b>Carreaux :</b> ${l.compo.map(x => t(x, 80)).join(' · ')}` : ''}</li>`).join('');
-      const adr = s.shipping_details && s.shipping_details.address;
-      const html = `<div style="font-family:Arial,sans-serif;font-size:14px">
-        <h2 style="color:#51573D">Nouvelle commande K-Reau · ${euros(s.amount_total)}</h2>
-        <p><b>Client :</b> ${t(s.customer_details && s.customer_details.name, 120)} — ${t(s.customer_details && s.customer_details.email, 160)}</p>
-        <ul>${lignes}</ul>
-        ${md.code ? `<p><b>Code utilisé :</b> ${t(md.code, 60)}</p>` : ''}
-        ${md.message_cadeau ? `<p><b>Message cadeau à imprimer :</b><br>« ${t(md.message_cadeau, 300)} »</p>` : ''}
-        ${md.sur_mesure && md.sur_mesure !== '0' ? `<p><b>Carreau sur mesure :</b><br>${md.sur_mesure_details ? t(md.sur_mesure_details, 500) : 'détails dans Stripe (ligne de commande)'}<br>Photos éventuelles : e-mail « Photo sur mesure » avec la même référence SM-. Envoyer le dessin au client pour validation.</p>` : ''}
-        ${montants.length ? `<p><b>Cartes cadeaux :</b> ${cartes.map(c => `${c.code} (${euros(c.montant)})`).join(', ') || 'création à faire à la main dans Stripe'}${erreurCartes ? ' — ⚠ création automatique impossible, à créer dans Stripe' : ''}</p>` : ''}
-        ${adr ? `<p><b>Livraison :</b> ${t(s.shipping_details.name, 120)}, ${t(adr.line1, 160)} ${t(adr.line2, 120)}, ${t(adr.postal_code, 12)} ${t(adr.city, 80)} ${adr.country && adr.country !== 'FR' ? '(' + t(adr.country, 4) + ')' : ''}</p>` : ''}
-      </div>`;
+      const html = htmlCommande(s, { cartes, montants, erreurCartes });
       const ok = await envoyerMail(`K-Reau · Nouvelle commande ${euros(s.amount_total)}`, html, s.customer_details && s.customer_details.email);
       if (ok) await d.marquer(); else await d.annuler();
     }
@@ -135,3 +142,5 @@ ${adr ? `<tr><td style="padding:10px 32px 0;font-size:14px;line-height:1.6"><str
 <em style="font-family:Georgia,serif;font-size:15px;color:#22211E">Les lieux qu’on aime, à garder chez soi.</em><br>K-Reau · <a href="https://k-reau.fr" style="color:#51573D">k-reau.fr</a> · <a href="https://www.instagram.com/kreau.studio/" style="color:#51573D">Instagram</a> · <a href="https://www.pinterest.com/kreaustudio/" style="color:#51573D">Pinterest</a></td></tr>
 </table></td></tr></table></body></html>`;
 }
+
+module.exports.htmlCommande = htmlCommande;

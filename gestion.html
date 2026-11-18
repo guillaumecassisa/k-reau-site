@@ -189,6 +189,7 @@ function carte(c) {
           <select id="s-${esc(c.id)}" data-champ="statut">${STATUTS.map(([k, l]) => `<option value="${k}" ${k === s.statut ? 'selected' : ''}>${l}</option>`).join('')}</select></div>
         <div><h3>N° de suivi colis</h3><input type="text" data-champ="suivi" value="${esc(s.suivi)}" placeholder="Ex. : 6A12345678901" aria-label="Numéro de suivi"></div>
         <div><h3>Note</h3><textarea data-champ="note" placeholder="Note interne" aria-label="Note interne">${esc(s.note)}</textarea></div>
+        <button type="button" class="btn-s" data-recap="${esc(c.id)}" style="padding:5px 10px;font-size:.82rem">Me renvoyer le récap par e-mail</button>
         <span class="enreg" aria-live="polite"></span></div>
     </div></article>`;
 }
@@ -361,6 +362,12 @@ function peindre() {
   });
 }
 
+document.addEventListener('click', async e => {
+  const b = e.target.closest('[data-recap]'); if (!b) return;
+  b.disabled = true; const t = b.textContent; b.textContent = 'Envoi…';
+  try { await api({ action:'recap', session_id: b.dataset.recap }); b.textContent = 'Récap envoyé ✓'; }
+  catch (er) { b.textContent = er.message; } setTimeout(() => { b.textContent = t; b.disabled = false; }, 4000);
+});
 $('#deco').addEventListener('click', () => { code = ''; try { sessionStorage.removeItem('kreau-gestion'); } catch {} CMDS = []; vueConnexion(); });
 if (code) { $('#app').innerHTML = '<p class="charge">Chargement des commandes…</p>'; charger().catch(e => vueConnexion(e.statut === 401 ? '' : e.message)); }
 else vueConnexion();

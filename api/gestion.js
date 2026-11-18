@@ -52,11 +52,13 @@ async function commandes(jours) {
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
-  if (req.method !== 'POST') { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
-  if (!origineAutorisee(req)) return res.status(403).json({ erreur: 'Requête refusée' });
+  // GET accepté uniquement pour renvoyer un récap de commande à K-Reau (lien direct, protégé par le code)
+  const recapGet = req.method === 'GET' && req.query && req.query.action === 'recap';
+  if (req.method !== 'POST' && !recapGet) { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
+  if (!recapGet && !origineAutorisee(req)) return res.status(403).json({ erreur: 'Requête refusée' });
   if (!process.env.KREAU_GESTION_CODE) return res.status(503).json({ erreur: 'Espace de gestion non configuré' });
   if (bloque(req)) return res.status(429).json({ erreur: 'Trop de tentatives, réessayez dans 15 minutes' });
-  let d = req.body;
+  let d = recapGet ? { ...req.query } : req.body;
   if (typeof d === 'string') { try { d = JSON.parse(d); } catch { d = {}; } }
   d = d && typeof d === 'object' ? d : {};
   if (!codeOk(d.code)) { echec(req); return res.status(401).json({ erreur: 'Code incorrect' }); }
@@ -68,6 +70,21 @@ module.exports = async function handler(req, res) {
       const statut = STATUTS.includes(d.statut) ? d.statut : 'a-faire';
       await base('commande_maj', { session_id: id, statut, suivi: String(d.suivi || '').slice(0, 120), note: String(d.note || '').slice(0, 1000) });
       return res.status(200).json({ ok: true });
+    }
+    if (d.action === 'recap') {   // renvoie à K-Reau l'e-mail « Nouvelle commande » (avec le détail des coffrets)
+      let s;
+      const id = String(d.session_id || '');
+      if (/^cs_(live|test)_[A-Za-z0-9]+$/.test(id)) s = await stripe('GET', `checkout/sessions/${id}`, { 'expand[]': 'line_items' });
+      else {
+        const q = String(d.recherche || '').trim().toLowerCase(); if (q.length < 3) return res.status(400).json({ erreur: 'Commande inconnue' });
+        const r = await stripe('GET', 'checkout/sessions', { limit: 100, status: 'complete', created: { gte: Math.floor(Date.now() / 1000) - 60 * 86400 }, expand: ['data.line_items'] });
+        s = r.data.filter(payee).find(x => JSON.stringify([x.customer_details, x.shipping_details]).toLowerCase().includes(q));
+      }
+      if (!s || !payee(s)) return res.status(404).json({ erreur: 'Commande introuvable' });
+      const { htmlCommande } = require('./commande');
+      const { envoyerMail, euros } = require('./_commun');
+      const ok = await envoyerMail(`K-Reau · Récap commande ${euros(s.amount_total)} · ${(s.customer_details && (s.customer_details.name || s.customer_details.email)) || ''}`, htmlCommande(s, { recap: true }), s.customer_details && s.customer_details.email);
+      return res.status(ok ? 200 : 502).json({ ok, commande: s.id.slice(-8).toUpperCase() });
     }
     if (d.action === 'abonnes') {   // liste des inscrits à la newsletter (page Gestion uniquement, derrière le code)
       const liste = await base('abonnes_detail', {});
