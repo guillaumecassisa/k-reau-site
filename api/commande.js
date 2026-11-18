@@ -1,6 +1,14 @@
 // Récapitulatif affiché sur la page « Merci » : vérifie le paiement, crée les codes des cartes cadeaux
 // (une seule fois par commande) et prévient K-Reau par e-mail des éléments à préparer.
-const { stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, tropDeRequetes, echap, base, payee } = require('./_commun');
+const { stripe, euros, texte, codeCadeau, envoyerMail, envoyerClient, tropDeRequetes, echap, base, payee, PRODUITS } = require('./_commun');
+
+// Carreaux de chaque coffret, retrouvés dans le résumé du panier (coffret(slug+slug+slug)x1), dans l'ordre des lignes
+function detailLignes(s) {
+  const md = s.metadata || {};
+  const coffrets = [...String(md.panier || '').matchAll(/coffret\(([^)]+)\)x(\d+)/g)].map(m => m[1].split('+').map(x => (PRODUITS[x] || {}).nom || x));
+  let k = 0;
+  return (s.line_items && s.line_items.data || []).map(l => ({ ...l, compo: /^Coffret 3 carreaux/i.test(l.description || '') && coffrets[k] ? coffrets[k++] : null }));
+}
 const t = (v, n) => echap(texte(v, n));
 
 async function carteCadeau(sessionId, i, montant) {
@@ -64,7 +72,7 @@ async function traiterCommande(s) {
   try {
     const d = await dejaFait(s, 'k_notifie');
     if (!d.fait) {
-      const lignes = (s.line_items && s.line_items.data || []).map(l => `<li>${l.quantity} × ${t(l.description, 200)}</li>`).join('');
+      const lignes = detailLignes(s).map(l => `<li>${l.quantity} × ${t(l.description, 200)}${l.compo ? `<br><b>Carreaux :</b> ${l.compo.map(x => t(x, 80)).join(' · ')}` : ''}</li>`).join('');
       const adr = s.shipping_details && s.shipping_details.address;
       const html = `<div style="font-family:Arial,sans-serif;font-size:14px">
         <h2 style="color:#51573D">Nouvelle commande K-Reau · ${euros(s.amount_total)}</h2>
@@ -97,8 +105,8 @@ module.exports.traiterCommande = traiterCommande;
 function mailClient(s, md, cartes, cartesEnAttente) {
   const e = v => texte(v, 300).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const prenom = e(((s.customer_details && s.customer_details.name) || '').split(' ')[0]);
-  const lignes = (s.line_items && s.line_items.data || []).map(l =>
-    `<tr><td style="padding:10px 0;border-bottom:1px solid #E6DED3">${l.quantity} × ${e(l.description)}</td><td style="padding:10px 0;border-bottom:1px solid #E6DED3;text-align:right;white-space:nowrap">${euros(l.amount_total)}</td></tr>`).join('');
+  const lignes = detailLignes(s).map(l =>
+    `<tr><td style="padding:10px 0;border-bottom:1px solid #E6DED3">${l.quantity} × ${e(l.description)}${l.compo ? `<br><span style="color:#5E5A52;font-size:13px">${l.compo.map(e).join(' · ')}</span>` : ''}</td><td style="padding:10px 0;border-bottom:1px solid #E6DED3;text-align:right;white-space:nowrap">${euros(l.amount_total)}</td></tr>`).join('');
   const port = s.total_details && s.total_details.amount_shipping;
   const adr = s.shipping_details && s.shipping_details.address;
   const physique = !!adr;
