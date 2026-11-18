@@ -91,6 +91,11 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 .parcours .pt button{border:1px solid var(--joint);background:none;padding:3px 10px;border-radius:14px;font:inherit;font-size:.82rem;cursor:pointer}.parcours .pt button[aria-pressed=true]{background:var(--encre);color:#fff;border-color:var(--encre)}
 .etape{display:grid;grid-template-columns:150px 1fr 110px;gap:10px;align-items:center;margin:5px 0;font-size:.9rem}.etape .barre{height:22px;background:#eee8dd;border-radius:3px;overflow:hidden}.etape .barre i{display:block;height:100%;background:var(--olive,#51573D)}
 .etape .v{text-align:right;font-variant-numeric:tabular-nums}.etape .v small{color:#8a8478;display:block;font-size:.75rem}
+.evol{position:relative;margin:14px 0 4px;padding-top:12px;border-top:1px solid var(--joint)}
+.evol-t{margin:0 0 4px;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--olivier)}
+.graph{display:block;width:100%;height:auto;font:11px Manrope,system-ui,sans-serif;fill:#5E5A52}
+.legende{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:.82rem;margin-bottom:2px}.legende i,.infobulle i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.infobulle{position:absolute;z-index:3;background:var(--blanc);border:1px solid var(--joint);box-shadow:0 4px 14px rgba(0,0,0,.08);padding:8px 10px;font-size:.82rem;line-height:1.5;pointer-events:none;white-space:nowrap}
 .sources{margin-top:10px;font-size:.82rem;color:#5e5a52;display:flex;flex-wrap:wrap;gap:4px 16px}
 @media(max-width:600px){.etape{grid-template-columns:100px 1fr 80px}}
 .news{background:var(--blanc);border:1px solid var(--joint);padding:10px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:6px 22px;align-items:baseline;font-size:.92rem}
@@ -114,7 +119,7 @@ const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currenc
 const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
 const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
 const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
-let PARCOURS = [], PPROD = [], parcoursJours = 7, ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+let PARCOURS = [], PPROD = [], parcoursJours = '7', ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
 try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
 
 async function api(corps) {
@@ -211,34 +216,95 @@ function chiffres(liste) {
   return r;
 }
 // Fiches produit vues et ajouts au panier, par produit (suivi démarré le 17 novembre)
-function blocProduits(lim) {
+function blocProduits(lim, fin) {
   const m = new Map();
-  for (const x of PPROD.filter(x => x.jour >= lim)) { const o = m.get(x.slug) || { nom: x.nom || x.slug, fiche: 0, panier: 0 }; o[x.etape] = (o[x.etape] || 0) + x.n; m.set(x.slug, o); }
+  for (const x of PPROD.filter(x => x.jour >= lim && x.jour <= fin)) { const o = m.get(x.slug) || { nom: x.nom || x.slug, fiche: 0, panier: 0 }; o[x.etape] = (o[x.etape] || 0) + x.n; m.set(x.slug, o); }
   const l = [...m.values()].sort((a, b) => b.panier - a.panier || b.fiche - a.fiche);
   if (!l.length) return '<p class="meta" style="font-size:.82rem;margin:10px 0 0">Détail par produit : les chiffres apparaîtront dès les prochaines visites.</p>';
   const lignes = l.map(o => `<tr><td>${esc(o.nom)}</td><td>${o.fiche || '—'}</td><td>${o.panier || '—'}</td></tr>`);
   const tete = '<tr><th>Produit</th><th>Fiche vue</th><th>Ajouté au panier</th></tr>';
   return `<table class="t" style="margin-top:12px">${tete}${lignes.slice(0, 10).join('')}</table>${lignes.length > 10 ? `<details style="margin-top:4px"><summary class="meta" style="cursor:pointer;font-size:.85rem">Voir les ${lignes.length - 10} autres produits</summary><table class="t">${lignes.slice(10).join('')}</table></details>` : ''}`;
 }
+
+// Évolution jour par jour : visites (barres), puis fiches vues, ajouts au panier et commandes (courbes, autre échelle → autre graphique)
+const SERIES_PARCOURS = [['fiche', 'Fiches vues', '#2a78d6'], ['panier', 'Ajouts au panier', '#eb6834'], ['commande', 'Commandes payées', '#1baf7a']];
+function serieParcours() {
+  const nb = parcoursJours === '30' ? 30 : 14, jours = [];
+  for (let i = nb - 1; i >= 0; i--) { const x = new Date(); x.setHours(12, 0, 0, 0); x.setDate(x.getDate() - i); jours.push(jourParis(x)); }
+  const premier = PARCOURS.reduce((m, x) => x.jour < m ? x.jour : m, '9999');   // pas de jours vides avant le début du suivi
+  return jours.filter(j => j >= premier).map(j => {
+    const v = e => PARCOURS.filter(x => x.jour === j && x.etape === e).reduce((a, x) => a + x.n, 0);
+    return { j, visite: v('visite'), fiche: v('fiche'), panier: v('panier'),
+      commande: CMDS.filter(c => jourParis(new Date(c.heure)) === j && c.suivi.statut !== 'annule').length };
+  });
+}
+function graphiqueParcours() {
+  const d = serieParcours(); if (d.length < 2) return '';
+  const W = Math.round(Math.min(1000, Math.max(300, ((document.querySelector('#stats') || {}).clientWidth || 640) - 34))), H = 150, g = 34, dr = 8, h = H - 26, pas = (W - g - dr) / d.length;
+  const lab = j => { const [a, m, jj] = j.split('-'); return `${+jj}/${+m}`; };
+  const tick = mx => { const p = Math.pow(10, Math.floor(Math.log10(Math.max(1, mx)))); const s = [1, 2, 5, 10].map(k => k * p).find(k => mx / k <= 4) || p * 10; return Math.max(1, s); };
+  const axe = (mx, y) => { const s = tick(mx), top = Math.max(s, Math.ceil(mx / s) * s), out = [];
+    for (let v = 0; v <= top; v += s) out.push(`<line x1="${g}" x2="${W - dr}" y1="${y(v, top)}" y2="${y(v, top)}" stroke="#E6DED3" stroke-width="1"/><text x="${g - 6}" y="${y(v, top) + 4}" text-anchor="end">${v}</text>`);
+    return { top, svg: out.join('') }; };
+  const xs = i => g + pas * i + pas / 2, chaque = Math.ceil(d.length / 8);
+  const etiquettes = d.map((x, i) => i % chaque === 0 || i === d.length - 1 ? `<text x="${xs(i)}" y="${H - 6}" text-anchor="middle">${lab(x.j)}</text>` : '').join('');
+  const y = (v, top) => 8 + (h - 8) * (1 - v / top);
+  // 1. visites
+  const mv = Math.max(...d.map(x => x.visite)), A = axe(mv, y), bw = Math.min(36, Math.max(3, pas - 4));
+  const barres = d.map((x, i) => { const yy = y(x.visite, A.top), hh = y(0, A.top) - yy;
+    return hh > 0 ? `<path d="M${xs(i) - bw / 2},${y(0, A.top)} v${-(hh - Math.min(4, hh, bw / 2))} q0,${-Math.min(4, hh, bw / 2)} ${Math.min(4, bw / 2)},${-Math.min(4, hh, bw / 2)} h${bw - 2 * Math.min(4, bw / 2)} q${Math.min(4, bw / 2)},0 ${Math.min(4, bw / 2)},${Math.min(4, hh, bw / 2)} v${hh - Math.min(4, hh, bw / 2)} z" fill="#51573D"/>` : ''; }).join('');
+  // 2. fiches, paniers, commandes
+  const m2 = Math.max(1, ...d.flatMap(x => SERIES_PARCOURS.map(([k]) => x[k]))), B = axe(m2, y);
+  const courbes = SERIES_PARCOURS.map(([k, , c]) => `<polyline fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="${d.map((x, i) => `${xs(i)},${y(x[k], B.top)}`).join(' ')}"/>`
+    + d.map((x, i) => x[k] ? `<circle cx="${xs(i)}" cy="${y(x[k], B.top)}" r="4" fill="${c}" stroke="#FFFEFB" stroke-width="2"/>` : '').join('')).join('');
+  const zones = id => d.map((x, i) => `<rect class="zg" data-g="${id}" data-i="${i}" x="${g + pas * i}" y="0" width="${pas}" height="${H - 20}" fill="transparent"/>`).join('');
+  const svg = (id, contenu, A_) => `<svg viewBox="0 0 ${W} ${H}" class="graph" role="img" aria-label="${id === 'v' ? 'Visites par jour' : 'Fiches vues, ajouts au panier et commandes par jour'}">${A_.svg}${contenu}${etiquettes}<line class="curseur" x1="0" x2="0" y1="6" y2="${h}" stroke="#8A8478" stroke-width="1" stroke-dasharray="3 3" style="display:none"/>${zones(id)}</svg>`;
+  const tableau = `<table class="t"><tr><th>Jour</th><th>Visites</th>${SERIES_PARCOURS.map(([, l]) => `<th>${l}</th>`).join('')}</tr>${d.slice().reverse().map(x => `<tr><td>${lab(x.j)}</td><td>${x.visite}</td>${SERIES_PARCOURS.map(([k]) => `<td>${x[k]}</td>`).join('')}</tr>`).join('')}</table>`;
+  return `<div class="evol"><p class="evol-t">Visites par jour</p>${svg('v', barres, A)}
+    <p class="evol-t" style="margin-top:10px">Fiches vues, paniers et commandes par jour</p>
+    <div class="legende">${SERIES_PARCOURS.map(([, l, c]) => `<span><i style="background:${c}"></i>${l}</span>`).join('')}</div>${svg('c', courbes, B)}
+    <div class="infobulle" role="status" hidden></div>
+    <details><summary class="meta" style="cursor:pointer;font-size:.82rem">Voir les chiffres jour par jour</summary>${tableau}</details></div>`;
+}
+document.addEventListener('pointermove', e => {
+  const z = e.target.closest && e.target.closest('.zg'), bulle = document.querySelector('.evol .infobulle');
+  document.querySelectorAll('.evol .curseur').forEach(c => c.style.display = 'none');
+  if (!bulle) return; if (!z) { bulle.hidden = true; return; }
+  const d = serieParcours(), x = d[+z.dataset.i]; if (!x) return;
+  const svg = z.ownerSVGElement, cx = +z.getAttribute('x') + +z.getAttribute('width') / 2;
+  document.querySelectorAll('.evol .curseur').forEach(c => { c.setAttribute('x1', cx); c.setAttribute('x2', cx); c.style.display = ''; });
+  const [a, m, j] = x.j.split('-'); const date = new Date(+a, +m - 1, +j).toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+  bulle.innerHTML = `<b>${date}</b><br>Visites : ${x.visite}${SERIES_PARCOURS.map(([k, l, c]) => `<br><i style="background:${c}"></i>${l} : ${x[k]}`).join('')}`;
+  const r = svg.getBoundingClientRect(), p = bulle.parentElement.getBoundingClientRect();
+  const left = r.left - p.left + cx / svg.viewBox.baseVal.width * r.width; bulle.hidden = false;
+  bulle.style.left = Math.min(p.width - bulle.offsetWidth, Math.max(0, left - bulle.offsetWidth / 2)) + 'px'; bulle.style.top = (r.top - p.top - bulle.offsetHeight - 6 < 0 ? r.bottom - p.top + 6 : r.top - p.top - bulle.offsetHeight - 6) + 'px';
+});
 // Parcours d'achat : visites → fiches → panier → paiement → commandes payées
+const jourParis = d => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris' }).format(d);   // AAAA-MM-JJ, comme en base
+function periodeParcours() {   // 'auj', 'hier', '7', '30' → bornes (jours inclus) et dates
+  const j = d => { const x = new Date(); x.setHours(12, 0, 0, 0); x.setDate(x.getDate() - d); return jourParis(x); };
+  if (parcoursJours === 'hier') return { lim: j(1), fin: j(1) };
+  const n = parcoursJours === 'auj' ? 1 : +parcoursJours; return { lim: j(n - 1), fin: j(0) };
+}
 function blocParcours() {
-  const debut = new Date(); debut.setHours(0, 0, 0, 0); debut.setDate(debut.getDate() - (parcoursJours - 1));
-  const lim = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Paris' }).format(debut);   // date du jour à Paris (AAAA-MM-JJ), comme en base
-  const lignes = PARCOURS.filter(x => x.jour >= lim);
-  if (!lignes.length && !CMDS.length) return '';
+  const { lim, fin } = periodeParcours();
+  const dansPeriode = jour => jour >= lim && jour <= fin;
+  const lignes = PARCOURS.filter(x => dansPeriode(x.jour));
+  if (!PARCOURS.length && !CMDS.length) return '';
   const tot = e => lignes.filter(x => x.etape === e).reduce((a, x) => a + x.n, 0);
-  const cmd = CMDS.filter(c => new Date(c.heure) >= debut && c.suivi.statut !== 'annule').length;
+  const cmd = CMDS.filter(c => dansPeriode(jourParis(new Date(c.heure))) && c.suivi.statut !== 'annule').length;
   const et = [['Visites', tot('visite')], ['Fiche produit vue', tot('fiche')], ['Ajout au panier', tot('panier')], ['Début de paiement', tot('paiement')], ['Commande payée', cmd]];
   const max = Math.max(1, et[0][1]);
   const src = {}; lignes.filter(x => x.etape === 'visite').forEach(x => src[x.source] = (src[x.source] || 0) + x.n);
   const srcC = {}; lignes.filter(x => x.etape === 'panier').forEach(x => srcC[x.source] = (srcC[x.source] || 0) + x.n);
   const noms = { pinterest:'Pinterest', instagram:'Instagram', facebook:'Facebook', google:'Google', newsletter:'Newsletter', direct:'Direct', autre:'Autres' };
-  return `<div class="parcours"><div class="pt"><b>Parcours d’achat</b><span>${[1, 7, 30].map(n => `<button type="button" data-pj="${n}" aria-pressed="${n === parcoursJours}">${n === 1 ? 'Aujourd’hui' : n + ' jours'}</button>`).join(' ')}</span></div>
+  return `<div class="parcours"><div class="pt"><b>Parcours d’achat</b><span>${[['auj', 'Aujourd’hui'], ['hier', 'Hier'], ['7', '7 jours'], ['30', '30 jours']].map(([k, l]) => `<button type="button" data-pj="${k}" aria-pressed="${k === parcoursJours}">${l}</button>`).join(' ')}</span></div>
     ${et.map(([l, v], i) => `<div class="etape"><span>${l}</span><span class="barre"><i style="width:${Math.max(v ? 1.5 : 0, 100 * v / max)}%"></i></span><span class="v">${v}${i ? `<small>${et[i - 1][1] ? Math.round(100 * v / et[i - 1][1]) + ' %' : '—'}</small>` : ''}</span></div>`).join('')}
-    ${blocProduits(lim)}
+    ${graphiqueParcours()}
+    ${blocProduits(lim, fin)}
     ${Object.keys(src).length ? `<div class="sources">${Object.entries(src).sort((a, b) => b[1] - a[1]).map(([k, v]) => `<span>${noms[k] || k} : <b>${v}</b> visite${v > 1 ? 's' : ''} → ${srcC[k] || 0} panier${(srcC[k] || 0) > 1 ? 's' : ''}</span>`).join('')}</div>` : '<div class="sources">Le suivi a démarré le 16 novembre : les chiffres se remplissent au fil des visites.</div>'}</div>`;
 }
-document.addEventListener('click', e => { const b = e.target.closest('[data-pj]'); if (!b) return; parcoursJours = +b.dataset.pj; const ouvert = [...document.querySelectorAll('#stats details')].map(x => x.open); peindreStats(); document.querySelectorAll('#stats details').forEach((x, i) => x.open = ouvert[i]); });
+document.addEventListener('click', e => { const b = e.target.closest('[data-pj]'); if (!b) return; parcoursJours = b.dataset.pj; const ouvert = [...document.querySelectorAll('#stats details')].map(x => x.open); peindreStats(); document.querySelectorAll('#stats details').forEach((x, i) => x.open = ouvert[i]); });
 
 // Liste des abonnés à la newsletter (chargée à la demande)
 let ABOS = null, abosTous = false;
