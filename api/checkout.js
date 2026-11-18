@@ -1,6 +1,10 @@
 // Création d'une session de paiement Stripe Checkout à partir du panier.
 // Le navigateur n'envoie que des choix (modèles, quantités, textes) ; les prix sont fixés côté serveur.
-const { PRIX, PRODUITS, prixCarreau, prixCoffret, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE } = require('./_commun');
+const { PRIX, PRODUITS, prixCarreau, prixCoffret, stripe, euros, texte, origineAutorisee, tropDeRequetes, ORIGINE_SITE, base } = require('./_commun');
+// Codes « carreaux offerts » : listés dans la variable Vercel KREAU_CODES_CARREAUX (séparés par des virgules).
+// Ils offrent les carreaux à l'unité du panier (pas les coffrets, le sur mesure, les chevalets ni les cartes cadeaux) et la livraison.
+// Utilisables une seule fois : le code est marqué comme utilisé en base au paiement de la commande (api/commande.js).
+const codesCarreaux = () => String(process.env.KREAU_CODES_CARREAUX || '').toUpperCase().split(',').map(x => x.trim()).filter(Boolean);
 // Pays européens livrés (hors France) au tarif Europe
 // Codes « commande offerte » : listés dans les variables Vercel KREAU_CODES_OFFERTS et KREAU_CODES_OFFERTS_2 (séparés par des virgules).
 // Chacun devient à sa première utilisation un code Stripe à 100 %, utilisable une seule fois ; la livraison est alors offerte aussi.
@@ -85,7 +89,7 @@ module.exports = async function handler(req, res) {
   let code = String(corps.code || '').trim().toUpperCase().replace(/[^A-Z0-9-]/g, '').slice(0, 40);
   const bf = bfActif();
   if (bf && code === BF.code) code = '';   // le code Black Friday est de toute façon appliqué automatiquement
-  let promo = null, offert = false, bfAuto = false;
+  let promo = null, offert = false, bfAuto = false, codeCarreaux = '';
   if (bf) {
     // -25 % appliqué directement sur le prix des produits : les frais de port ne sont jamais remisés
     if (!bfAuto) {
@@ -97,6 +101,15 @@ module.exports = async function handler(req, res) {
         if (/^Carreau K-Reau · |^Chevalet/.test(nom)) it.price_data.product_data.description = 'Prix Black Friday -25 %';
       }
     }
+  }
+  let carreauxOfferts = 0;   // montant des carreaux à l'unité offerts par un code « carreaux »
+  if (code && codesCarreaux().includes(code)) {
+    let deja = false;
+    try { deja = (await base('envoi_existe', { type: 'code_carreaux', ref: code })).existe; } catch (e) { console.error('Code carreaux', e.message); return res.status(502).json({ erreur: 'Le code n’a pas pu être vérifié' }); }
+    if (deja) return res.status(400).json({ erreur: corps.lang === 'en' ? 'This code has already been used or has expired' : 'Ce code a déjà été utilisé ou a expiré' });
+    carreauxOfferts = items.filter(it => /^Carreau K-Reau · /.test(it.price_data.product_data.name)).reduce((t, it) => t + it.price_data.unit_amount * it.quantity, 0);
+    if (!carreauxOfferts) return res.status(400).json({ erreur: corps.lang === 'en' ? 'This code only applies to single tiles: add a tile to your basket' : 'Ce code s’applique uniquement aux carreaux à l’unité (pas aux coffrets) : ajoutez un carreau à votre panier' });
+    codeCarreaux = code; code = '';
   }
   if (code) {
     try { promo = await codePromo(code); } catch (e) { console.error('Code promo', e.message); return res.status(502).json({ erreur: 'Le code n’a pas pu être vérifié' }); }
@@ -151,6 +164,19 @@ module.exports = async function handler(req, res) {
         display_name: offerte ? (en ? 'Free shipping in France' : 'Livraison France offerte') : (en ? 'Shipping in France' : (process.env.LIBELLE_LIVRAISON || 'Livraison')),
         fixed_amount: { amount: offerte ? 0 : frais, currency: 'eur' } } }];
     }
+  }
+  if (carreauxOfferts) {   // remise du montant exact des carreaux, via un bon Stripe créé pour ce seul paiement
+    const bon = await stripe('POST', 'coupons', { amount_off: carreauxOfferts, currency: 'eur', duration: 'once', max_redemptions: 1,
+      redeem_by: Math.floor(Date.now() / 1000) + 2 * 86400, name: en ? 'Tiles offered' : 'Carreaux offerts' });
+    params.discounts = [{ coupon: bon.id }];
+    delete params.allow_promotion_codes;
+    params.after_expiration = { recovery: { enabled: 'true' } };
+    params.metadata.code = `${codeCarreaux} (carreaux offerts)`;
+    params.metadata.code_carreaux = codeCarreaux;
+    if (params.shipping_options) params.shipping_options.forEach(o => {
+      o.shipping_rate_data.fixed_amount.amount = 0;
+      o.shipping_rate_data.display_name = en ? 'Free shipping (gift)' : 'Livraison offerte';
+    });
   }
   if (promo) {
     params.discounts = [{ promotion_code: promo.id }];

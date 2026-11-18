@@ -75,6 +75,8 @@ async function traiterCommande(s) {
   const id = s.id;
   const md = s.metadata || {};
   // case « newsletter » cochée dans le panier : inscription + code -10 % pour la prochaine commande (une seule fois : abonne_ajout est idempotent)
+  // code « carreaux offerts » : marqué comme utilisé dès que la commande est payée (il ne resservira pas)
+  if (md.code_carreaux) { try { await base('envoi_reserver', { type: 'code_carreaux', ref: md.code_carreaux, email: (s.customer_details && s.customer_details.email) || '' }); } catch (e) { console.error('Code carreaux', e.message); } }
   if (md.newsletter === '1' && s.customer_details && s.customer_details.email) {
     try { await require('./newsletter').inscrire(String(s.customer_details.email).toLowerCase(), { en: md.lang === 'en', source: 'commande', apresAchat: true }); }
     catch (e) { console.error('newsletter commande', e.message); }
