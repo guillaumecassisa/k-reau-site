@@ -108,9 +108,11 @@ module.exports = async function handler(req, res) {
     try { abonnes = await base('abonnes_stats', {}); } catch (e) { console.error('gestion abonnes', e.message); }
     let parcours = [];
     try { parcours = await base('parcours_stats', { jours: 31 }); } catch (e) { console.error('gestion parcours', e.message); }
+    let durees = [];
+    try { durees = await base('durees_stats', { jours: 31 }); } catch (e) { console.error('gestion durées', e.message); }
     let parcoursProduits = [];
     try { parcoursProduits = (await base('parcours_produits_stats', { jours: 31 }) || []).map(x => ({ ...x, nom: (PRODUITS[x.slug] || {}).nom || ({ coffret: 'Coffret de 3', 'sur-mesure': 'Carreau sur mesure', chevalet: 'Chevalet', 'carte-cadeau': 'Carte cadeau' })[x.slug] || x.slug })); } catch (e) { console.error('gestion parcours produits', e.message); }
-    return res.status(200).json({ couts, abonnes, parcours, parcoursProduits, commandes: cmds.map(c => ({ ...c, suivi: suivis[c.id] || { statut: 'a-faire', suivi: '', note: '' } })) });
+    return res.status(200).json({ couts, abonnes, parcours, parcoursProduits, durees, commandes: cmds.map(c => ({ ...c, suivi: suivis[c.id] || { statut: 'a-faire', suivi: '', note: '' } })) });
   } catch (e) {
     console.error('gestion', e.message);
     return res.status(502).json({ erreur: 'Service indisponible pour le moment' });

@@ -1,6 +1,6 @@
 // Suivi anonyme du parcours d'achat : visite → fiche produit → ajout au panier → début de paiement.
 // Aucune donnée personnelle : seulement un compteur par jour, par étape et par source (pinterest, instagram…).
-// Le navigateur n'envoie chaque étape qu'une fois par visite (sessionStorage).
+// Le navigateur n'envoie chaque étape qu'une fois par visite (sessionStorage), et la durée de la visite au départ du visiteur.
 // Fiches vues et ajouts au panier sont aussi comptés par produit (une fois par visite et par produit).
 const { base, origineAutorisee, tropDeRequetes, PRODUITS } = require('./_commun');
 const AUTRES = ['coffret', 'sur-mesure', 'chevalet', 'carte-cadeau'];   // articles du panier qui ne sont pas des fiches carreaux
@@ -16,6 +16,13 @@ module.exports = async function handler(req, res) {
   let d = req.body;
   if (typeof d === 'string') { try { d = JSON.parse(d); } catch { d = {}; } }
   d = d && typeof d === 'object' ? d : {};
+  if (d.etape === 'duree') {   // durée de la visite, rangée par tranche
+    const sec = Math.max(0, Math.min(3600, parseInt(d.secondes, 10) || 0));
+    const tranche = sec < 10 ? '0-10' : sec < 30 ? '10-30' : sec < 60 ? '30-60' : sec < 180 ? '60-180' : '180+';
+    const source = SOURCES.includes(d.source) ? d.source : 'autre';
+    try { await base('duree_ajout', { tranche, source, secondes: sec }); } catch (e) { console.error('suivi durée', e.message); }
+    return res.status(204).end();
+  }
   const etape = ETAPES.includes(d.etape) ? d.etape : null;
   if (!etape) return res.status(204).end();
   const source = SOURCES.includes(d.source) ? d.source : 'autre';

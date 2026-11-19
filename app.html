@@ -912,6 +912,19 @@ function suivre(etape, produits){
   fetch('/api/suivi', { method:'POST', headers:{'Content-Type':'application/json'}, body: corps, keepalive:true }).catch(()=>{});
 }
 setTimeout(() => suivre('visite'), 0);
+// Durée de la visite : envoyée une seule fois, quand le visiteur quitte le site ou change d'appli (compteur anonyme par tranche)
+(function(){
+  if(!/(^|\.)k-reau\.fr$|\.vercel\.app$/.test(location.hostname)) return;
+  let debut = Date.now(); try{ const d = +sessionStorage.getItem('kr-debut'); if(d) debut = d; else sessionStorage.setItem('kr-debut', String(debut)); }catch(e){}
+  const envoyer = () => {
+    try{ if(sessionStorage.getItem('kr-duree')) return; sessionStorage.setItem('kr-duree', '1'); }catch(e){}
+    const corps = JSON.stringify({ etape:'duree', source: sourceVisite(), secondes: Math.round((Date.now() - debut) / 1000) });
+    try{ if(navigator.sendBeacon && navigator.sendBeacon('/api/suivi', new Blob([corps], { type:'application/json' }))) return; }catch(e){}
+    fetch('/api/suivi', { method:'POST', headers:{'Content-Type':'application/json'}, body: corps, keepalive:true }).catch(()=>{});
+  };
+  document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'hidden') envoyer(); });
+  addEventListener('pagehide', envoyer);
+})();
 
 function setMeta(title, desc, opts = {}){
   document.title = title;
