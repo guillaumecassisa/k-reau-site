@@ -71,6 +71,24 @@ module.exports = async function handler(req, res) {
       await base('commande_maj', { session_id: id, statut, suivi: String(d.suivi || '').slice(0, 120), note: String(d.note || '').slice(0, 1000) });
       return res.status(200).json({ ok: true });
     }
+    // Ventes en boutiques partenaires (dépôt-vente…) : saisies à la main depuis /gestion
+    if (d.action === 'boutiques') return res.status(200).json(await base('boutiques_tout', {}));
+    if (d.action === 'boutique') {
+      const b = d.boutique || {}; if (!String(b.nom || '').trim()) return res.status(400).json({ erreur: 'Nom de la boutique obligatoire' });
+      const prix = String(b.prix_depot ?? '').replace(',', '.');
+      await base('boutique_enregistrer', { ...b, nom: String(b.nom).trim(), prix_depot: isFinite(parseFloat(prix)) ? String(parseFloat(prix)) : '' });
+      return res.status(200).json(await base('boutiques_tout', {}));
+    }
+    if (d.action === 'vente_boutique') {
+      const v = d.vente || {}, q = parseInt(v.quantite, 10), m = Math.round(parseFloat(String(v.montant).replace(',', '.')) * 100);
+      if (!v.boutique_id || !/^\d{4}-\d{2}-\d{2}$/.test(String(v.jour || '')) || !(q > 0) || !(m >= 0)) return res.status(400).json({ erreur: 'Vente incomplète' });
+      await base('vente_boutique_ajout', { boutique_id: String(v.boutique_id), jour: v.jour, quantite: q, montant_centimes: m, modeles: String(v.modeles || ''), note: String(v.note || '') });
+      return res.status(200).json(await base('boutiques_tout', {}));
+    }
+    if (d.action === 'vente_boutique_suppr') {
+      await base('vente_boutique_suppr', { id: String(parseInt(d.id, 10)) });
+      return res.status(200).json(await base('boutiques_tout', {}));
+    }
     if (d.action === 'ca') {   // chiffre d'affaires de l'année en cours et de la même période l'an dernier (montants payés, port compris)
       const an = new Date().getFullYear(), maint = Math.floor(Date.now() / 1000);
       const fenetre = async (de, a) => {

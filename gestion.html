@@ -25,7 +25,7 @@ header button{background:none;border:1px solid #6B675F;color:#D8D3C9;padding:6px
 .connexion h1{font-size:2rem;margin-bottom:6px}
 .connexion p{color:var(--doux);margin:0 0 20px}
 label{display:block;font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--olivier);margin-bottom:6px}
-input[type=password],input[type=text],input[type=search],select,textarea{width:100%;border:1px solid #CFC6B8;background:var(--blanc);padding:10px 12px;border-radius:2px}
+input[type=password],input[type=text],input[type=search],input[type=date],input[type=number],input[type=tel],input[type=email],select,textarea{width:100%;border:1px solid #CFC6B8;background:var(--blanc);padding:10px 12px;border-radius:2px}
 input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--olivier);outline-offset:1px}
 .btn{background:var(--olivier);color:var(--blanc);border:0;padding:11px 18px;font-weight:600;cursor:pointer}
 .btn:hover{background:var(--olivier-fonce)}
@@ -81,9 +81,15 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 .couts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;padding:4px 16px 16px}
 .couts label{text-transform:none;letter-spacing:0;font-weight:600;font-size:.82rem;color:var(--encre)}
 .couts small{display:block;color:var(--doux);font-weight:400;font-size:.75rem}
+.bq{padding:4px 16px 16px}.bq h3{font-size:.8rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier);margin:6px 0 8px;grid-column:1/-1}
+.bq-form{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;margin-bottom:12px}.bq-form label{text-transform:none;letter-spacing:0;font-weight:600;font-size:.82rem;color:var(--encre);display:grid;gap:4px;margin:0}
+.bq-form .large{grid-column:span 2}.bq-form small{font-weight:400;color:var(--doux)}
+.bq-liste{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:14px}.bq-carte{border:1px solid var(--joint);padding:10px 12px;display:grid;gap:3px;font-size:.88rem}.bq-carte a{color:var(--olivier)}
+.lien-suppr{background:none;border:0;color:var(--afaire);cursor:pointer;font-size:.8rem;text-decoration:underline}
+@media(max-width:700px){.bq-form{grid-template-columns:1fr 1fr}.bq-form .large{grid-column:1/-1}}
 .ca{background:var(--blanc);border:1px solid var(--joint);border-left:5px solid var(--olivier);padding:14px 16px;margin-bottom:12px}.ca h2{font-size:1.35rem;margin:0 0 8px}
 .ca-t td,.ca-t th{padding:7px 8px}.ca-t td:nth-child(2){font-size:1rem}.hausse{color:var(--livre);font-weight:600}.baisse{color:var(--afaire);font-weight:600}
-.ca-t tr:first-child th{white-space:nowrap}.ca-n{display:none;font-weight:400;color:#5E5A52;font-size:.85rem}
+.ca-t tr:first-child th{white-space:nowrap}.ca-bq{display:block;font-size:.75rem;color:#5E5A52;font-weight:400}.ca-n{display:none;font-weight:400;color:#5E5A52;font-size:.85rem}
 @media(max-width:640px){.ca-t,.ca-t tbody{display:block}.ca-t tr:first-child{display:none}
   .ca-t tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;padding:9px 0;border-bottom:1px solid var(--joint)}
   .ca-t td{border:0!important;padding:0!important;white-space:nowrap}.ca-t td:nth-child(1){font-weight:600;flex:1}.ca-t td:nth-child(2){text-align:right}
@@ -128,7 +134,7 @@ const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currenc
 const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
 const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
 const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
-let CA = null, PARCOURS = [], PPROD = [], DUREES = [], parcoursJours = '7', ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+let CA = null, BOUT = { boutiques: [], ventes: [] }, PARCOURS = [], PPROD = [], DUREES = [], parcoursJours = '7', ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
 try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
 
 async function api(corps) {
@@ -158,6 +164,7 @@ async function charger() {
   CMDS = j.commandes || []; COUTS = j.couts || {}; ABONNES = j.abonnes || null; PARCOURS = j.parcours || []; PPROD = j.parcoursProduits || []; DUREES = j.durees || [];
   $('#deco').hidden = false;
   vueListe();
+  api({ action:'boutiques' }).then(r => { BOUT = r; repeindreStats(); }).catch(() => {});
   api({ action:'ca' }).then(r => { CA = r; const z = $('#ca'); if (z) z.outerHTML = blocCA(); }).catch(() => { const z = $('#ca'); if (z) z.innerHTML = '<p class="meta">Chiffre d’affaires indisponible pour le moment.</p>'; });
 }
 
@@ -375,16 +382,78 @@ function blocCA() {
     ['Cette semaine', +lundi, maint, +lundi, finJour],
     ['Ce mois', +mois, maint, +mois, finJour],
     ['Cette année', +an, maint, +an, finJour]
-  ].map(([lb, a, b, a1, b1]) => ({ lb, ...somme(CA.actuel, a, b), n1: somme(CA.n1, moins1an(a1), moins1an(b1)).ca }));
+  ].map(([lb, a, b, a1, b1]) => { const vb = ventesB(), site = somme(CA.actuel, a, b), bq = somme(vb, a, b);
+    return { lb, ca: site.ca + bq.ca, n: site.n + bq.n, bq: bq.ca, n1: somme(CA.n1, moins1an(a1), moins1an(b1)).ca + somme(vb, moins1an(a1), moins1an(b1)).ca }; });
   const evol = (v, r) => r ? `<span class="${v >= r ? 'hausse' : 'baisse'}">${v >= r ? '+' : ''}${Math.round(100 * (v - r) / r)} %</span>` : '—';
   return `<div class="ca" id="ca"><h2>Chiffre d’affaires</h2>
     <div style="overflow-x:auto"><table class="t ca-t"><tr><th>Période</th><th>CA</th><th>Cmd</th><th>N-1</th><th>Évol.</th><th>Objectif</th><th>Atteint</th></tr>
     ${lignes.map(l => { const obj = Math.round(l.n1 * OBJECTIF), pct = obj ? Math.round(100 * l.ca / obj) : null;
-      return `<tr><td>${l.lb}<span class="ca-n"> · ${l.n} cmd</span></td><td><b>${euros(l.ca)}</b></td><td data-l="Commandes">${l.n}</td><td data-l="N-1">${l.n1 ? euros(l.n1) : '—'}</td><td data-l="Évol.">${evol(l.ca, l.n1)}</td><td data-l="Objectif">${obj ? euros(obj) : '—'}</td>
+      return `<tr><td>${l.lb}<span class="ca-n"> · ${l.n} cmd</span></td><td><b>${euros(l.ca)}</b>${l.bq ? `<small class="ca-bq">dont boutiques ${euros(l.bq)}</small>` : ''}</td><td data-l="Commandes">${l.n}</td><td data-l="N-1">${l.n1 ? euros(l.n1) : '—'}</td><td data-l="Évol.">${evol(l.ca, l.n1)}</td><td data-l="Objectif">${obj ? euros(obj) : '—'}</td>
         <td data-l="Atteint">${pct === null ? '—' : `<span class="jauge"><i style="width:${Math.min(100, pct)}%;background:${pct >= 100 ? 'var(--livre)' : 'var(--olivier)'}"></i></span> ${pct} %`}</td></tr>`; }).join('')}</table></div>
-    <p class="meta" style="font-size:.8rem;margin:8px 0 0">Montants encaissés, frais de port compris, hors commandes annulées. N-1 : même période l’an dernier. Objectif : N-1 + 10 % (il apparaîtra quand il y aura un historique, à partir de novembre 2027).</p></div>`;
+    <p class="meta" style="font-size:.8rem;margin:8px 0 0">Montants encaissés : site (frais de port compris, hors commandes annulées) et ventes en boutique saisies ci-dessous. N-1 : même période l’an dernier. Objectif : N-1 + 10 % (il apparaîtra quand il y aura un historique, à partir de novembre 2027).</p></div>`;
 }
 
+// Ventes en boutiques partenaires : saisie rapide, liste, fiches boutiques avec contact
+function blocBoutiques() {
+  const B = BOUT.boutiques || [], V = BOUT.ventes || [], parId = Object.fromEntries(B.map(b => [b.id, b]));
+  const auj = new Date(), jourISO = `${auj.getFullYear()}-${String(auj.getMonth() + 1).padStart(2, '0')}-${String(auj.getDate()).padStart(2, '0')}`;
+  const totB = id => V.filter(v => v.boutique_id === id).reduce((t, v) => ({ q: t.q + v.quantite, m: t.m + v.montant_centimes }), { q: 0, m: 0 });
+  const dateFr = j => { const [a, m, d] = j.split('-'); return new Date(+a, +m - 1, +d).toLocaleDateString('fr-FR', { day:'numeric', month:'short', year:'numeric' }); };
+  return `<details class="panneau" id="panneau-boutiques"><summary>Ventes en boutique (${V.length} vente${V.length > 1 ? 's' : ''} saisie${V.length > 1 ? 's' : ''})</summary><div class="bq">
+    ${B.length ? `<form class="bq-form" id="f-vente"><h3>Ajouter une vente</h3>
+      <label>Boutique<select name="boutique_id" required>${B.map(b => `<option value="${b.id}" data-prix="${b.prix_depot ?? 9.9}">${esc(b.nom)}</option>`).join('')}</select></label>
+      <label>Date<input type="date" name="jour" value="${jourISO}" required></label>
+      <label>Carreaux vendus<input type="number" name="quantite" min="1" value="1" required inputmode="numeric"></label>
+      <label>Montant encaissé (€)<input type="text" name="montant" inputmode="decimal" required></label>
+      <label class="large">Modèles <small>(facultatif)</small><input type="text" name="modeles" placeholder="Ex. : 2 Vieux-Port, 1 Mucem"></label>
+      <label class="large">Note <small>(facultatif)</small><input type="text" name="note" placeholder="Ex. : relevé de fin de mois"></label>
+      <div class="large" style="display:flex;gap:12px;align-items:center"><button class="btn" type="submit">Enregistrer la vente</button><span class="enreg" id="vente-ok"></span></div></form>` : '<p class="meta">Ajoutez d’abord une boutique ci-dessous.</p>'}
+    ${V.length ? `<div style="overflow-x:auto"><table class="t" style="margin-top:6px"><tr><th>Date</th><th>Boutique</th><th>Carreaux</th><th>Montant</th><th>Modèles / note</th><th></th></tr>
+      ${V.slice(0, 50).map(v => `<tr><td>${dateFr(v.jour)}</td><td>${esc((parId[v.boutique_id] || {}).nom || '?')}</td><td>${v.quantite}</td><td>${euros(v.montant_centimes)}</td><td style="white-space:normal;text-align:left">${esc([v.modeles, v.note].filter(Boolean).join(' · '))}</td><td><button type="button" class="lien-suppr" data-suppr-vente="${v.id}" aria-label="Supprimer cette vente">Supprimer</button></td></tr>`).join('')}</table></div>` : ''}
+    <h3 style="margin-top:18px">Boutiques partenaires</h3>
+    <div class="bq-liste">${B.map(b => { const t = totB(b.id); return `<div class="bq-carte"><b>${esc(b.nom)}</b>
+      ${b.contact ? `<span>${esc(b.contact)}</span>` : ''}${b.telephone ? `<a href="tel:${esc(b.telephone)}">${esc(b.telephone)}</a>` : ''}${b.email ? `<a href="mailto:${esc(b.email)}">${esc(b.email)}</a>` : ''}${b.adresse ? `<span>${esc(b.adresse)}</span>` : ''}
+      <span class="meta">Vous touchez ${Number(b.prix_depot ?? 9.9).toFixed(2).replace('.', ',')} € par carreau · ${t.q} carreau${t.q > 1 ? 'x' : ''} vendu${t.q > 1 ? 's' : ''} · ${euros(t.m)}</span>${b.notes ? `<span class="meta">${esc(b.notes)}</span>` : ''}
+      <button type="button" class="btn-s" data-modif-boutique="${b.id}" style="padding:4px 10px;font-size:.82rem;justify-self:start">Modifier</button></div>`; }).join('')}</div>
+    <form class="bq-form" id="f-boutique"><h3 id="f-boutique-titre">Ajouter une boutique</h3><input type="hidden" name="bid">
+      <label>Nom de la boutique<input type="text" name="nom" required></label>
+      <label>Contact<input type="text" name="contact" placeholder="Prénom Nom"></label>
+      <label>Téléphone<input type="tel" name="telephone"></label>
+      <label>E-mail<input type="email" name="email"></label>
+      <label class="large">Adresse<input type="text" name="adresse"></label>
+      <label>Vous touchez par carreau (€)<input type="text" name="prix_depot" inputmode="decimal" value="9,90"></label>
+      <label class="large">Notes<input type="text" name="notes" placeholder="Ex. : contrat de dépôt-vente du 15/11, 18 carreaux déposés"></label>
+      <div class="large" style="display:flex;gap:12px;align-items:center"><button class="btn" type="submit">Enregistrer la boutique</button><span class="enreg" id="boutique-ok"></span></div></form>
+  </div></details>`;
+}
+function majMontantVente() {
+  const f = $('#f-vente'); if (!f) return; const o = f.boutique_id.selectedOptions[0];
+  const prix = parseFloat((o && o.dataset.prix) || '9.9'), q = parseInt(f.quantite.value, 10) || 0;
+  if (!f.montant.dataset.touche) f.montant.value = (prix * q).toFixed(2).replace('.', ',');
+}
+document.addEventListener('input', e => { if (e.target.closest('#f-vente')) { if (e.target.name === 'montant') e.target.dataset.touche = '1'; else majMontantVente(); } });
+document.addEventListener('change', e => { if (e.target.closest('#f-vente') && e.target.name === 'boutique_id') { $('#f-vente').montant.dataset.touche = ''; majMontantVente(); } });
+document.addEventListener('submit', async e => {
+  const f = e.target, fid = f.getAttribute('id'); if (fid !== 'f-vente' && fid !== 'f-boutique') return; e.preventDefault();
+  const ok = f.querySelector('.enreg'), donnees = Object.fromEntries(new FormData(f)); ok.textContent = 'Enregistrement…';
+  try {
+    BOUT = await api(fid === 'f-vente' ? { action:'vente_boutique', vente: donnees } : { action:'boutique', boutique: { ...donnees, id: donnees.bid || '' } });
+    repeindreStats(); $('#panneau-boutiques').open = true; const k = $(fid === 'f-vente' ? '#vente-ok' : '#boutique-ok'); if (k) k.textContent = 'Enregistré ✓';
+    if (CA) { const z = $('#ca'); if (z) z.outerHTML = blocCA(); }
+  } catch (er) { ok.textContent = er.message; }
+});
+document.addEventListener('click', async e => {
+  const s = e.target.closest('[data-suppr-vente]');
+  if (s) { if (!confirm('Supprimer cette vente ?')) return; try { BOUT = await api({ action:'vente_boutique_suppr', id: s.dataset.supprVente }); repeindreStats(); $('#panneau-boutiques').open = true; } catch (er) { alert(er.message); } return; }
+  const m = e.target.closest('[data-modif-boutique]'); if (!m) return;
+  const b = (BOUT.boutiques || []).find(x => String(x.id) === m.dataset.modifBoutique), f = $('#f-boutique'); if (!b || !f) return;
+  f.bid.value = b.id; ['nom', 'contact', 'telephone', 'email', 'adresse', 'notes'].forEach(k => f[k].value = b[k] ?? '');
+  f.prix_depot.value = Number(b.prix_depot ?? 9.9).toFixed(2).replace('.', ','); $('#f-boutique-titre').textContent = 'Modifier la boutique'; f.scrollIntoView({ behavior:'smooth', block:'center' });
+});
+
+function repeindreStats() { const ouvert = [...document.querySelectorAll('#stats details')].map(x => x.open); peindreStats(); document.querySelectorAll('#stats details').forEach((x, i) => x.open = ouvert[i]); }
+// ventes en boutique au format des commandes du site (midi du jour de la vente)
+const ventesB = () => (BOUT.ventes || []).map(v => { const [a, m, j] = v.jour.split('-'); return { id: 'b' + v.id, t: +new Date(+a, +m - 1, +j, 12), total: v.montant_centimes, boutique: true }; });
 function peindreStats() {
   const valides = CMDS.filter(c => c.suivi.statut !== 'annule');
   const r = chiffres(valides);
@@ -406,15 +475,17 @@ function peindreStats() {
   const parMois = k => valides.filter(c => { const d = new Date(c.heure); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') === k; });
   const auj = new Date(), cle = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
   const precedent = new Date(auj.getFullYear(), auj.getMonth() - 1, 1), finMois = new Date(auj.getFullYear(), auj.getMonth() + 1, 0);
-  const caPrec = parMois(cle(precedent)).reduce((t, c) => t + c.total, 0), caCours = parMois(cle(auj)).reduce((t, c) => t + c.total, 0);
+  const bqMois = k => (BOUT.ventes || []).filter(v => v.jour.slice(0, 7) === k).reduce((t, v) => t + v.montant_centimes, 0);   // ventes en boutique : CA à déclarer aussi
+  const bqPrec = bqMois(cle(precedent)), bqCours = bqMois(cle(auj));
+  const caPrec = parMois(cle(precedent)).reduce((t, c) => t + c.total, 0) + bqPrec, caCours = parMois(cle(auj)).reduce((t, c) => t + c.total, 0) + bqCours;
   const cotis = ca => Math.round(ca * cout('urssaf') / 10000);
   const nomMois = d => d.toLocaleDateString('fr-FR', { month:'long', year:'numeric' });
   const blocUrssaf = `<div class="urssaf"><h2>Déclaration URSSAF</h2>
-      <div><span>CA à déclarer · ${nomMois(precedent)}</span><strong>${euros(caPrec)}</strong></div>
+      <div><span>CA à déclarer · ${nomMois(precedent)}</span><strong>${euros(caPrec)}</strong>${bqPrec ? ` <small class="meta">(dont boutiques ${euros(bqPrec)})</small>` : ''}</div>
       <div><span>Cotisations à payer</span><strong>${euros(cotis(caPrec))}</strong></div>
       <div><span>À déclarer avant le</span><strong>${finMois.toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</strong></div>
-      <div><span>Mois en cours · ${nomMois(auj)}</span><strong>${euros(caCours)}</strong> <small class="meta">(cotisations ≈ ${euros(cotis(caCours))})</small></div>
-      <p>Chiffre d’affaires encaissé dans le mois, frais de port compris, sur autoentrepreneur.urssaf.fr (rubrique « Vente de marchandises »). Taux appliqué : ${(cout('urssaf') / 100).toLocaleString('fr-FR')} %. Les commandes offertes ne sont pas à déclarer (0 €). Si vous déclarez au trimestre, additionnez les trois mois du tableau ci-dessous.${jours < 62 ? ' Choisissez au moins 90 jours pour voir le mois précédent complet.' : ''}</p></div>`;
+      <div><span>Mois en cours · ${nomMois(auj)}</span><strong>${euros(caCours)}</strong>${bqCours ? ` <small class="meta">(dont boutiques ${euros(bqCours)})</small>` : ''} <small class="meta">(cotisations ≈ ${euros(cotis(caCours))})</small></div>
+      <p>Chiffre d’affaires encaissé dans le mois, frais de port compris, sur autoentrepreneur.urssaf.fr (rubrique « Vente de marchandises »). Taux appliqué : ${(cout('urssaf') / 100).toLocaleString('fr-FR')} %. Les commandes offertes ne sont pas à déclarer (0 €). Les ventes en boutique comptent pour ce que la boutique vous reverse. Si vous déclarez au trimestre, additionnez les trois mois du tableau ci-dessous.${jours < 62 ? ' Choisissez au moins 90 jours pour voir le mois précédent complet.' : ''}</p></div>`;
   $('#stats').innerHTML = `
     ${blocCA()}
     ${blocUrssaf}
@@ -432,6 +503,7 @@ function peindreStats() {
     ${ABONNES ? `<div class="news"><span class="t">Newsletter</span><span><b>${ABONNES.actifs}</b> abonné${ABONNES.actifs > 1 ? 's' : ''}</span><span>+${ABONNES.semaine} sur 7 jours</span><span>+${ABONNES.mois} sur 30 jours</span><span>${ABONNES.desinscrits} désinscrit${ABONNES.desinscrits > 1 ? 's' : ''}</span>${ABONNES.dernier ? `<span class="meta">dernière inscription le ${new Date(ABONNES.dernier).toLocaleDateString('fr-FR', { day:'numeric', month:'long' })}</span>` : ''}<button type="button" class="btn-s" id="voir-abonnes" style="margin-left:auto;padding:5px 12px;font-size:.85rem">Voir la liste</button></div>
     <div class="abonnes" id="abonnes" hidden></div>` : ''}
     ${blocParcours()}
+    ${blocBoutiques()}
     <details class="panneau"><summary>Détail du résultat, par mois et meilleures ventes</summary><div class="panneau-corps">
       <div><table class="t"><tr><th>Sur ${jours} jours, hors annulées</th><th>Montant</th></tr>
         <tr><td>Chiffre d’affaires encaissé</td><td>${euros(r.ca)}</td></tr>
@@ -447,6 +519,7 @@ function peindreStats() {
     <details class="panneau" id="panneau-couts"><summary>Mes coûts (servent au calcul du résultat net)</summary>
       <form class="couts" id="f-couts">${CHAMPS_COUTS.map(([k, l, aide]) => `<div><label for="cout-${k}">${l} <small>${aide}</small></label><input type="text" inputmode="decimal" id="cout-${k}" name="${k}" value="${COUTS[k] != null ? String(COUTS[k]).replace('.', ',') : (k === 'urssaf' ? '12,4' : '')}" placeholder="${k === 'urssaf' ? '12,4' : '0,00 €'}"></div>`).join('')}
         <div style="grid-column:1/-1;display:flex;gap:12px;align-items:center"><button class="btn" type="submit">Enregistrer mes coûts</button><span class="enreg" id="couts-ok" aria-live="polite"></span></div></form></details>`;
+  majMontantVente();
   const ouvrir = $('#ouvrir-couts'); if (ouvrir) ouvrir.addEventListener('click', () => { $('#panneau-couts').open = true; $('#panneau-couts').scrollIntoView({ behavior:'smooth', block:'start' }); });
   $('#f-couts').addEventListener('submit', async e => {
     e.preventDefault(); const valeur = Object.fromEntries(new FormData(e.target)); $('#couts-ok').textContent = 'Enregistrement…';
