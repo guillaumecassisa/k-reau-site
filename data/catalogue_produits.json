@@ -126,7 +126,8 @@
   "image_dimensions": "img/dimensions/marseille-fada-dimensions.webp",
   "image_salon": "img/salon/marseille-fada-salon.webp",
   "image_detail": "img/details/marseille-fada-detail.webp",
-  "image_coffret": "img/coffret/marseille-fada-coffret.webp"
+  "image_coffret": "img/coffret/marseille-fada-coffret.webp",
+  "publie": false
  },
  {
   "id": "marseille-mucem",
