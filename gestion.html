@@ -81,6 +81,15 @@ table.t tr.total td{font-weight:600;border-top:2px solid var(--encre);border-bot
 .couts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px;padding:4px 16px 16px}
 .couts label{text-transform:none;letter-spacing:0;font-weight:600;font-size:.82rem;color:var(--encre)}
 .couts small{display:block;color:var(--doux);font-weight:400;font-size:.75rem}
+.ca{background:var(--blanc);border:1px solid var(--joint);border-left:5px solid var(--olivier);padding:14px 16px;margin-bottom:12px}.ca h2{font-size:1.35rem;margin:0 0 8px}
+.ca-t td,.ca-t th{padding:7px 8px}.ca-t td:nth-child(2){font-size:1rem}.hausse{color:var(--livre);font-weight:600}.baisse{color:var(--afaire);font-weight:600}
+.ca-t tr:first-child th{white-space:nowrap}.ca-n{display:none;font-weight:400;color:#5E5A52;font-size:.85rem}
+@media(max-width:640px){.ca-t,.ca-t tbody{display:block}.ca-t tr:first-child{display:none}
+  .ca-t tr{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 12px;padding:9px 0;border-bottom:1px solid var(--joint)}
+  .ca-t td{border:0!important;padding:0!important;white-space:nowrap}.ca-t td:nth-child(1){font-weight:600;flex:1}.ca-t td:nth-child(2){text-align:right}
+  .ca-t td[data-l]{font-size:.8rem;color:#5E5A52}.ca-t td[data-l]::before{content:attr(data-l) ' '}.ca-t td:nth-child(3){flex-basis:100%;height:0;overflow:hidden}
+  .ca-t td[data-l="Atteint"] .jauge{width:36px}.ca-n{display:inline}}
+.jauge{display:inline-block;width:56px;height:8px;background:#eee8dd;border-radius:4px;overflow:hidden;vertical-align:middle;margin-right:4px}.jauge i{display:block;height:100%}
 .urssaf{background:var(--blanc);border:1px solid var(--joint);border-left:5px solid var(--olivier);padding:14px 16px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:10px 28px;align-items:center}
 .urssaf h2{font-size:1.35rem;width:100%;margin:0}
 .urssaf div span{display:block;font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--olivier)}
@@ -119,7 +128,7 @@ const euros = c => (c / 100).toLocaleString('fr-FR', { style:'currency', currenc
 const STATUTS = [['a-faire','À faire','--afaire'],['en-preparation','En préparation','--prep'],['envoye','Envoyé','--envoye'],['livre','Livré','--livre'],['annule','Annulé','--annule']];
 const nomStatut = k => (STATUTS.find(s => s[0] === k) || STATUTS[0])[1];
 const couleur = k => `var(${(STATUTS.find(s => s[0] === k) || STATUTS[0])[2]})`;
-let PARCOURS = [], PPROD = [], DUREES = [], parcoursJours = '7', ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
+let CA = null, PARCOURS = [], PPROD = [], DUREES = [], parcoursJours = '7', ABONNES = null, COUTS = {}, code = '', CMDS = [], filtre = 'a-traiter', recherche = '', jours = 90;
 try { code = sessionStorage.getItem('kreau-gestion') || ''; } catch {}
 
 async function api(corps) {
@@ -149,6 +158,7 @@ async function charger() {
   CMDS = j.commandes || []; COUTS = j.couts || {}; ABONNES = j.abonnes || null; PARCOURS = j.parcours || []; PPROD = j.parcoursProduits || []; DUREES = j.durees || [];
   $('#deco').hidden = false;
   vueListe();
+  api({ action:'ca' }).then(r => { CA = r; const z = $('#ca'); if (z) z.outerHTML = blocCA(); }).catch(() => { const z = $('#ca'); if (z) z.innerHTML = '<p class="meta">Chiffre d’affaires indisponible pour le moment.</p>'; });
 }
 
 const aTraiter = c => ['a-faire','en-preparation'].includes(c.suivi.statut);
@@ -348,6 +358,33 @@ document.addEventListener('click', async e => {
   peindreAbonnes();
 });
 
+// Tableau de bord du chiffre d'affaires : jour, hier, semaine, mois, année ; comparaison N-1 et objectif (N-1 + 10 %)
+const OBJECTIF = 1.10;
+function blocCA() {
+  if (!CA) return `<div class="ca" id="ca"><p class="meta">Chargement du chiffre d’affaires…</p></div>`;
+  const annulees = new Set(CMDS.filter(c => c.suivi.statut === 'annule').map(c => c.id));
+  const somme = (l, a, b) => { const x = l.filter(c => c.t >= a && c.t < b && !annulees.has(c.id)); return { ca: x.reduce((t, c) => t + c.total, 0), n: x.length }; };
+  const j0 = new Date(); j0.setHours(0, 0, 0, 0); const J = 86400000, maint = Date.now();
+  const lundi = new Date(j0); lundi.setDate(lundi.getDate() - ((lundi.getDay() + 6) % 7));
+  const mois = new Date(j0.getFullYear(), j0.getMonth(), 1), an = new Date(j0.getFullYear(), 0, 1);
+  const moins1an = d => { const x = new Date(d); x.setFullYear(x.getFullYear() - 1); return +x; };
+  const finJour = +j0 + J;   // N-1 : même période l'an dernier, jusqu'à la fin du même jour
+  const lignes = [
+    ['Aujourd’hui', +j0, maint, +j0, finJour],
+    ['Hier', +j0 - J, +j0, +j0 - J, +j0],
+    ['Cette semaine', +lundi, maint, +lundi, finJour],
+    ['Ce mois', +mois, maint, +mois, finJour],
+    ['Cette année', +an, maint, +an, finJour]
+  ].map(([lb, a, b, a1, b1]) => ({ lb, ...somme(CA.actuel, a, b), n1: somme(CA.n1, moins1an(a1), moins1an(b1)).ca }));
+  const evol = (v, r) => r ? `<span class="${v >= r ? 'hausse' : 'baisse'}">${v >= r ? '+' : ''}${Math.round(100 * (v - r) / r)} %</span>` : '—';
+  return `<div class="ca" id="ca"><h2>Chiffre d’affaires</h2>
+    <div style="overflow-x:auto"><table class="t ca-t"><tr><th>Période</th><th>CA</th><th>Cmd</th><th>N-1</th><th>Évol.</th><th>Objectif</th><th>Atteint</th></tr>
+    ${lignes.map(l => { const obj = Math.round(l.n1 * OBJECTIF), pct = obj ? Math.round(100 * l.ca / obj) : null;
+      return `<tr><td>${l.lb}<span class="ca-n"> · ${l.n} cmd</span></td><td><b>${euros(l.ca)}</b></td><td data-l="Commandes">${l.n}</td><td data-l="N-1">${l.n1 ? euros(l.n1) : '—'}</td><td data-l="Évol.">${evol(l.ca, l.n1)}</td><td data-l="Objectif">${obj ? euros(obj) : '—'}</td>
+        <td data-l="Atteint">${pct === null ? '—' : `<span class="jauge"><i style="width:${Math.min(100, pct)}%;background:${pct >= 100 ? 'var(--livre)' : 'var(--olivier)'}"></i></span> ${pct} %`}</td></tr>`; }).join('')}</table></div>
+    <p class="meta" style="font-size:.8rem;margin:8px 0 0">Montants encaissés, frais de port compris, hors commandes annulées. N-1 : même période l’an dernier. Objectif : N-1 + 10 % (il apparaîtra quand il y aura un historique, à partir de novembre 2027).</p></div>`;
+}
+
 function peindreStats() {
   const valides = CMDS.filter(c => c.suivi.statut !== 'annule');
   const r = chiffres(valides);
@@ -379,6 +416,7 @@ function peindreStats() {
       <div><span>Mois en cours · ${nomMois(auj)}</span><strong>${euros(caCours)}</strong> <small class="meta">(cotisations ≈ ${euros(cotis(caCours))})</small></div>
       <p>Chiffre d’affaires encaissé dans le mois, frais de port compris, sur autoentrepreneur.urssaf.fr (rubrique « Vente de marchandises »). Taux appliqué : ${(cout('urssaf') / 100).toLocaleString('fr-FR')} %. Les commandes offertes ne sont pas à déclarer (0 €). Si vous déclarez au trimestre, additionnez les trois mois du tableau ci-dessous.${jours < 62 ? ' Choisissez au moins 90 jours pour voir le mois précédent complet.' : ''}</p></div>`;
   $('#stats').innerHTML = `
+    ${blocCA()}
     ${blocUrssaf}
     ${sansCouts ? `<p class="alerte">Pour un résultat net juste, renseignez vos coûts (carreau, emballage, envoi…) dans <a id="ouvrir-couts">Mes coûts</a> ci-dessous.</p>` : ''}
     <div class="stats">

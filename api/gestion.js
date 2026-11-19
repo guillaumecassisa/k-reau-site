@@ -71,6 +71,22 @@ module.exports = async function handler(req, res) {
       await base('commande_maj', { session_id: id, statut, suivi: String(d.suivi || '').slice(0, 120), note: String(d.note || '').slice(0, 1000) });
       return res.status(200).json({ ok: true });
     }
+    if (d.action === 'ca') {   // chiffre d'affaires de l'année en cours et de la même période l'an dernier (montants payés, port compris)
+      const an = new Date().getFullYear(), maint = Math.floor(Date.now() / 1000);
+      const fenetre = async (de, a) => {
+        const out = []; let apres;
+        for (let i = 0; i < 20; i++) {
+          const p = { limit: 100, status: 'complete', created: { gte: de, lte: a } }; if (apres) p.starting_after = apres;
+          const r = await stripe('GET', 'checkout/sessions', p);
+          out.push(...r.data.filter(payee).map(x => ({ id: x.id, t: x.created * 1000, total: x.amount_total || 0 })));
+          if (!r.has_more || !r.data.length) break; apres = r.data[r.data.length - 1].id;
+        }
+        return out;
+      };
+      const debut = y => Math.floor(Date.UTC(y, 0, 1) / 1000) - 8 * 86400;   // marge : une semaine peut commencer en décembre
+      const [actuel, n1] = await Promise.all([fenetre(debut(an), maint), fenetre(debut(an - 1), maint - 365 * 86400 + 2 * 86400)]);
+      return res.status(200).json({ actuel, n1 });
+    }
     if (d.action === 'recap') {   // renvoie à K-Reau l'e-mail « Nouvelle commande » (avec le détail des coffrets)
       let s;
       const id = String(d.session_id || '');
