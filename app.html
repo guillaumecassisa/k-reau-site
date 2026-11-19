@@ -349,6 +349,10 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .panier-panneau{position:absolute;top:0;right:0;bottom:0;width:min(92vw,420px);background:var(--ceramique);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) 20px;gap:16px}
 .panier-lignes{display:grid;gap:12px;align-content:start}
 .panier-panneau{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.panier-panneau>*{flex-shrink:0}
+.payer-barre{position:sticky;bottom:calc(-20px - env(safe-area-inset-bottom,0px));z-index:2;background:var(--ceramique);padding:12px 0 calc(env(safe-area-inset-bottom,0px) + 20px);margin-bottom:calc(-20px - env(safe-area-inset-bottom,0px));box-shadow:0 -10px 16px -12px rgba(34,33,30,.25);display:grid;gap:6px}
+.payer-barre .btn{width:100%}.payer-barre p{margin:0;text-align:center}
+.replie{border-top:1px solid var(--joint);padding:10px 0}.replie>summary{cursor:pointer;font-size:.92rem;font-weight:600;color:var(--olivier);list-style:none}.replie>summary::-webkit-details-marker{display:none}
+.replie>summary::before{content:'+ '}.replie[open]>summary::before{content:'− '}.replie[open]>summary{margin-bottom:10px}
 .ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--joint)}
 .ligne-visuel{width:64px;height:64px;border:1px solid var(--joint);background:var(--blanc);overflow:hidden;display:grid}
 .ligne-visuel img{width:100%;height:100%;object-fit:cover}
@@ -4190,7 +4194,7 @@ const Panier = {
       <div class="panier-lignes">
         ${this.lignes.length ? this.lignes.map((l,i)=>`<div class="ligne">${this.visuel(l)}<div>${this.libelle(l)}
           <div class="ligne-qte"><button type="button" data-q="${i}:-1" aria-label="Retirer un">−</button><output>${l.q}</output><button type="button" data-q="${i}:1" aria-label="Ajouter un">+</button></div></div>
-          <div class="ligne-prix">${prixEur(this.prix(l)*l.q)}<button class="lien" type="button" style="background:none;border:0;cursor:pointer" data-suppr="${i}">Retirer</button></div></div>`).join('')
+          <div class="ligne-prix">${bfActif() && l.type!=='carte' ? `<s class="muted" style="font-size:.82em">${prixEur(this.prix(l)*l.q)}</s> ${prixEur((Math.round(this.prix(l)*100) - Math.round(Math.round(this.prix(l)*100) * BF.pct / 100)) * l.q / 100)}` : prixEur(this.prix(l)*l.q)}<button class="lien" type="button" style="background:none;border:0;cursor:pointer" data-suppr="${i}">Retirer</button></div></div>`).join('')
         : `<p class="muted">Votre panier est vide.</p><a class="btn btn-s" href="/carreaux" data-fermer>Découvrir les carreaux</a>`}
         ${phys > 0 ? `<div class="destination" role="radiogroup" aria-label="Pays de livraison"><span class="small"><strong>Livraison</strong></span>
           <label><input type="radio" name="dest" value="FR" ${eu?'':'checked'}> France · ${phys < seuil ? prixEur(7.90) : 'offerte'}</label>
@@ -4199,8 +4203,8 @@ const Panier = {
         ${phys > 0 && !eu ? `<div style="display:grid;gap:6px"><p class="small" style="margin:0">${reste > 0 && reste <= CONFIG.prix.carreau ? `${this.nbCarreaux() === 2 ? 'Votre troisième carreau' : 'Un carreau de plus'} ne vous coûte que <strong>${prixEur(CONFIG.prix.carreau - 7.90)}</strong> : la livraison devient offerte` : reste > 0 ? `Plus que <strong>${prixEur(reste)}</strong> pour la livraison offerte` : '<strong>Livraison offerte</strong>'}</p><div class="jauge" aria-hidden="true"><span style="width:${Math.min(100, phys/seuil*100)}%"></span></div></div>` : ''}
         ${phys > 0 && reste > 0 ? `<div class="completez"><strong class="small">Complétez avec…</strong><div class="completez-liste">${this.suggestions().map(p=>`<button type="button" data-plus="${esc(p.slug)}"><img src="${esc(p.miniature)}" alt="" loading="lazy"><span>${esc(p.nom)}</span><em>+ Ajouter</em></button>`).join('')}${this.nbCarreaux() ? `<button type="button" data-chevalet class="completez-chevalet"><div class="chevalet-mini">${ILLU_CHEVALET}</div><span>Chevalet en bois brut · ${prixEur(CONFIG.prix.chevalet)}</span><em>+ Ajouter</em></button>` : ''}</div>
           ${reste > CONFIG.prix.carreau ? `<a class="lien small" href="/coffrets" data-fermer>Ou passez au coffret de 3 carreaux à ${prixEur(CONFIG.prix.coffret)}, livraison offerte</a>` : ''}</div>` : ''}
-        ${phys > 0 ? `<div class="champ message-cadeau"><label for="msg-cadeau">Message cadeau <span class="muted" style="font-weight:400">(facultatif, imprimé sur la carte du coffret)</span></label>
-          <textarea id="msg-cadeau" maxlength="200" placeholder="Joyeux anniversaire ! Un petit bout du Vieux-Port pour toi…">${esc(this.message)}</textarea><span class="small muted" id="msg-compte">${this.message.length} / 200</span></div>` : ''}
+        ${phys > 0 ? `<details class="replie" ${this.message ? 'open' : ''}><summary>Ajouter un message cadeau</summary><div class="champ message-cadeau"><label for="msg-cadeau">Message cadeau <span class="muted" style="font-weight:400">(facultatif, imprimé sur la carte du coffret)</span></label>
+          <textarea id="msg-cadeau" maxlength="200" placeholder="Joyeux anniversaire ! Un petit bout du Vieux-Port pour toi…">${esc(this.message)}</textarea><span class="small muted" id="msg-compte">${this.message.length} / 200</span></div></details>` : ''}
       </div>
       ${this.lignes.length ? `<div class="panier-recap">
         ${phys > 0 ? `<p class="panier-sous"><span>Sous-total</span><span>${prixEur(tot)}</span></p>
@@ -4208,14 +4212,14 @@ const Panier = {
         <p class="panier-sous"><span>${ca ? 'Livraison Canada' : eu ? 'Livraison Europe' : 'Livraison France'}</span><span>${port > 0 ? prixEur(port) : 'Offerte'}</span></p>` : ''}
         <p class="panier-total"><span>Total</span><strong>${prixEur(tot - bf + port)}</strong></p></div>
       ${phys === 0 || ca || eu ? `<p class="small muted" style="margin-top:-10px">${phys === 0 ? 'Aucune livraison : carte cadeau envoyée par code.' : ca ? 'D’éventuels droits et taxes d’importation sont à la charge du destinataire. Pas de livraison aux États-Unis.' : 'Hors Union européenne (Suisse, Royaume-Uni…), d’éventuels droits de douane sont à la charge du destinataire.'}</p>` : ''}
-      <div class="code-promo">
+      <details class="replie" ${this.code ? 'open' : ''}><summary>J’ai un code promo ou une carte cadeau</summary><div class="code-promo">
         <label for="code-promo"><strong>Code promo ou carte cadeau</strong></label>
         <input id="code-promo" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40" placeholder="Code promo ou carte cadeau" value="${esc(this.code || '')}">
-        <p class="small muted" style="margin:6px 0 0">Facultatif. Le code est vérifié puis déduit au moment du paiement.</p></div>
+        <p class="small muted" style="margin:6px 0 0">Facultatif. Le code est vérifié puis déduit au moment du paiement.</p></div></details>
       ${(store.get('kreau-news', null) || {}).inscrit ? '' : `<label class="consent consent-news" style="margin:0 0 14px"><input type="checkbox" id="panier-news" ${this.newsletter ? 'checked' : ''}> <span>Je m’inscris à la newsletter : nos nouveaux lieux, et -10 % sur ma prochaine commande. Désinscription en un clic.</span></label>`}
-      <button class="btn btn-p" type="button" id="payer">Passer au paiement sécurisé</button>
-      <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p>
-      <div id="payer-retour" aria-live="polite"></div>` : ''}
+      <div class="payer-barre"><button class="btn btn-p" type="button" id="payer">Passer au paiement · ${prixEur(tot - bf + port)}</button>
+      <div id="payer-retour" aria-live="polite"></div>
+      <p class="small muted">Paiement sécurisé par Stripe : carte bancaire, Apple Pay, Google Pay.</p></div>` : ''}
     </div></div>`;
     const t = c.firstElementChild;
     const cp = $('#code-promo'); if(cp) cp.addEventListener('input', () => { this.code = cp.value.trim().toUpperCase(); });
@@ -4266,7 +4270,7 @@ const Panier = {
   },
   async payer(){
     suivre('paiement');
-    const b = $('#payer'), ret = $('#payer-retour'); b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
+    const b = $('#payer'), ret = $('#payer-retour'), libelle = b.textContent; b.disabled = true; b.textContent = 'Redirection vers le paiement…'; ret.innerHTML='';
     try{
       const r = await fetch(CONFIG.checkoutApi, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ code: this.code || '', newsletter: !!this.newsletter, lignes: this.lignes, message: this.physique() > 0 ? this.message : '', destination: ['EU','CA'].includes(this.destination) ? this.destination : 'FR', lang: LANG }) });
       const j = await r.json().catch(()=>({}));
@@ -4274,7 +4278,7 @@ const Panier = {
       location.href = j.url;
     }catch(err){
       ret.innerHTML = err.court ? `<p class="msg ko">${esc(err.message)}.</p>` : `<p class="msg ko">${esc(err.message)}. Réessayez dans un instant ou écrivez-nous via le formulaire de contact.</p>`;
-      b.disabled = false; b.textContent = 'Passer au paiement sécurisé';
+      b.disabled = false; b.textContent = libelle;
     }
   }
 };

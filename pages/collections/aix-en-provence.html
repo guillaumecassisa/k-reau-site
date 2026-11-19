@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr"><head>
 <meta charset="utf-8">
-<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.76fba57f42.js";document.head.appendChild(t);}</script>
+<script>if(/^\/en(\/|$)/.test(location.pathname)){document.documentElement.lang="en";var t=document.createElement("script");t.id="i18n-js";t.src="/assets/i18n-en.b881ecd5e4.js";document.head.appendChild(t);}</script>
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1">
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
@@ -348,6 +348,10 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--mer);outline-off
 .panier-panneau{position:absolute;top:0;right:0;bottom:0;width:min(92vw,420px);background:var(--ceramique);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) 20px;gap:16px}
 .panier-lignes{display:grid;gap:12px;align-content:start}
 .panier-panneau{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}.panier-panneau>*{flex-shrink:0}
+.payer-barre{position:sticky;bottom:calc(-20px - env(safe-area-inset-bottom,0px));z-index:2;background:var(--ceramique);padding:12px 0 calc(env(safe-area-inset-bottom,0px) + 20px);margin-bottom:calc(-20px - env(safe-area-inset-bottom,0px));box-shadow:0 -10px 16px -12px rgba(34,33,30,.25);display:grid;gap:6px}
+.payer-barre .btn{width:100%}.payer-barre p{margin:0;text-align:center}
+.replie{border-top:1px solid var(--joint);padding:10px 0}.replie>summary{cursor:pointer;font-size:.92rem;font-weight:600;color:var(--olivier);list-style:none}.replie>summary::-webkit-details-marker{display:none}
+.replie>summary::before{content:'+ '}.replie[open]>summary::before{content:'− '}.replie[open]>summary{margin-bottom:10px}
 .ligne{display:grid;grid-template-columns:64px 1fr auto;gap:12px;align-items:start;padding-bottom:12px;border-bottom:1px solid var(--joint)}
 .ligne-visuel{width:64px;height:64px;border:1px solid var(--joint);background:var(--blanc);overflow:hidden;display:grid}
 .ligne-visuel img{width:100%;height:100%;object-fit:cover}
@@ -795,7 +799,7 @@ footer.site{background:var(--encre);color:#D8D3C9;padding-block:64px 32px;margin
 
 <div id="couche"></div>
 
-<script src="/assets/app.8c1ea1820c.js" defer=""></script>
+<script src="/assets/app.4c0248de29.js" defer=""></script>
 
 
 
