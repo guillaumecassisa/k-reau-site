@@ -4173,6 +4173,12 @@ const Panier = {
     return pool.slice(0,3);
   },
   ouvrir(){
+    // catalogue pas encore chargé (page /panier ouverte directement, retour depuis Stripe…) : on attend au lieu de vider le panier
+    if(!PRODUITS && this.lignes.some(l=>l.type==='carreau'||l.type==='coffret')){
+      const c = $('#couche'); if(c){ c.innerHTML = `<div class="tiroir"><div class="panier-panneau" role="dialog" aria-modal="true" aria-label="Panier"><h2>Panier</h2><p class="muted">Chargement de votre panier…</p></div></div>`; c.hidden = false; }
+      const t0 = Date.now(), attendre = () => { if(PRODUITS) return this.ouvrir(); if(Date.now() - t0 < 15000) setTimeout(attendre, 150); };
+      return setTimeout(attendre, 150);
+    }
     this.lignes = this.lignes.filter(l=>this.valide(l));
     const c = $('#couche'), seuil = CONFIG.livraisonGratuiteDes, phys = this.physique(), tot = this.total();
     const eu = this.destination === 'EU' || this.destination === 'CA', ca = this.destination === 'CA';
