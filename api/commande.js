@@ -113,7 +113,9 @@ module.exports.traiterCommande = traiterCommande;
 
 function mailClient(s, md, cartes, cartesEnAttente) {
   const e = v => texte(v, 300).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const prenom = e(((s.customer_details && s.customer_details.name) || '').split(' ')[0]);
+  let prenom = ((s.customer_details && s.customer_details.name) || '').trim().split(/\s+/)[0];
+  if (prenom && prenom === prenom.toUpperCase()) prenom = prenom.toLowerCase().replace(/(^|[-'’])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());   // « PIERRE » → « Pierre »
+  prenom = e(prenom);
   const lignes = detailLignes(s).map(l =>
     `<tr><td style="padding:10px 0;border-bottom:1px solid #E6DED3">${l.quantity} × ${e(l.description)}${l.compo ? `<br><span style="color:#5E5A52;font-size:13px">${l.compo.map(e).join(' · ')}</span>` : ''}</td><td style="padding:10px 0;border-bottom:1px solid #E6DED3;text-align:right;white-space:nowrap">${euros(l.amount_total)}</td></tr>`).join('');
   const port = s.total_details && s.total_details.amount_shipping;
