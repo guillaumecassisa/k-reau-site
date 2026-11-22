@@ -115,7 +115,8 @@ module.exports = async function handler(req, res) {
         s = r.data.filter(payee).find(x => JSON.stringify([x.customer_details, x.shipping_details]).toLowerCase().includes(q));
       }
       if (!s || !payee(s)) return res.status(404).json({ erreur: 'Commande introuvable' });
-      const { htmlCommande } = require('./commande');
+      const { htmlCommande, codesRemises } = require('./commande');
+      if (!(s.metadata || {}).code && s.total_details && s.total_details.amount_discount) s.metadata = { ...(s.metadata || {}), remises: await codesRemises(s) };
       const { envoyerMail, euros } = require('./_commun');
       const ok = await envoyerMail(`K-Reau · Récap commande ${euros(s.amount_total)} · ${(s.customer_details && (s.customer_details.name || s.customer_details.email)) || ''}`, htmlCommande(s, { recap: true }), s.customer_details && s.customer_details.email);
       return res.status(ok ? 200 : 502).json({ ok, commande: s.id.slice(-8).toUpperCase() });
