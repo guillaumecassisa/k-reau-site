@@ -212,6 +212,7 @@ function carte(c) {
         <div><h3>N° de suivi colis</h3><input type="text" data-champ="suivi" value="${esc(s.suivi)}" placeholder="Ex. : 6A12345678901" aria-label="Numéro de suivi"></div>
         <div><h3>Note</h3><textarea data-champ="note" placeholder="Note interne" aria-label="Note interne">${esc(s.note)}</textarea></div>
         <button type="button" class="btn-s" data-recap="${esc(c.id)}" style="padding:5px 10px;font-size:.82rem">Me renvoyer le récap par e-mail</button>
+        <button type="button" class="btn-s" data-avis="${esc(c.id)}" style="padding:5px 10px;font-size:.82rem">Demander un avis maintenant</button>
         <span class="enreg" aria-live="polite"></span></div>
     </div></article>`;
 }
@@ -555,6 +556,13 @@ function peindre() {
   });
 }
 
+document.addEventListener('click', async e => {
+  const a = e.target.closest('[data-avis]'); if (!a) return;
+  if (!confirm('Envoyer maintenant au client l’e-mail de demande d’avis ? (une seule fois par commande)')) return;
+  a.disabled = true; const t = a.textContent; a.textContent = 'Envoi…';
+  try { const r = await api({ action:'avis', session_id: a.dataset.avis, main: '0' }); a.textContent = r.ok ? 'Demande envoyée ✓' : (r.erreur || 'Déjà envoyée'); }
+  catch (er) { a.textContent = er.message; } setTimeout(() => { a.textContent = t; a.disabled = false; }, 5000);
+});
 document.addEventListener('click', async e => {
   const b = e.target.closest('[data-recap]'); if (!b) return;
   b.disabled = true; const t = b.textContent; b.textContent = 'Envoi…';

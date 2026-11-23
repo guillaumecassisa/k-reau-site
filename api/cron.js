@@ -15,17 +15,17 @@ const JOUR = 24 * 3600;
 const AVIS_IMMEDIAT = (process.env.KREAU_AVIS_IMMEDIAT || '').toLowerCase().split(',').map(x => x.trim()).filter(Boolean);
 const delaiAvis = pays => (pays === 'FR' || pays === 'MC' ? 14 : pays === 'CA' ? 26 : 19) * JOUR;
 
-function mailAvis(s, en) {
+function mailAvis(s, en, { enMain = false } = {}) {   // enMain : commande remise en main propre
   const slugs = carreauxDeLaCommande(s.metadata && s.metadata.panier);
   const prenom = echap(((s.customer_details && s.customer_details.name) || '').trim().split(/\s+/)[0] || '');
   const noms = slugs.map(sl => echap(PRODUITS[sl].nom));
   const lien = `${ORIGINE_SITE}${en ? '/en' : ''}/avis?c=${encodeURIComponent(s.id)}&s=${signer(s.id)}`;
   const vignettes = slugs.slice(0, 3).map(sl => `<img src="${ORIGINE_SITE}/${PRODUITS[sl].miniature.replace(/^\//, '')}" width="120" height="120" alt="" style="border:1px solid #E6DED3;margin:0 4px">`).join('');
   const corps = en
-    ? `<p style="margin:0 0 14px">${prenom ? `Hello ${prenom},<br>` : ''}Your K-Reau order should have arrived a few days ago. We hope ${noms.length > 1 ? 'your tiles have' : 'your tile has'} found a good spot at home, or made someone happy.</p>
+    ? `<p style="margin:0 0 14px">${prenom ? `Hello ${prenom},<br>` : ''}${enMain ? 'Thank you for picking up your K-Reau order.' : 'Your K-Reau order should have arrived a few days ago.'} We hope ${noms.length > 1 ? 'your tiles have' : 'your tile has'} found a good spot at home, or made someone happy.</p>
 <p style="margin:0 0 14px">Would you take one minute to tell us what you think? Your review helps other people choose, and it means a great deal to a small brand like ours.</p>
 <p style="text-align:center;margin:0">${vignettes}</p>`
-    : `<p style="margin:0 0 14px">${prenom ? `Bonjour ${prenom},<br>` : ''}Votre commande K-Reau est arrivée il y a quelques jours. Nous espérons que ${noms.length > 1 ? 'vos carreaux ont' : 'votre carreau a'} trouvé sa place chez vous, ou fait plaisir à la personne qui l’a reçu.</p>
+    : `<p style="margin:0 0 14px">${prenom ? `Bonjour ${prenom},<br>` : ''}${enMain ? 'Merci d’être passé récupérer votre commande K-Reau.' : 'Votre commande K-Reau est arrivée il y a quelques jours.'} Nous espérons que ${noms.length > 1 ? 'vos carreaux ont' : 'votre carreau a'} trouvé sa place chez vous, ou fait plaisir à la personne qui l’a reçu.</p>
 <p style="margin:0 0 14px">Auriez-vous une minute pour nous dire ce que vous en pensez ? Votre avis aide d’autres personnes à choisir, et compte beaucoup pour une petite marque comme la nôtre.</p>
 <p style="text-align:center;margin:0">${vignettes}</p>`;
   return gabarit({ lang: en ? 'en' : 'fr', titre: en ? 'How do you like it?' : 'Alors, ce carreau ?', corps,
@@ -129,3 +129,5 @@ module.exports = async function handler(req, res) {
   console.log('cron', JSON.stringify(bilan));
   return res.status(200).json(bilan);
 };
+
+module.exports.mailAvis = mailAvis;

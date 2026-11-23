@@ -53,7 +53,7 @@ module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Robots-Tag', 'noindex, nofollow');
   // GET accepté uniquement pour renvoyer un récap de commande à K-Reau (lien direct, protégé par le code)
-  const recapGet = req.method === 'GET' && req.query && req.query.action === 'recap';
+  const recapGet = req.method === 'GET' && req.query && ['recap', 'avis'].includes(req.query.action);
   if (req.method !== 'POST' && !recapGet) { res.setHeader('Allow', 'POST'); return res.status(405).json({ erreur: 'Méthode non autorisée' }); }
   if (!recapGet && !origineAutorisee(req)) return res.status(403).json({ erreur: 'Requête refusée' });
   if (!process.env.KREAU_GESTION_CODE) return res.status(503).json({ erreur: 'Espace de gestion non configuré' });
@@ -104,6 +104,24 @@ module.exports = async function handler(req, res) {
       const debut = y => Math.floor(Date.UTC(y, 0, 1) / 1000) - 8 * 86400;   // marge : une semaine peut commencer en décembre
       const [actuel, n1] = await Promise.all([fenetre(debut(an), maint), fenetre(debut(an - 1), maint - 365 * 86400 + 2 * 86400)]);
       return res.status(200).json({ actuel, n1 });
+    }
+    if (d.action === 'avis') {   // demande d'avis envoyée tout de suite (commande remise en main propre, ou livrée plus tôt que prévu)
+      let s; const id = String(d.session_id || '');
+      if (/^cs_(live|test)_[A-Za-z0-9]+$/.test(id)) s = await stripe('GET', `checkout/sessions/${id}`);
+      else {
+        const q = String(d.recherche || '').trim().toLowerCase(); if (q.length < 3) return res.status(400).json({ erreur: 'Commande inconnue' });
+        const r = await stripe('GET', 'checkout/sessions', { limit: 100, status: 'complete', created: { gte: Math.floor(Date.now() / 1000) - 60 * 86400 } });
+        s = r.data.filter(payee).find(x => JSON.stringify([x.customer_details, x.shipping_details]).toLowerCase().includes(q));
+      }
+      if (!s || !payee(s)) return res.status(404).json({ erreur: 'Commande introuvable' });
+      const email = s.customer_details && s.customer_details.email; if (!email) return res.status(400).json({ erreur: 'Pas d’e-mail client' });
+      const r = await base('envoi_reserver', { type: 'avis', ref: s.id, email });
+      if (!r.reserve) return res.status(200).json({ ok: false, deja: true, erreur: 'Demande d’avis déjà envoyée pour cette commande' });
+      const { mailAvis } = require('./cron'); const { envoyerClient } = require('./_commun');
+      const en = s.locale === 'en';
+      const ok = await envoyerClient(email, en ? 'How do you like your K-Reau tile?' : 'Alors, ce carreau K-Reau ?', mailAvis(s, en, { enMain: d.main !== '0' && d.main !== false }));
+      if (!ok) { try { await base('envoi_annuler', { type: 'avis', ref: s.id }); } catch {} }
+      return res.status(ok ? 200 : 502).json({ ok, email, commande: s.id.slice(-8).toUpperCase() });
     }
     if (d.action === 'recap') {   // renvoie à K-Reau l'e-mail « Nouvelle commande » (avec le détail des coffrets)
       let s;
