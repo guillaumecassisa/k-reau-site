@@ -118,7 +118,7 @@ module.exports = async function handler(req, res) {
       const r = await base('envoi_reserver', { type: 'avis', ref: s.id, email });
       if (!r.reserve) return res.status(200).json({ ok: false, deja: true, erreur: 'Demande d’avis déjà envoyée pour cette commande' });
       const { mailAvis } = require('./cron'); const { envoyerClient } = require('./_commun');
-      const en = s.locale === 'en';
+      const en = (s.metadata || {}).lang === 'en';
       const ok = await envoyerClient(email, en ? 'How do you like your K-Reau tile?' : 'Alors, ce carreau K-Reau ?', mailAvis(s, en, { enMain: d.main !== '0' && d.main !== false }));
       if (!ok) { try { await base('envoi_annuler', { type: 'avis', ref: s.id }); } catch {} }
       return res.status(ok ? 200 : 502).json({ ok, email, commande: s.id.slice(-8).toUpperCase() });
