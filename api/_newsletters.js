@@ -25,7 +25,59 @@ const COLS = [
   { slug: 'alpes', fr: 'Les Alpes', en: 'The Alps' }
 ];
 
+// Compte à rebours figé au moment de l'envoi (un e-mail ne peut pas faire tourner un vrai minuteur)
+const FIN_BF = Date.parse('2026-11-28T00:00:00+01:00');
+function decompte(en) {
+  const r = Math.max(0, FIN_BF - Date.now()), j = Math.floor(r / 86400000), h = Math.floor(r % 86400000 / 3600000), m = Math.floor(r % 3600000 / 60000);
+  const bloc = (v, l) => `<td align="center" style="padding:0 6px"><div style="background:#22211E;color:#FFFEFB;font-family:Georgia,serif;font-size:30px;line-height:1;padding:12px 0;width:64px;text-align:center">${String(v).padStart(2, '0')}</div><div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#5E5A52;padding-top:6px">${l}</div></td>`;
+  return `<table role="presentation" align="center" cellpadding="0" cellspacing="0" style="margin:6px auto 4px"><tr>${bloc(j, en ? 'days' : 'jours')}${bloc(h, en ? 'hours' : 'heures')}${bloc(m, 'min')}</tr></table>
+<p style="margin:6px 0 16px;text-align:center;font-size:13px;color:#5E5A52">${en ? 'Ends Thursday 27 November at midnight' : 'Fin jeudi 27 novembre à minuit'}</p>`;
+}
+const MODELES = [
+  { slug: 'marseille-bonne-mere-doree', fr: 'La Bonne Mère', en: 'La Bonne Mère', prix: 2190 },
+  { slug: 'cote-d-azur-saint-tropez-terrasses', fr: 'Les terrasses de Saint-Tropez', en: 'The terraces of Saint-Tropez', prix: 2190 },
+  { slug: 'cote-d-azur-nice', fr: 'Nice', en: 'Nice', prix: 2190 },
+  { slug: 'alpes-ceuse', fr: 'Céüse', en: 'Céüse', prix: 1990 }
+];
+const eur = c => (c / 100).toFixed(2).replace('.', ',') + ' €';
+function modeles(en) {
+  const cell = m => `<td width="50%" valign="top" style="padding:5px"><a href="${S}${en ? '/en' : ''}/produits/${m.slug}?utm_source=newsletter" style="color:#22211E;text-decoration:none">
+<img src="${IMG}/bf-${m.slug}.jpg" width="236" alt="${en ? m.en : m.fr}" style="display:block;width:100%;height:auto;border:0">
+<span style="display:block;font-size:14px;padding:7px 0 0;text-align:center">${en ? m.en : m.fr}</span>
+<span style="display:block;font-size:13px;padding:2px 0 8px;text-align:center"><s style="color:#8A8478">${eur(m.prix)}</s> <b>${eur(m.prix - Math.round(m.prix * 25 / 100))}</b></span></a></td>`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:4px 0 10px"><tr>${cell(MODELES[0])}${cell(MODELES[1])}</tr><tr>${cell(MODELES[2])}${cell(MODELES[3])}</tr></table>`;
+}
+
 const NEWSLETTERS = [
+  {
+    id: '2026-11-25-black-friday',
+    date: '2026-11-25',
+    expire: '2026-11-28',   // plus envoyée aux nouveaux inscrits après la fin du Black Friday
+    valide: false,   // à valider par Guillaume
+    sujet: { fr: 'Mes derniers dessins (et le Black Friday finit jeudi)', en: 'My latest drawings (and Black Friday ends Thursday)' },
+    preheader: { fr: 'La Bonne Mère en doré, Saint-Tropez en couleur… et -25 % sur tout jusqu’à jeudi minuit.', en: 'La Bonne Mère in gold, Saint-Tropez in colour… and 25% off everything until Thursday midnight.' },
+    titre: { fr: 'Bonjour,', en: 'Hello,' },
+    bouton: { fr: 'Voir tous les carreaux', en: 'See all the tiles' },
+    lien: { fr: `${S}/carreaux?utm_source=newsletter`, en: `${S}/en/carreaux?utm_source=newsletter` },
+    corps(en) {
+      if (en) return `${p('I wanted to take a couple of minutes to write to you before Black Friday ends.')}
+${p('Over the last few weeks I have spent quite a few evenings drawing new places. I am especially proud of <b>La Bonne Mère</b>: for the first time, the statue is in gold, the way it shines when the sun goes down over Marseille. I also tried colour with <b>the terraces of Saint-Tropez</b> and <b>Nice</b>, and I went up into the Alps with <b>Céüse</b>, for climbers and lovers of the Hautes-Alpes.')}
+${modeles(true)}
+${p('Black Friday ends on Thursday at midnight: <b>25% off all tiles and gift boxes</b>, applied automatically in your basket.')}
+${decompte(true)}
+${p('If you are already thinking about Christmas: a gift box of 3 tiles of your choice is €41.17 instead of €54.90, and for delivery before Christmas, order by 13 December.')}
+${p('And if you have a question, or a place you would love to see on a tile, just reply to this email. I read every one myself.')}
+${p('Speak soon,<br><b>Guillaume</b><br><span style="color:#5E5A52">K-Reau, in Mallemort (Provence)</span>')}`;
+      return `${p('Je voulais prendre deux minutes pour vous écrire avant la fin du Black Friday.')}
+${p('Ces dernières semaines, j’ai passé pas mal de soirées à dessiner de nouveaux lieux. Je suis particulièrement fier de <b>La Bonne Mère</b> : pour la première fois, la statue est en doré, comme quand elle brille au soleil couchant sur Marseille. J’ai aussi tenté la couleur avec <b>les terrasses de Saint-Tropez</b> et <b>Nice</b>, et je suis monté dans les Alpes avec <b>Céüse</b>, pour les grimpeurs et les amoureux des Hautes-Alpes.')}
+${modeles(false)}
+${p('Le Black Friday se termine jeudi à minuit : <b>-25 % sur tous les carreaux et les coffrets</b>, appliqué automatiquement dans le panier.')}
+${decompte(false)}
+${p('Si vous pensez déjà à Noël : un coffret de 3 carreaux de votre choix passe à 41,17 € au lieu de 54,90 €, et pour une livraison avant Noël, il faut commander avant le 13 décembre.')}
+${p('Et si vous avez une question, ou l’envie d’un lieu qui n’existe pas encore en carreau, répondez simplement à ce mail. Je les lis tous moi-même.')}
+${p('À très vite,<br><b>Guillaume</b><br><span style="color:#5E5A52">K-Reau, à Mallemort</span>')}`;
+    }
+  },
   {
     id: '2026-11-15-la-marque',
     date: '2026-11-15',

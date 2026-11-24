@@ -1,4 +1,4 @@
-// Envoi de la newsletter du dimanche (Vercel Cron, dimanche 9 h UTC, soit 10 h à Paris en hiver).
+// Envoi des newsletters (Vercel Cron, tous les jours à 9 h UTC, soit 10 h à Paris en hiver) : seule celle datée du jour et validée part.
 // Envoie la newsletter de api/_newsletters.js datée du jour (heure de Paris) et validée, à chaque abonné actif.
 // Chaque envoi est réservé en base avant d'être fait : un abonné ne reçoit jamais deux fois la même newsletter.
 const { base, gabarit, envoyerClient, envoyerMail, echap } = require('./_commun');
@@ -44,7 +44,7 @@ module.exports = async function handler(req, res) {
 // Dernière newsletter validée dont la date est passée (ou aujourd'hui) : envoyée aux nouveaux inscrits de la page /newsletter
 async function envoyerDerniere(email, en, { veille = false } = {}) {
   const jour = aujourdhuiParis();
-  const n = NEWSLETTERS.filter(x => x.valide && (veille ? x.date < jour : x.date <= jour)).sort((a, b) => b.date.localeCompare(a.date))[0];
+  const n = NEWSLETTERS.filter(x => x.valide && (veille ? x.date < jour : x.date <= jour) && !(x.expire && jour >= x.expire)).sort((a, b) => b.date.localeCompare(a.date))[0];
   if (!n) return false;
   const r = await base('envoi_reserver', { type: 'newsletter', ref: `${n.id}:${email}`, email });
   if (!r.reserve) return false;
