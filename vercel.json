@@ -108,7 +108,7 @@
         },
         {
           "key": "X-Robots-Tag",
-          "value": "noai, noimageai"
+          "value": "noimageai"
         }
       ]
     },

@@ -6,7 +6,7 @@
 <meta name="p:domain_verify" content="4ce472af7cf6db5c3630e0afcc8f43d1"/>
 <meta name="tdm-reservation" content="1">
 <meta name="tdm-policy" content="https://k-reau.fr/mentions-legales">
-<meta name="robots" content="index, follow, max-image-preview:large, noai, noimageai">
+<meta name="robots" content="index, follow, max-image-preview:large, noimageai">
 <meta name="copyright" content="© K-Reau – GC3D. Tous droits réservés.">
 <meta name="author" content="K-Reau">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -946,7 +946,7 @@ function setMeta(title, desc, opts = {}){
   }
   let rob = document.querySelector('meta[name="robots"]');
   const prive = ['/avant-lancement','/merci','/panier','/avis'].includes(cheminFR()) || title.startsWith('Page introuvable');
-  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noai, noimageai';
+  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noimageai';
 }
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),3200); }
 

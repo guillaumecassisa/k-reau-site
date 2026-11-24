@@ -182,7 +182,7 @@ function setMeta(title, desc, opts = {}){
   }
   let rob = document.querySelector('meta[name="robots"]');
   const prive = ['/avant-lancement','/merci','/panier','/avis'].includes(cheminFR()) || title.startsWith('Page introuvable');
-  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noai, noimageai';
+  if(prive){ if(!rob){ rob=document.createElement('meta'); rob.name='robots'; document.head.appendChild(rob);} rob.content='noindex'; } else if(rob) rob.content='index, follow, max-image-preview:large, noimageai';
 }
 function toast(t){ const el=document.createElement('div'); el.className='toast'; el.setAttribute('role','status'); el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(),3200); }
 
