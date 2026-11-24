@@ -8,7 +8,10 @@ const cat = JSON.parse(fs.readFileSync(path.join(RACINE, 'data/catalogue_produit
 const collections = [...new Set(cat.map(p => p.collection_slug))].filter(c => c !== 'les-embiez' || cat.filter(p => p.collection_slug === c).length > 1);
 const pagesSimples = ['carreaux','coffrets','sur-mesure','carte-cadeau','projet-specifique','guides','notre-histoire','faq','contact','mentions-legales','cgv','livraison-retours','confidentialite','merci','panier','avis','revendeurs','carte-des-lieux','newsletter'];
 const appSrc = fs.readFileSync(path.join(RACINE, 'app.html'), 'utf8');
-const guides = [...appSrc.slice(appSrc.indexOf('/*GUIDES-DEBUT*/'), appSrc.indexOf('/*GUIDES-FIN*/')).matchAll(/slug: '([a-z0-9-]+)'/g)].map(m => m[1]);
+// guides publiés seulement (champ « publication » ≤ aujourd'hui, heure de Paris)
+const aujourdhui = new Date().toLocaleDateString('sv-SE', { timeZone: 'Europe/Paris' });
+const guides = [...appSrc.slice(appSrc.indexOf('/*GUIDES-DEBUT*/'), appSrc.indexOf('/*GUIDES-FIN*/')).matchAll(/slug: '([a-z0-9-]+)',(?:\s*publication: '(\d{4}-\d{2}-\d{2})',)?/g)].filter(m => !m[2] || m[2] <= aujourdhui).map(m => m[1]);
+console.log(`guides publiés : ${guides.length}`);
 // Fichiers externes versionnés (mis en cache un an par le navigateur) : le script principal et la traduction anglaise
 const crypto = require('crypto');
 const empreinte = t => crypto.createHash('sha256').update(t).digest('hex').slice(0, 10);
@@ -102,5 +105,15 @@ ${[p.image_en_main,p.image_salon,p.image_etagere,p.image_coffret,p.image_detail,
   fs.writeFileSync(path.join(RACINE, 'google-merchant.xml'),
     `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n<channel>\n  <title>K-Reau – carreaux décoratifs</title>\n  <link>https://k-reau.fr/</link>\n  <description>Carreaux décoratifs illustrés en céramique : Marseille, Côte Bleue, montagnes de Provence, châteaux de France</description>\n${items}\n</channel>\n</rss>\n`);
   console.log(`flux Merchant : ${cat.length} produits`);
+  // llms.txt : ajoute les guides publiés qui n'y figurent pas encore
+  const llms = path.join(RACINE, 'llms.txt'); let txt = fs.readFileSync(llms, 'utf8'); let ajouts = 0;
+  for (const slug of guides) {
+    if (txt.includes('/guides/' + slug + ')')) continue;
+    const m = appSrc.match(new RegExp("slug: '" + slug + "',[\\s\\S]*?titre: '([^']+)'"));
+    if (!m) continue;
+    txt = txt.replace('## Guides\n\n', `## Guides\n\n- [${m[1]}](https://k-reau.fr/guides/${slug})\n`); ajouts++;
+  }
+  if (ajouts) fs.writeFileSync(llms, txt);
+  console.log(`llms.txt : ${ajouts} guide(s) ajouté(s)`);
   if (erreurs.length) { console.error('Erreurs JS :', erreurs); process.exit(1); }
 })();
