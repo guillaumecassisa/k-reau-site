@@ -67,7 +67,8 @@ ${p('Black Friday ends on Thursday at midnight: <b>25% off all tiles and gift bo
 ${decompte(true)}
 ${p('If you are already thinking about Christmas: a gift box of 3 tiles of your choice is €41.17 instead of €54.90, and for delivery before Christmas, order by 13 December.')}
 ${p('And if you have a question, or a place you would love to see on a tile, just reply to this email. I read every one myself.')}
-${p('Speak soon,<br><b>Guillaume</b><br><span style="color:#5E5A52">K-Reau, in Mallemort (Provence)</span>')}`;
+${p('Speak soon,<br><b>Guillaume</b><br><span style="color:#5E5A52">K-Reau, in Mallemort (Provence)</span>')}
+${p('PS: I share my new drawings (and sometimes a peek behind the scenes at the workshop) on Instagram. If you would like to see them first, come and follow me: <a href="https://www.instagram.com/kreau.studio/" style="color:#51573D;font-weight:bold">@kreau.studio</a>')}`;
       return `${p('Je voulais prendre deux minutes pour vous écrire avant la fin du Black Friday.')}
 ${p('Ces dernières semaines, j’ai passé pas mal de soirées à dessiner de nouveaux lieux. Je suis particulièrement fier de <b>La Bonne Mère</b> : pour la première fois, la statue est en doré, comme quand elle brille au soleil couchant sur Marseille. J’ai aussi tenté la couleur avec <b>les terrasses de Saint-Tropez</b> et <b>Nice</b>, et je suis monté dans les Alpes avec <b>Céüse</b>, pour les grimpeurs et les amoureux des Hautes-Alpes.')}
 ${modeles(false)}
@@ -75,7 +76,8 @@ ${p('Le Black Friday se termine jeudi à minuit : <b>-25 % sur tous les carreaux
 ${decompte(false)}
 ${p('Si vous pensez déjà à Noël : un coffret de 3 carreaux de votre choix passe à 41,17 € au lieu de 54,90 €, et pour une livraison avant Noël, il faut commander avant le 13 décembre.')}
 ${p('Et si vous avez une question, ou l’envie d’un lieu qui n’existe pas encore en carreau, répondez simplement à ce mail. Je les lis tous moi-même.')}
-${p('À très vite,<br><b>Guillaume</b><br><span style="color:#5E5A52">K-Reau, à Mallemort</span>')}`;
+${p('À très vite,<br><b>Guillaume</b><br><span style="color:#5E5A52">K-Reau, à Mallemort</span>')}
+${p('PS : je partage mes nouveaux dessins (et parfois les coulisses de l’atelier) sur Instagram. Si vous voulez les découvrir en avant-première, venez me suivre : <a href="https://www.instagram.com/kreau.studio/" style="color:#51573D;font-weight:bold">@kreau.studio</a>')}`;
     }
   },
   {
