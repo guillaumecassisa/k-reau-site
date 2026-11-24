@@ -53,7 +53,7 @@ const NEWSLETTERS = [
     id: '2026-11-25-black-friday',
     date: '2026-11-25',
     expire: '2026-11-28',   // plus envoyée aux nouveaux inscrits après la fin du Black Friday
-    valide: false,   // à valider par Guillaume
+    valide: true,   // validée par Guillaume le 24/11/2026
     sujet: { fr: 'Mes derniers dessins (et le Black Friday finit jeudi)', en: 'My latest drawings (and Black Friday ends Thursday)' },
     preheader: { fr: 'La Bonne Mère en doré, Saint-Tropez en couleur… et -25 % sur tout jusqu’à jeudi minuit.', en: 'La Bonne Mère in gold, Saint-Tropez in colour… and 25% off everything until Thursday midnight.' },
     titre: { fr: 'Bonjour,', en: 'Hello,' },
